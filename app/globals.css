@@ -1,0 +1,124 @@
+@import "tailwindcss";
+
+:root {
+	--font-outfit: 'Outfit', sans-serif;
+}
+
+.font-outfit {
+	font-family: var(--font-outfit), sans-serif;
+}
+
+.slider {
+  @apply relative w-screen h-[100svh]  overflow-hidden;
+}
+
+.slide,
+.slide-img {
+  @apply absolute top-0 left-0 w-screen h-[100svh];
+}
+
+.slide {
+  @apply will-change-transform;
+}
+
+.slide-img img {
+  @apply w-full h-full object-cover;
+}
+
+.slide-header {
+  @apply absolute bottom-8 left-1/2 transform -translate-x-1/2 w-3/4 text-center flex flex-col items-center gap-4 z-10;
+}
+
+.slide-title,
+.slide-description,
+.slide-link {
+  @apply w-3/5 text-center;
+}
+
+.slide-title h1,
+.slide-description p,
+.slide-link a {
+  @apply uppercase text-white;
+}
+
+.slide-title h1 {
+  @apply text-5xl font-semibold tracking-tight;
+}
+
+.slide-description p,
+.slide-link a {
+  @apply text-xl font-medium tracking-wide my-4;
+}
+
+.slide-link a {
+  @apply no-underline;
+}
+
+.slide-info {
+  @apply absolute left-0 bottom-8 w-screen px-8 flex justify-between items-end;
+}
+
+.slide-tags {
+  @apply flex flex-col;
+}
+
+.slide-index-wrapper {
+  @apply flex gap-2;
+}
+
+.slide-tags p:first-child {
+  @apply mb-4;
+}
+
+.line,
+.word {
+  @apply relative inline-block will-change-transform;
+}
+
+@media (max-width: 1000px) {
+  .slide-title h1 {
+    @apply text-3xl tracking-normal;
+  }
+
+  .slide-description p,
+  .slide-link a {
+    @apply text-sm;
+  }
+
+  .slide-header {
+    @apply top-1/2 bottom-auto transform -translate-x-1/2 -translate-y-1/2 w-[90%];
+  }
+
+  .slide-title,
+  .slide-description,
+  .slide-link {
+    @apply w-full;
+  }
+
+  .slide-info {
+    @apply flex-col gap-4 items-start;
+  }
+
+  .slide-index-wrapper {
+    @apply flex flex-row gap-2;
+  }
+}
+
+@keyframes pulse-custom {
+    0%, 100% {
+        box-shadow: 0 0 0 0 rgba(215, 36, 35, 0.3);
+        border-width: 1px;
+    }
+    5% {
+        box-shadow: 0 0 0 4px rgba(215, 36, 35, 0.3);
+        border-width: 3px;
+    }
+    10% {
+        box-shadow: 0 0 0 8px rgba(215, 36, 35, 0);
+        border-width: 1px;
+    }
+}
+
+.animate-pulse-custom {
+    animation: pulse-custom 10s infinite;
+}
