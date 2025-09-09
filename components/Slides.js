@@ -54,11 +54,11 @@ const slides = [
     slideTags: ['monochrome', 'signal', 'image', 'video'],
     slideImg: '/car.jpg',
     slideImgSM: '/CA.png',
-    greenIcon: " Accidental damage to the house",
-    redIcon: 'Natural Disasters Cover',
-    whiteIcon:'We also cover houses under SNL'
+    greenIcon: "Comprehensive Motor Insurance",
+    redIcon: 'Third-Party Only Insurance',
+    whiteIcon:'Third Party, Fire and Theft only'
 
-  },
+  }
   
 ];
 

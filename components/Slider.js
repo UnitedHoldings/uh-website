@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import gsap from 'gsap';
 import { Observer } from 'gsap/Observer';
 import slidesData from './Slides';
@@ -11,17 +11,21 @@ gsap.registerPlugin(Observer);
 const Slider = () => {
     const sliderRef = useRef(null);
     const observerRef = useRef(null);
-    const [slides, setSlides] = useState(slidesData);
+    // Ensure slides are in chronological order by using the original array order
+    const [slides] = useState(slidesData);
     const [isMobile, setIsMobile] = useState(false);
     const [userActive, setUserActive] = useState(true);
     const [isLastSlide, setIsLastSlide] = useState(false);
-    const [infoCircle01show, setinfoCircle01show] = useState(false)
-        const [infoCircle02show, setinfoCircle02show] = useState(false)
-        const [infoCircle03show, setinfoCircle03show] = useState(false)
+    const [activeInfoCircles, setActiveInfoCircles] = useState({
+        0: false, 1: false, 2: false
+    });
 
-    const currentIndexRef = useRef(-1);
+    const currentIndexRef = useRef(0);
     const animatingRef = useRef(false);
     const inactivityTimerRef = useRef(null);
+    const infoCircleTimersRef = useRef([]);
+    const isFirstMount = useRef(true);
+    const isInitializedRef = useRef(false);
 
     // Check if device is mobile
     useEffect(() => {
@@ -34,6 +38,29 @@ const Slider = () => {
 
         return () => {
             window.removeEventListener('resize', checkMobile);
+        };
+    }, []);
+
+    // Info circle animations
+    useEffect(() => {
+        // Clear any existing timers
+        infoCircleTimersRef.current.forEach(timer => clearTimeout(timer));
+        infoCircleTimersRef.current = [];
+
+        // Set up new timers
+        const timers = [
+            setTimeout(() => setActiveInfoCircles(prev => ({ ...prev, 0: true })), 2000),
+            setTimeout(() => setActiveInfoCircles(prev => ({ ...prev, 0: false })), 9000),
+            setTimeout(() => setActiveInfoCircles(prev => ({ ...prev, 1: true })), 4000),
+            setTimeout(() => setActiveInfoCircles(prev => ({ ...prev, 1: false })), 10000),
+            setTimeout(() => setActiveInfoCircles(prev => ({ ...prev, 2: true })), 6000),
+            setTimeout(() => setActiveInfoCircles(prev => ({ ...prev, 2: false })), 11000)
+        ];
+
+        infoCircleTimersRef.current = timers;
+
+        return () => {
+            timers.forEach(timer => clearTimeout(timer));
         };
     }, []);
 
@@ -82,7 +109,7 @@ const Slider = () => {
         };
     }, []);
 
-    const initializeObserver = useRef(() => {
+    const initializeObserver = useCallback(() => {
         const slider = sliderRef.current;
         const totalSlides = slides.length;
 
@@ -98,11 +125,11 @@ const Slider = () => {
             onDown: () => !animatingRef.current && gotoSection(currentIndexRef.current - 1, -1),
             onUp: () => !animatingRef.current && gotoSection(currentIndexRef.current + 1, 1),
             tolerance: 10,
-            preventDefault: false,
+            preventDefault: true,
             allowClicks: true,
             capture: false,
         });
-    }).current;
+    }, [slides.length, isLastSlide]);
 
     // Reinitialize observer when user becomes active again
     useEffect(() => {
@@ -115,30 +142,24 @@ const Slider = () => {
     useEffect(() => {
         const preloadImages = () => {
             slides.forEach((slide) => {
-                // Use the browser's Image constructor only if we're in the browser
                 if (typeof window !== 'undefined') {
+                    // Preload main image
                     const img = new window.Image();
                     img.src = slide.slideImg;
-                    img.onerror = () => {
-                        // Fallback to placeholder if image fails to load
-                        img.src = `https://via.placeholder.com/${isMobile ? '400x300' : '800x600'}?text=Image+Not+Found`;
-                    };
-
+                    
+                    // Preload mobile image if available
                     if (slide.slideImgSM) {
                         const imgSM = new window.Image();
                         imgSM.src = slide.slideImgSM;
-                        imgSM.onerror = () => {
-                            imgSM.src = 'https://via.placeholder.com/400x300?text=Mobile+Image+Not+Found';
-                        };
                     }
                 }
             });
         };
         
         preloadImages();
-    }, [slides, isMobile]);
+    }, [slides]);
 
-    const gotoSection = (index, direction) => {
+    const gotoSection = useCallback((index, direction) => {
         const totalSlides = slides.length;
         if (totalSlides === 0) return;
 
@@ -152,22 +173,19 @@ const Slider = () => {
 
         index = wrap(index);
 
-        // Check if we're trying to go beyond the last slide
-        if (index === 0 && direction === 1 && currentIndexRef.current === totalSlides - 1) {
-            // We've reached the end of the slides
+        // FIX: Check if we're at the last slide and trying to go to the next
+        // This was the main issue - the condition was incorrectly triggering
+        if (currentIndexRef.current === totalSlides - 1 && direction === 1 && index === 0) {
             setIsLastSlide(true);
 
-            // Kill the observer to allow normal scrolling
             if (observerRef.current) {
                 observerRef.current.kill();
                 observerRef.current = null;
             }
 
-            // Enable normal page scrolling
             document.body.style.overflow = 'auto';
             document.documentElement.style.overflow = 'auto';
 
-            // Scroll to the next content after the slider
             setTimeout(() => {
                 window.scrollTo({
                     top: window.innerHeight,
@@ -194,7 +212,6 @@ const Slider = () => {
                     });
                 });
 
-                // Update current index
                 currentIndexRef.current = index;
             },
         });
@@ -253,22 +270,28 @@ const Slider = () => {
             );
 
         currentIndexRef.current = index;
-    };
+    }, [slides.length]);
 
     // Enable normal scrolling when component mounts
     useEffect(() => {
-        // Disable body scroll initially (will be re-enabled when slider ends)
         document.body.style.overflow = 'hidden';
         document.documentElement.style.overflow = 'hidden';
 
         return () => {
-            // Re-enable scrolling when component unmounts
             document.body.style.overflow = 'auto';
             document.documentElement.style.overflow = 'auto';
+            
+            // Clear all timers
+            if (inactivityTimerRef.current) {
+                clearTimeout(inactivityTimerRef.current);
+            }
+            infoCircleTimersRef.current.forEach(timer => clearTimeout(timer));
         };
     }, []);
 
     useEffect(() => {
+        if (isInitializedRef.current) return;
+        
         const slider = sliderRef.current;
         const totalSlides = slides.length;
 
@@ -288,8 +311,14 @@ const Slider = () => {
             currentIndexRef.current = 0;
         }
 
-        if (!isLastSlide) {
-            initializeObserver();
+        // Initialize observer only after first mount and animations are set up
+        if (!isLastSlide && isFirstMount.current) {
+            // Small delay to ensure initial setup is complete
+            setTimeout(() => {
+                initializeObserver();
+                isFirstMount.current = false;
+                isInitializedRef.current = true;
+            }, 300);
         }
 
         return () => {
@@ -297,47 +326,16 @@ const Slider = () => {
             if (observerRef.current) {
                 observerRef.current.kill();
             }
-            if (inactivityTimerRef.current) {
-                clearTimeout(inactivityTimerRef.current);
-            }
         };
     }, [slides, isMobile, isLastSlide, initializeObserver]);
 
-    const Slide = ({ slideData, slideIndex, totalSlides }) => {
-        if (!slideData) {
-            return null;
-        }
+    const Slide = useCallback(({ slideData, slideIndex }) => {
+        if (!slideData) return null;
 
         const imageSrc = isMobile && slideData.slideImgSM ? slideData.slideImgSM : slideData.slideImg;
-        const imageSrcSM = slideData.slideImgSM;
-
-        
-
-        useEffect(() => {
-            setTimeout(() => {
-                setinfoCircle01show(true)
-            }, 2000);
-            setTimeout(() => {
-                setinfoCircle01show(false)
-            }, 9000);
-
-            setTimeout(() => {
-                setinfoCircle02show(true)
-            }, 4000);
-            setTimeout(() => {
-                setinfoCircle02show(false)
-            }, 10000);
-
-            setTimeout(() => {
-                setinfoCircle03show(true)
-            }, 6000);
-            setTimeout(() => {
-                setinfoCircle03show(false)
-            }, 11000);
-        }, [])
 
         return (
-            <section className="slide absolute top-0 left-0 w-screen h-screen bg-white text-white overflow-hidden">
+            <section className="slide absolute top-0 left-0 w-screen h-screen bg-white text-white overflow-hidden" aria-label={`Slide ${slideIndex + 1}: ${slideData.slideTitle1} ${slideData.slideTitle11}`}>
                 <div className="outer h-full w-full flex items-center justify-center">
                     <div className="inner w-full h-full max-w-[99vw] max-h-[98vh] mx-auto flex items-center justify-center">
                         <div className="bg flex flex-col h-full w-full">
@@ -345,23 +343,24 @@ const Slider = () => {
                                 <Image
                                     src={imageSrc || '/placeholder-image.jpg'}
                                     alt={slideData.slideTitle || `Slide ${slideIndex}`}
-                                    width={800}
-                                    height={600}
+                                    width={1200}
+                                    height={800}
+                                    quality={90}
+                                    priority={slideIndex === 0}
                                     className={`object-contain w-full ${isMobile ? 'h-[70vh]' : 'h-auto'} object-center hidden lg:inline`}
-                                    onError={(e) => {
-                                        e.target.src = `https://via.placeholder.com/${isMobile ? '400x300' : '800x600'}?text=Slide+${slideIndex}`;
-                                    }}
+                                    placeholder="blur"
+                                    blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaUMkck8YsYilbU5xuTQqoCgkmgT//Z"
                                 />
-                                {imageSrcSM && (
+                                {isMobile && slideData.slideImgSM && (
                                     <Image
-                                        src={imageSrcSM}
+                                        src={slideData.slideImgSM}
                                         alt={slideData.slideTitle || `Slide ${slideIndex}`}
-                                        width={400}
-                                        height={300}
+                                        width={800}
+                                        height={600}
+                                        quality={85}
                                         className="object-contain w-full object-center lg:hidden"
-                                        onError={(e) => {
-                                            e.target.src = `https://via.placeholder.com/400x300?text=Slide+${slideIndex}`;
-                                        }}
+                                        placeholder="blur"
+                                        blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaUMkck8YsYilbU5xuTQqQCgkmgT//Z"
                                     />
                                 )}
                             </div>
@@ -371,13 +370,12 @@ const Slider = () => {
                                 {/* Icon 1 - Top Left */}
                                 <div className="absolute top-[23%] left-[10%] group pointer-events-auto flex items-center">
                                     <div className='border relative rounded-full hover:w-64 border-[#F9AF55] p-1 flex animate-pulse-custom'>
-                                        <div className="bg-[#F9AF55] text-white rounded-full p-3 lg:w-16 h-12 w-12 lg:h-16 flex items-center justify-center cursor-pointer flex-shrink-0 z-10">
+                                        <div className="bg-[#F9AF55] text-white rounded-full p-3 lg:w-16 h-12 w-12 lg:h-16 flex items-center justify-center cursor-pointer flex-shrink-0 z-10" aria-label="More information">
                                             <span className="text-xl"><SlInfo /></span>
                                         </div>
-                                        <div className={`text-[#F9AF55] bg-white rounded-full absolute ml-1 pl-18 pr-2 lg:h-16 h-12 cursor-pointer transition-all duration-300 ease-in-out group-hover:w-60  ${infoCircle01show ? 'w-60 opacity-100 ml-1 pl-18 pr-2 lg:h-16 h-12 cursor-pointer transition-all duration-400 ease-in-out' : ''} overflow-hidden opacity-0 group-hover:opacity-100`}>
+                                        <div className={`text-[#F9AF55] bg-white rounded-full absolute ml-1 pl-18 pr-2 lg:h-16 h-12 cursor-pointer transition-all duration-300 ease-in-out group-hover:w-60  ${activeInfoCircles[0] ? 'w-60 opacity-100 ml-1 pl-18 pr-2 lg:h-16 h-12 cursor-pointer transition-all duration-400 ease-in-out' : 'w-0'} overflow-hidden opacity-0 group-hover:opacity-100`}>
                                             <div className='-space-y-2 text-lg flex flex-col justify-center lg:pt-2'>
                                                 <p className="font-bold leading-5 pt-1">{slideData.greenIcon}</p>
-                                                <p className="font-bold"></p>
                                             </div>
                                         </div>
                                     </div>
@@ -385,10 +383,10 @@ const Slider = () => {
 
                                 <div className="absolute top-[12%] right-[15%] lg:top-[25%] lg:right-[20%] group pointer-events-auto flex items-center">
                                     <div className='border relative rounded-full hover:w-68 justify-end border-[#D72423] p-1 flex animate-pulse-custom'>
-                                        <div className="bg-[#D72423] text-white rounded-full p-3 lg:w-16 h-12 w-12 lg:h-16 flex items-center justify-center cursor-pointer flex-shrink-0 z-10">
+                                        <div className="bg-[#D72423] text-white rounded-full p-3 lg:w-16 h-12 w-12 lg:h-16 flex items-center justify-center cursor-pointer flex-shrink-0 z-10" aria-label="More information">
                                             <span className="text-lg"><SlInfo /></span>
                                         </div>
-                                        <div className={`text-[#D72423] bg-white rounded-full absolute ml-1 pr-14 lg:pr-18 pl-4 lg:h-16 h-12 cursor-pointer transition-all duration-300 ease-in-out -translate-x-2 w-0 group-hover:w-64 ${infoCircle02show ? 'w-64 opacity-100 ml-1 pr-14 lg:pr-18 pl-4 lg:h-16 h-12 cursor-pointer transition-all duration-300 ease-in-out' : ''} overflow-hidden opacity-0 group-hover:opacity-100`}>
+                                        <div className={`text-[#D72423] bg-white rounded-full absolute ml-1 pr-14 lg:pr-18 pl-4 lg:h-16 h-12 cursor-pointer transition-all duration-300 ease-in-out -translate-x-2 w-0 group-hover:w-64 ${activeInfoCircles[1] ? 'w-64 opacity-100 ml-1 pr-14 lg:pr-18 pl-4 lg:h-16 h-12 cursor-pointer transition-all duration-300 ease-in-out' : 'w-0'} overflow-hidden opacity-0 group-hover:opacity-100`}>
                                             <div className='-space-y-2 text-lg flex flex-col justify-center lg:pt-2'>
                                                 <p className="font-bold leading-5 pt-1">{slideData.redIcon}</p>
                                             </div>
@@ -398,10 +396,10 @@ const Slider = () => {
 
                                 <div className="absolute lg:top-[65%] top-[45%] lg:left-[25%] left-[25%] group pointer-events-auto flex items-center">
                                     <div className='border relative rounded-full hover:w-64 border-[#ffffff] p-1 flex animate-pulse-custom'>
-                                        <div className="bg-[#ffffff] text-[#646565] rounded-full p-3 lg:w-16 h-12 w-12 lg:h-16 flex items-center justify-center cursor-pointer flex-shrink-0 z-10">
+                                        <div className="bg-[#ffffff] text-[#646565] rounded-full p-3 lg:w-16 h-12 w-12 lg:h-16 flex items-center justify-center cursor-pointer flex-shrink-0 z-10" aria-label="More information">
                                             <span className="text-3xl"><SlInfo /></span>
                                         </div>
-                                        <div className={`text-[#646565] bg-white rounded-full absolute ml-1 pl-18 pr-2 lg:h-16 h-12 cursor-pointer transition-all duration-300 ease-in-out w-0 group-hover:w-60  ${infoCircle03show ? 'w-60 opacity-100 ml-1 pl-18 pr-2 lg:h-16 h-12 cursor-pointer transition-all duration-300 ease-in-out' : ''} overflow-hidden opacity-0 group-hover:opacity-100`}>
+                                        <div className={`text-[#646565] bg-white rounded-full absolute ml-1 pl-18 pr-2 lg:h-16 h-12 cursor-pointer transition-all duration-300 ease-in-out w-0 group-hover:w-60  ${activeInfoCircles[2] ? 'w-60 opacity-100 ml-1 pl-18 pr-2 lg:h-16 h-12 cursor-pointer transition-all duration-300 ease-in-out' : 'w-0'} overflow-hidden opacity-0 group-hover:opacity-100`}>
                                             <div className='-space-y-2 flex text-lg flex-col justify-center lg:pt-2 '>
                                                 <p className="font-bold leading-5 pt-1">{slideData.whiteIcon}</p>
                                             </div>
@@ -430,7 +428,7 @@ const Slider = () => {
                                 </div>
                             </div>
                             <div className="absolute bottom-[20vh] right-[12vw] lg:bottom-[10vh] lg:right-[10vw] px-8  flex flex-col justify-center items-center space-y-2  font-outfit text-lg text-white">
-                                <button className='bg-[#D72423] px-16 py-0 rounded-full h-12 shadow-md max-h-24 flex items-center justify-center'>
+                                <button className='bg-[#D72423] px-16 py-0 rounded-full h-12 shadow-md max-h-24 flex items-center justify-center' aria-label="Sign up today">
                                     <p>Sign Up Today</p>
                                 </button>
                                 <p className='text-sm'>Quick & Easy - No Delays</p>
@@ -438,31 +436,9 @@ const Slider = () => {
                         </div>
                     </div>
                 </div>
-
-                {/* CSS for pulse animation */}
-                <style jsx>{`
-                    @keyframes pulse-custom {
-                        0%, 100% {
-                            box-shadow: 0 0 0 0 rgba(215, 36, 35, 0.3);
-                            border-width: 1px;
-                        }
-                        5% {
-                            box-shadow: 0 0 0 4px rgba(215, 36, 35, 0.3);
-                            border-width: 2px;
-                        }
-                        10% {
-                            box-shadow: 0 0 0 8px rgba(215, 36, 35, 0);
-                            border-width: 1px;
-                        }
-                    }
-                    
-                    .animate-pulse-custom {
-                        animation: pulse-custom 15s infinite;
-                    }
-                `}</style>
             </section>
         );
-    };
+    }, [isMobile, activeInfoCircles]);
 
     return (
         <div className="relative w-screen h-screen overflow-hidden">
@@ -471,11 +447,32 @@ const Slider = () => {
                     <Slide
                         key={index}
                         slideData={slide}
-                        slideIndex={index + 1}
-                        totalSlides={slides.length}
+                        slideIndex={index}
                     />
                 ))}
             </div>
+            
+            {/* CSS for pulse animation */}
+            <style jsx global>{`
+                @keyframes pulse-custom {
+                    0%, 100% {
+                        box-shadow: 0 0 0 0 rgba(215, 36, 35, 0.3);
+                        border-width: 1px;
+                    }
+                    5% {
+                        box-shadow: 0 0 0 4px rgba(215, 36, 35, 0.3);
+                        border-width: 2px;
+                    }
+                    10% {
+                        box-shadow: 0 0 0 8px rgba(215, 36, 35, 0);
+                        border-width: 1px;
+                    }
+                }
+                
+                .animate-pulse-custom {
+                    animation: pulse-custom 15s infinite;
+                }
+            `}</style>
         </div>
     );
 };

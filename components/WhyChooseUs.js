@@ -104,7 +104,7 @@ const ReviewCard = ({ review, isActive }) => (
         <StarRating rating={review.rating} />
       </div>
     </div>
-    <p className="text-gray-700 leading-relaxed italic">"{review.content}"</p>
+    <p className="text-gray-700 leading-relaxed italic">&quot;{review.content}&quot;</p>
   </div>
 );
 
