@@ -3,8 +3,8 @@ import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { Observer } from 'gsap/Observer';
 import slidesData from './Slides';
-import { SlInfo, SlPeople } from 'react-icons/sl';
-import { BsCash } from 'react-icons/bs';
+import { SlInfo } from 'react-icons/sl';
+import Image from 'next/image';
 
 gsap.registerPlugin(Observer);
 
@@ -79,36 +79,7 @@ const Slider = () => {
         };
     }, []);
 
-    // Reinitialize observer when user becomes active again
-    useEffect(() => {
-        if (userActive && !observerRef.current && sliderRef.current && !isLastSlide) {
-            initializeObserver();
-        }
-    }, [userActive, isLastSlide]);
-
-    // Preload all slide images
-    useEffect(() => {
-        const preloadImages = () => {
-            slides.forEach((slide, index) => {
-                const img = new Image();
-                img.src = slide.slideImg;
-                img.onerror = () => {
-                    img.src = 'https://via.placeholder.com/800x600?text=Fallback+Image';
-                };
-
-                if (slide.slideImgSM) {
-                    const imgSM = new Image();
-                    imgSM.src = slide.slideImgSM;
-                    imgSM.onerror = () => {
-                        imgSM.src = 'https://via.placeholder.com/400x300?text=Fallback+Mobile+Image';
-                    };
-                }
-            });
-        };
-        preloadImages();
-    }, [slides]);
-
-    const initializeObserver = () => {
+    const initializeObserver = useRef(() => {
         const slider = sliderRef.current;
         const totalSlides = slides.length;
 
@@ -128,7 +99,41 @@ const Slider = () => {
             allowClicks: true,
             capture: false,
         });
-    };
+    }).current;
+
+    // Reinitialize observer when user becomes active again
+    useEffect(() => {
+        if (userActive && !observerRef.current && sliderRef.current && !isLastSlide) {
+            initializeObserver();
+        }
+    }, [userActive, isLastSlide, initializeObserver]);
+
+    // Preload all slide images
+    useEffect(() => {
+        const preloadImages = () => {
+            slides.forEach((slide) => {
+                // Use the browser's Image constructor only if we're in the browser
+                if (typeof window !== 'undefined') {
+                    const img = new window.Image();
+                    img.src = slide.slideImg;
+                    img.onerror = () => {
+                        // Fallback to placeholder if image fails to load
+                        img.src = `https://via.placeholder.com/${isMobile ? '400x300' : '800x600'}?text=Image+Not+Found`;
+                    };
+
+                    if (slide.slideImgSM) {
+                        const imgSM = new window.Image();
+                        imgSM.src = slide.slideImgSM;
+                        imgSM.onerror = () => {
+                            imgSM.src = 'https://via.placeholder.com/400x300?text=Mobile+Image+Not+Found';
+                        };
+                    }
+                }
+            });
+        };
+        
+        preloadImages();
+    }, [slides, isMobile]);
 
     const gotoSection = (index, direction) => {
         const totalSlides = slides.length;
@@ -190,8 +195,6 @@ const Slider = () => {
                 currentIndexRef.current = index;
             },
         });
-
-
 
         if (currentIndexRef.current >= 0) {
             tl.to(sections[currentIndexRef.current], {
@@ -262,6 +265,41 @@ const Slider = () => {
         };
     }, []);
 
+    useEffect(() => {
+        const slider = sliderRef.current;
+        const totalSlides = slides.length;
+
+        if (totalSlides === 0) return;
+
+        const sections = gsap.utils.toArray('.slide', slider);
+        const outerWrappers = gsap.utils.toArray('.outer', slider);
+        const innerWrappers = gsap.utils.toArray('.inner', slider);
+        const images = gsap.utils.toArray('.bg img', slider);
+
+        gsap.set(sections, { autoAlpha: 0, position: 'absolute', top: 0, left: 0, y: 0, rotation: 0, scale: 1 });
+
+        if (totalSlides > 0) {
+            gsap.set(sections[0], { y: 0, autoAlpha: 1, zIndex: 1, rotation: 0, scale: 1 });
+            gsap.set([outerWrappers[0], innerWrappers[0]], { yPercent: 0 });
+            gsap.set(images[0], { yPercent: 0 });
+            currentIndexRef.current = 0;
+        }
+
+        if (!isLastSlide) {
+            initializeObserver();
+        }
+
+        return () => {
+            gsap.killTweensOf('*');
+            if (observerRef.current) {
+                observerRef.current.kill();
+            }
+            if (inactivityTimerRef.current) {
+                clearTimeout(inactivityTimerRef.current);
+            }
+        };
+    }, [slides, isMobile, isLastSlide, initializeObserver]);
+
     const Slide = ({ slideData, slideIndex, totalSlides }) => {
         if (!slideData) {
             return null;
@@ -274,12 +312,7 @@ const Slider = () => {
         const [infoCircle02show, setinfoCircle02show] = useState(false)
         const [infoCircle03show, setinfoCircle03show] = useState(false)
 
-
-
-
-
         useEffect(() => {
-
             setTimeout(() => {
                 setinfoCircle01show(true)
             }, 2000);
@@ -300,32 +333,36 @@ const Slider = () => {
             setTimeout(() => {
                 setinfoCircle03show(false)
             }, 11000);
-
-
-
         }, [])
+
         return (
             <section className="slide absolute top-0 left-0 w-screen h-screen bg-white text-white overflow-hidden">
                 <div className="outer h-full w-full flex items-center justify-center">
                     <div className="inner w-full h-full max-w-[99vw] max-h-[98vh] mx-auto flex items-center justify-center">
                         <div className="bg flex flex-col h-full w-full">
                             <div className="w-full h-full flex items-center justify-center overflow-hidden rounded-2xl">
-                                <img
-                                    src={imageSrc}
-                                    alt={slideData.slideTitle}
+                                <Image
+                                    src={imageSrc || '/placeholder-image.jpg'}
+                                    alt={slideData.slideTitle || `Slide ${slideIndex}`}
+                                    width={800}
+                                    height={600}
                                     className={`object-contain w-full ${isMobile ? 'h-[70vh]' : 'h-auto'} object-center hidden lg:inline`}
                                     onError={(e) => {
                                         e.target.src = `https://via.placeholder.com/${isMobile ? '400x300' : '800x600'}?text=Slide+${slideIndex}`;
                                     }}
                                 />
-                                <img
-                                    src={imageSrcSM}
-                                    alt={slideData.slideTitle}
-                                    className={`object-contain w-full object-center lg:hidden`}
-                                    onError={(e) => {
-                                        e.target.src = `https://via.placeholder.com/${isMobile ? '400x300' : '800x600'}?text=Slide+${slideIndex}`;
-                                    }}
-                                />
+                                {imageSrcSM && (
+                                    <Image
+                                        src={imageSrcSM}
+                                        alt={slideData.slideTitle || `Slide ${slideIndex}`}
+                                        width={400}
+                                        height={300}
+                                        className="object-contain w-full object-center lg:hidden"
+                                        onError={(e) => {
+                                            e.target.src = `https://via.placeholder.com/400x300?text=Slide+${slideIndex}`;
+                                        }}
+                                    />
+                                )}
                             </div>
 
                             {/* Floating Info Icons */}
@@ -425,41 +462,6 @@ const Slider = () => {
             </section>
         );
     };
-
-    useEffect(() => {
-        const slider = sliderRef.current;
-        const totalSlides = slides.length;
-
-        if (totalSlides === 0) return;
-
-        const sections = gsap.utils.toArray('.slide', slider);
-        const outerWrappers = gsap.utils.toArray('.outer', slider);
-        const innerWrappers = gsap.utils.toArray('.inner', slider);
-        const images = gsap.utils.toArray('.bg img', slider);
-
-        gsap.set(sections, { autoAlpha: 0, position: 'absolute', top: 0, left: 0, y: 0, rotation: 0, scale: 1 });
-
-        if (totalSlides > 0) {
-            gsap.set(sections[0], { y: 0, autoAlpha: 1, zIndex: 1, rotation: 0, scale: 1 });
-            gsap.set([outerWrappers[0], innerWrappers[0]], { yPercent: 0 });
-            gsap.set(images[0], { yPercent: 0 });
-            currentIndexRef.current = 0;
-        }
-
-        if (!isLastSlide) {
-            initializeObserver();
-        }
-
-        return () => {
-            gsap.killTweensOf('*');
-            if (observerRef.current) {
-                observerRef.current.kill();
-            }
-            if (inactivityTimerRef.current) {
-                clearTimeout(inactivityTimerRef.current);
-            }
-        };
-    }, [slides, isMobile, isLastSlide]);
 
     return (
         <div className="relative w-screen h-screen overflow-hidden">
