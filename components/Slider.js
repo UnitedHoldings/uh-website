@@ -15,6 +15,9 @@ const Slider = () => {
     const [isMobile, setIsMobile] = useState(false);
     const [userActive, setUserActive] = useState(true);
     const [isLastSlide, setIsLastSlide] = useState(false);
+    const [infoCircle01show, setinfoCircle01show] = useState(false)
+        const [infoCircle02show, setinfoCircle02show] = useState(false)
+        const [infoCircle03show, setinfoCircle03show] = useState(false)
 
     const currentIndexRef = useRef(-1);
     const animatingRef = useRef(false);
@@ -308,9 +311,7 @@ const Slider = () => {
         const imageSrc = isMobile && slideData.slideImgSM ? slideData.slideImgSM : slideData.slideImg;
         const imageSrcSM = slideData.slideImgSM;
 
-        const [infoCircle01show, setinfoCircle01show] = useState(false)
-        const [infoCircle02show, setinfoCircle02show] = useState(false)
-        const [infoCircle03show, setinfoCircle03show] = useState(false)
+        
 
         useEffect(() => {
             setTimeout(() => {
