@@ -660,6 +660,8 @@ const Slider = () => {
         );
     });
 
+    SlideComponent.displayName = 'SlideComponent';
+
     return (
         <div className="relative w-screen h-screen overflow-hidden">
             <div className="slider relative h-screen w-screen" ref={sliderRef}>
