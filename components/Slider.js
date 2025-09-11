@@ -26,7 +26,16 @@ const Slider = () => {
     // Check if device is mobile
     useEffect(() => {
         const checkMobile = () => {
-            setIsMobile(window.innerWidth <= 768);
+            const mobile = window.innerWidth <= 1024; // Changed to 1024 to match lg breakpoint
+            setIsMobile(mobile);
+
+            // Kill animations if mobile, create if desktop
+            if (mobile) {
+                circleTimelinesRef.current.forEach(tl => tl.kill());
+                circleTimelinesRef.current = [];
+            } else if (circleTimelinesRef.current.length === 0) {
+                setupCircleAnimations();
+            }
         };
 
         checkMobile();
@@ -37,8 +46,8 @@ const Slider = () => {
         };
     }, []);
 
-    // Setup GSAP animations for info circles
-    useEffect(() => {
+    // Setup GSAP animations for info circles (desktop only)
+    const setupCircleAnimations = useCallback(() => {
         circleTimelinesRef.current.forEach(tl => tl.kill());
         circleTimelinesRef.current = [];
 
@@ -74,11 +83,21 @@ const Slider = () => {
             createCircleAnimation('circle-2', 4, 0.5, 6, 0.5),
             createCircleAnimation('circle-3', 6, 0.5, 5, 0.5)
         ];
+    }, []);
+
+    // Re-setup animations when screen size changes
+    useEffect(() => {
+        if (!isMobile) {
+            setupCircleAnimations();
+        }
 
         return () => {
-            circleTimelinesRef.current.forEach(tl => tl.kill());
+            if (isMobile) {
+                circleTimelinesRef.current.forEach(tl => tl.kill());
+                circleTimelinesRef.current = [];
+            }
         };
-    }, []);
+    }, [isMobile, setupCircleAnimations]);
 
     // Track user activity
     useEffect(() => {
@@ -360,32 +379,31 @@ const Slider = () => {
     const SlideComponent = React.memo(({ slideData, slideIndex, isMobile }) => {
         if (!slideData) return null;
 
-        console.log(slideData.slideImgSM);
-
-
-
         return (
             <section className="slide absolute top-0 left-0 w-screen h-screen bg-white text-white overflow-hidden" aria-label={`Slide ${slideIndex + 1}: ${slideData.slideTitle1} ${slideData.slideTitle11}`}>
                 <div className="outer h-full w-full flex items-center justify-center">
                     <div className="inner w-full h-full max-w-[99vw] max-h-[98vh] mx-auto flex items-center justify-center">
                         <div className="bg flex flex-col h-full w-full">
                             <div className="w-full h-full flex items-center justify-center overflow-hidden rounded-2xl relative">
+                                {/* Gradient overlay for better text visibility */}
+                                <div className="absolute bottom-0 left-0 w-full h-1/3 bg-gradient-to-t from-black/70 to-transparent z-10"></div>
+
                                 {/* Desktop Image - Hidden on mobile */}
-                                <div className="w-full h-full hidden md:block">
+                                <div className="w-full h-full  hidden lg:block">
                                     <Image
                                         src={slideData.slideImg || '/placeholder-image.jpg'}
                                         alt={slideData.slideTitle || `Slide ${slideIndex}`}
                                         fill
                                         quality={90}
                                         priority={slideIndex === 0}
-                                        className="object-contain rounded-2xl "
+                                        className="object-cover rounded-2xl w-[98vw]"
                                         placeholder="blur"
                                         blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgDRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaUMkck8YsYilbU5xuTQqoCgkmgT//Z"
                                     />
                                 </div>
 
                                 {/* Mobile Image - Hidden on desktop */}
-                                <div className="w-screen h-screen bg-red-500 md:hidden relative">
+                                <div className="w-full h-full lg:hidden relative">
                                     <Image
                                         src={
                                             slideData.slideImgSM ||
@@ -396,25 +414,24 @@ const Slider = () => {
                                         fill
                                         quality={85}
                                         priority={slideIndex === 0}
-                                        className="object-contain"
+                                        className="object-cover"
                                         placeholder="blur"
                                         blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgDRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaUMkck8YsYilbU5xuTQqQCgkmgT//Z"
                                     />
-
                                 </div>
                             </div>
 
                             {/* Floating Info Icons */}
-                            <div className="absolute top-0 font-outfit w-full h-full z-20 pointer-events-none">
+                            <div className="absolute hidden lg:block top-0 font-outfit w-full h-full z-20 pointer-events-none">
                                 {/* Icon 1 - Top Left */}
                                 <div className="circle-1 absolute top-[23%] left-[10%] group pointer-events-auto flex items-center">
-                                    <div className=' relative rounded-full hover:w-[260px] border-[#F9AF55] p-1 flex '>
-                                        <div className="bg-[#F9AF55] text-white rounded-full  lg:w-16 h-12 w-12 lg:h-16 flex items-center justify-center cursor-pointer flex-shrink-0 z-10" aria-label="More information">
-                                            <span className="text-3xl  flex items-center justify-center">{slideData.greenIcon.icon}</span>
+                                    <div className='relative rounded-full lg:hover:w-[260px] border-[#F9AF55] p-1 flex transition-all duration-300'>
+                                        <div className="bg-[#F9AF55] text-white rounded-full lg:w-16 h-12 w-12 lg:h-16 flex items-center justify-center cursor-pointer flex-shrink-0 z-10" aria-label="More information">
+                                            <span className="text-3xl flex items-center justify-center">{slideData.greenIcon.icon}</span>
                                         </div>
                                         <div className="info-text lg:-translate-x-16 -translate-x-12 text-[#F9AF55] bg-white rounded-full ml-1 pl-18 pr-2 lg:h-16 h-12 cursor-pointer flex items-center overflow-hidden">
                                             <div className='-space-y-2 text-lg flex flex-col justify-center lg:pt-2 min-w-[240px]'>
-                                                <p className="font-bold leading-5 pt-">
+                                                <p className="font-bold leading-5">
                                                     {(() => {
                                                         const words = slideData.greenIcon.info.split(' ');
                                                         if (words.length > 2) {
@@ -435,8 +452,7 @@ const Slider = () => {
                                 </div>
 
                                 <div className="circle-2 absolute top-[12%] right-[15%] lg:top-[25%] lg:right-[20%] group pointer-events-auto flex items-center">
-                                    <div className=" relative rounded-full hover:w-[260px] border-[#D72423] p-1 flex ">
-
+                                    <div className="relative rounded-full lg:hover:w-[260px] border-[#D72423] p-1 flex transition-all duration-300">
                                         {/* TEXT FIRST */}
                                         <div className="info-text text-[#D72423] bg-white lg:translate-x-16 translate-x-12 rounded-full mr-1 pl-6 pr-14 lg:pr-18 lg:h-16 h-12 cursor-pointer flex items-center justify-start overflow-hidden">
                                             <div className="-space-y-2 text-lg flex flex-col justify-center lg:pt-2 min-w-[240px]">
@@ -460,21 +476,18 @@ const Slider = () => {
 
                                         {/* ICON SECOND (RIGHT SIDE) */}
                                         <div className="bg-[#D72423] text-white rounded-full p-3 lg:w-16 h-12 w-12 lg:h-16 flex items-center justify-center cursor-pointer flex-shrink-0 z-10" aria-label="More information">
-                                            <span className="text-3xl  flex items-center justify-center">{slideData.redIcon.icon}</span>
+                                            <span className="text-3xl flex items-center justify-center">{slideData.redIcon.icon}</span>
                                         </div>
-
                                     </div>
                                 </div>
 
-
                                 <div className="circle-3 absolute lg:top-[65%] top-[45%] lg:left-[25%] left-[25%] group pointer-events-auto flex items-center">
-                                    <div className=' relative rounded-full hover:w-[260px] border-[#ffffff] p-1 flex '>
+                                    <div className='relative rounded-full lg:hover:w-[260px] border-[#ffffff] p-1 flex transition-all duration-300'>
                                         <div className="bg-[#ffffff] text-[#646565] rounded-full p-3 lg:w-16 h-12 w-12 lg:h-16 flex items-center justify-center cursor-pointer flex-shrink-0 z-10" aria-label="More information">
-                                            <span className="text-3xl  flex items-center justify-center">{slideData.whiteIcon.icon}</span>
+                                            <span className="text-3xl flex items-center justify-center">{slideData.whiteIcon.icon}</span>
                                         </div>
-                                        <div className="info-text text-[#646565]  bg-white -translate-x-12  lg:-translate-x-18 sm:-translate-x-14 rounded-full ml-1 pl-18 pr-2 lg:h-16 h-12 cursor-pointer flex items-center overflow-hidden">
-                                            <div className='-space-y-2 flex text-lg flex-col justify-center  leading-4 '>
-
+                                        <div className="info-text text-[#646565] bg-white -translate-x-12 lg:-translate-x-18 rounded-full ml-1 pl-18 pr-2 lg:h-16 h-12 cursor-pointer flex items-center overflow-hidden">
+                                            <div className='-space-y-2 flex text-lg flex-col justify-center leading-4'>
                                                 {(() => {
                                                     const words = slideData.whiteIcon.info.split(' ');
                                                     if (words.length > 2) {
@@ -493,28 +506,121 @@ const Slider = () => {
                                     </div>
                                 </div>
 
-                                <div className='absolute lg:top-[84%] top-[88%] left-[11%]  lg:left-[20%] lg:max-w-4xl max-w-80 lg:text-xl text-sm'>
-                                    <p className='text-center'>{slideData.slideDescription}</p>
+
+                            </div>
+                            {/* Floating Info Icons - Mobile (hover/touch only) */}
+                            <div className="lg:hidden absolute top-0 font-outfit w-full h-full z-20 pointer-events-none">
+                                {/* Icon 1 - Top Left */}
+                                <div className=" absolute top-[23%] left-[10%] group pointer-events-auto flex items-center">
+                                    <div className='border relative rounded-full border-[#F9AF55] p-1 flex group-hover:w-[280px] group-active:w-[260px] transition-all duration-300 h-[58px] w-[58px] animate-pulse-custom'>
+                                        <div className="bg-[#F9AF55] text-white rounded-full w-12 h-12 flex items-center justify-center cursor-pointer flex-shrink-0 z-10" aria-label="More information">
+                                            <span className="text-3xl pl-1 flex items-center justify-center">{slideData.greenIcon.icon}</span>
+                                        </div>
+                                        <div className=" absolute  text-[#F9AF55] bg-white rounded-full ml-1 pl-12 pr-2 h-12 cursor-pointer flex items-center overflow-hidden w-0 opacity-0 group-hover:w-[260px] group-hover:opacity-100 group-active:w-[260px] group-active:opacity-100 transition-all duration-300">
+                                            <div className='-space-y-2 text-sm flex flex-col justify-center min-w-[100px]'>
+                                                <p className="font-semibold leading-5">
+                                                    {(() => {
+                                                        const words = slideData.greenIcon.info.split(' ');
+                                                        if (words.length > 2) {
+                                                            return (
+                                                                <>
+                                                                    {words.slice(0, 2).join(' ')}
+                                                                    <br />
+                                                                    {words.slice(2).join(' ')}
+                                                                </>
+                                                            );
+                                                        }
+                                                        return slideData.greenIcon.info;
+                                                    })()}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
+
+                                {/* Icon 2 - Top Right */}
+                                <div className="mobile-circle-2 absolute top-[12%] right-[15%] group pointer-events-auto flex items-center">
+                                    <div className="relative flex items-center border border-[#D72423] rounded-full h-[58px] w-[58px] transition-all duration-300 animate-pulse-custom">
+
+                                        {/* TEXT PANEL (LEFT SIDE) */}
+                                        <div className="absolute left-0 bg-white text-[#D72423] rounded-full pl-6 pr-4 h-12 -translate-x-[52vw] cursor-pointer flex items-center justify-start overflow-hidden w-0 opacity-0 group-hover:w-[260px] group-hover:opacity-100 group-active:w-[260px] group-active:opacity-100 transition-all duration-300 z-0">
+                                            <div className="-space-y-2 text-sm flex flex-col justify-center max-w-[200px]">
+                                                <p className="font-semibold leading-5">
+                                                    {(() => {
+                                                        const words = slideData.redIcon.info.split(' ');
+                                                        if (words.length > 2) {
+                                                            return (
+                                                                <>
+                                                                    {words.slice(0, 2).join(' ')}
+                                                                    <br />
+                                                                    {words.slice(2).join(' ')}
+                                                                </>
+                                                            );
+                                                        }
+                                                        return slideData.redIcon.info;
+                                                    })()}
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                        {/* ICON (RIGHT SIDE) */}
+                                        <div className="bg-[#D72423] -translate-x-[62vw]  text-white rounded-full w-12 h-12 flex items-center justify-center cursor-pointer flex-shrink-0 z-10 ml-[260px]" aria-label="More information">
+                                            <span className="text-3xl pl-1.5 flex items-center justify-center">{slideData.redIcon.icon}</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                                {/* Icon 3 - Bottom Left */}
+                                <div className="mobile-circle-3 absolute top-[45%] left-[25%] group pointer-events-auto flex items-center">
+                                    <div className='relative rounded-full border animate-pulse-custom w-[58px] h-[58px] border-[#ffffff] p-1 flex group-hover:w-[240px] group-active:w-[260px] transition-all duration-300'>
+                                        <div className="bg-[#ffffff] text-[#646565] rounded-full p-3 w-12 h-12 flex items-center justify-center cursor-pointer flex-shrink-0 z-10" aria-label="More information">
+                                            <span className="text-3xl flex items-center justify-center">{slideData.whiteIcon.icon}</span>
+                                        </div>
+                                        <div className="absolute  text-[#646565] bg-white  rounded-full ml-1 pl-16 pr-2 h-12 cursor-pointer flex items-center overflow-hidden w-0 opacity-0 group-hover:w-[220px] group-hover:opacity-100 group-active:w-[260px] group-active:opacity-100 transition-all duration-300">
+                                            <div className='-space-y-2 flex text-sm font-semibold flex-col justify-center leading-4'>
+                                                {(() => {
+                                                    const words = slideData.whiteIcon.info.split(' ');
+                                                    if (words.length > 2) {
+                                                        return (
+                                                            <>
+                                                                {words.slice(0, 2).join(' ')}
+                                                                <br />
+                                                                {words.slice(2).join(' ')}
+                                                            </>
+                                                        );
+                                                    }
+                                                    return slideData.whiteIcon.info;
+                                                })()}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Description text (shared between desktop and mobile) */}
+                            <div className='absolute lg:top-[84%] top-[88%] left-1/2 transform -translate-x-1/2 lg:max-w-4xl w-full lg:text-xl text-sm text-center px-4'>
+                                <p className='text-white drop-shadow-md'>{slideData.slideDescription}</p>
                             </div>
 
                             {/* Branding elements */}
                             {/* First Title Block */}
                             <div className="
-  absolute
-  bottom-[35vh] sm:bottom-[25vh] md:bottom-[30vh] lg:bottom-[29vh] xl:bottom-[28vh] 2xl:bottom-[27vh]
-  right-[5vw] sm:right-[6vw] md:right-[8vw] lg:right-[10vw]
-  p-4 sm:p-6 md:p-8
-  flex flex-col justify-center
-  -rotate-1 text-white z-10
-  hover:-translate-y-2 cursor-pointer
-  transition-all duration-300 ease-in-out
-">
+                                absolute
+                                bottom-[35vh] sm:bottom-[25vh] md:bottom-[30vh] lg:bottom-[29vh] xl:bottom-[28vh] 2xl:bottom-[27vh]
+                                right-[5vw] sm:right-[6vw] md:right-[8vw] lg:right-[10vw]
+                                p-4 sm:p-6 md:p-8
+                                flex flex-col justify-center
+                                -rotate-1 text-white z-10
+                                hover:-translate-y-2 cursor-pointer
+                                transition-all duration-300 ease-in-out
+                            ">
                                 <div className="bg-white px-4 sm:px-6 md:px-8 py-0 rounded-full shadow-md max-h-24 flex items-center justify-center">
                                     <h2 className="
-      text-3xl sm:text-3xl md:text-4xl lg:text-6xl xl:text-7xl
-      mb-0 text-[#8B8B8B] font-bold uppercase font-outfit
-    ">
+                                        text-3xl sm:text-3xl md:text-4xl lg:text-6xl xl:text-7xl
+                                        mb-0 text-[#8B8B8B] font-bold uppercase font-outfit
+                                    ">
                                         {slideData.slideTitle1} <span className="text-[#D72423]">{slideData.slideTitle11}</span>
                                     </h2>
                                 </div>
@@ -522,30 +628,30 @@ const Slider = () => {
 
                             {/* Second Title Block */}
                             <div className="
-  absolute
-  bottom-[31vh] sm:bottom-[30vh] md:bottom-[25vh] lg:bottom-[21vh] xl:bottom-[22vh] 2xl:bottom-[21vh]
-  right-[6vw] sm:right-[8vw] md:right-[10vw]
-  p-4 sm:p-6 md:p-8
-  flex flex-col justify-center
-  rotate-1 text-white
-  hover:translate-y-2 cursor-pointer
-  transition-all duration-300 ease-in-out
-">
+                                absolute
+                                bottom-[31vh] sm:bottom-[30vh] md:bottom-[25vh] lg:bottom-[21vh] xl:bottom-[22vh] 2xl:bottom-[21vh]
+                                right-[6vw] sm:right-[8vw] md:right-[10vw]
+                                p-4 sm:p-6 md:p-8
+                                flex flex-col justify-center
+                                rotate-1 text-white z-10
+                                hover:translate-y-2 cursor-pointer
+                                transition-all duration-300 ease-in-out
+                            ">
                                 <div className="bg-white px-4 sm:px-6 md:px-8 py-0 rounded-full shadow-md max-h-24 flex items-center justify-center">
                                     <h2 className="
-      text-3xl sm:text-3xl md:text-4xl lg:text-6xl xl:text-7xl
-      mb-0 text-[#F9AF55] font-bold uppercase font-outfit
-    ">
+                                        text-3xl sm:text-3xl md:text-4xl lg:text-6xl xl:text-7xl
+                                        mb-0 text-[#F9AF55] font-bold uppercase font-outfit
+                                    ">
                                         {slideData.slideTitle2}
                                     </h2>
                                 </div>
                             </div>
 
-                            <div className="absolute bottom-[20vh] right-[12vw] lg:bottom-[10vh] lg:right-[10vw] px-8  flex flex-col justify-center items-center space-y-2  font-outfit text-lg text-white">
-                                <button className='bg-[#D72423] px-16 py-0 rounded-full h-12 shadow-md max-h-24 flex items-center justify-center' aria-label="Sign up today">
+                            <div className="absolute bottom-[20vh] right-[12vw] lg:bottom-[10vh] lg:right-[10vw] px-8 flex flex-col justify-center items-center space-y-2 font-outfit text-lg text-white z-10">
+                                <button className='bg-[#D72423] px-16 py-0 rounded-full h-12 shadow-md max-h-24 flex items-center justify-center hover:bg-[#b01c1b] transition-colors' aria-label="Sign up today">
                                     <p>Sign Up Today</p>
                                 </button>
-                                <p className='text-sm'>Quick & Easy - No Delays</p>
+                                <p className='text-sm text-white drop-shadow-md'>Quick & Easy - No Delays</p>
                             </div>
                         </div>
                     </div>
@@ -567,8 +673,17 @@ const Slider = () => {
                 ))}
             </div>
 
-            {/* CSS for pulse animation */}
+            {/* CSS for mobile info circles */}
             <style jsx global>{`
+                @media (max-width: 1024px) {
+                    .circle-1:active .info-text,
+                    .circle-2:active .info-text,
+                    .circle-3:active .info-text {
+                        width: 260px !important;
+                        opacity: 1 !important;
+                    }
+                }
+                
                 @keyframes pulse-custom {
                     0%, 100% {
                         box-shadow: 0 0 0 0 rgba(215, 36, 35, 0.3);
