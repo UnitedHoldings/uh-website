@@ -32,7 +32,7 @@ function Footer() {
                     {/* Logo Section */}
                     <div className="flex flex-col items-start ">
                         <Link href="/" className="flex items-center gap-2">
-                            <Image src="/Logo.svg" alt="Logo" width={300} height={50} />
+                            <Image src="/logo.svg" alt="Logo" width={300} height={50} />
                         </Link>
                     </div>
                     {/* Company Links */}

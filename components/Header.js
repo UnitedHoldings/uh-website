@@ -72,7 +72,7 @@ export default function Header() {
             <div className={`fixed top-0 left-0 h-full w-80 bg-white shadow-xl z-60 transform transition-transform duration-300 ease-in-out lg:hidden ${isDrawerOpen ? 'translate-x-0' : '-translate-x-full'}`}>
                 <div className="p-6">
                     <div className="flex justify-between items-center mb-8">
-                        <Image src={'/Logo.svg'} alt="Logo" width={110} height={100} />
+                        <Image src={'/logo.svg'} alt="Logo" width={110} height={100} />
                         <button onClick={toggleDrawer} className="p-2">
                             <SlClose className="text-2xl" />
                         </button>

@@ -430,8 +430,8 @@ const Slider = () => {
                                             <span className="text-3xl flex items-center justify-center">{slideData.greenIcon.icon}</span>
                                         </div>
                                         <div className="info-text lg:-translate-x-16 -translate-x-12 text-[#F9AF55] bg-white rounded-full ml-1 pl-18 pr-2 lg:h-16 h-12 cursor-pointer flex items-center overflow-hidden">
-                                            <div className='-space-y-2 text-lg flex flex-col justify-center lg:pt-2 min-w-[240px]'>
-                                                <p className="font-bold leading-5">
+                                            <div className='-space-y-2 text-lg flex flex-col justify-center  min-w-[240px]'>
+                                                <p className="font-semibold leading-5">
                                                     {(() => {
                                                         const words = slideData.greenIcon.info.split(' ');
                                                         if (words.length > 2) {
@@ -455,8 +455,8 @@ const Slider = () => {
                                     <div className="relative rounded-full lg:hover:w-[260px] border-[#D72423] p-1 flex transition-all duration-300">
                                         {/* TEXT FIRST */}
                                         <div className="info-text text-[#D72423] bg-white lg:translate-x-16 translate-x-12 rounded-full mr-1 pl-6 pr-14 lg:pr-18 lg:h-16 h-12 cursor-pointer flex items-center justify-start overflow-hidden">
-                                            <div className="-space-y-2 text-lg flex flex-col justify-center lg:pt-2 min-w-[240px]">
-                                                <p className="font-bold leading-5">
+                                            <div className="-space-y-2 text-lg flex flex-col justify-center  min-w-[240px]">
+                                                <p className="font-semibold leading-5">
                                                     {(() => {
                                                         const words = slideData.redIcon.info.split(' ');
                                                         if (words.length > 2) {
@@ -484,7 +484,7 @@ const Slider = () => {
                                 <div className="circle-3 absolute lg:top-[65%] top-[45%] lg:left-[25%] left-[25%] group pointer-events-auto flex items-center">
                                     <div className='relative rounded-full lg:hover:w-[260px] border-[#ffffff] p-1 flex transition-all duration-300'>
                                         <div className="bg-[#ffffff] text-[#646565] rounded-full p-3 lg:w-16 h-12 w-12 lg:h-16 flex items-center justify-center cursor-pointer flex-shrink-0 z-10" aria-label="More information">
-                                            <span className="text-3xl flex items-center justify-center">{slideData.whiteIcon.icon}</span>
+                                            <span className="text-3xl font-semibold flex items-center justify-center">{slideData.whiteIcon.icon}</span>
                                         </div>
                                         <div className="info-text text-[#646565] bg-white -translate-x-12 lg:-translate-x-18 rounded-full ml-1 pl-18 pr-2 lg:h-16 h-12 cursor-pointer flex items-center overflow-hidden">
                                             <div className='-space-y-2 flex text-lg flex-col justify-center leading-4'>
@@ -600,7 +600,7 @@ const Slider = () => {
                             </div>
 
                             {/* Description text (shared between desktop and mobile) */}
-                            <div className='absolute lg:top-[84%] top-[88%] left-1/2 transform -translate-x-1/2 lg:max-w-4xl w-full lg:text-xl text-sm text-center px-4'>
+                            <div className='absolute lg:top-[84%] top-[88%] left-1/2 transform -translate-x-1/2 z-50 lg:max-w-4xl w-full lg:text-xl text-sm text-center px-4'>
                                 <p className='text-white drop-shadow-md'>{slideData.slideDescription}</p>
                             </div>
 
@@ -608,11 +608,11 @@ const Slider = () => {
                             {/* First Title Block */}
                             <div className="
                                 absolute
-                                bottom-[35vh] sm:bottom-[25vh] md:bottom-[30vh] lg:bottom-[29vh] xl:bottom-[28vh] 2xl:bottom-[27vh]
-                                right-[5vw] sm:right-[6vw] md:right-[8vw] lg:right-[10vw]
+                                bottom-[35vh] sm:bottom-[25vh] md:bottom-[34vh] lg:bottom-[2vh] xl:bottom-[2vh] 2xl:bottom-[28vh]
+                                right-[5vw] sm:right-[6vw] md:right-[8vw] z-40 lg:right-[10vw]
                                 p-4 sm:p-6 md:p-8
                                 flex flex-col justify-center
-                                -rotate-1 text-white z-10
+                                -rotate-1 text-white 
                                 hover:-translate-y-2 cursor-pointer
                                 transition-all duration-300 ease-in-out
                             ">
