@@ -12,6 +12,7 @@ gsap.registerPlugin(Observer);
 const Slider = () => {
     const sliderRef = useRef(null);
     const observerRef = useRef(null);
+    const circleTimelinesRef = useRef([]);
     // Ensure slides are in chronological order by using the original array order
     const [slides] = useState(slidesData);
     const [isMobile, setIsMobile] = useState(false);
@@ -34,6 +35,56 @@ const Slider = () => {
 
         return () => {
             window.removeEventListener('resize', checkMobile);
+        };
+    }, []);
+
+    // Setup GSAP animations for info circles
+    useEffect(() => {
+        // Clear any existing animations
+        circleTimelinesRef.current.forEach(tl => tl.kill());
+        circleTimelinesRef.current = [];
+
+        // Create animations for each circle
+        const createCircleAnimation = (circleClass, delay, showDuration, hideDelay, hideDuration) => {
+            const tl = gsap.timeline({ repeat: -1 });
+            
+            // Initial state
+            gsap.set(`.${circleClass} .info-text`, {
+                width: 0,
+                opacity: 0,
+                overflow: 'hidden'
+            });
+            
+            // Animate in
+            tl.to(`.${circleClass} .info-text`, {
+                width: 240,
+                opacity: 1,
+                duration: showDuration,
+                delay: delay,
+                ease: 'power2.out'
+            })
+            // Animate out
+            .to(`.${circleClass} .info-text`, {
+                width: 0,
+                opacity: 0,
+                duration: hideDuration,
+                delay: hideDelay,
+                ease: 'power2.in'
+            });
+            
+            return tl;
+        };
+
+        // Create animations for each circle with the specified timing
+        circleTimelinesRef.current = [
+            createCircleAnimation('circle-1', 2, 0.5, 7, 0.5), // First circle
+            createCircleAnimation('circle-2', 4, 0.5, 6, 0.5), // Second circle
+            createCircleAnimation('circle-3', 6, 0.5, 5, 0.5)  // Third circle
+        ];
+
+        return () => {
+            // Clean up animations on unmount
+            circleTimelinesRef.current.forEach(tl => tl.kill());
         };
     }, []);
 
@@ -256,6 +307,9 @@ const Slider = () => {
             if (inactivityTimerRef.current) {
                 clearTimeout(inactivityTimerRef.current);
             }
+            
+            // Kill all GSAP animations
+            circleTimelinesRef.current.forEach(tl => tl.kill());
         };
     }, []);
 
@@ -336,39 +390,39 @@ const Slider = () => {
                             {/* Floating Info Icons */}
                             <div className="absolute top-0 font-outfit w-full h-full z-20 pointer-events-none">
                                 {/* Icon 1 - Top Left */}
-                                <div className="absolute top-[23%] left-[10%] group pointer-events-auto flex items-center">
+                                <div className="circle-1 absolute top-[23%] left-[10%] group pointer-events-auto flex items-center">
                                     <div className='border relative rounded-full hover:w-64 border-[#F9AF55] p-1 flex animate-pulse-custom'>
                                         <div className="bg-[#F9AF55] text-white rounded-full p-3 lg:w-16 h-12 w-12 lg:h-16 flex items-center justify-center cursor-pointer flex-shrink-0 z-10" aria-label="More information">
                                             <span className="text-xl"><SlInfo /></span>
                                         </div>
-                                        <div className="text-[#F9AF55] bg-white rounded-full absolute ml-1 pl-18 pr-2 lg:h-16 h-12 cursor-pointer transition-all duration-300 ease-in-out group-hover:w-60 w-0 overflow-hidden opacity-0 group-hover:opacity-100">
-                                            <div className='-space-y-2 text-lg flex flex-col justify-center lg:pt-2'>
+                                        <div className="info-text text-[#F9AF55] bg-white rounded-full ml-1 pl-18 pr-2 lg:h-16 h-12 cursor-pointer flex items-center overflow-hidden">
+                                            <div className='-space-y-2 text-lg flex flex-col justify-center lg:pt-2 min-w-[240px]'>
                                                 <p className="font-bold leading-5 pt-1">{slideData.greenIcon}</p>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div className="absolute top-[12%] right-[15%] lg:top-[25%] lg:right-[20%] group pointer-events-auto flex items-center">
+                                <div className="circle-2 absolute top-[12%] right-[15%] lg:top-[25%] lg:right-[20%] group pointer-events-auto flex items-center">
                                     <div className='border relative rounded-full hover:w-68 justify-end border-[#D72423] p-1 flex animate-pulse-custom'>
                                         <div className="bg-[#D72423] text-white rounded-full p-3 lg:w-16 h-12 w-12 lg:h-16 flex items-center justify-center cursor-pointer flex-shrink-0 z-10" aria-label="More information">
                                             <span className="text-lg"><SlInfo /></span>
                                         </div>
-                                        <div className="text-[#D72423] bg-white rounded-full absolute ml-1 pr-14 lg:pr-18 pl-4 lg:h-16 h-12 cursor-pointer transition-all duration-300 ease-in-out -translate-x-2 w-0 group-hover:w-64 overflow-hidden opacity-0 group-hover:opacity-100">
-                                            <div className='-space-y-2 text-lg flex flex-col justify-center lg:pt-2'>
+                                        <div className="info-text text-[#D72423] bg-white rounded-full ml-1 pr-14 lg:pr-18 pl-4 lg:h-16 h-12 cursor-pointer flex items-center justify-end overflow-hidden">
+                                            <div className='-space-y-2 text-lg flex flex-col justify-center lg:pt-2 min-w-[240px]'>
                                                 <p className="font-bold leading-5 pt-1">{slideData.redIcon}</p>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div className="absolute lg:top-[65%] top-[45%] lg:left-[25%] left-[25%] group pointer-events-auto flex items-center">
+                                <div className="circle-3 absolute lg:top-[65%] top-[45%] lg:left-[25%] left-[25%] group pointer-events-auto flex items-center">
                                     <div className='border relative rounded-full hover:w-64 border-[#ffffff] p-1 flex animate-pulse-custom'>
                                         <div className="bg-[#ffffff] text-[#646565] rounded-full p-3 lg:w-16 h-12 w-12 lg:h-16 flex items-center justify-center cursor-pointer flex-shrink-0 z-10" aria-label="More information">
                                             <span className="text-3xl"><SlInfo /></span>
                                         </div>
-                                        <div className="text-[#646565] bg-white rounded-full absolute ml-1 pl-18 pr-2 lg:h-16 h-12 cursor-pointer transition-all duration-300 ease-in-out w-0 group-hover:w-60 overflow-hidden opacity-0 group-hover:opacity-100">
-                                            <div className='-space-y-2 flex text-lg flex-col justify-center lg:pt-2 '>
+                                        <div className="info-text text-[#646565] bg-white rounded-full ml-1 pl-18 pr-2 lg:h-16 h-12 cursor-pointer flex items-center overflow-hidden">
+                                            <div className='-space-y-2 flex text-lg flex-col justify-center lg:pt-2 min-w-[240px]'>
                                                 <p className="font-bold leading-5 pt-1">{slideData.whiteIcon}</p>
                                             </div>
                                         </div>
@@ -421,7 +475,7 @@ const Slider = () => {
                 ))}
             </div>
             
-            {/* CSS for pulse animation and initial slide hiding */}
+            {/* CSS for pulse animation */}
             <style jsx global>{`
                 @keyframes pulse-custom {
                     0%, 100% {
