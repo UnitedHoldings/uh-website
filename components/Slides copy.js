@@ -15,7 +15,7 @@ const slidesData = [
       'United Life Assurance, a division of United Holdings, specializes in funeral, personal, and group life insurance.',
     slideUrl: 'https://example.com/united-life-assurance',
     slideImg: '/slide1.jpg',
-    slideImgSM: '/slide1-SM.jpg',
+    slideImgSM: '/slide1SM.png',
     greenIcon: {
       info: 'Family Cover for your loved ones',
       icon: <MdOutlineFamilyRestroom className="inline-block mr-2 text-xl align-middle" aria-label="Family Cover for your loved ones" />
@@ -81,7 +81,7 @@ const slidesData = [
       'Our motor insurance offers comprehensive coverage, third-party only, or third-party with fire and theft protection for your vehicle.',
     slideUrl: 'https://example.com/motor-insurance',
     slideImg: '/car.jpg',
-    slideImgSM: '/carSM.jpg',
+    slideImgSM: '/CarSM.png',
     greenIcon: {
       info: 'Comprehensive Motor Insurance',
       icon: <FaCarCrash className="inline-block mr-2 text-xl align-middle" aria-label="Comprehensive Motor Insurance" />

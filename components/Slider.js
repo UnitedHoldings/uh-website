@@ -3,7 +3,6 @@ import { useEffect, useRef, useState, useCallback } from 'react';
 import gsap from 'gsap';
 import { Observer } from 'gsap/Observer';
 import slidesData from './Slides';
-import { SlInfo } from 'react-icons/sl';
 import Image from 'next/image';
 import React from 'react';
 
@@ -13,7 +12,6 @@ const Slider = () => {
     const sliderRef = useRef(null);
     const observerRef = useRef(null);
     const circleTimelinesRef = useRef([]);
-    // Ensure slides are in chronological order by using the original array order
     const [slides] = useState(slidesData);
     const [isMobile, setIsMobile] = useState(false);
     const [userActive, setUserActive] = useState(true);
@@ -23,6 +21,7 @@ const Slider = () => {
     const animatingRef = useRef(false);
     const inactivityTimerRef = useRef(null);
     const isInitializedRef = useRef(false);
+    const scrollPositionRef = useRef(0);
 
     // Check if device is mobile
     useEffect(() => {
@@ -40,50 +39,43 @@ const Slider = () => {
 
     // Setup GSAP animations for info circles
     useEffect(() => {
-        // Clear any existing animations
         circleTimelinesRef.current.forEach(tl => tl.kill());
         circleTimelinesRef.current = [];
 
-        // Create animations for each circle
         const createCircleAnimation = (circleClass, delay, showDuration, hideDelay, hideDuration) => {
             const tl = gsap.timeline({ repeat: -1 });
-            
-            // Initial state
+
             gsap.set(`.${circleClass} .info-text`, {
                 width: 0,
                 opacity: 0,
                 overflow: 'hidden'
             });
-            
-            // Animate in
+
             tl.to(`.${circleClass} .info-text`, {
-                width: 240,
+                width: 260,
                 opacity: 1,
                 duration: showDuration,
                 delay: delay,
                 ease: 'power2.out'
             })
-            // Animate out
-            .to(`.${circleClass} .info-text`, {
-                width: 0,
-                opacity: 0,
-                duration: hideDuration,
-                delay: hideDelay,
-                ease: 'power2.in'
-            });
-            
+                .to(`.${circleClass} .info-text`, {
+                    width: 0,
+                    opacity: 0,
+                    duration: hideDuration,
+                    delay: hideDelay,
+                    ease: 'power2.in'
+                });
+
             return tl;
         };
 
-        // Create animations for each circle with the specified timing
         circleTimelinesRef.current = [
-            createCircleAnimation('circle-1', 2, 0.5, 7, 0.5), // First circle
-            createCircleAnimation('circle-2', 4, 0.5, 6, 0.5), // Second circle
-            createCircleAnimation('circle-3', 6, 0.5, 5, 0.5)  // Third circle
+            createCircleAnimation('circle-1', 2, 0.5, 7, 0.5),
+            createCircleAnimation('circle-2', 4, 0.5, 6, 0.5),
+            createCircleAnimation('circle-3', 6, 0.5, 5, 0.5)
         ];
 
         return () => {
-            // Clean up animations on unmount
             circleTimelinesRef.current.forEach(tl => tl.kill());
         };
     }, []);
@@ -92,14 +84,11 @@ const Slider = () => {
     useEffect(() => {
         const resetInactivityTimer = () => {
             setUserActive(true);
-
             if (inactivityTimerRef.current) {
                 clearTimeout(inactivityTimerRef.current);
             }
-
             inactivityTimerRef.current = setTimeout(() => {
                 setUserActive(false);
-
                 if (observerRef.current) {
                     observerRef.current.kill();
                     observerRef.current = null;
@@ -122,11 +111,9 @@ const Slider = () => {
             activityEvents.forEach(event => {
                 window.removeEventListener(event, resetInactivityTimer);
             });
-
             if (inactivityTimerRef.current) {
                 clearTimeout(inactivityTimerRef.current);
             }
-
             if (observerRef.current) {
                 observerRef.current.kill();
             }
@@ -162,16 +149,39 @@ const Slider = () => {
         }
     }, [userActive, isLastSlide, initializeObserver]);
 
+    // Add scroll event listener to detect when user scrolls back to top
+    useEffect(() => {
+        const handleScroll = () => {
+            if (window.scrollY === 0 && isLastSlide) {
+                setIsLastSlide(false);
+                document.body.style.overflow = 'hidden';
+                document.documentElement.style.overflow = 'hidden';
+
+                setTimeout(() => {
+                    initializeObserver();
+                }, 100);
+            }
+
+            scrollPositionRef.current = window.scrollY;
+        };
+
+        if (isLastSlide) {
+            window.addEventListener('scroll', handleScroll);
+        }
+
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, [isLastSlide, initializeObserver]);
+
     // Preload all slide images
     useEffect(() => {
         const preloadImages = () => {
             slides.forEach((slide) => {
                 if (typeof window !== 'undefined') {
-                    // Preload main image
                     const img = new window.Image();
                     img.src = slide.slideImg;
-                    
-                    // Preload mobile image if available
+
                     if (slide.slideImgSM) {
                         const imgSM = new window.Image();
                         imgSM.src = slide.slideImgSM;
@@ -179,7 +189,7 @@ const Slider = () => {
                 }
             });
         };
-        
+
         preloadImages();
     }, [slides]);
 
@@ -302,20 +312,18 @@ const Slider = () => {
         return () => {
             document.body.style.overflow = 'auto';
             document.documentElement.style.overflow = 'auto';
-            
-            // Clear all timers
+
             if (inactivityTimerRef.current) {
                 clearTimeout(inactivityTimerRef.current);
             }
-            
-            // Kill all GSAP animations
+
             circleTimelinesRef.current.forEach(tl => tl.kill());
         };
     }, []);
 
     useEffect(() => {
         if (isInitializedRef.current) return;
-        
+
         const slider = sliderRef.current;
         const totalSlides = slides.length;
 
@@ -335,7 +343,6 @@ const Slider = () => {
             currentIndexRef.current = 0;
         }
 
-        // Initialize observer only after animations are set up
         if (!isLastSlide) {
             initializeObserver();
         }
@@ -353,77 +360,134 @@ const Slider = () => {
     const SlideComponent = React.memo(({ slideData, slideIndex, isMobile }) => {
         if (!slideData) return null;
 
-        const imageSrc = isMobile && slideData.slideImgSM ? slideData.slideImgSM : slideData.slideImg;
-        const mobileImageSrc = slideData.slideImgSM || slideData.slideImg;
+        console.log(slideData.slideImgSM);
+
+
 
         return (
             <section className="slide absolute top-0 left-0 w-screen h-screen bg-white text-white overflow-hidden" aria-label={`Slide ${slideIndex + 1}: ${slideData.slideTitle1} ${slideData.slideTitle11}`}>
                 <div className="outer h-full w-full flex items-center justify-center">
                     <div className="inner w-full h-full max-w-[99vw] max-h-[98vh] mx-auto flex items-center justify-center">
                         <div className="bg flex flex-col h-full w-full">
-                            <div className="w-full h-full flex items-center justify-center overflow-hidden rounded-2xl">
-                                <Image
-                                    src={imageSrc || '/placeholder-image.jpg'}
-                                    alt={slideData.slideTitle || `Slide ${slideIndex}`}
-                                    width={1200}
-                                    height={800}
-                                    quality={90}
-                                    priority={slideIndex === 0}
-                                    className={`object-contain w-full ${isMobile ? 'h-[70vh]' : 'h-auto'} object-center hidden lg:inline`}
-                                    placeholder="blur"
-                                    blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaUMkck8YsYilbU5xuTQqoCgkmgT//Z"
-                                />
-                                {isMobile && (
+                            <div className="w-full h-full flex items-center justify-center overflow-hidden rounded-2xl relative">
+                                {/* Desktop Image - Hidden on mobile */}
+                                <div className="w-full h-full hidden md:block">
                                     <Image
-                                        src={mobileImageSrc}
+                                        src={slideData.slideImg || '/placeholder-image.jpg'}
                                         alt={slideData.slideTitle || `Slide ${slideIndex}`}
-                                        width={800}
-                                        height={600}
-                                        quality={85}
-                                        className="object-contain w-full object-center lg:hidden"
+                                        fill
+                                        quality={90}
+                                        priority={slideIndex === 0}
+                                        className="object-contain rounded-2xl "
                                         placeholder="blur"
-                                        blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaUMkck8YsYilbU5xuTQqQCgkmgT//Z"
+                                        blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgDRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaUMkck8YsYilbU5xuTQqoCgkmgT//Z"
                                     />
-                                )}
+                                </div>
+
+                                {/* Mobile Image - Hidden on desktop */}
+                                <div className="w-screen h-screen bg-red-500 md:hidden relative">
+                                    <Image
+                                        src={
+                                            slideData.slideImgSM ||
+                                            slideData.slideImg ||
+                                            '/placeholder-image.jpg'
+                                        }
+                                        alt={slideData.slideTitle || `Slide ${slideIndex}`}
+                                        fill
+                                        quality={85}
+                                        priority={slideIndex === 0}
+                                        className="object-contain"
+                                        placeholder="blur"
+                                        blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgDRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaUMkck8YsYilbU5xuTQqQCgkmgT//Z"
+                                    />
+
+                                </div>
                             </div>
 
                             {/* Floating Info Icons */}
                             <div className="absolute top-0 font-outfit w-full h-full z-20 pointer-events-none">
                                 {/* Icon 1 - Top Left */}
                                 <div className="circle-1 absolute top-[23%] left-[10%] group pointer-events-auto flex items-center">
-                                    <div className='border relative rounded-full hover:w-64 border-[#F9AF55] p-1 flex animate-pulse-custom'>
-                                        <div className="bg-[#F9AF55] text-white rounded-full p-3 lg:w-16 h-12 w-12 lg:h-16 flex items-center justify-center cursor-pointer flex-shrink-0 z-10" aria-label="More information">
-                                            <span className="text-xl"><SlInfo /></span>
+                                    <div className=' relative rounded-full hover:w-[260px] border-[#F9AF55] p-1 flex '>
+                                        <div className="bg-[#F9AF55] text-white rounded-full  lg:w-16 h-12 w-12 lg:h-16 flex items-center justify-center cursor-pointer flex-shrink-0 z-10" aria-label="More information">
+                                            <span className="text-3xl  flex items-center justify-center">{slideData.greenIcon.icon}</span>
                                         </div>
-                                        <div className="info-text text-[#F9AF55] bg-white rounded-full ml-1 pl-18 pr-2 lg:h-16 h-12 cursor-pointer flex items-center overflow-hidden">
+                                        <div className="info-text lg:-translate-x-16 -translate-x-12 text-[#F9AF55] bg-white rounded-full ml-1 pl-18 pr-2 lg:h-16 h-12 cursor-pointer flex items-center overflow-hidden">
                                             <div className='-space-y-2 text-lg flex flex-col justify-center lg:pt-2 min-w-[240px]'>
-                                                <p className="font-bold leading-5 pt-1">{slideData.greenIcon}</p>
+                                                <p className="font-bold leading-5 pt-">
+                                                    {(() => {
+                                                        const words = slideData.greenIcon.info.split(' ');
+                                                        if (words.length > 2) {
+                                                            return (
+                                                                <>
+                                                                    {words.slice(0, 2).join(' ')}
+                                                                    <br />
+                                                                    {words.slice(2).join(' ')}
+                                                                </>
+                                                            );
+                                                        }
+                                                        return slideData.greenIcon.info;
+                                                    })()}
+                                                </p>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div className="circle-2 absolute top-[12%] right-[15%] lg:top-[25%] lg:right-[20%] group pointer-events-auto flex items-center">
-                                    <div className='border relative rounded-full hover:w-68 justify-end border-[#D72423] p-1 flex animate-pulse-custom'>
-                                        <div className="bg-[#D72423] text-white rounded-full p-3 lg:w-16 h-12 w-12 lg:h-16 flex items-center justify-center cursor-pointer flex-shrink-0 z-10" aria-label="More information">
-                                            <span className="text-lg"><SlInfo /></span>
-                                        </div>
-                                        <div className="info-text text-[#D72423] bg-white rounded-full ml-1 pr-14 lg:pr-18 pl-4 lg:h-16 h-12 cursor-pointer flex items-center justify-end overflow-hidden">
-                                            <div className='-space-y-2 text-lg flex flex-col justify-center lg:pt-2 min-w-[240px]'>
-                                                <p className="font-bold leading-5 pt-1">{slideData.redIcon}</p>
+                                    <div className=" relative rounded-full hover:w-[260px] border-[#D72423] p-1 flex ">
+
+                                        {/* TEXT FIRST */}
+                                        <div className="info-text text-[#D72423] bg-white lg:translate-x-16 translate-x-12 rounded-full mr-1 pl-6 pr-14 lg:pr-18 lg:h-16 h-12 cursor-pointer flex items-center justify-start overflow-hidden">
+                                            <div className="-space-y-2 text-lg flex flex-col justify-center lg:pt-2 min-w-[240px]">
+                                                <p className="font-bold leading-5">
+                                                    {(() => {
+                                                        const words = slideData.redIcon.info.split(' ');
+                                                        if (words.length > 2) {
+                                                            return (
+                                                                <>
+                                                                    {words.slice(0, 2).join(' ')}
+                                                                    <br />
+                                                                    {words.slice(2).join(' ')}
+                                                                </>
+                                                            );
+                                                        }
+                                                        return slideData.redIcon.info;
+                                                    })()}
+                                                </p>
                                             </div>
                                         </div>
+
+                                        {/* ICON SECOND (RIGHT SIDE) */}
+                                        <div className="bg-[#D72423] text-white rounded-full p-3 lg:w-16 h-12 w-12 lg:h-16 flex items-center justify-center cursor-pointer flex-shrink-0 z-10" aria-label="More information">
+                                            <span className="text-3xl  flex items-center justify-center">{slideData.redIcon.icon}</span>
+                                        </div>
+
                                     </div>
                                 </div>
 
+
                                 <div className="circle-3 absolute lg:top-[65%] top-[45%] lg:left-[25%] left-[25%] group pointer-events-auto flex items-center">
-                                    <div className='border relative rounded-full hover:w-64 border-[#ffffff] p-1 flex animate-pulse-custom'>
+                                    <div className=' relative rounded-full hover:w-[260px] border-[#ffffff] p-1 flex '>
                                         <div className="bg-[#ffffff] text-[#646565] rounded-full p-3 lg:w-16 h-12 w-12 lg:h-16 flex items-center justify-center cursor-pointer flex-shrink-0 z-10" aria-label="More information">
-                                            <span className="text-3xl"><SlInfo /></span>
+                                            <span className="text-3xl  flex items-center justify-center">{slideData.whiteIcon.icon}</span>
                                         </div>
-                                        <div className="info-text text-[#646565] bg-white rounded-full ml-1 pl-18 pr-2 lg:h-16 h-12 cursor-pointer flex items-center overflow-hidden">
-                                            <div className='-space-y-2 flex text-lg flex-col justify-center lg:pt-2 min-w-[240px]'>
-                                                <p className="font-bold leading-5 pt-1">{slideData.whiteIcon}</p>
+                                        <div className="info-text text-[#646565]  bg-white -translate-x-12  lg:-translate-x-18 sm:-translate-x-14 rounded-full ml-1 pl-18 pr-2 lg:h-16 h-12 cursor-pointer flex items-center overflow-hidden">
+                                            <div className='-space-y-2 flex text-lg flex-col justify-center  leading-4 '>
+
+                                                {(() => {
+                                                    const words = slideData.whiteIcon.info.split(' ');
+                                                    if (words.length > 2) {
+                                                        return (
+                                                            <>
+                                                                {words.slice(0, 2).join(' ')}
+                                                                <br />
+                                                                {words.slice(2).join(' ')}
+                                                            </>
+                                                        );
+                                                    }
+                                                    return slideData.whiteIcon.info;
+                                                })()}
                                             </div>
                                         </div>
                                     </div>
@@ -435,20 +499,48 @@ const Slider = () => {
                             </div>
 
                             {/* Branding elements */}
-                            <div className="absolute bottom-[35vh] lg:bottom-[29vh] right-[8vw] lg:right-[10vw] p-8 flex flex-col justify-center -rotate-1 text-white z-10 hover:-translate-y-2 cursor-pointer transition-all duration-300 ease-in-out">
-                                <div className="bg-white px-8 py-0 rounded-full shadow-md max-h-24 flex items-center justify-center">
-                                    <h2 className={`text-4xl lg:text-7xl mb-0 text-[#8B8B8B]  font-bold uppercase font-outfit`}>
-                                        {slideData.slideTitle1} <span className='text-[#D72423]'>{slideData.slideTitle11}</span>
+                            {/* First Title Block */}
+                            <div className="
+  absolute
+  bottom-[35vh] sm:bottom-[25vh] md:bottom-[30vh] lg:bottom-[29vh] xl:bottom-[28vh] 2xl:bottom-[27vh]
+  right-[5vw] sm:right-[6vw] md:right-[8vw] lg:right-[10vw]
+  p-4 sm:p-6 md:p-8
+  flex flex-col justify-center
+  -rotate-1 text-white z-10
+  hover:-translate-y-2 cursor-pointer
+  transition-all duration-300 ease-in-out
+">
+                                <div className="bg-white px-4 sm:px-6 md:px-8 py-0 rounded-full shadow-md max-h-24 flex items-center justify-center">
+                                    <h2 className="
+      text-3xl sm:text-3xl md:text-4xl lg:text-6xl xl:text-7xl
+      mb-0 text-[#8B8B8B] font-bold uppercase font-outfit
+    ">
+                                        {slideData.slideTitle1} <span className="text-[#D72423]">{slideData.slideTitle11}</span>
                                     </h2>
                                 </div>
                             </div>
-                            <div className="absolute bottom-[30vh] lg:bottom-[21vh] right-[10vw] p-8 flex flex-col justify-center rotate-1 text-white hover:translate-y-2 cursor-pointer transition-all duration-300 ease-in-out">
-                                <div className="bg-white px-8 py-0 rounded-full shadow-md max-h-24 flex items-center justify-center">
-                                    <h2 className={`text-4xl lg:text-7xl mb-0 text-[#F9AF55]  font-bold uppercase font-outfit`}>
+
+                            {/* Second Title Block */}
+                            <div className="
+  absolute
+  bottom-[31vh] sm:bottom-[30vh] md:bottom-[25vh] lg:bottom-[21vh] xl:bottom-[22vh] 2xl:bottom-[21vh]
+  right-[6vw] sm:right-[8vw] md:right-[10vw]
+  p-4 sm:p-6 md:p-8
+  flex flex-col justify-center
+  rotate-1 text-white
+  hover:translate-y-2 cursor-pointer
+  transition-all duration-300 ease-in-out
+">
+                                <div className="bg-white px-4 sm:px-6 md:px-8 py-0 rounded-full shadow-md max-h-24 flex items-center justify-center">
+                                    <h2 className="
+      text-3xl sm:text-3xl md:text-4xl lg:text-6xl xl:text-7xl
+      mb-0 text-[#F9AF55] font-bold uppercase font-outfit
+    ">
                                         {slideData.slideTitle2}
                                     </h2>
                                 </div>
                             </div>
+
                             <div className="absolute bottom-[20vh] right-[12vw] lg:bottom-[10vh] lg:right-[10vw] px-8  flex flex-col justify-center items-center space-y-2  font-outfit text-lg text-white">
                                 <button className='bg-[#D72423] px-16 py-0 rounded-full h-12 shadow-md max-h-24 flex items-center justify-center' aria-label="Sign up today">
                                     <p>Sign Up Today</p>
@@ -474,7 +566,7 @@ const Slider = () => {
                     />
                 ))}
             </div>
-            
+
             {/* CSS for pulse animation */}
             <style jsx global>{`
                 @keyframes pulse-custom {
