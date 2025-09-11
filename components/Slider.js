@@ -5,6 +5,7 @@ import { Observer } from 'gsap/Observer';
 import slidesData from './Slides';
 import { SlInfo } from 'react-icons/sl';
 import Image from 'next/image';
+import React from 'react';
 
 gsap.registerPlugin(Observer);
 
@@ -16,15 +17,10 @@ const Slider = () => {
     const [isMobile, setIsMobile] = useState(false);
     const [userActive, setUserActive] = useState(true);
     const [isLastSlide, setIsLastSlide] = useState(false);
-    const [activeInfoCircles, setActiveInfoCircles] = useState({
-        0: false, 1: false, 2: false
-    });
 
     const currentIndexRef = useRef(0);
     const animatingRef = useRef(false);
     const inactivityTimerRef = useRef(null);
-    const infoCircleTimersRef = useRef([]);
-    const isFirstMount = useRef(true);
     const isInitializedRef = useRef(false);
 
     // Check if device is mobile
@@ -38,29 +34,6 @@ const Slider = () => {
 
         return () => {
             window.removeEventListener('resize', checkMobile);
-        };
-    }, []);
-
-    // Info circle animations
-    useEffect(() => {
-        // Clear any existing timers
-        infoCircleTimersRef.current.forEach(timer => clearTimeout(timer));
-        infoCircleTimersRef.current = [];
-
-        // Set up new timers
-        const timers = [
-            setTimeout(() => setActiveInfoCircles(prev => ({ ...prev, 0: true })), 2000),
-            setTimeout(() => setActiveInfoCircles(prev => ({ ...prev, 0: false })), 9000),
-            setTimeout(() => setActiveInfoCircles(prev => ({ ...prev, 1: true })), 4000),
-            setTimeout(() => setActiveInfoCircles(prev => ({ ...prev, 1: false })), 10000),
-            setTimeout(() => setActiveInfoCircles(prev => ({ ...prev, 2: true })), 6000),
-            setTimeout(() => setActiveInfoCircles(prev => ({ ...prev, 2: false })), 11000)
-        ];
-
-        infoCircleTimersRef.current = timers;
-
-        return () => {
-            timers.forEach(timer => clearTimeout(timer));
         };
     }, []);
 
@@ -173,8 +146,6 @@ const Slider = () => {
 
         index = wrap(index);
 
-        // FIX: Check if we're at the last slide and trying to go to the next
-        // This was the main issue - the condition was incorrectly triggering
         if (currentIndexRef.current === totalSlides - 1 && direction === 1 && index === 0) {
             setIsLastSlide(true);
 
@@ -285,7 +256,6 @@ const Slider = () => {
             if (inactivityTimerRef.current) {
                 clearTimeout(inactivityTimerRef.current);
             }
-            infoCircleTimersRef.current.forEach(timer => clearTimeout(timer));
         };
     }, []);
 
@@ -311,15 +281,12 @@ const Slider = () => {
             currentIndexRef.current = 0;
         }
 
-        // Initialize observer only after first mount and animations are set up
-        if (!isLastSlide && isFirstMount.current) {
-            // Small delay to ensure initial setup is complete
-            setTimeout(() => {
-                initializeObserver();
-                isFirstMount.current = false;
-                isInitializedRef.current = true;
-            }, 300);
+        // Initialize observer only after animations are set up
+        if (!isLastSlide) {
+            initializeObserver();
         }
+
+        isInitializedRef.current = true;
 
         return () => {
             gsap.killTweensOf('*');
@@ -329,10 +296,11 @@ const Slider = () => {
         };
     }, [slides, isMobile, isLastSlide, initializeObserver]);
 
-    const Slide = useCallback(({ slideData, slideIndex }) => {
+    const SlideComponent = React.memo(({ slideData, slideIndex, isMobile }) => {
         if (!slideData) return null;
 
         const imageSrc = isMobile && slideData.slideImgSM ? slideData.slideImgSM : slideData.slideImg;
+        const mobileImageSrc = slideData.slideImgSM || slideData.slideImg;
 
         return (
             <section className="slide absolute top-0 left-0 w-screen h-screen bg-white text-white overflow-hidden" aria-label={`Slide ${slideIndex + 1}: ${slideData.slideTitle1} ${slideData.slideTitle11}`}>
@@ -351,9 +319,9 @@ const Slider = () => {
                                     placeholder="blur"
                                     blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaUMkck8YsYilbU5xuTQqoCgkmgT//Z"
                                 />
-                                {isMobile && slideData.slideImgSM && (
+                                {isMobile && (
                                     <Image
-                                        src={slideData.slideImgSM}
+                                        src={mobileImageSrc}
                                         alt={slideData.slideTitle || `Slide ${slideIndex}`}
                                         width={800}
                                         height={600}
@@ -373,7 +341,7 @@ const Slider = () => {
                                         <div className="bg-[#F9AF55] text-white rounded-full p-3 lg:w-16 h-12 w-12 lg:h-16 flex items-center justify-center cursor-pointer flex-shrink-0 z-10" aria-label="More information">
                                             <span className="text-xl"><SlInfo /></span>
                                         </div>
-                                        <div className={`text-[#F9AF55] bg-white rounded-full absolute ml-1 pl-18 pr-2 lg:h-16 h-12 cursor-pointer transition-all duration-300 ease-in-out group-hover:w-60  ${activeInfoCircles[0] ? 'w-60 opacity-100 ml-1 pl-18 pr-2 lg:h-16 h-12 cursor-pointer transition-all duration-400 ease-in-out' : 'w-0'} overflow-hidden opacity-0 group-hover:opacity-100`}>
+                                        <div className="text-[#F9AF55] bg-white rounded-full absolute ml-1 pl-18 pr-2 lg:h-16 h-12 cursor-pointer transition-all duration-300 ease-in-out group-hover:w-60 w-0 overflow-hidden opacity-0 group-hover:opacity-100">
                                             <div className='-space-y-2 text-lg flex flex-col justify-center lg:pt-2'>
                                                 <p className="font-bold leading-5 pt-1">{slideData.greenIcon}</p>
                                             </div>
@@ -386,7 +354,7 @@ const Slider = () => {
                                         <div className="bg-[#D72423] text-white rounded-full p-3 lg:w-16 h-12 w-12 lg:h-16 flex items-center justify-center cursor-pointer flex-shrink-0 z-10" aria-label="More information">
                                             <span className="text-lg"><SlInfo /></span>
                                         </div>
-                                        <div className={`text-[#D72423] bg-white rounded-full absolute ml-1 pr-14 lg:pr-18 pl-4 lg:h-16 h-12 cursor-pointer transition-all duration-300 ease-in-out -translate-x-2 w-0 group-hover:w-64 ${activeInfoCircles[1] ? 'w-64 opacity-100 ml-1 pr-14 lg:pr-18 pl-4 lg:h-16 h-12 cursor-pointer transition-all duration-300 ease-in-out' : 'w-0'} overflow-hidden opacity-0 group-hover:opacity-100`}>
+                                        <div className="text-[#D72423] bg-white rounded-full absolute ml-1 pr-14 lg:pr-18 pl-4 lg:h-16 h-12 cursor-pointer transition-all duration-300 ease-in-out -translate-x-2 w-0 group-hover:w-64 overflow-hidden opacity-0 group-hover:opacity-100">
                                             <div className='-space-y-2 text-lg flex flex-col justify-center lg:pt-2'>
                                                 <p className="font-bold leading-5 pt-1">{slideData.redIcon}</p>
                                             </div>
@@ -399,7 +367,7 @@ const Slider = () => {
                                         <div className="bg-[#ffffff] text-[#646565] rounded-full p-3 lg:w-16 h-12 w-12 lg:h-16 flex items-center justify-center cursor-pointer flex-shrink-0 z-10" aria-label="More information">
                                             <span className="text-3xl"><SlInfo /></span>
                                         </div>
-                                        <div className={`text-[#646565] bg-white rounded-full absolute ml-1 pl-18 pr-2 lg:h-16 h-12 cursor-pointer transition-all duration-300 ease-in-out w-0 group-hover:w-60  ${activeInfoCircles[2] ? 'w-60 opacity-100 ml-1 pl-18 pr-2 lg:h-16 h-12 cursor-pointer transition-all duration-300 ease-in-out' : 'w-0'} overflow-hidden opacity-0 group-hover:opacity-100`}>
+                                        <div className="text-[#646565] bg-white rounded-full absolute ml-1 pl-18 pr-2 lg:h-16 h-12 cursor-pointer transition-all duration-300 ease-in-out w-0 group-hover:w-60 overflow-hidden opacity-0 group-hover:opacity-100">
                                             <div className='-space-y-2 flex text-lg flex-col justify-center lg:pt-2 '>
                                                 <p className="font-bold leading-5 pt-1">{slideData.whiteIcon}</p>
                                             </div>
@@ -438,21 +406,22 @@ const Slider = () => {
                 </div>
             </section>
         );
-    }, [isMobile, activeInfoCircles]);
+    });
 
     return (
         <div className="relative w-screen h-screen overflow-hidden">
             <div className="slider relative h-screen w-screen" ref={sliderRef}>
                 {slides.map((slide, index) => (
-                    <Slide
+                    <SlideComponent
                         key={index}
                         slideData={slide}
                         slideIndex={index}
+                        isMobile={isMobile}
                     />
                 ))}
             </div>
             
-            {/* CSS for pulse animation */}
+            {/* CSS for pulse animation and initial slide hiding */}
             <style jsx global>{`
                 @keyframes pulse-custom {
                     0%, 100% {

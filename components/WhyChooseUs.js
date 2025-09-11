@@ -88,37 +88,37 @@ const StarRating = ({ rating }) => {
 
 const ReviewCard = ({ review, isActive }) => (
   <div 
-    className={`bg-white rounded-2xl p-6 shadow-lg border border-gray-100 transition-all duration-500 ${
+    className={`bg-white rounded-2xl p-4 sm:p-6 shadow-lg border border-gray-100 transition-all duration-500 ${
       isActive ? 'opacity-100 scale-100' : 'opacity-0 scale-95 absolute'
     }`}
     role="region"
     aria-hidden={!isActive}
   >
     <div className="flex items-start space-x-4 mb-4">
-      <div className="w-12 h-12 bg-gradient-to-r from-[#D72423] to-[#D72423] rounded-full flex items-center justify-center text-white font-semibold">
+      <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-r from-[#D72423] to-[#D72423] rounded-full flex items-center justify-center text-white font-semibold text-sm sm:text-base">
         {review.name.charAt(0)}
       </div>
       <div className="flex-1">
-        <h4 className="font-semibold text-gray-900">{review.name}</h4>
-        <p className="text-sm text-gray-600">{review.role}</p>
+        <h4 className="font-semibold text-gray-900 text-base sm:text-lg">{review.name}</h4>
+        <p className="text-xs sm:text-sm text-gray-600">{review.role}</p>
         <StarRating rating={review.rating} />
       </div>
     </div>
-    <p className="text-gray-700 leading-relaxed italic">&quot;{review.content}&quot;</p>
+    <p className="text-gray-700 leading-relaxed italic text-sm sm:text-base">&quot;{review.content}&quot;</p>
   </div>
 );
 
 const ReasonCard = ({ title, content }) => (
-  <div className="bg-white rounded-2xl p-4 mt-2 border border-gray-100  transition-shadow duration-300">
-    <h3 className="text-xl font-semibold text-gray-900 mb-4 font-outfit">{title}</h3>
-    <p className="text-gray-700 text-sm leading-relaxed">{content}</p>
+  <div className="bg-white rounded-2xl p-4 sm:p-6 border border-gray-100 transition-shadow duration-300">
+    <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-4 font-outfit">{title}</h3>
+    <p className="text-gray-700 text-sm sm:text-base leading-relaxed">{content}</p>
   </div>
 );
 
 const StatCard = ({ value, label, color }) => (
   <div className="text-center">
-    <div className={`text-4xl font-bold text-[#D72423] mb-2`}>{value}</div>
-    <div className="text-gray-600">{label}</div>
+    <div className={`text-3xl sm:text-4xl font-bold text-[#D72423] mb-2`}>{value}</div>
+    <div className="text-gray-600 text-sm sm:text-base">{label}</div>
   </div>
 );
 
@@ -144,17 +144,17 @@ const ReviewsCarousel = () => {
   }, [isAutoPlaying]);
 
   return (
-    <div className="bg-gradient-to-br from-[#D72423] to-[#8d0f0f] rounded-2xl p-8 text-white relative overflow-hidden">
-      <div className="absolute top-0 right-0 w-32 h-32 bg-white opacity-5 rounded-full -translate-y-16 translate-x-16"></div>
-      <div className="absolute bottom-0 left-0 w-24 h-24 bg-white opacity-5 rounded-full translate-y-12 -translate-x-12"></div>
+    <div className="bg-gradient-to-br from-[#D72423] to-[#8d0f0f] rounded-2xl p-4 sm:p-6 md:p-8 text-white relative overflow-hidden">
+      <div className="absolute top-0 right-0 w-24 sm:w-32 h-24 sm:h-32 bg-white opacity-5 rounded-full -translate-y-12 sm:-translate-y-16 translate-x-12 sm:translate-x-16"></div>
+      <div className="absolute bottom-0 left-0 w-20 sm:w-24 h-20 sm:h-24 bg-white opacity-5 rounded-full translate-y-10 sm:translate-y-12 -translate-x-10 sm:-translate-x-12"></div>
       
       <div className="relative z-10">
-        <div className="text-center mb-8">
-          <h3 className="text-3xl font-bold mb-2 font-outfit">What Our Clients Say</h3>
-          <p className="text-white opacity-80">Real stories from satisfied customers</p>
+        <div className="text-center mb-6 sm:mb-8">
+          <h3 className="text-2xl sm:text-3xl font-bold mb-2 font-outfit">What Our Clients Say</h3>
+          <p className="text-white opacity-80 text-sm sm:text-base">Real stories from satisfied customers</p>
         </div>
 
-        <div className="relative h-64 mb-8">
+        <div className="relative h-auto min-h-[200px] sm:min-h-[250px] mb-6 sm:mb-8">
           {reviewsData.map((review, index) => (
             <div
               key={review.id}
@@ -167,16 +167,16 @@ const ReviewsCarousel = () => {
           ))}
         </div>
 
-        <div className="flex justify-center items-center space-x-4 mb-6">
+        <div className="flex justify-center items-center space-x-4 mb-4 sm:mb-6">
           <button
             onClick={() => {
               prevReview();
               setIsAutoPlaying(false);
             }}
-            className="p-2 rounded-full bg-white text-[#D72423] hover:bg-gray-100 transition-colors duration-200"
+            className="p-1 sm:p-2 rounded-full bg-white text-[#D72423] hover:bg-gray-100 transition-colors duration-200"
             aria-label="Previous review"
           >
-            <BsChevronLeft className="text-xl" />
+            <BsChevronLeft className="text-lg sm:text-xl" />
           </button>
           
           <div className="flex space-x-2">
@@ -184,7 +184,7 @@ const ReviewsCarousel = () => {
               <button
                 key={index}
                 onClick={() => goToReview(index)}
-                className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full transition-all duration-300 ${
                   index === currentReview ? 'bg-white scale-125' : 'bg-white opacity-40'
                 }`}
                 aria-label={`Go to review ${index + 1}`}
@@ -198,10 +198,10 @@ const ReviewsCarousel = () => {
               nextReview();
               setIsAutoPlaying(false);
             }}
-            className="p-2 rounded-full bg-white text-[#D72423] hover:bg-gray-100 transition-colors duration-200"
+            className="p-1 sm:p-2 rounded-full bg-white text-[#D72423] hover:bg-gray-100 transition-colors duration-200"
             aria-label="Next review"
           >
-            <BsChevronRight className="text-xl" />
+            <BsChevronRight className="text-lg sm:text-xl" />
           </button>
         </div>
 
@@ -209,7 +209,7 @@ const ReviewsCarousel = () => {
           <button
             onMouseEnter={() => setIsAutoPlaying(false)}
             onMouseLeave={() => setIsAutoPlaying(true)}
-            className="inline-flex items-center px-6 py-3 bg-white text-[#D72423] rounded-full font-semibold hover:bg-gray-50 transition-colors duration-200"
+            className="inline-flex items-center px-4 py-2 sm:px-6 sm:py-3 bg-white text-[#D72423] rounded-full font-semibold hover:bg-gray-50 transition-colors duration-200 text-sm sm:text-base"
             aria-label="Share your experience"
           >
             <span>Share Your Experience</span>
@@ -221,15 +221,15 @@ const ReviewsCarousel = () => {
 };
 
 const WhyChooseUs = () => (
-  <section className="py-16">
-    <div className="max-w-[1400px] mx-auto  w-full ">
-      <div className="flex flex-col gap-8 md:gap-16 mb-16">
+  <section className="py-8 sm:py-12 md:py-16">
+    <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+      <div className="flex flex-col gap-6 sm:gap-8 md:gap-16 mb-8 sm:mb-12 md:mb-16">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center">
           <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-8">
-            <div className="text-2xl min-w-xs font-semibold text-gray-500">
+            <div className="text-xl sm:text-2xl min-w-[150px] sm:min-w-[200px] font-semibold text-gray-500">
               <p>Choose <span className="text-[#D72423]">United Holdings</span></p>
             </div>
-            <div className="text-2xl md:text-3xl max-w-3xl">
+            <div className="text-xl sm:text-2xl md:text-3xl max-w-3xl">
               <p>
                 <span className="text-[#8B8B8B]">Discover why thousands of Swazis </span>
                 trust us with their insurance and financial needs.
@@ -239,21 +239,19 @@ const WhyChooseUs = () => (
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-        <div className="">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 md:gap-12 items-start">
+        <div className="space-y-4 sm:space-y-6">
           {reasonsData.map((reason, index) => (
             <ReasonCard key={index} title={reason.title} content={reason.content} />
           ))}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-6">
-        {statsData.map((stat, index) => (
-          <StatCard key={index} {...stat} />
-        ))}
-      </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 md:gap-8 mt-4 sm:mt-6">
+            {statsData.map((stat, index) => (
+              <StatCard key={index} {...stat} />
+            ))}
+          </div>
         </div>
         <ReviewsCarousel />
       </div>
-
-      
     </div>
   </section>
 );
