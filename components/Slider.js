@@ -16,20 +16,22 @@ const Slider = () => {
     const [isMobile, setIsMobile] = useState(false);
     const [userActive, setUserActive] = useState(true);
     const [isLastSlide, setIsLastSlide] = useState(false);
+    const [expandedIcons, setExpandedIcons] = useState({}); // Track expanded icons per slide
 
     const currentIndexRef = useRef(0);
     const animatingRef = useRef(false);
     const inactivityTimerRef = useRef(null);
     const isInitializedRef = useRef(false);
     const scrollPositionRef = useRef(0);
+    const touchStartXRef = useRef(0);
+    const touchStartYRef = useRef(0);
 
     // Check if device is mobile
     useEffect(() => {
         const checkMobile = () => {
-            const mobile = window.innerWidth <= 1024; // Changed to 1024 to match lg breakpoint
+            const mobile = window.innerWidth <= 1024;
             setIsMobile(mobile);
 
-            // Kill animations if mobile, create if desktop
             if (mobile) {
                 circleTimelinesRef.current.forEach(tl => tl.kill());
                 circleTimelinesRef.current = [];
@@ -212,6 +214,53 @@ const Slider = () => {
         preloadImages();
     }, [slides]);
 
+    // Setup touch events for mobile swiping
+    useEffect(() => {
+        if (!isMobile) return;
+
+        const handleTouchStart = (e) => {
+            touchStartXRef.current = e.touches[0].clientX;
+            touchStartYRef.current = e.touches[0].clientY;
+        };
+
+        const handleTouchEnd = (e) => {
+            if (!touchStartXRef.current || !touchStartYRef.current) return;
+
+            const touchEndX = e.changedTouches[0].clientX;
+            const touchEndY = e.changedTouches[0].clientY;
+            
+            const diffX = touchStartXRef.current - touchEndX;
+            const diffY = touchStartYRef.current - touchEndY;
+            
+            // Only consider horizontal swipes with minimal vertical movement
+            if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 50) {
+                if (diffX > 0) {
+                    // Swipe left - next slide
+                    gotoSection(currentIndexRef.current + 1, 1);
+                } else {
+                    // Swipe right - previous slide
+                    gotoSection(currentIndexRef.current - 1, -1);
+                }
+            }
+            
+            touchStartXRef.current = 0;
+            touchStartYRef.current = 0;
+        };
+
+        const slider = sliderRef.current;
+        if (slider) {
+            slider.addEventListener('touchstart', handleTouchStart, { passive: true });
+            slider.addEventListener('touchend', handleTouchEnd, { passive: true });
+        }
+
+        return () => {
+            if (slider) {
+                slider.removeEventListener('touchstart', handleTouchStart);
+                slider.removeEventListener('touchend', handleTouchEnd);
+            }
+        };
+    }, [isMobile]);
+
     const gotoSection = useCallback((index, direction) => {
         const totalSlides = slides.length;
         if (totalSlides === 0) return;
@@ -264,6 +313,8 @@ const Slider = () => {
                 });
 
                 currentIndexRef.current = index;
+                // Reset expanded icons when changing slides
+                setExpandedIcons({});
             },
         });
 
@@ -376,8 +427,28 @@ const Slider = () => {
         };
     }, [slides, isMobile, isLastSlide, initializeObserver]);
 
-    const SlideComponent = React.memo(({ slideData, slideIndex, isMobile }) => {
+    // Toggle icon expansion state
+    const toggleIcon = useCallback((slideIndex, iconKey) => {
+        setExpandedIcons(prev => {
+            const slideIcons = prev[slideIndex] || {};
+            const isCurrentlyExpanded = slideIcons[iconKey];
+            
+            return {
+                ...prev,
+                [slideIndex]: {
+                    ...slideIcons,
+                    [iconKey]: !isCurrentlyExpanded
+                }
+            };
+        });
+    }, []);
+
+    const SlideComponent = React.memo(({ slideData, slideIndex, isMobile, expandedIcons, toggleIcon }) => {
         if (!slideData) return null;
+
+        const isIconExpanded = (iconKey) => {
+            return expandedIcons[slideIndex]?.[iconKey] || false;
+        };
 
         return (
             <section className="slide absolute top-0 left-0 w-screen h-screen bg-white text-white overflow-hidden" aria-label={`Slide ${slideIndex + 1}: ${slideData.slideTitle1} ${slideData.slideTitle11}`}>
@@ -508,15 +579,18 @@ const Slider = () => {
 
 
                             </div>
-                            {/* Floating Info Icons - Mobile (hover/touch only) */}
+                            {/* Floating Info Icons - Mobile (touch only) */}
                             <div className="lg:hidden absolute top-0 font-outfit w-full h-full z-20 pointer-events-none">
                                 {/* Icon 1 - Top Left */}
-                                <div className=" absolute top-[23%] left-[10%] group pointer-events-auto flex items-center">
-                                    <div className='border relative rounded-full border-[#F9AF55] p-1 flex group-hover:w-[280px] group-active:w-[260px] transition-all duration-300 h-[58px] w-[58px] animate-pulse-custom'>
+                                <div className="absolute top-[23%] left-[10%] pointer-events-auto flex items-center">
+                                    <div 
+                                        className={`border relative rounded-full border-[#F9AF55] p-1 flex transition-all duration-300 h-[58px] ${isIconExpanded('circle1') ? 'w-[280px]' : 'w-[58px] animate-pulse-custom'}`}
+                                        onClick={() => toggleIcon(slideIndex, 'circle1')}
+                                    >
                                         <div className="bg-[#F9AF55] text-white rounded-full w-12 h-12 flex items-center justify-center cursor-pointer flex-shrink-0 z-10" aria-label="More information">
                                             <span className="text-3xl pl-1 flex items-center justify-center">{slideData.greenIcon.icon}</span>
                                         </div>
-                                        <div className=" absolute  text-[#F9AF55] bg-white rounded-full ml-1 pl-12 pr-2 h-12 cursor-pointer flex items-center overflow-hidden w-0 opacity-0 group-hover:w-[260px] group-hover:opacity-100 group-active:w-[260px] group-active:opacity-100 transition-all duration-300">
+                                        <div className={`absolute text-[#F9AF55] bg-white rounded-full ml-1 pl-12 pr-2 h-12 cursor-pointer flex items-center overflow-hidden transition-all duration-300 ${isIconExpanded('circle1') ? 'w-[260px] opacity-100' : 'w-0 opacity-0'}`}>
                                             <div className='-space-y-2 text-sm flex flex-col justify-center min-w-[100px]'>
                                                 <p className="font-semibold leading-5">
                                                     {(() => {
@@ -539,11 +613,13 @@ const Slider = () => {
                                 </div>
 
                                 {/* Icon 2 - Top Right */}
-                                <div className="mobile-circle-2 absolute top-[12%] right-[15%] group pointer-events-auto flex items-center">
-                                    <div className="relative flex items-center border border-[#D72423] rounded-full h-[58px] w-[58px] transition-all duration-300 animate-pulse-custom">
-
+                                <div className="absolute top-[12%] right-[15%] pointer-events-auto flex items-center">
+                                    <div 
+                                        className={`relative flex items-center border border-[#D72423] rounded-full h-[58px] transition-all duration-300 ${isIconExpanded('circle2') ? 'w-[280px]' : 'w-[58px] animate-pulse-custom'}`}
+                                        onClick={() => toggleIcon(slideIndex, 'circle2')}
+                                    >
                                         {/* TEXT PANEL (LEFT SIDE) */}
-                                        <div className="absolute left-0 bg-white text-[#D72423] rounded-full pl-6 pr-4 h-12 -translate-x-[52vw] cursor-pointer flex items-center justify-start overflow-hidden w-0 opacity-0 group-hover:w-[260px] group-hover:opacity-100 group-active:w-[260px] group-active:opacity-100 transition-all duration-300 z-0">
+                                        <div className={`absolute left-0 bg-white text-[#D72423] rounded-full pl-6 pr-4 h-12 cursor-pointer flex items-center justify-start overflow-hidden transition-all duration-300 z-0 ${isIconExpanded('circle2') ? 'w-[260px] opacity-100' : 'w-0 opacity-0'}`}>
                                             <div className="-space-y-2 text-sm flex flex-col justify-center max-w-[200px]">
                                                 <p className="font-semibold leading-5">
                                                     {(() => {
@@ -564,21 +640,22 @@ const Slider = () => {
                                         </div>
 
                                         {/* ICON (RIGHT SIDE) */}
-                                        <div className="bg-[#D72423] -translate-x-[62vw]  text-white rounded-full w-12 h-12 flex items-center justify-center cursor-pointer flex-shrink-0 z-10 ml-[260px]" aria-label="More information">
+                                        <div className="bg-[#D72423] text-white rounded-full w-12 h-12 flex items-center justify-center cursor-pointer flex-shrink-0 z-10 ml-auto" aria-label="More information">
                                             <span className="text-3xl pl-1.5 flex items-center justify-center">{slideData.redIcon.icon}</span>
                                         </div>
                                     </div>
                                 </div>
 
-
-
                                 {/* Icon 3 - Bottom Left */}
-                                <div className="mobile-circle-3 absolute top-[45%] left-[25%] group pointer-events-auto flex items-center">
-                                    <div className='relative rounded-full border animate-pulse-custom w-[58px] h-[58px] border-[#ffffff] p-1 flex group-hover:w-[240px] group-active:w-[260px] transition-all duration-300'>
+                                <div className="absolute top-[45%] left-[25%] pointer-events-auto flex items-center">
+                                    <div 
+                                        className={`relative rounded-full border w-[58px] h-[58px] border-[#ffffff] p-1 flex transition-all duration-300 ${isIconExpanded('circle3') ? 'w-[280px]' : 'animate-pulse-custom'}`}
+                                        onClick={() => toggleIcon(slideIndex, 'circle3')}
+                                    >
                                         <div className="bg-[#ffffff] text-[#646565] rounded-full p-3 w-12 h-12 flex items-center justify-center cursor-pointer flex-shrink-0 z-10" aria-label="More information">
                                             <span className="text-3xl flex items-center justify-center">{slideData.whiteIcon.icon}</span>
                                         </div>
-                                        <div className="absolute  text-[#646565] bg-white  rounded-full ml-1 pl-16 pr-2 h-12 cursor-pointer flex items-center overflow-hidden w-0 opacity-0 group-hover:w-[220px] group-hover:opacity-100 group-active:w-[260px] group-active:opacity-100 transition-all duration-300">
+                                        <div className={`absolute text-[#646565] bg-white rounded-full ml-1 pl-16 pr-2 h-12 cursor-pointer flex items-center overflow-hidden transition-all duration-300 ${isIconExpanded('circle3') ? 'w-[260px] opacity-100' : 'w-0 opacity-0'}`}>
                                             <div className='-space-y-2 flex text-sm font-semibold flex-col justify-center leading-4'>
                                                 {(() => {
                                                     const words = slideData.whiteIcon.info.split(' ');
@@ -637,7 +714,7 @@ const Slider = () => {
                                 hover:translate-y-2 cursor-pointer
                                 transition-all duration-300 ease-in-out
                             ">
-                                <div className="bg-white px-4 sm:px-6 md:px-8 py-0 rounded-full shadow-md max-h-24 flex items-center justify-center">
+                                <div className="bg-white px-4 sm:p-6 md:p-8 py-0 rounded-full shadow-md max-h-24 flex items-center justify-center">
                                     <h2 className="
                                         text-3xl sm:text-3xl md:text-4xl lg:text-6xl xl:text-7xl
                                         mb-0 text-[#F9AF55] font-bold uppercase font-outfit
@@ -671,21 +748,14 @@ const Slider = () => {
                         slideData={slide}
                         slideIndex={index}
                         isMobile={isMobile}
+                        expandedIcons={expandedIcons[index] || {}}
+                        toggleIcon={toggleIcon}
                     />
                 ))}
             </div>
 
             {/* CSS for mobile info circles */}
             <style jsx global>{`
-                @media (max-width: 1024px) {
-                    .circle-1:active .info-text,
-                    .circle-2:active .info-text,
-                    .circle-3:active .info-text {
-                        width: 260px !important;
-                        opacity: 1 !important;
-                    }
-                }
-                
                 @keyframes pulse-custom {
                     0%, 100% {
                         box-shadow: 0 0 0 0 rgba(215, 36, 35, 0.3);
