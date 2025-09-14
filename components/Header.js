@@ -1,6 +1,6 @@
 "use client"
 import Image from 'next/image';
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import {
     SlSocialFacebook,
     SlSocialInstagram,
@@ -19,6 +19,18 @@ import {
 export default function Header() {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
     const [mobileActiveDropdown, setMobileActiveDropdown] = useState(null);
+    const [isScrolled, setIsScrolled] = useState(false);
+
+    // Track scroll position
+    useEffect(() => {
+        const handleScroll = () => {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            setIsScrolled(scrollTop > 50);
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
 
     const toggleDrawer = () => {
         setIsDrawerOpen(!isDrawerOpen);
@@ -59,7 +71,7 @@ export default function Header() {
     }), []);
 
     return (
-        <div className="w-full">
+        <div className={`w-full sticky top-0 z-50 transition-all duration-300 ${isScrolled ? ' ' : 'bg-transparent'}`}>
             {/* Mobile Drawer Overlay */}
             {isDrawerOpen && (
                 <div 
@@ -190,10 +202,10 @@ export default function Header() {
                 </div>
             </div>
 
-            {/* Full-width white background */}
-            <div className="max-w-[1400px] mx-auto drop-shadow-lg flex flex-col overflow-visible">
-                {/* Top Section - Hidden on mobile */}
-                <div className="hidden lg:flex max-w-[1400px] bg-white lg:border-b border-gray-200 w-full rounded-t-2xl mx-auto flex-wrap items-center justify-between px-6 py-2 gap-y-4">
+            {/* Full-width white background - becomes solid on scroll */}
+            <div className={`max-w-[1400px] mx-auto flex flex-col overflow-visible transition-all duration-300 ${isScrolled ? ' drop-shadow-lg rounded-b-2xl' : ''}`}>
+                {/* Top Section - Hidden on mobile and when scrolled */}
+                <div className={`hidden lg:flex max-w-[1400px] bg-white lg:border-b border-gray-200 w-full rounded-t-2xl mx-auto flex-wrap items-center justify-between px-6 py-2 gap-y-4 transition-all duration-300 ${isScrolled ? 'opacity-0 h-0 overflow-hidden -mt-4' : 'opacity-100'}`}>
                     {/* Social Icons */}
                     <ul className="flex space-x-4 text-base text-gray-600">
                         {[SlSocialFacebook, SlSocialInstagram, SlSocialTwitter, SlSocialYoutube, SlSocialLinkedin].map((Icon, index) => (
@@ -237,15 +249,23 @@ export default function Header() {
                     </div>
                 </div>
 
-                {/* Bottom Section */}
-                <div className="max-w-[1400px] bg-white w-full lg:rounded-b-2xl rounded-2xl lg:rounded-t-none mx-auto flex flex-wrap items-center justify-between lg:px-6 py-1 gap-y-4">
-                    {/* Logo and Mobile Menu Button */}
-                    <div className="flex items-center">
-                        <Image src={'/logo.svg'} alt="Logo" width={110} height={100} />
+                {/* Bottom Section - Changes on scroll */}
+                <div className={`max-w-[1400px] w-full mx-auto flex flex-wrap items-center justify-between lg:px-6 gap-y-4 transition-all duration-300 ${isScrolled ? ' -translate-y-4 bg-white rounded-2xl py-2' : 'py-1 bg-white rounded-2xl lg:rounded-t-none'}`}>
+                    {/* Logo - Changes on scroll */}
+                    <div className="flex items-center transition-all duration-300 ml-4">
+                        <div className={`transition-all duration-300 ${isScrolled ? 'w-10' : 'w-28'}`}>
+                            <Image 
+                                src={isScrolled ? '/icon.svg' : '/logo.svg'} 
+                                alt="Logo" 
+                                width={isScrolled ? 40 : 110} 
+                                height={isScrolled ? 40 : 100} 
+                                className="transition-all duration-300 cursor-pointer hover:scale-105 delay-100 ease-in-out  "
+                            />
+                        </div>
                     </div>
 
                     {/* Desktop Navigation - Hidden on mobile */}
-                    <div className='hidden lg:block pr-14'>
+                    <div className={`hidden lg:block pr-14 transition-all duration-300 ${isScrolled ? 'opacity-100' : 'opacity-100'}`}>
                         <ul className='flex items-center gap-8 text-sm'>
                             <li className='font-semibold cursor-pointer hover:underline transition duration-150 ease-in-out'>
                                 <p>HOME</p>

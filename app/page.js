@@ -46,7 +46,7 @@ export default function Home() {
       <div className='relative lg:px-2 mb-4 lg:mb-8 flex flex-col items-center'>
         <Hero currentSlide={currentSlide} setCurrentSlide={setCurrentSlide} />
         <div className='w-full'>
-          <div className='absolute z-50 bottom-2 w-full flex'>
+          <div className='absolute z-40 bottom-2 w-full flex'>
             <ul className="bg-gray-100 p-2 flex gap-2 space-x-1 h-14 mx-auto drop-shadow-lg border-[#F9AF55] border-2 rounded-full relative">
               {/* Animated highlight bar */}
               <div
