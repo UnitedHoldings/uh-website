@@ -91,7 +91,7 @@ function Hero({ currentSlide, setCurrentSlide }) {
               </div>
 
               {/* Description Text */}
-              <div className='lg:max-w-4xl lg:-translate-x-[25vw] lg:translate-y-[-15vh] xl:translate-y-[-10vh] 2xl:translate-y-[-10vh] max-w-[360px] w-full  text-white drop-shadow-md text-sm mb-16 md:text-base lg:text-xl text-center lg:text-left md:mb-0'>
+              <div className='lg:max-w-4xl lg:-translate-x-[25vw] lg:translate-y-[-15vh] xl:translate-y-[-15vh] 2xl:translate-y-[-15vh] max-w-[360px] w-full  text-white drop-shadow-md text-sm mb-16 md:text-base lg:text-xl text-center lg:text-left md:mb-0'>
                 <p>{slide.slideDescription}</p>
               </div>
             </div>
