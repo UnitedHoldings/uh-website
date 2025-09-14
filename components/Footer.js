@@ -27,12 +27,14 @@ function Footer() {
     ];
     return (
         <footer className="bg-tertiary border-t-8 border-[#D72423]">
-            <div className=" mx-auto px-16  max-w-[1600px]  py-12">
+            <div className=" mx-auto lg:px-16 px-4  max-w-[1600px]  py-12">
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-8 lg:gap-12">
                     {/* Logo Section */}
                     <div className="flex flex-col items-start ">
                         <Link href="/" className="flex items-center gap-2">
-                            <Image src="/logo.svg" alt="Logo" width={300} height={50} />
+                            <Image src="/logo.svg" alt="Logo" width={300} height={50}  className='hidden lg:inline'/>
+                            <Image src="/logo.svg" alt="Logo" width={150} height={50} className='lg:hidden '/>
+
                         </Link>
                     </div>
                     {/* Company Links */}
@@ -92,12 +94,12 @@ function Footer() {
                     <p>
                         Developed by{' '}
                         <a
-                            href="tel:+26878608308"
+                            href="tel:+"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="hover:text-secondary transition-colors"
                         >
-                            Unbounded Creative Agency
+                            Ummo Inc. & Unbounded Creatives
                         </a>
                     </p>
                 </div>

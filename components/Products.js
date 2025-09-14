@@ -12,22 +12,21 @@ const productData = [
 ];
 
 const ProductCard = ({ title, desc, img }) => (
-    <div className="shadow-md bg-gray-50 group-hover:scale-105 relative rounded-xl flex flex-col h-full group cursor-pointer transition-all duration-500">
-        <div className=" rounded-t-xl h-64  flex items-center justify-center overflow-hidden">
+    <div className=" bg-white group-hover:scale-105 border-b-4 border-[#D72423] relative rounded-xl flex flex-col h-full group cursor-pointer transition-all duration-500">
+        <div className=" rounded-t-xl h-72  flex items-center justify-center overflow-hidden">
             <Image
                 src={img}
                 alt={title}
                 width={320}
                 height={192}
-                className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-110"
+                className="object-cover w-full h-full transition-transform duration-500 delay-300 group-hover:scale-110"
             />
         </div>
-        <div className="flex flex-col items-start p-4 flex-grow">
-            <h3 className="text-lg font-bold text-[#D72423] mb-2 font-outfit">{title}</h3>
-            <p className="text-sm text-gray-700 font-outfit line-clamp-4 mb-4 flex-grow">{desc}</p>
-            <p className='text-blue-500 hover:underline text-sm'>Learn More</p>
+        <div className="flex flex-col items-start p-4  flex-grow">
+            <h3 className="text-xl font-semibold text-[#D72423] mb-2 font-outfit">{title}</h3>
+            <p className="text-sm text-gray-700 font-outfit line-clamp-4  flex-grow">{desc}</p>
         </div>
-        <span className='text-white bg-[#D72423] h-8 w-8 flex items-center justify-center right-4 bottom-4 absolute transition-all ease-in-out duration-500 group-hover:-rotate-45 group-hover:scale-110 rounded-full'>
+        <span className='text-white bg-[#D72423] h-8 w-8  mx-auto mb-4 flex items-center justify-center right-4 bottom-4  transition-all ease-in-out duration-500 group-hover:-rotate-45 group-hover:scale-110 rounded-full'>
             <BsArrowRight />
         </span>
     </div>
@@ -155,14 +154,14 @@ function Products() {
     }, [currentPosition, maxScroll]);
 
     return (
-        <div className="font-outfit max-w-[1600px] mx-auto px-4 md:px-16 w-full space-y-8 py-12 overflow-hidden">
+        <div className="font-outfit max-w-[1400px] mx-auto px-4 lg:px-0  w-full space-y-8  overflow-hidden">
             <div className="flex flex-col gap-8 md:gap-16">
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center">
                     <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-8">
-                        <div className="text-2xl min-w-xs font-semibold text-gray-500">
+                        <div className="text-xl sm:text-2xl min-w-xs font-semibold text-gray-500">
                             <p>Our Products</p>
                         </div>
-                        <div className="text-2xl md:text-3xl max-w-3xl">
+                        <div className="text-xl sm:text-2xl md:text-3xl max-w-3xl">
                             <p>
                                 <span className="text-[#8B8B8B]">United Holding</span> has a solution for individuals, families & teams. Find the{' '}
                                 <span className="text-[#D72423]">product</span> that you need.

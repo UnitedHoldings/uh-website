@@ -110,7 +110,7 @@ const ReviewCard = ({ review, isActive }) => (
 
 const ReasonCard = ({ title, content }) => (
   <div className="bg-white rounded-2xl p-4 sm:p-6 border border-gray-100 transition-shadow duration-300">
-    <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-4 font-outfit">{title}</h3>
+    <h3 className="text-lg sm:text-xl font-semibold text-[#D72423] mb-4 font-outfit">{title}</h3>
     <p className="text-gray-700 text-sm sm:text-base leading-relaxed">{content}</p>
   </div>
 );
@@ -221,17 +221,17 @@ const ReviewsCarousel = () => {
 };
 
 const WhyChooseUs = () => (
-  <section className="py-8 sm:py-12 md:py-16">
-    <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+  <section className="">
+    <div className="max-w-[1400px] mx-auto px-4 lg:px-0 w-full">
       <div className="flex flex-col gap-6 sm:gap-8 md:gap-16 mb-8 sm:mb-12 md:mb-16">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center">
           <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-8">
-            <div className="text-xl sm:text-2xl min-w-[150px] sm:min-w-[200px] font-semibold text-gray-500">
+            <div className="text-xl sm:text-2xl min-w-xs  font-semibold text-gray-500">
               <p>Choose <span className="text-[#D72423]">United Holdings</span></p>
             </div>
             <div className="text-xl sm:text-2xl md:text-3xl max-w-3xl">
               <p>
-                <span className="text-[#8B8B8B]">Discover why thousands of Swazis </span>
+                <span className="text-[#8B8B8B] font-light">Discover why thousands of Swazis </span>
                 trust us with their insurance and financial needs.
               </p>
             </div>
@@ -240,7 +240,7 @@ const WhyChooseUs = () => (
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 md:gap-12 items-start">
-        <div className="space-y-4 sm:space-y-6">
+        <div className="space-y-2 ">
           {reasonsData.map((reason, index) => (
             <ReasonCard key={index} title={reason.title} content={reason.content} />
           ))}

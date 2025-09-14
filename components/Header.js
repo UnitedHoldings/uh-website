@@ -78,7 +78,7 @@ export default function Header() {
                         </button>
                     </div>
                     
-                    <ul className='space-y-2 text-lg'>
+                    <ul className='space-y-2 '>
                         <li className='font-semibold cursor-pointer hover:text-[#D72423] transition duration-150 ease-in-out py-2 border-b border-gray-100'>
                             <p>HOME</p>
                         </li>

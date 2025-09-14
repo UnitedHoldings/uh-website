@@ -1,15 +1,13 @@
 import Agent from '@/components/Agent';
+import Hero from '@/components/Hero';
 import Products from '@/components/Products';
-import Slider from '@/components/Slider';
 import WhyChooseUs from '@/components/WhyChooseUs';
-import Head from 'next/head';
-import Image from 'next/image';
 
 export default function Home() {
   
   return (
-    <div className='flex  flex-col space-y-10 '>
-      <Slider />
+    <div className='flex  flex-col pb-16 lg:space-y-16  '>
+      <Hero />
       <Products />
       <Agent />
       <WhyChooseUs />

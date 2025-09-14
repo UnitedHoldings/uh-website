@@ -6,25 +6,25 @@ import { SlDoc, SlEnvolope, SlInfo, SlLink, SlPhone, SlTarget } from 'react-icon
 
 function Agent() {
   return (
-    <div className="bg-gray-100 py-8 sm:py-12 md:py-16">
-      <div className="font-outfit max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 w-full space-y-6 sm:space-y-8">
+    <div className="bg-gray-100 py-4 ">
+      <div className="font-outfit max-w-[1400px] mx-auto  px-2 lg:px-0  w-full space-y-6 sm:space-y-8">
         <div className="flex flex-col gap-6 sm:gap-8 md:gap-16">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center">
             <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-8">
-              <div className="text-xl sm:text-2xl min-w-[150px] sm:min-w-[200px] font-semibold text-gray-500">
+              <div className="text-xl sm:text-2xl min-w-xs font-semibold text-gray-500">
                 <p>Speak to an Agent</p>
               </div>
               <div className="text-xl sm:text-2xl md:text-3xl max-w-3xl">
                 <p>
-                  <span className="text-[#8B8B8B]">Connect</span> with one of our agents to explore tailored solutions.
+                  <span className="text-[#8B8B8B] font-light">Connect</span> with one of our agents to explore tailored solutions.
                 </p>
               </div>
             </div>
           </div>
         </div>
-        <div className="max-w-7xl mx-auto">
+        <div className=" mx-auto">
           <div className="bg-white rounded-xl flex flex-col lg:flex-row justify-between">
-            <div className="space-y-6 pt-6 sm:pt-8 px-4 sm:px-6 lg:px-8 w-full">
+            <div className="space-y-6 py-6 sm:pt-8 px-4 sm:px-6 lg:px-8 w-full">
               <div className="flex flex-col gap-4 sm:gap-6 md:gap-8 font-semibold text-[#D72423] text-xl sm:text-2xl">
                 <p>Request a Quote</p>
               </div>
