@@ -43,7 +43,7 @@ export default function Home() {
 
   return (
     <div className='flex flex-col pb-16 lg:space-y-16'>
-      <div className='relative mb-4 lg:mb-8 flex flex-col items-center'>
+      <div className='relative lg:px-2 mb-4 lg:mb-8 flex flex-col items-center'>
         <Hero currentSlide={currentSlide} setCurrentSlide={setCurrentSlide} />
         <div className='w-full'>
           <div className='absolute z-50 bottom-2 w-full flex'>

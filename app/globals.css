@@ -1,7 +1,18 @@
 @import "tailwindcss";
 
+@theme {
+  --breakpoint-md: 900px;  /* Override default */
+  --breakpoint-*: initial;  /* Optional: Reset all defaults first */
+  --breakpoint-sm: 640px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+  --breakpoint-2xl: 1936px;
+  --breakpoint-xxl: 1600px;  /* Custom */
+}
+
 :root {
 	--font-outfit: 'Outfit', sans-serif;
+
 }
 
 .font-outfit {

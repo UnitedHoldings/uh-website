@@ -5,7 +5,7 @@ import slidesData from './Slides';
 
 function Hero({ currentSlide, setCurrentSlide }) {
   return (
-    <div className="relative lg:w-full lg:max-w-[1800px] w-[95vw] h-[90vh] mb-8 mx-auto overflow-hidden rounded-xl ">
+    <div className="relative lg:w-full lg:max-w-[1800px] w-[95vw] h-[90vh] 2xl:h-[80vh] mb-8 mx-auto overflow-hidden rounded-xl ">
       {/* Image Container */}
       <div className="relative w-full  h-[90vh] rounded-xl">
         {/* Slides */}
@@ -39,7 +39,7 @@ function Hero({ currentSlide, setCurrentSlide }) {
           {slidesData.map((slide, index) => (
             <div
               key={index}
-              className={`absolute h-[90vh]  inset-0 flex flex-col items-center lg:items-end justify-end transition-opacity duration-1000 ${index === currentSlide ? 'opacity-100' : 'opacity-0'
+              className={`absolute h-[90vh] 2xl:h-[85vh] inset-0 flex flex-col items-center lg:items-end justify-end transition-opacity duration-1000 ${index === currentSlide ? 'opacity-100' : 'opacity-0'
                 }`}
             >
               {/* Text Content */}
@@ -91,7 +91,7 @@ function Hero({ currentSlide, setCurrentSlide }) {
               </div>
 
               {/* Description Text */}
-              <div className='lg:max-w-4xl lg:-translate-x-[25vw] lg:translate-y-[-15vh] xl:translate-y-[-15vh] 2xl:translate-y-[-15vh] max-w-[360px] w-full  text-white drop-shadow-md text-sm mb-16 md:text-base lg:text-xl text-center lg:text-left md:mb-0'>
+              <div className='lg:max-w-4xl lg:-translate-x-[25vw] xl:-translate-x-[20vw] lg:translate-y-[-11vh] xl:translate-y-[-11vh] 2xl:translate-y-[-11vh] max-w-[360px] w-full  text-white drop-shadow-md text-sm mb-16 md:text-base lg:text-xl text-center lg:text-left md:mb-0'>
                 <p>{slide.slideDescription}</p>
               </div>
             </div>
