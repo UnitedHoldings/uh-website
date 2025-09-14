@@ -47,10 +47,10 @@ export default function Home() {
         <Hero currentSlide={currentSlide} setCurrentSlide={setCurrentSlide} />
         <div className='w-full'>
           <div className='absolute z-50 bottom-2 w-full flex'>
-            <ul className="bg-gray-100 p-2 flex gap-2 space-x-1 mx-auto drop-shadow-lg border-[#F9AF55] border-2 rounded-full relative">
+            <ul className="bg-gray-100 p-2 flex gap-2 space-x-1 h-14 mx-auto drop-shadow-lg border-[#F9AF55] border-2 rounded-full relative">
               {/* Animated highlight bar */}
               <div
-                className="absolute bg-[#F9AF55] h-8 rounded-full transition-all duration-500 ease-in-out"
+                className="absolute bg-[#F9AF55] h-9 rounded-full transition-all duration-500 ease-in-out"
                 style={{
                   width: `calc(25% - 4px)`,
                   transform: `translateX(${activeTab * 100}%)`
