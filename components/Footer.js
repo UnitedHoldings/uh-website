@@ -28,7 +28,7 @@ function Footer() {
     return (
         <footer className="bg-tertiary border-t-8 border-[#D72423]">
             <div className=" mx-auto lg:px-16 px-4  max-w-[1600px]  py-12">
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-8 lg:gap-12">
+                <div className="grid grid-cols-1 lg:grid-flow-row lg:grid-cols-4 gap-8 lg:gap-12">
                     {/* Logo Section */}
                     <div className="flex flex-col items-start ">
                         <Link href="/" className="flex items-center gap-2">
