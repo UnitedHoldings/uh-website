@@ -15,9 +15,9 @@ function Hero() {
     }, []);
 
     return (
-        <div className="relative w-full max-w-[1800px] mx-auto overflow-hidden rounded-xl ">
+        <div className="relative lg:w-full lg:max-w-[1800px] w-[95vw] h-[90vh] mb-8 mx-auto overflow-hidden rounded-xl ">
             {/* Image Container */}
-            <div className="relative w-full  lg:h-[1080px] h-screen rounded-xl">
+            <div className="relative w-full  h-[90vh] rounded-xl">
                 {/* Slides */}
                 {slidesData.map((slide, index) => (
                     <div
@@ -34,8 +34,7 @@ function Hero() {
                         />
                         <Image
                             src={slide.slideImgSM || '/home.jpg'}
-                            height={1920}
-                            width={1080}
+                            fill
                             alt={slide.slideTitle1 + ' ' + slide.slideTitle11}
                             className="object-cover lg:hidden rounded-xl"
                             priority={index === 0}
@@ -45,12 +44,12 @@ function Hero() {
                 ))}
 
                 {/* Content Container */}
-                <div className="relative z-20 max-w-[1400px] mx-auto h-full flex flex-col justify-end px-4 md:px-8 lg:px-12 pb-4 md:pb-8 lg:pb-12">
+                <div className="relative z-20 max-w-[1400px] mx-auto  flex flex-col justify-end px-4 md:px-8 lg:px-12 pb-4 md:pb-8 lg:pb-12">
                     {/* Slides Content */}
                     {slidesData.map((slide, index) => (
                         <div
                             key={index}
-                            className={`absolute inset-0 flex flex-col items-center lg:items-end justify-end transition-opacity duration-1000 ${index === currentSlide ? 'opacity-100' : 'opacity-0'
+                            className={`absolute h-[90vh]  inset-0 flex flex-col items-center lg:items-end justify-end transition-opacity duration-1000 ${index === currentSlide ? 'opacity-100' : 'opacity-0'
                                 }`}
                         >
                             {/* Text Content */}
@@ -102,7 +101,7 @@ function Hero() {
                             </div>
 
                             {/* Description Text */}
-                            <div className='lg:max-w-4xl lg:-translate-x-[20vw] lg:translate-y-[-15vh] max-w-[360px] w-full  text-white drop-shadow-md text-sm mb-16 md:text-base lg:text-xl text-center lg:text-left md:mb-0'>
+                            <div className='lg:max-w-4xl lg:-translate-x-[20vw] lg:translate-y-[-15vh] xl:translate-y-[-10vh] 2xl:translate-y-[-10vh] max-w-[360px] w-full  text-white drop-shadow-md text-sm mb-16 md:text-base lg:text-xl text-center lg:text-left md:mb-0'>
                                 <p>{slide.slideDescription}</p>
                             </div>
                         </div>

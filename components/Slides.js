@@ -30,7 +30,7 @@ const slidesData = [
     }
   },
   {
-    slideTitle1: 'Having',
+    slideTitle1: 'Having a',
     slideTitle11: 'Bad Month?',
     slideTitle2: 'Try Shesha Loans',
     slideDescription:

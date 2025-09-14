@@ -31,7 +31,7 @@ function Agent() {
               <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 w-full">
                 <input
                   type="text"
-                  placeholder="Enter your email"
+                  placeholder="Enter Mobile Number"
                   className="bg-white p-2 sm:p-3 px-4 rounded-full border border-red-200 text-sm sm:text-base w-full sm:w-auto"
                 />
                 <select className="bg-white p-2 sm:p-3 px-4 rounded-full border border-red-200 text-sm sm:text-base w-full sm:w-auto">

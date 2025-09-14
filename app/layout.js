@@ -33,7 +33,7 @@ export default function RootLayout({ children }) {
 
   return (
     <html lang="en">
-      <body className={`${outfit.variable} font-outfit bg-[#FDF2F2] lg:pt-6 antialiased relative`}>
+      <body className={`${outfit.variable} font-outfit bg-[#FDF2F2] lg:pt-6 pt-3 antialiased relative`}>
         <div className="fixed top-[3%] lg:top-[5%] lg:px-8 px-4 left-0 right-0 w-full z-50">
           <Header />
         </div>
