@@ -76,9 +76,9 @@ function Hero({ currentSlide, setCurrentSlide }) {
               </div>
 
               {/* CTA Button */}
-              <div className="flex flex-col lg:items-end items-center mt-8 mb-8 md:mb-6 lg:mb-20 xl:mb-20  2xl:mb-20  space-y-1 md:space-y-2">
+              <div className="flex flex-col lg:items-end items-center mt-8 mb-8 lg:mt-16 md:mb-6 lg:mb-0 xl:mb-0  2xl:mb-10  space-y-1 md:space-y-2">
                 <button className='
-                  bg-[#D72423] px-6 md:px-8 py-2 md:py-3 rounded-full shadow-md 
+                  bg-[#D72423] px-6 md:px-8 py-3 lg:py-4 md:py-3 rounded-full shadow-md 
                   flex items-center justify-center hover:bg-[#b01c1b] 
                   transition-colors text-white font-outfit font-bold
                   text-base md:text-lg min-w-xs max-w-xs w-auto
@@ -91,7 +91,7 @@ function Hero({ currentSlide, setCurrentSlide }) {
               </div>
 
               {/* Description Text */}
-              <div className='lg:max-w-4xl lg:-translate-x-[25vw] xl:-translate-x-[20vw] lg:translate-y-[-11vh] xl:translate-y-[-11vh] 2xl:translate-y-[-11vh] max-w-[360px] w-full  text-white drop-shadow-md text-sm mb-16 md:text-base lg:text-xl text-center lg:text-left md:mb-0'>
+              <div className='lg:max-w-2xl lg:-translate-x-[35vw] xl:-translate-x-[35vw] 2xl:-translate-x-[30vw] lg:translate-y-[-9vh] xl:translate-y-[-9vh] 2xl:translate-y-[-9vh] max-w-[60px] w-full  text-white drop-shadow-md text-sm mb-16 md:text-base lg:text-xl text-center lg:text-left md:mb-0'>
                 <p>{slide.slideDescription}</p>
               </div>
             </div>
