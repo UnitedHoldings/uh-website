@@ -191,7 +191,7 @@ export default function Header() {
             </div>
 
             {/* Full-width white background */}
-            <div className="max-w-[1400px] mx-auto flex flex-col overflow-visible">
+            <div className="max-w-[1400px] mx-auto drop-shadow-lg flex flex-col overflow-visible">
                 {/* Top Section - Hidden on mobile */}
                 <div className="hidden lg:flex max-w-[1400px] bg-white lg:border-b border-gray-200 w-full rounded-t-2xl mx-auto flex-wrap items-center justify-between px-6 py-2 gap-y-4">
                     {/* Social Icons */}
