@@ -6,6 +6,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useEffect } from 'react';
 import { usePathname } from 'next/navigation';
+import Script from "next/script";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,7 +26,7 @@ const outfit = Outfit({
 
 export default function RootLayout({ children }) {
   const pathname = usePathname();
-  
+
   useEffect(() => {
     // Scroll to top on initial load and route changes
     window.scrollTo(0, 0);
@@ -33,12 +34,34 @@ export default function RootLayout({ children }) {
 
   return (
     <html lang="en">
-      <body className={`${outfit.variable} font-outfit bg-[#FDF2F2] lg:pt-6 pt-3 antialiased relative`}>
-        <div className="fixed top-[3%] lg:top-[5%] lg:px-8 px-4 left-0 right-0 w-full z-50">
-          <Header />
-        </div>
+      <body className={`${outfit.variable} font-outfit bg-[#FDF2F2] antialiased relative`}>
+        <Header />
         {children}
         <Footer />
+
+        {/* Voiceflow Chatbot */}
+        <Script
+          src="https://cdn.voiceflow.com/widget-next/bundle.mjs"
+          type="text/javascript"
+          strategy="afterInteractive"
+          onLoad={() => {
+            if (window?.voiceflow?.chat) {
+              window.voiceflow.chat.load({
+                verify: { projectID: "68dea042360ab353c0717f93" },
+                url: "https://general-runtime.voiceflow.com",
+                versionID: "production",
+                assistant: {
+                  title: "United Holdings Assistant",
+                  description: "How can we help you today?",
+                  image: "/logo.png",
+                },
+                voice: {
+                  url: "https://runtime-api.voiceflow.com"
+                }
+              });
+            }
+          }}
+        />
       </body>
     </html>
   );

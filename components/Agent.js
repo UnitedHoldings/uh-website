@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import Link from 'next/link';
 import React from 'react';
 import { SlDoc, SlEnvolope, SlInfo, SlLink, SlPhone, SlTarget } from 'react-icons/sl';
 
@@ -23,9 +24,9 @@ function Agent() {
           </div>
         </div>
         <div className=" mx-auto">
-          <div className="bg-white rounded-xl flex flex-col lg:flex-row justify-between">
+          <div className="bg-white  flex flex-col lg:flex-row justify-between">
             <div className="space-y-6 py-6 sm:pt-8 px-4 sm:px-6 lg:px-8 w-full">
-              <div className="flex flex-col gap-4 sm:gap-6 md:gap-8 font-semibold text-[#D72423] text-xl sm:text-2xl">
+              <div className="flex flex-col gap-4 sm:gap-6 md:gap-8 font-semibold text-[#9b1c20] text-xl sm:text-2xl">
                 <p>Request a Quote</p>
               </div>
               <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 w-full">
@@ -45,7 +46,7 @@ function Agent() {
                   <option value="life-assurance">Life Assurance</option>
                   <option value="general-insurance">General Insurance</option>
                 </select>
-                <button className="bg-[#D72423] space-x-2 text-white px-4 sm:px-6 lg:px-16 py-2 sm:py-3 rounded-full h-12 shadow-md flex items-center justify-center text-sm sm:text-base">
+                <button className="bg-[#9b1c20] space-x-2 text-white px-4 sm:px-6 lg:px-16 py-2 sm:py-3 rounded-full h-12 shadow-md flex items-center justify-center text-sm sm:text-base">
                   <SlPhone />
                   <p className="whitespace-nowrap">Send Callback</p>
                 </button>
@@ -53,10 +54,12 @@ function Agent() {
               <div className="space-y-4">
                 <p className="font-bold text-gray-500 text-sm">Quick Links</p>
                 <ul className="flex flex-wrap gap-4 sm:gap-6">
-                  <li className="font-semibold text-gray-700 cursor-pointer hover:underline flex items-center space-x-2 text-sm sm:text-base">
-                    <SlDoc />
-                    <p>File a Claim</p>
-                  </li>
+                  <Link href="/claims">
+                    <li className="font-semibold text-gray-700 cursor-pointer hover:underline flex items-center space-x-2 text-sm sm:text-base">
+                      <SlDoc />
+                      <p>File a Claim</p>
+                    </li>
+                  </Link>
                   <li className="font-semibold text-gray-700 cursor-pointer hover:underline flex items-center space-x-2 text-sm sm:text-base">
                     <SlTarget />
                     <p>Track a Claim</p>
@@ -76,14 +79,14 @@ function Agent() {
                       <SlPhone className="text-sm sm:text-base hover:underline transition duration-150 ease-in-out" />
                       <a
                         href="tel:8001010"
-                        className="font-semibold text-sm sm:text-base text-[#F7941D] hover:underline transition hover:text-[#F7941D]"
+                        className="font-semibold text-sm sm:text-base text-[#9b1c20] hover:underline transition hover:text-[#F7941D]"
                       >
                         800 1010
                       </a>
-                      <span className="text-[#F7941D] hidden sm:inline">|</span>
+                      <span className="text-[#9b1c20] hidden sm:inline">|</span>
                       <a
                         href="tel:+26825086000"
-                        className="font-semibold text-sm sm:text-base text-[#F7941D] hover:underline transition hover:text-[#F7941D]"
+                        className="font-semibold text-sm sm:text-base text-[#9b1c20] hover:underline transition hover:text-[#F7941D]"
                       >
                         (+268) 2508 6000
                       </a>
@@ -92,7 +95,7 @@ function Agent() {
                       <SlEnvolope className="text-sm sm:text-base hover:underline transition duration-150 ease-in-out" />
                       <a
                         href="mailto:info@united.co.sz"
-                        className="font-semibold text-sm sm:text-base text-[#F7941D] hover:underline transition hover:text-[#F7941D]"
+                        className="font-semibold text-sm sm:text-base text-[#9b1c20] hover:underline transition hover:text-[#F7941D]"
                       >
                         info@united.co.sz
                       </a>
@@ -107,7 +110,7 @@ function Agent() {
                 alt="Advertisement"
                 height={200}
                 width={700}
-                className="rounded-b-xl lg:rounded-r-xl w-full h-auto max-h-[400px] object-cover"
+                className="  w-full h-auto max-h-[400px] object-cover"
               />
             </div>
           </div>

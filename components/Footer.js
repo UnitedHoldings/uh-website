@@ -7,18 +7,18 @@ function Footer() {
     const companyLinks = [
         { title: 'Home', path: '/' },
         { title: 'About Us', path: '/about' },
-        { title: 'United General Insurance', path: '/programs' },
-        { title: 'United Pay', path: '/blog' },
-        { title: 'United Life Assurance', path: '/contact' },
-        { title: 'Documents', path: '/document' },
-
+        { title: 'Services', path: '/services' },
+        { title: 'United Pay', path: '/services#united-pay' },
+        { title: 'United Life Assurance', path: '/services#life-assurance' },
+        { title: 'Client Area', path: '/client-area' },
+        { title: 'Projects', path: '/projects' },
     ];
     const helpLinks = [
         { title: 'Contact Us', path: '/contact' },
-        { title: 'Consult', path: '/psychosocial' },
-        { title: 'Proof Insurance', path: '/screening' },
-        { title: 'FAQ’s', path: '/faq' },
-        { title: 'Vancancies', path: '/programs/advocacy' },
+        { title: 'FAQ\u2019s', path: '/faq' },
+        { title: 'Proof Insurance', path: '/faq#proof-insurance' },
+        { title: 'Claims', path: '/claims' },
+        { title: 'Vacancies', path: '/about#careers' },
     ];
     const socialLinks = [
         { name: 'Instagram', url: 'https://www.instagram.com/breastandcervicalcancernetwork/', icon: <FaInstagram className="inline-block mr-2 text-xl align-middle" aria-label="Instagram" /> },
@@ -26,7 +26,7 @@ function Footer() {
         { name: 'WhatsApp', url: 'https://wa.me/26879021071', icon: <FaWhatsapp className="inline-block mr-2 text-xl align-middle" aria-label="WhatsApp" /> },
     ];
     return (
-        <footer className="bg-tertiary border-t-8 border-[#D72423]">
+        <footer className="bg-tertiary border-t-8 border-[#9b1c20]">
             <div className=" mx-auto lg:px-16 px-4  max-w-[1600px]  py-12">
                 <div className="grid grid-cols-1 lg:grid-flow-row lg:grid-cols-4 gap-8 lg:gap-12">
                     {/* Logo Section */}
