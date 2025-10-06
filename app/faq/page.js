@@ -6,7 +6,7 @@ export const metadata = {
 export default function FAQ() {
   return (
     <main className="max-w-[1100px] mx-auto px-4 py-12 font-outfit">
-      <h1 className="text-3xl font-bold text-[#9b1c20] mb-6">FAQ's</h1>
+      <h1 className="text-3xl font-bold text-[#9b1c20] mb-6">FAQ&apos;s</h1>
 
       <section className="mb-8">
         <h2 className="text-2xl font-semibold mb-3">Proof of Insurance</h2>
@@ -29,7 +29,7 @@ export default function FAQ() {
       </section>
 
       <section className="mt-8 text-sm text-gray-600">
-        <p>If you don't find an answer here, please email <a href="mailto:info@united.co.sz" className="text-[#9b1c20] underline">info@united.co.sz</a> or call 800 1010.</p>
+        <p>If you don&apos;t find an answer here, please email <a href="mailto:info@united.co.sz" className="text-[#9b1c20] underline">info@united.co.sz</a> or call 800 1010.</p>
       </section>
     </main>
   );

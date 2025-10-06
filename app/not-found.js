@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 
 export default function NotFound() {
@@ -13,7 +14,7 @@ export default function NotFound() {
         </div>
         <h1 className="text-4xl font-bold text-[#9b1c20] mb-4 text-center">Page Under Construction</h1>
         <p className="text-lg text-gray-700 text-center mb-8">Sorry, the page you are looking for is currently under construction or does not exist. Please check back soon!</p>
-        <a href="/" className="px-6 py-3 bg-[#9b1c20] text-white rounded font-semibold hover:bg-[#7a1518] transition">Go Home</a>
+        <Link href="/" className="px-6 py-3 bg-[#9b1c20] text-white rounded font-semibold hover:bg-[#7a1518] transition">Go Home</Link>
       </div>
     </div>
   );
