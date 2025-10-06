@@ -1,11 +1,8 @@
 'use client';
 
-
 import { useState, useEffect, useRef } from 'react';
 import { SlStar } from 'react-icons/sl';
 import { BsChevronLeft, BsChevronRight } from 'react-icons/bs';
-import { FiAward, FiShield, FiGlobe } from 'react-icons/fi';
-import Image from 'next/image';
 
 // Constants
 const AUTO_PLAY_INTERVAL = 5000;
@@ -50,28 +47,34 @@ const reviewsData = [
 const reasonsData = [
   {
     title: "70+ Years of Trusted Service",
-    content: "We're the right partner you can choose with over 70 years of doing business in the Kingdom of Eswatini. We're your trusted brand here to provide not just products and services, but rather the peace of mind to get on with the things in life that really matter to you.",
-    icon: <FiAward className="text-2xl text-[#9b1c20] mb-2" />
+    content: "We're the right partner you can choose with over 70 years of doing business in the Kingdom of Eswatini. We're your trusted brand here to provide not just products and services, but rather the peace of mind to get on with the things in life that really matter to you."
   },
   {
     title: "Serving you with Integrity",
-    content: "We don't do insurance for ourselves, we do it for your peace of mind. Our commitment to ethical practices and transparent dealings ensures you always get the best service possible.",
-    icon: <FiShield className="text-2xl text-[#9b1c20] mb-2" />
+    content: "We don't do insurance for ourselves, we do it for your peace of mind. Our commitment to ethical practices and transparent dealings ensures you always get the best service possible."
   },
   {
     title: "Swazi Insurance for the International Market",
-    content: "With over 70 years of doing business in Eswatini, United Holdings is best suited and experienced to provide uniquely tailored solutions that understand both local needs and global standards.",
-    icon: <FiGlobe className="text-2xl text-[#9b1c20] mb-2" />
+    content: "With over 70 years of doing business in Eswatini, United Holdings is best suited and experienced to provide uniquely tailored solutions that understand both local needs and global standards."
   },
+ 
 ];
 
+const statsData = [
+  { value: "70+", label: "Years of Experience", color: "text-[#9b1c20]" },
+  { value: "50K+", label: "Happy Clients", color: "text-[#F9AF55]" },
+  { value: "24/7", label: "Customer Support", color: "text-[#9b1c20]" },
+  { value: "98%", label: "Claim Satisfaction", color: "text-[#F9AF55]" }
+];
+
+// Components
 const StarRating = ({ rating }) => {
   const fullStars = Math.floor(rating);
   const hasHalfStar = rating % 1 !== 0;
-  const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
+  const emptyStars = MAX_STARS - fullStars - (hasHalfStar ? 1 : 0);
 
   return (
-    <div className="flex items-center space-x-1" aria-label={`Rating: ${rating} out of 5 stars`}>
+    <div className="flex items-center space-x-1" aria-label={`Rating: ${rating} out of ${MAX_STARS} stars`}>
       {[...Array(fullStars)].map((_, i) => (
         <SlStar key={`full-${i}`} className="text-[#F9AF55] fill-current" />
       ))}
@@ -83,86 +86,40 @@ const StarRating = ({ rating }) => {
   );
 };
 
-const ReviewCard = ({ review }) => (
-  <div className="bg-white rounded-xl border border-gray-200 p-6 flex flex-col h-full min-w-[320px] max-w-[380px] shadow-sm">
-    <p className="text-gray-800 text-base mb-6 flex-1">{review.content}</p>
-    <div className="flex items-center mt-auto">
-      <Image
-        src={review.image}
-        alt={review.name}
-        width={40}
-        height={40}
-        className="rounded-full object-cover w-10 h-10 border border-gray-200"
-      />
-      <div className="ml-3">
-        <div className="font-semibold text-gray-900 text-sm leading-tight">{review.name}</div>
-        <div className="text-xs text-gray-500">{review.role}</div>
-        <div className="flex items-center mt-1">
+const ReviewCard = ({ review, variant = 'center' }) => {
+  // variant: 'center' | 'side' | 'small' - adjusts size/opacity/positioning
+  const base = 'bg-white rounded-2xl p-4 sm:p-6 shadow-lg border border-gray-100 transition-all duration-500 flex-shrink-0';
+  const variants = {
+    center: 'opacity-100 scale-105 z-20',
+    side: 'opacity-95 scale-95 z-10',
+    small: 'opacity-0 scale-95 z-0 hidden'
+  };
+
+  const sizeClass = variant === 'center' ? 'w-72 sm:w-96' : 'w-64 sm:w-80';
+
+  return (
+    <div
+      className={`${base} ${variants[variant] || variants.center} ${sizeClass}`}
+      role="group"
+      aria-label={`Review by ${review.name}`}>
+      <div className="flex items-start space-x-4 mb-4">
+        <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-r from-[#9b1c20] to-[#9b1c20] rounded-full flex items-center justify-center text-white font-semibold text-sm sm:text-base">
+          {review.name.charAt(0)}
+        </div>
+        <div className="flex-1">
+          <h4 className="font-semibold text-gray-900 text-base sm:text-lg">{review.name}</h4>
+          <p className="text-xs sm:text-sm text-gray-600">{review.role}</p>
           <StarRating rating={review.rating} />
         </div>
       </div>
-    </div>
-  </div>
-);
-
-const ReviewsCarousel = () => {
-  const [current, setCurrent] = useState(0);
-  const visibleCount = 3;
-  const total = reviewsData.length;
-  const next = () => setCurrent((prev) => (prev + 1) % total);
-  const prev = () => setCurrent((prev) => (prev - 1 + total) % total);
-  const getVisible = () => {
-    let arr = [];
-    for (let i = 0; i < visibleCount; i++) {
-      arr.push(reviewsData[(current + i) % total]);
-    }
-    return arr;
-  };
-
-  return (
-    <div className="w-full bg-white rounded-2xl p-0 sm:p-6 md:p-8 flex flex-col md:flex-row items-stretch gap-0 md:gap-8 shadow-md">
-      {/* Left image */}
-      <div className="hidden md:block w-1/3 min-w-[260px] max-w-[340px] rounded-l-2xl overflow-hidden relative">
-        <Image src={reviewsData[current].image} alt={reviewsData[current].name} width={400} height={400} className="w-full h-full object-cover" />
-        <button className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#F9AF55] text-white rounded-full p-4 shadow-lg border-4 border-white">
-          <svg width="28" height="28" fill="none" viewBox="0 0 24 24"><path d="M8 5v14l11-7L8 5z" fill="currentColor"/></svg>
-        </button>
-      </div>
-      {/* Reviews */}
-      <div className="flex-1 flex flex-col justify-center">
-        <div className="flex flex-row gap-6 overflow-x-auto py-8 px-4 md:px-0 scrollbar-hide">
-          {getVisible().map((review, idx) => (
-            <ReviewCard key={review.id} review={review} />
-          ))}
-        </div>
-        {/* Navigation */}
-        <div className="flex items-center justify-between px-4 md:px-0 pb-4">
-          <div className="flex items-center gap-2">
-            <button onClick={prev} className="rounded-full border border-gray-300 w-8 h-8 flex items-center justify-center text-[#F9AF55] bg-white hover:bg-gray-100 transition">
-              <BsChevronLeft />
-            </button>
-            <button onClick={next} className="rounded-full border border-gray-300 w-8 h-8 flex items-center justify-center text-[#F9AF55] bg-white hover:bg-gray-100 transition">
-              <BsChevronRight />
-            </button>
-          </div>
-          <div className="flex gap-2 items-center">
-            {Array.from({ length: total }).map((_, i) => (
-              <span
-                key={i}
-                className={`h-1.5 rounded-full transition-all duration-200 ${i === current ? 'w-8 bg-[#F9AF55]' : 'w-4 bg-gray-200'}`}
-              />
-            ))}
-          </div>
-        </div>
-      </div>
+      <p className="text-gray-700 leading-relaxed italic text-sm sm:text-base">&quot;{review.content}&quot;</p>
     </div>
   );
 };
 
-const ReasonCard = ({ title, content, icon }) => (
-  <div className="bg-white rounded-2xl p-4 sm:p-6 border border-gray-100 transition-shadow duration-300 flex flex-col items-start">
-    {icon}
-    <h3 className="text-lg sm:text-xl font-semibold text-[#9b1c20] mb-2 font-outfit">{title}</h3>
+const ReasonCard = ({ title, content }) => (
+  <div className="bg-white rounded-2xl p-4 sm:p-6 border border-gray-100 transition-shadow duration-300">
+    <h3 className="text-lg sm:text-xl font-semibold text-[#9b1c20] mb-4 font-outfit">{title}</h3>
     <p className="text-gray-700 text-sm sm:text-base leading-relaxed">{content}</p>
   </div>
 );
@@ -174,10 +131,116 @@ const StatCard = ({ value, label, color }) => (
   </div>
 );
 
+const ReviewsCarousel = () => {
+  const [currentReview, setCurrentReview] = useState(0);
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  const autoPlayRef = useRef(null);
+
+  const nextReview = () => setCurrentReview((prev) => (prev + 1) % reviewsData.length);
+  const prevReview = () => setCurrentReview((prev) => (prev - 1 + reviewsData.length) % reviewsData.length);
+  const goToReview = (index) => {
+    setCurrentReview(index);
+    setIsAutoPlaying(false);
+  };
+
+  useEffect(() => {
+    if (isAutoPlaying) {
+      autoPlayRef.current = setInterval(nextReview, AUTO_PLAY_INTERVAL);
+    }
+    return () => {
+      if (autoPlayRef.current) clearInterval(autoPlayRef.current);
+    };
+  }, [isAutoPlaying]);
+
+  // compute left, center, right indices for the 3-up view
+  const n = reviewsData.length;
+  const center = currentReview;
+  const left = (center - 1 + n) % n;
+  const right = (center + 1) % n;
+
+  return (
+    <div className="w-full bg-gradient-to-br from-[#9b1c20] to-[#8d0f0f] rounded-2xl p-4 sm:p-6 md:p-8 text-white relative overflow-visible">
+      <div className="absolute top-0 right-0 w-24 sm:w-32 h-24 sm:h-32 bg-white opacity-5 rounded-full -translate-y-12 sm:-translate-y-16 translate-x-12 sm:translate-x-16"></div>
+      <div className="absolute bottom-0 left-0 w-20 sm:w-24 h-20 sm:h-24 bg-white opacity-5 rounded-full translate-y-10 sm:translate-y-12 -translate-x-10 sm:-translate-x-12"></div>
+      
+      <div className="relative z-10">
+        <div className="text-center mb-6 sm:mb-8">
+          <h3 className="text-2xl sm:text-3xl font-bold mb-2 font-outfit">What Our Clients Say</h3>
+          <p className="text-white opacity-80 text-sm sm:text-base">Real stories from satisfied customers</p>
+        </div>
+
+        <div className="mb-6 sm:mb-8">
+          {/* Mobile: single centered card */}
+          <div className="md:hidden w-full flex justify-center">
+            <div className="w-full max-w-xl">
+              <ReviewCard review={reviewsData[center]} variant="center" />
+            </div>
+          </div>
+
+          {/* Desktop: 3-up carousel */}
+          <div className="hidden md:flex items-center justify-center space-x-6 overflow-visible">
+            <ReviewCard review={reviewsData[left]} variant="side" />
+            <ReviewCard review={reviewsData[center]} variant="center" />
+            <ReviewCard review={reviewsData[right]} variant="side" />
+          </div>
+        </div>
+
+        <div className="flex justify-center items-center space-x-4 mb-4 sm:mb-6">
+          <button
+            onClick={() => {
+              prevReview();
+              setIsAutoPlaying(false);
+            }}
+            className="p-1 sm:p-2 rounded-full bg-white text-[#9b1c20] hover:bg-gray-100 transition-colors duration-200"
+            aria-label="Previous review"
+          >
+            <BsChevronLeft className="text-lg sm:text-xl" />
+          </button>
+          
+          <div className="flex space-x-2">
+            {reviewsData.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => goToReview(index)}
+                className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full transition-all duration-300 ${
+                  index === currentReview ? 'bg-white scale-125' : 'bg-white opacity-40'
+                }`}
+                aria-label={`Go to review ${index + 1}`}
+                aria-current={index === currentReview}
+              />
+            ))}
+          </div>
+
+          <button
+            onClick={() => {
+              nextReview();
+              setIsAutoPlaying(false);
+            }}
+            className="p-1 sm:p-2 rounded-full bg-white text-[#9b1c20] hover:bg-gray-100 transition-colors duration-200"
+            aria-label="Next review"
+          >
+            <BsChevronRight className="text-lg sm:text-xl" />
+          </button>
+        </div>
+
+        <div className="text-center">
+          <button
+            onMouseEnter={() => setIsAutoPlaying(false)}
+            onMouseLeave={() => setIsAutoPlaying(true)}
+            className="inline-flex items-center px-4 py-2 sm:px-6 sm:py-3 bg-white text-[#9b1c20] rounded-full font-semibold hover:bg-gray-50 transition-colors duration-200 text-sm sm:text-base"
+            aria-label="Share your experience"
+          >
+            <span>Share Your Experience</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const WhyChooseUs = () => (
   <section className="">
-    <div className="max-w-[1400px] flex flex-col mx-auto px-4 lg:px-0 w-full">
+    <div className="max-w-[1400px] mx-auto px-4 lg:px-0 w-full">
       <div className="flex flex-col gap-6 sm:gap-8 md:gap-16 mb-8 sm:mb-12 md:mb-16">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center">
           <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-8">
@@ -194,16 +257,18 @@ const WhyChooseUs = () => (
         </div>
       </div>
 
-      <div className="grid grid-cols-1 gap-8 sm:gap-10 md:gap-12 items-start">
-        <div>
-          <h3 className="text-2xl font-bold mb-6 text-gray-900">Customer Reviews</h3>
-          <ReviewsCarousel />
-        </div>
-        <div className="space-y-2 grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 md:gap-12 items-start">
+        <div className="space-y-2 ">
           {reasonsData.map((reason, index) => (
-            <ReasonCard key={index} title={reason.title} content={reason.content} icon={reason.icon} />
+            <ReasonCard key={index} title={reason.title} content={reason.content} />
           ))}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 md:gap-8 mt-4 sm:mt-6">
+            {statsData.map((stat, index) => (
+              <StatCard key={index} {...stat} />
+            ))}
+          </div>
         </div>
+        <ReviewsCarousel />
       </div>
     </div>
   </section>
