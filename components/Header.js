@@ -187,14 +187,14 @@ export default function Header() {
                     {/* Social Icons */}
                     <ul className="flex space-x-4 text-base text-gray-100">
                         {[SlSocialFacebook, SlSocialInstagram, SlSocialTwitter, SlSocialYoutube, SlSocialLinkedin].map((Icon, index) => (
-                            <li key={index} className="cursor-pointer hover:text-black hover:scale-105 transition duration-150 ease-in-out">
+                            <li key={index} className="cursor-pointer hover:text-gray-200 hover:scale-105 transition duration-150 ease-in-out">
                                 <Icon />
                             </li>
                         ))}
                     </ul>
 
                     {/* Location */}
-                    <div className="flex items-center space-x-2 text-base text-gray-100 cursor-pointer hover:text-black">
+                    <div className="flex items-center space-x-2 text-base text-gray-100 cursor-pointer hover:text-gray-200">
                         <SlLocationPin className="hover:scale-105 transition duration-150 ease-in-out" />
                         <p className="font-semibold border-b border-dotted border-gray-600 hover:scale-105 transition duration-150 ease-in-out">
                             Address
@@ -205,7 +205,7 @@ export default function Header() {
                     <div className="flex flex-wrap items-center gap-6">
                         <div className="flex flex-col sm:flex-row items-center gap-4">
                             <div className="flex items-center gap-2">
-                                <div className='bg-white rounded-full p-2 text-gray-600'>
+                                <div className=' rounded-full p-2 text-white'>
                                     <SlPhone className="text-base hover:underline transition duration-150 ease-in-out" />
                                 </div>
                                 <a href="tel:8001010" className="font-normal text-base text-white hover:underline transition hover:text-gray-200">
@@ -217,7 +217,7 @@ export default function Header() {
                                 </a>
                             </div>
                             <div className="flex items-center gap-2">
-                                <div className='bg-white rounded-full p-2 text-gray-600'>
+                                <div className='b rounded-full p-2 text-white'>
                                     <SlEnvolope className="text-base hover:underline transition duration-150 ease-in-out" />
                                 </div>
                                 <a href="mailto:info@united.co.sz" className="font-normal text-base text-white hover:underline transition hover:text-gray-200">
@@ -229,7 +229,7 @@ export default function Header() {
                 </div>
 
                 {/* Bottom Section - Static without scroll changes */}
-                <div className="w-full mx-auto flex flex-wrap items-center justify-between lg:px-6 gap-y-4 py-1 bg-white border-b-4 border-[#9b1c20]">
+                <div className="w-full py-4 mx-auto flex flex-wrap items-center justify-between lg:px-6 gap-y-4  bg-white border-b-4 border-[#9b1c20]">
                     {/* Logo */}
                     <div className="flex items-center ml-4">
                         <div className="w-28">
@@ -244,7 +244,7 @@ export default function Header() {
                     </div>
 
                     {/* Desktop Navigation - Hidden on mobile */}
-                    <div className="hidden lg:block pr-14 -translate-x-44 transition-all duration-300 opacity-100">
+                    <div className="hidden lg:block pr-14  transition-all duration-300 opacity-100">
                         <ul className='flex items-center gap-8 text-sm'>
                             <li className='font-semibold cursor-pointer hover:underline transition duration-150 ease-in-out'>
                                 <Link href="/">HOME</Link>
@@ -325,8 +325,12 @@ export default function Header() {
                     </div>
 
                     {/* Mobile Contact Button - Visible only on mobile */}
+
                     <div className="flex items-center gap-4 mr-4">
-                        <a href="/client-area" className="hidden lg:inline-block px-4 py-2 bg-[#9b1c20] text-white rounded font-semibold">Client Area</a>
+                        {/* Desktop: Login & Sign Up */}
+                        <a href="/login" className="hidden lg:inline-block px-8 py-2 bg-white text-[#9b1c20] border border-[#9b1c20] rounded-full font-semibold hover:bg-[#9b1c20] hover:text-white transition">Login</a>
+                        <a href="/signup" className="hidden lg:inline-block px-8 py-2 bg-[#9b1c20] text-white rounded-full font-semibold hover:bg-white hover:text-[#9b1c20] border border-[#9b1c20] transition">Sign Up Today</a>
+                        {/* Mobile: Menu Button */}
                         <button
                             onClick={toggleDrawer}
                             className="lg:hidden p-2 mr-4"

@@ -7,35 +7,35 @@ import { SlDoc, SlEnvolope, SlInfo, SlLink, SlPhone, SlTarget } from 'react-icon
 
 function Agent() {
   return (
-    <div className="bg-gray-100 py-4 ">
-      <div className="font-outfit max-w-[1400px] mx-auto  px-2 lg:px-0  w-full space-y-6 sm:space-y-8">
-        <div className="flex flex-col gap-6 sm:gap-8 md:gap-16">
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-center">
-            <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-8">
-              <div className="text-xl sm:text-2xl min-w-xs font-semibold text-gray-500">
-                <p>Speak to an Agent</p>
-              </div>
-              <div className="text-xl sm:text-2xl md:text-3xl max-w-3xl">
-                <p>
-                  <span className="text-[#8B8B8B] font-light">Connect</span> with one of our agents to explore tailored solutions.
-                </p>
+    <div className="py-4 ">
+      <div className="font-outfit max-w-[1400px]  px-2 mx-auto  lg:px-0 w-full space-y-6 sm:space-y-8 text-white">
+        <div className=" mx-auto">
+          <div className="flex flex-col gap-2  mb-8 ">
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center">
+              <div className="flex  flex-col md:flex-row md:items-center ">
+                <div className="text-xl text-[#9b1c20] sm:text-2xl min-w-xs font-semibold ">
+                  <p>Speak to an Agent</p>
+                </div>
+                <div className="text-xl sm:text-2xl md:text-3xl max-w-3xl">
+                  <p className='text-[#9b1c20]'>
+                    <span className="text-[#9b1c20] font-light">Connect</span> with one of our agents to explore tailored solutions.
+                  </p>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div className=" mx-auto">
-          <div className="bg-white  flex flex-col lg:flex-row justify-between">
+          <div className="bg-[#9b1c20] rounded-2xl items-center flex flex-col lg:flex-row justify-between">
             <div className="space-y-6 py-6 sm:pt-8 px-4 sm:px-6 lg:px-8 w-full">
-              <div className="flex flex-col gap-4 sm:gap-6 md:gap-8 font-semibold text-[#9b1c20] text-xl sm:text-2xl">
+              <div className="flex flex-col gap-4 sm:gap-6 md:gap-8 font-semibold text-white text-xl sm:text-2xl">
                 <p>Request a Quote</p>
               </div>
               <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 w-full">
                 <input
                   type="text"
                   placeholder="Enter Mobile Number"
-                  className="bg-white p-2 sm:p-3 px-4 rounded-full border border-red-200 text-sm sm:text-base w-full sm:w-auto"
+                  className="bg-[#9b1c20] p-2 sm:p-3 px-4 rounded-full border border-white text-sm sm:text-base w-full sm:w-auto text-white placeholder-white"
                 />
-                <select className="bg-white p-2 sm:p-3 px-4 rounded-full border border-red-200 text-sm sm:text-base w-full sm:w-auto">
+                <select className="bg-[#9b1c20] p-2 sm:p-3 px-4 rounded-full border border-white text-sm sm:text-base w-full sm:w-auto text-white">
                   <option value="">Select Product</option>
                   <option value="legal-insurance">Legal Insurance</option>
                   <option value="funeral-assurance">Funeral Assurance</option>
@@ -46,29 +46,29 @@ function Agent() {
                   <option value="life-assurance">Life Assurance</option>
                   <option value="general-insurance">General Insurance</option>
                 </select>
-                <button className="bg-[#9b1c20] space-x-2 text-white px-4 sm:px-6 lg:px-16 py-2 sm:py-3 rounded-full h-12 shadow-md flex items-center justify-center text-sm sm:text-base">
+                <button className="bg-white space-x-2 text-[#9b1c20] px-4 sm:px-6 lg:px-16 py-2 sm:py-3 rounded-full h-12 shadow-md flex items-center justify-center text-sm sm:text-base font-bold">
                   <SlPhone />
                   <p className="whitespace-nowrap">Send Callback</p>
                 </button>
               </div>
               <div className="space-y-4">
-                <p className="font-bold text-gray-500 text-sm">Quick Links</p>
+                <p className="font-bold text-white text-sm">Quick Links</p>
                 <ul className="flex flex-wrap gap-4 sm:gap-6">
                   <Link href="/claims">
-                    <li className="font-semibold text-gray-700 cursor-pointer hover:underline flex items-center space-x-2 text-sm sm:text-base">
+                    <li className="font-semibold text-white cursor-pointer hover:underline flex items-center space-x-2 text-sm sm:text-base">
                       <SlDoc />
                       <p>File a Claim</p>
                     </li>
                   </Link>
-                  <li className="font-semibold text-gray-700 cursor-pointer hover:underline flex items-center space-x-2 text-sm sm:text-base">
+                  <li className="font-semibold text-white cursor-pointer hover:underline flex items-center space-x-2 text-sm sm:text-base">
                     <SlTarget />
                     <p>Track a Claim</p>
                   </li>
-                  <li className="font-semibold text-gray-700 cursor-pointer hover:underline flex items-center space-x-2 text-sm sm:text-base">
+                  <li className="font-semibold text-white cursor-pointer hover:underline flex items-center space-x-2 text-sm sm:text-base">
                     <SlInfo />
                     <p>Get Proof of Insurance</p>
                   </li>
-                  <li className="font-semibold text-gray-700 cursor-pointer hover:underline flex items-center space-x-2 text-sm sm:text-base">
+                  <li className="font-semibold text-white cursor-pointer hover:underline flex items-center space-x-2 text-sm sm:text-base">
                     <SlLink />
                     <p>Make Payment</p>
                   </li>
@@ -76,26 +76,26 @@ function Agent() {
                 <div className="flex flex-wrap items-center gap-4 sm:gap-6">
                   <div className="flex sm:flex-col lg:flex-row  items-center gap-4">
                     <div className="flex items-center gap-2">
-                      <SlPhone className="text-sm sm:text-base hover:underline transition duration-150 ease-in-out" />
+                      <SlPhone className="text-sm sm:text-base hover:underline transition duration-150 ease-in-out text-white" />
                       <a
                         href="tel:8001010"
-                        className="font-semibold text-sm sm:text-base text-[#9b1c20] hover:underline transition hover:text-[#F7941D]"
+                        className="font-semibold text-sm sm:text-base text-white hover:underline transition hover:text-[#F7941D]"
                       >
                         800 1010
                       </a>
-                      <span className="text-[#9b1c20] hidden sm:inline">|</span>
+                      <span className="text-white hidden sm:inline">|</span>
                       <a
                         href="tel:+26825086000"
-                        className="font-semibold text-sm sm:text-base text-[#9b1c20] hover:underline transition hover:text-[#F7941D]"
+                        className="font-semibold text-sm sm:text-base text-white hover:underline transition hover:text-[#F7941D]"
                       >
                         (+268) 2508 6000
                       </a>
                     </div>
                     <div className="flex items-center gap-2">
-                      <SlEnvolope className="text-sm sm:text-base hover:underline transition duration-150 ease-in-out" />
+                      <SlEnvolope className="text-sm sm:text-base hover:underline transition duration-150 ease-in-out text-white" />
                       <a
                         href="mailto:info@united.co.sz"
-                        className="font-semibold text-sm sm:text-base text-[#9b1c20] hover:underline transition hover:text-[#F7941D]"
+                        className="font-semibold text-sm sm:text-base text-white hover:underline transition hover:text-[#F7941D]"
                       >
                         info@united.co.sz
                       </a>
@@ -108,9 +108,9 @@ function Agent() {
               <Image
                 src={'/ad.jpg'}
                 alt="Advertisement"
-                height={200}
-                width={700}
-                className="  w-full h-auto max-h-[400px] object-cover"
+                height={500}
+                width={1000}
+                className="w-full h-auto max-h-[800px] object-cover  border-white"
               />
             </div>
           </div>

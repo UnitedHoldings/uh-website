@@ -73,7 +73,7 @@ export default function Home() {
   };
 
   return (
-    <div className='flex flex-col bg-[#9b1c20] pb-16 lg:space-y-16'>
+    <div className='flex flex-col  pb-16 lg:space-y-16'>
       <div className='relative lg:px-2 mb-4 lg:mb-8 flex flex-col items-center'>
         <Hero 
           currentSlide={currentSlide} 

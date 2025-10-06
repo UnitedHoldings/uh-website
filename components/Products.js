@@ -12,17 +12,17 @@ const productData = [
 ];
 
 const ProductCard = ({ title, desc, img }) => (
-    <div className=" bg-[#9b1c20] group-hover:scale-105 border-b-4 border-[#9b1c20] relative  flex flex-col h-full group cursor-pointer transition-all duration-500">
-        <div className=" h-72  flex items-center justify-center overflow-hidden">
+    <div className=" bg-[#80161a] rounded-2xl group-hover:scale-105 border-b-4 border-[#9b1c20] relative  flex flex-col h-full group cursor-pointer transition-all duration-500">
+        <div className=" h-[300px]  flex items-center justify-center overflow-hidden">
             <Image
                 src={img}
                 alt={title}
                 width={320}
                 height={192}
-                className="object-cover w-full h-full transition-transform duration-500 delay-300 group-hover:scale-110"
+                className="object-cover rounded-t-2xl  w-full h-full transition-transform duration-500 delay-300 group-hover:scale-110"
             />
         </div>
-        <div className="flex flex-col items-start p-4  flex-grow text-white">
+        <div className="flex flex-col items-start p-4  flex-grow text-white ">
             <h3 className="text-xl font- font-outfit">{title}</h3>
         </div>
        
@@ -151,7 +151,7 @@ function Products() {
     }, [currentPosition, maxScroll]);
 
     return (
-        <div className='bg-[#740e12] py-8'>
+        <div className=' py-8 bg-[#9b1c20]'>
             <div className="font-outfit max-w-[1400px] mx-auto px-4 lg:px-0  w-full space-y-8  overflow-hidden">
                 <div className="flex flex-col gap-4 md:gap-16">
                     <div className="flex flex-col md:flex-row justify-between items-start md:items-center">

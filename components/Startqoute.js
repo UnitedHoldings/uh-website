@@ -12,6 +12,7 @@ import { PiCrossLight } from "react-icons/pi";
 import { GoLaw } from "react-icons/go";
 import { GrUserWorker } from "react-icons/gr";
 import Agent from './Agent';
+import ProductsData from './ProductsData';
 import { BsPlus } from 'react-icons/bs';
 
 // Reusable Input Field Component
@@ -89,19 +90,19 @@ const CheckboxGroup = ({ label, name, options, value = [], onChange, className =
 // Reusable Tab Button Component
 const TabButton = ({ id, label, icon, active, onClick }) => (
     <button
-        className={`flex flex-col items-center justify-end h-[150px] relative w-full  py-4 px-2 bg-[#9b1c20]  inset-shadow-2xs shadow  transition-all duration-200 ${active
-            ? ' text-white bg-[#9b1c20] shadow-lg transform -translate-y-1'
-            : ' bg-white text-gray-700 hover:bg-gray-200 hover:shadow-md'
+        className={`flex flex-col items-center justify-center h-[150px] w-[150px] rounded-full relative   py-4 px-2   transition-all duration-200 ${active
+            ? ' text-[#9b1c20] bg-white shadow-lg transform -translate-y-1'
+            : '  text-white border border-white hover:bg-[#801619] hover:-translate-y-2 transition-all  ease-in-out hover:shadow-md'
             }`}
         onClick={onClick}
     >
 
-        <div className=' flex flex-col h-full  items-center justify-between w-full '>
-            <div className='w-full flex justify-start'>
-                <div className="text-4xl mb-2  top-0 text-white bg-[#9b1c20] p-2 rounded-full left-0">{icon}</div>
+        <div className=' flex flex-col h-full  items-center justify-center  w-full '>
+            <div className='w-full '>
+                <div className="text-6xl   top-0  flex justify-center p-2 rounded-full left-0">{icon}</div>
             </div>
-            <div className='w-full flex justify-start'>
-                <span className="font-medium text-2xl bg">{label}</span>
+            <div className='w-full '>
+                <span className="font-medium text-lg bg">{label}</span>
             </div>
         </div>
     </button>
@@ -239,14 +240,14 @@ export default function StartQuote() {
     };
 
     const tabs = [
-        { id: 'life', label: 'Life', icon: <IoHeartOutline className="text-2xl" /> },
-        { id: 'car', label: 'Car', icon: <IoCarSportOutline className="text-2xl" /> },
-        { id: 'home', label: 'Home', icon: <IoHomeOutline className="text-2xl" /> },
-        { id: 'business', label: 'Business', icon: <IoBriefcaseOutline className="text-2xl" /> },
-        { id: 'funeral', label: 'Funeral', icon: <PiCrossLight className="text-2xl" /> },
-        { id: 'legal', label: 'Legal', icon: <GoLaw className="text-2xl" /> },
-        { id: 'professional', label: 'Professional', icon: <GrUserWorker className="text-2xl" /> },
-        { id: 'micro', label: 'Micro Loans', icon: <IoCashOutline className="text-2xl" /> },
+        { id: 'life', label: 'Life', icon: <IoHeartOutline className="text-5xl" /> },
+        { id: 'car', label: 'Car', icon: <IoCarSportOutline className="text-5xl" /> },
+        { id: 'home', label: 'Home', icon: <IoHomeOutline className="text-5xl" /> },
+        { id: 'business', label: 'Business', icon: <IoBriefcaseOutline className="text-5xl" /> },
+        { id: 'funeral', label: 'Funeral', icon: <IoHeartCircleOutline className="text-5xl" /> },
+        { id: 'legal', label: 'Legal', icon: <IoBriefcaseOutline className="text-5xl" /> },
+        { id: 'professional', label: 'Professional', icon: <IoHomeOutline className="text-5xl" /> },
+        { id: 'micro', label: 'Micro Loans', icon: <IoCashOutline className="text-5xl" /> },
     ];
 
     // Render the appropriate form based on activeTab using reusable components
@@ -392,30 +393,91 @@ export default function StartQuote() {
         }
     };
 
-    return (
-        <div className="min-h-screen  w-full mx-auto bg-[#9b1c20]  flex flex-col ">
-            {/* Header */}
-            <header className="max-w-[1400px] w-full  border-b border-gray-200 mx-auto">
-                <div className="container mx-auto  py-4 flex pb-12 justify-between items-center">
-                    <div className="text-5xl text-white">
-                        <p> Lets get you the <span className="text-white font-bold">Cover</span> You Deserve... <br />and<span className="text-white font-bold"> Sign you up</span>  Today!</p>
-                    </div>
-                    <nav className="hidden md:flex space-x-6">
-                        <a href="#home" className="text-gray-600 hover:text-[#9b1c20] transition-colors">Home</a>
-                        <a href="#insurance" className="text-gray-600 hover:text-[#9b1c20] transition-colors">Insurance</a>
-                        <a href="#claims" className="text-gray-600 hover:text-[#9b1c20] transition-colors">Claims</a>
-                        <a href="#contact" className="text-gray-600 hover:text-[#9b1c20] transition-colors">Contact</a>
-                    </nav>
 
+    const statsData = [
+        { value: 70, label: "Years in Business", color: "text-[#9b1c20]", prefix: "+" },
+        { value: 3, label: "Group Companies", color: "text-[#9b1c20]" },
+        { value: 24, label: "Customer Support", color: "text-[#9b1c20]", suffix: "/7" },
+        { value: 98, label: "Claim Satisfaction", color: "text-[#9b1c20]", suffix: "%" },
+        { value: 50000, label: "Happy Clients", color: "text-[#9b1c20]", prefix: "+" },
+        { value: 100, label: "% Swazi Owned", color: "text-[#9b1c20]", suffix: "%" },
+
+    ];
+
+    // Carousel state
+    const [statIndex, setStatIndex] = useState(0);
+
+    // Animate stat value
+    const [displayValue, setDisplayValue] = useState(statsData[0].value);
+    React.useEffect(() => {
+        let start = 0;
+        let end = statsData[statIndex].value;
+        let duration = 1000;
+        let startTime = null;
+        let prefix = statsData[statIndex].prefix || '';
+        let suffix = statsData[statIndex].suffix || '';
+        function animateCountUp(ts) {
+            if (!startTime) startTime = ts;
+            const progress = Math.min((ts - startTime) / duration, 1);
+            const current = Math.floor(progress * (end - start) + start);
+            setDisplayValue(current);
+            if (progress < 1) {
+                requestAnimationFrame(animateCountUp);
+            } else {
+                setDisplayValue(end);
+            }
+        }
+        requestAnimationFrame(animateCountUp);
+    }, [statIndex]);
+
+    // Carousel auto-advance
+    React.useEffect(() => {
+        const interval = setInterval(() => {
+            setStatIndex((prev) => (prev + 1) % statsData.length);
+        }, 3500);
+        return () => clearInterval(interval);
+    }, [statsData.length]);
+
+    const StatCarousel = () => {
+        const stat = statsData[statIndex];
+        // Format number with commas
+        const formatNumber = (num) => {
+            if (typeof num === 'number') {
+                return num.toLocaleString();
+            }
+            return num;
+        };
+        return (
+            <div className="flex flex-col items-center justify-center min-w-[180px] px-8 py-4">
+                <div className={`text-5xl font-bold ${stat.color}`}>{stat.prefix || ''}{formatNumber(displayValue)}{stat.suffix || ''}</div>
+                <div className="text-gray-600 text-base mt-2 text-center">{stat.label}</div>
+            </div>
+        );
+    };
+
+    return (
+        <div className="  w-full mx-auto text-[#9b1c20]  flex flex-col ">
+            {/* Header */}
+            <header className="max-w-[1400px] w-full border-b border-gray-200 mx-auto">
+                <div className="container mx-auto px-4 pb-8 flex  md:flex-row justify-between items-center ">
+                    <div className="text-4xl text-[#9b1c20]  md:mb-0">
+                        <p> Lets get you the <span className="text-[#9b1c20] font-semibold">Cover</span> You Deserve... <br />and<span className="text-[#9b1c20] font-semibold"> Sign you up</span>  Today!</p>
+                    </div>
+                    <StatCarousel />
                 </div>
             </header>
 
+
             {/* Main Content */}
-            <main className="w-full px-8 py-8 bg-[#9b1c20]">
-                <div className=" max-w-[1400px] mx-auto">
+            <main className="w-full   bg-[#9b1c20]">
+                <div className=" max-w-[1400px] mx-auto  py-6 px-6 rounded-2xl">
                     {/* Insurance Type Tabs */}
-                    <p className='text-xl text-white font-semibold'> Products</p>
-                    <div className="flex gap-2  justify-between w-full  pt-4 pb-4 rounded-lg ">
+                    <div className='flex  items-start justify-between  '>
+
+                        <p className='text-2xl max-w-sm mb-8  text-white '> Explore our wide range of offerings tailored to your insurance needs</p>
+
+                    </div>
+                    <div className="gap-2 grid  grid-cols-3 lg:grid-cols-8  w-full  pt-4 pb-4 rounded-lg ">
                         {tabs.map((tab) => (
                             <TabButton
                                 key={tab.id}
@@ -427,46 +489,14 @@ export default function StartQuote() {
                             />
                         ))}
                     </div>
+                    <div className='flex  items-start justify-end  '>
+                        <p className='text-xl underline max-w-sm mt-8 text-end text-white '> View all of our products</p>
+
+                    </div>
 
                     {/* Quote Form */}
-                    <div className='bg-white  p-6  '>
 
-                        <form className="space-y-6  border border-gray-200 rounded-lg  py-8 px-8  " onSubmit={handleSubmit}>
-                            {/* Common Fields */}
-                            <div className='flex font-bold text-[#9b1c20] text-2xl pb-6'>
-                                <p>Please enter your details to get a quote</p>
-                            </div>
-                            <div className="grid grid-cols-3 md:grid-cols-3 gap-6 mb-6">
-                                <InputField label="Full Name" name="name" value={formData.name} onChange={handleInputChange} required />
-                                <InputField label="Email Address" name="email" type="email" value={formData.email} onChange={handleInputChange} required />
-                                <InputField label="Phone Number" name="phone" type="tel" value={formData.phone} onChange={handleInputChange} required />
-                            </div>
-
-                            {/* Insurance-Specific Fields */}
-                            {renderForm()}
-
-                            <div className='flex space-x-4'>
-                                <button
-                                    type="submit"
-                                    className="w-full text-white hover:bg-gray-100 bg-[#9b1c20] font-bold py-3 px-4 rounded-full transition-colors shadow-md mt-6"
-                                >
-                                    Sign me Up
-                                </button>
-                                <button
-                                    type="submit"
-                                    className="w-full text-[#9b1c20] hover:bg-gray-100 border border-[#9b1c20] font-bold py-3 px-4 rounded-full transition-colors shadow-md mt-6"
-                                >
-                                    Get My Quote
-                                </button>
-                            </div>
-                        </form>
-                        <div className='px-8 py-8 space-y-1'>
-                            <p className='font-black text-sm text-gray-700'>Disclaimer</p>
-                            <p className='text-xs text-gray-600'>The quote provided is an indicative estimate based on the information you supplied and is not a binding insurance contract. Final terms, coverage and premium are subject to verification, underwriting and acceptance by United Holdings. Additional exclusions, limits, fees or taxes may apply. Submitting a quote request does not create coverage. Provide accurate information — misrepresentation may affect eligibility or claims. For a binding policy you must complete a formal proposal, payment and receive official policy documents. By requesting a quote you consent to processing your personal data in accordance with our Privacy Policy. For help, please use the Contact page.</p>
-                        </div>
-                    </div>
                 </div>
-
             </main>
 
 
