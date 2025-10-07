@@ -57,7 +57,7 @@ export default function Contact() {
           <div className="max-w-[1100px] mx-auto px-4 w-full">
             <div className="bg-[#9b1c20]  px-8 flex flex-col  mx-auto text-white py-8">
               <div className=' left-[13%] space-y-4 top-[30%] text-white '>
-                <p className='text-4xl max-w-96 font-semibold'>We're here to help</p>
+                <p className='text-4xl max-w-96 font-semibold'>We&apos;re here to help</p>
                 <p className='text-sm font-light'>Reach out to us for any questions or concerns.</p>
               </div>
             
@@ -154,7 +154,7 @@ export default function Contact() {
                 <div>
                   <h4 className="font-semibold text-lg">Email Us</h4>
                   <a href="mailto:info@united.co.sz" className="text-[#9b1c20] text-lg font-semibold">info@united.co.sz</a>
-                  <p className="text-gray-600">We'll respond within 24 hours</p>
+                  <p className="text-gray-600">We&apos;ll respond within 24 hours</p>
                 </div>
               </div>
 
@@ -273,7 +273,7 @@ export default function Contact() {
         <div className="max-w-[1400px] mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-semibold text-gray-800 mb-4">Other Ways to Connect</h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">We're available through multiple channels to serve you better</p>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">We&apos;re available through multiple channels to serve you better</p>
           </div>
           
           <div className="grid grid-cols-3 md:grid-cols-3 gap-8">
