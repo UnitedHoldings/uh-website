@@ -40,23 +40,30 @@ export default function Contact() {
   ];
 
   return (
-    <div className="min-h-screen font-outfit  mx-auto  ">
+    <div className="min-h-screen font-outfit mx-auto">
       <div className='bg-[#881a1e] h-8 w-full' />
       <div className='bg-[#9b1c20] py-4'>
-        <header className=" max-w-[1400px] mx-auto px-4">
+        <header className="max-w-[1400px] mx-auto px-4">
           <h1 className="text-2xl md:text-4xl font-semibold text-white">Contact Us</h1>
-          <p className="text-sm text-white ">Get in touch with us for any inquiries or support.</p>
+          <p className="text-sm text-white">Get in touch with us for any inquiries or support.</p>
         </header>
       </div>
       
       <div className='relative'>
         <div className='bg-gradient-to-r absolute from-[#9b1c20]/60 to-[#9b1c20]/20 h-full w-full' />
-        <Image src={'/claims.png'} alt="Contact" width={1920} height={400} className="w-full h-[320px] object-cover" />
+        <Image 
+          src="/claims.png" 
+          alt="Contact" 
+          width={1920} 
+          height={400} 
+          className="w-full h-[320px] object-cover"
+          priority
+        />
         
-        <div className="absolute right-[10%] top-[20%]   flex items-center">
+        <div className="absolute right-[10%] top-[20%] flex items-center">
           <div className="max-w-[1100px] mx-auto px-4 w-full">
-            <div className="bg-[#9b1c20]  px-8 flex flex-col  mx-auto text-white py-8">
-              <div className=' left-[13%] space-y-4 top-[30%] text-white '>
+            <div className="bg-[#9b1c20] px-8 flex flex-col mx-auto text-white py-8">
+              <div className='left-[13%] space-y-4 top-[30%] text-white'>
                 <p className='text-4xl max-w-96 font-semibold'>We&apos;re here to help</p>
                 <p className='text-sm font-light'>Reach out to us for any questions or concerns.</p>
               </div>
@@ -65,7 +72,7 @@ export default function Contact() {
                 <input 
                   type="text" 
                   placeholder="Your Name" 
-                  className="rounded-full px-4 py-2 min-w-[300px] bg-white border  text-gray-800"
+                  className="rounded-full px-4 py-2 min-w-[300px] bg-white border text-gray-800"
                 />
                 <input 
                   type="email" 
@@ -82,21 +89,21 @@ export default function Contact() {
       </div>
 
       <div className='max-w-[1400px] px-4 mt-8 mb-16 space-y-6 mx-auto'>
-        <div className="flex  justify-between items-center md:flex-row md:items-center gap-4 md:gap-8">
+        <div className="flex justify-between items-center md:flex-row md:items-center gap-4 md:gap-8">
           <p className='max-w-[800px] text-2xl'>We have multiple branches across the country. Find the one nearest to you or reach out through our contact channels.</p>
           <div>
-            <button className='border-[#9b1c20] border  text-[#9b1c20] py-2 px-8 rounded-full' >
+            <button className='border-[#9b1c20] border text-[#9b1c20] py-2 px-8 rounded-full'>
               Download Brochure
             </button>
           </div>
         </div>
       </div>
 
-      <div className="bg-white  overflow-hidden">
-        <div className='max-w-[1400px] px-4 mt-8 mb-16 space-y-6 mx-auto flex'>
-          <div className='min-w-4/12'>
+      <div className="bg-white overflow-hidden">
+        <div className='max-w-[1400px] px-4 mt-8 mb-16 space-y-6 mx-auto flex flex-col lg:flex-row'>
+          <div className='lg:min-w-[400px] lg:pr-8'>
             <p className='font-semibold text-3xl'>Get in Touch</p>
-            <div className="flex flex-col  w-full justify-between py-6 ">
+            <div className="flex flex-col w-full justify-between py-6">
               <nav className="flex gap-2">
                 <button
                   onClick={() => setActiveTab('branches')}
@@ -174,7 +181,7 @@ export default function Contact() {
             </div>
           </div>
 
-          <div className='w-full border-l border-gray-400 pl-6'>
+          <div className='w-full lg:border-l lg:border-gray-400 lg:pl-6 mt-8 lg:mt-0'>
             {activeTab === 'branches' ? (
               <div className="space-y-6">
                 <div className="h-[500px] rounded-lg overflow-hidden">
@@ -276,7 +283,7 @@ export default function Contact() {
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">We&apos;re available through multiple channels to serve you better</p>
           </div>
           
-          <div className="grid grid-cols-3 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="text-center p-6">
               <div className="bg-[#9b1c20] w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                 <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
