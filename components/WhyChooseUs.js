@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import { FaShieldAlt, FaHandshake, FaGlobeAfrica } from 'react-icons/fa';
 import { SlStar } from 'react-icons/sl';
 import { BsChevronLeft, BsChevronRight } from 'react-icons/bs';
 
@@ -9,6 +10,24 @@ const AUTO_PLAY_INTERVAL = 5000;
 const MAX_STARS = 5;
 
 // Data
+const reasonsData = [
+  {
+    title: "70+ Years of Trusted Service",
+    content: "We're the right partner you can choose with over 70 years of doing business in the Kingdom of Eswatini. We're your trusted brand here to provide not just products and services, but rather the peace of mind to get on with the things in life that really matter to you.",
+    icon: <FaShieldAlt className="text-[#9b1c20] text-3xl mb-2" aria-label="Trusted Service" />
+  },
+  {
+    title: "Serving you with Integrity",
+    content: "We don't do insurance for ourselves, we do it for your peace of mind. Our commitment to ethical practices and transparent dealings ensures you always get the best service possible.",
+    icon: <FaHandshake className="text-[#9b1c20] text-3xl mb-2" aria-label="Integrity" />
+  },
+  {
+    title: "Swazi Insurance for the International Market",
+    content: "With over 70 years of doing business in Eswatini, United Holdings is best suited and experienced to provide uniquely tailored solutions that understand both local needs and global standards.",
+    icon: <FaGlobeAfrica className="text-[#9b1c20] text-3xl mb-2" aria-label="International Market" />
+  },
+];
+// Reviews Data
 const reviewsData = [
   {
     id: 1,
@@ -44,21 +63,6 @@ const reviewsData = [
   }
 ];
 
-const reasonsData = [
-  {
-    title: "70+ Years of Trusted Service",
-    content: "We're the right partner you can choose with over 70 years of doing business in the Kingdom of Eswatini. We're your trusted brand here to provide not just products and services, but rather the peace of mind to get on with the things in life that really matter to you."
-  },
-  {
-    title: "Serving you with Integrity",
-    content: "We don't do insurance for ourselves, we do it for your peace of mind. Our commitment to ethical practices and transparent dealings ensures you always get the best service possible."
-  },
-  {
-    title: "Swazi Insurance for the International Market",
-    content: "With over 70 years of doing business in Eswatini, United Holdings is best suited and experienced to provide uniquely tailored solutions that understand both local needs and global standards."
-  },
- 
-];
 
 const statsData = [
   { value: "70+", label: "Years of Experience", color: "text-[#9b1c20]" },
@@ -117,10 +121,11 @@ const ReviewCard = ({ review, variant = 'center' }) => {
   );
 };
 
-const ReasonCard = ({ title, content }) => (
-  <div className="bg-white rounded-2xl p-4 sm:p-6 border border-gray-100 transition-shadow duration-300">
-    <h3 className="text-lg sm:text-xl font-semibold text-[#9b1c20] mb-4 font-outfit">{title}</h3>
-    <p className="text-gray-700 text-sm sm:text-base leading-relaxed">{content}</p>
+const ReasonCard = ({ title, content, icon }) => (
+  <div className="bg-[#9b1c20] rounded-2xl p-4 sm:p-6 border border-gray-100 transition-shadow duration-300 flex flex-col items-start">
+    <div className='bg-white mb-8 flex items-center justify-center pt-1 rounded-full h-16 w-16'>{icon}</div>
+    <h3 className="text-lg sm:text-xl font-semibold text-white  mb-4 font-outfit">{title}</h3>
+    <p className="text-white/80 font-light text-sm sm:text-base leading-relaxed">{content}</p>
   </div>
 );
 
@@ -162,7 +167,7 @@ const ReviewsCarousel = () => {
     <div className="w-full bg-gradient-to-br from-[#9b1c20] to-[#8d0f0f] rounded-2xl p-4 sm:p-6 md:p-8 text-white relative overflow-visible">
       <div className="absolute top-0 right-0 w-24 sm:w-32 h-24 sm:h-32 bg-white opacity-5 rounded-full -translate-y-12 sm:-translate-y-16 translate-x-12 sm:translate-x-16"></div>
       <div className="absolute bottom-0 left-0 w-20 sm:w-24 h-20 sm:h-24 bg-white opacity-5 rounded-full translate-y-10 sm:translate-y-12 -translate-x-10 sm:-translate-x-12"></div>
-      
+
       <div className="relative z-10">
         <div className="text-center mb-6 sm:mb-8">
           <h3 className="text-2xl sm:text-3xl font-bold mb-2 font-outfit">What Our Clients Say</h3>
@@ -171,18 +176,13 @@ const ReviewsCarousel = () => {
 
         <div className="mb-6 sm:mb-8">
           {/* Mobile: single centered card */}
-          <div className="md:hidden w-full flex justify-center">
-            <div className="w-full max-w-xl">
+          <div className="md:hidden w-full flex justify-center ">
+            <div className="">
               <ReviewCard review={reviewsData[center]} variant="center" />
             </div>
           </div>
 
-          {/* Desktop: 3-up carousel */}
-          <div className="hidden md:flex items-center justify-center space-x-6 overflow-visible">
-            <ReviewCard review={reviewsData[left]} variant="side" />
-            <ReviewCard review={reviewsData[center]} variant="center" />
-            <ReviewCard review={reviewsData[right]} variant="side" />
-          </div>
+          
         </div>
 
         <div className="flex justify-center items-center space-x-4 mb-4 sm:mb-6">
@@ -196,15 +196,14 @@ const ReviewsCarousel = () => {
           >
             <BsChevronLeft className="text-lg sm:text-xl" />
           </button>
-          
+
           <div className="flex space-x-2">
             {reviewsData.map((_, index) => (
               <button
                 key={index}
                 onClick={() => goToReview(index)}
-                className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full transition-all duration-300 ${
-                  index === currentReview ? 'bg-white scale-125' : 'bg-white opacity-40'
-                }`}
+                className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full transition-all duration-300 ${index === currentReview ? 'bg-white scale-125' : 'bg-white opacity-40'
+                  }`}
                 aria-label={`Go to review ${index + 1}`}
                 aria-current={index === currentReview}
               />
@@ -244,12 +243,12 @@ const WhyChooseUs = () => (
       <div className="flex flex-col gap-6 sm:gap-8 md:gap-16 mb-8 sm:mb-12 md:mb-16">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center">
           <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-8">
-            <div className="text-xl sm:text-2xl min-w-xs  font-semibold text-gray-500">
-              <p>Choose <span className="text-[#9b1c20]">United Holdings</span></p>
+            <div className="text-xl sm:text-2xl min-w-xs text-[#9b1c20] font-semibold ">
+              <p>Choose <span className="">United Holdings</span></p>
             </div>
-            <div className="text-xl sm:text-2xl md:text-3xl max-w-3xl">
+            <div className="text-xl sm:text-2xl md:text-3xl max-w-3xl text-[#9b1c20]">
               <p>
-                <span className="text-[#8B8B8B] font-light">Discover why thousands of Swazis </span>
+                <span className="text-[#9b1c20] font-light">Discover why thousands of Swazis </span>
                 trust us with their insurance and financial needs.
               </p>
             </div>
@@ -257,16 +256,12 @@ const WhyChooseUs = () => (
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 md:gap-12 items-start">
-        <div className="space-y-2 ">
+      <div className=" flex flex-col items-center">
+        <div className="space-y-2 grid grid-cols-1 lg:grid-cols-3 gap-6 mb-4">
           {reasonsData.map((reason, index) => (
-            <ReasonCard key={index} title={reason.title} content={reason.content} />
+            <ReasonCard key={index} title={reason.title} content={reason.content} icon={reason.icon} />
           ))}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 md:gap-8 mt-4 sm:mt-6">
-            {statsData.map((stat, index) => (
-              <StatCard key={index} {...stat} />
-            ))}
-          </div>
+          
         </div>
         <ReviewsCarousel />
       </div>

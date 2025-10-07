@@ -110,7 +110,7 @@ function Agent() {
                 alt="Advertisement"
                 height={500}
                 width={1000}
-                className="w-full h-auto max-h-[800px] object-cover  border-white"
+                className="w-full h-auto max-h-[800px] object-cover rounded-2xl  border-white"
               />
             </div>
           </div>

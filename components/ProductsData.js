@@ -1,21 +1,91 @@
 // ProductsData.js
 // Centralized data for all United Holdings insurance products
 
+import {
+  HiOutlineTrash,
+  HiOutlineHome,
+  HiOutlineFire,
+  HiOutlineCloud,
+  HiOutlineShieldCheck,
+  HiOutlineExclamationCircle,
+  HiOutlineTruck,
+  HiOutlineScale,
+  HiOutlineUsers,
+  HiOutlinePhone,
+  HiOutlineCash,
+  HiOutlineCreditCard,
+  HiOutlineHand,
+  HiOutlineDocumentText,
+  HiOutlineCurrencyDollar,
+  HiOutlineBriefcase,
+  HiOutlineHeart,
+  HiOutlineUserGroup,
+  HiOutlineOfficeBuilding,
+  HiOutlineLockClosed,
+  HiOutlineCalendar,
+  HiOutlineTrendingUp,
+  HiOutlineChip,
+  HiOutlineClock,
+  HiOutlineUser,
+  HiOutlineDocument,
+} from 'react-icons/hi';
 
 const ProductsData = [
+  // Life Assurance
+  {
+    name: 'Life Assurance',
+    tagline: 'Long-term protection for you and your family',
+    heroImage: '/life.jpg',
+    overview: 'United Life Assurance provides comprehensive long-term assurance products designed to secure your family\'s financial future. As the dedicated long-term insurer within the United Holdings group, we offer a range of life assurance solutions including personal life covers, group life, credit life, and funeral assurance plans. Our policies ensure financial support in the event of death or permanent disability, with benefits such as lump sum payouts, debt coverage, and additional perks like double accidental death benefits and discounts on funeral services through our sister company, Dups Funeral Home. With a wide branch network across Eswatini, claims approved within 2 hours, and 100% Eswatini ownership, we deliver exceptional service and peace of mind. Whether for individuals, groups, or specific community needs like Tinkhundla Funeral Cover, our life assurance products are tailored to provide reliable protection and support during life\'s most challenging times.',
+    stats: ['Claims approved in 2 hours', '100% Eswatini owned', 'Wide branch network'],
+    benefits: [
+      { text: 'Financial security for family', icon: HiOutlineHeart },
+      { text: 'Double accidental death benefit', icon: HiOutlineShieldCheck },
+      { text: 'Funeral discounts and services', icon: HiOutlineCalendar },
+      { text: 'Group and credit life options', icon: HiOutlineUserGroup },
+      { text: 'Quick claims processing', icon: HiOutlineClock },
+    ],
+    coverage: [
+      { title: 'Personal Life Covers', content: 'Lump sum payout upon death or disability.' },
+      { title: 'Group Life', content: 'Coverage for groups and communities.' },
+      { title: 'Credit Life', content: 'Pays off outstanding debts if borrower dies or is disabled.' },
+    ],
+    exclusions: [
+      { title: 'Policy Specific', content: 'Exclusions vary by plan; consult terms.' },
+    ],
+    eligibility: [
+      'Eswatini residents',
+      'Age and health requirements per policy',
+    ],
+    howToApply: [
+      'Contact branch or get quote online',
+      'Submit required documents',
+      'Get approval and make payment',
+    ],
+    paymentMethods: ['Debit Order', 'Bank Transfer', 'Mobile Money'],
+    faqs: [
+      { title: 'How fast are claims paid?', content: 'Approved within 2 hours.' },
+      { title: 'What benefits for accidental death?', content: 'Double payout for accidental deaths.' },
+    ],
+    related: [
+      { name: 'Funeral Assurance', image: '/funeral.jpg', link: '/products/funeral' },
+      { name: 'Dignified Family Support Cover', image: '/family-support.jpg', link: '/products/family-support' },
+    ],
+    trust: 'Reliable long-term assurance for Eswatini families.',
+  },
   // Home Insurance
   {
     name: 'Home Insurance',
     tagline: 'Protect Your Home and Peace of Mind',
     heroImage: '/home.jpg',
-    overview: 'Provides cover for your house, outbuildings, and contents against fire, theft, and natural disasters.',
+    overview: 'Our comprehensive Home Insurance provides complete protection for your most valuable asset - your home. This extensive coverage safeguards your main residence, outbuildings, and personal contents against a wide range of risks including fire, explosion, theft, burglary, and natural disasters such as storms, floods, hail, and earthquakes. Beyond structural protection, we include essential benefits like debris removal costs, alternative accommodation if your home becomes uninhabitable due to covered damage, and personal liability coverage. With coverage extending up to E50,000, flexible payment options tailored to your budget, and 24/7 claims support, you can rest assured that your home and belongings are protected. Our policy is designed specifically for Eswatini homeowners, understanding local risks and providing reliable protection that thousands of families trust to secure their homes and peace of mind.',
     stats: ['Covers up to E50,000', 'Flexible payment options', '24/7 claims support'],
     benefits: [
-      'Debris Removal',
-      'Alternative Accommodation',
-      'Fire & Theft Cover',
-      'Natural Disaster Protection',
-      'Personal Liability',
+      { text: 'Debris Removal', icon: HiOutlineTrash },
+      { text: 'Alternative Accommodation', icon: HiOutlineHome },
+      { text: 'Fire & Theft Cover', icon: HiOutlineFire },
+      { text: 'Natural Disaster Protection', icon: HiOutlineCloud },
+      { text: 'Personal Liability', icon: HiOutlineShieldCheck },
     ],
     coverage: [
       { title: 'Fire & Explosion', content: 'Covers damage caused by fire, lightning, or explosion.' },
@@ -52,13 +122,13 @@ const ProductsData = [
     name: 'Motor Insurance',
     tagline: 'Comprehensive, Third Party, Fire & Theft',
     heroImage: '/car.jpg',
-    overview: 'Comprehensive cover for your vehicle, including accident, theft, fire, and third-party liability.',
+    overview: 'Our Motor Insurance offers comprehensive protection for your vehicle with three flexible coverage options to suit your needs and budget. Choose from Comprehensive coverage that protects against accidents, theft, fire, collision, and third-party liability; Third Party Only for essential legal liability coverage; or Third Party, Fire and Theft for balanced protection. Each policy includes valuable benefits like free towing services, windscreen cover, and funeral cover in case of accidental death. We understand that your vehicle is essential for daily life in Eswatini, which is why we provide 24/7 claims assistance and support. Our comprehensive policies are designed to get you back on the road quickly after an incident, with efficient claims processing and a network of trusted repair shops. With thousands of motorists across Eswatini trusting us with their vehicle protection, you can drive with confidence knowing you have reliable coverage from a locally-owned insurance provider.',
     stats: ['Free towing', 'Windscreen cover', 'Funeral cover for accidents'],
     benefits: [
-      'Comprehensive, Third Party, Fire & Theft options',
-      'Free Towing Services',
-      'Windscreen Cover',
-      'Funeral Cover for Accidents',
+      { text: 'Comprehensive, Third Party, Fire & Theft options', icon: HiOutlineExclamationCircle },
+      { text: 'Free Towing Services', icon: HiOutlineTruck },
+      { text: 'Windscreen Cover', icon: HiOutlineShieldCheck },
+      { text: 'Funeral Cover for Accidents', icon: HiOutlineShieldCheck },
     ],
     coverage: [
       { title: 'Comprehensive', content: 'Covers accident damage, theft, fire, collision, lightning, explosion, and third-party liability.' },
@@ -71,7 +141,7 @@ const ProductsData = [
     ],
     eligibility: [
       'Vehicle must be roadworthy',
-      'Valid driver’s license',
+      'Valid driver\'s license',
     ],
     howToApply: [
       'Fill out the online form',
@@ -94,14 +164,14 @@ const ProductsData = [
     name: 'Legal Insurance',
     tagline: 'Legal Protection for You & Family',
     heroImage: '/legal.jpg',
-    overview: 'Legal counselling and representation for civil, criminal, labour, and administrative matters.',
+    overview: 'Our Legal Insurance provides comprehensive legal protection for you and your family, ensuring you have access to quality legal representation when you need it most. This essential coverage includes face-to-face legal counselling, immediate telephonic legal advice, and full in-court representation across civil, criminal, labour, and administrative matters. Whether you\'re dealing with breach of contract, unfair dismissal, criminal charges, or need assistance with drawing up a will, our extensive network of qualified attorneys is ready to assist. With coverage up to E100,000 and protection extending to your spouse, children, and even parents/in-laws, this policy offers true family-wide legal security. We understand that legal issues can be stressful and costly, which is why we provide immediate access to legal experts who can guide you through complex situations. Thousands of Eswatini families rely on our legal protection for peace of mind in an increasingly complex legal environment.',
     stats: ['Covers up to E100,000', 'Face-to-face and telephonic advice', 'Network of attorneys'],
     benefits: [
-      'Face-to-face legal counselling',
-      'Immediate telephonic access',
-      'Network of attorneys',
-      'In-court representation',
-      'Accidental death legal expenses cover',
+      { text: 'Face-to-face legal counselling', icon: HiOutlineScale },
+      { text: 'Immediate telephonic access', icon: HiOutlinePhone },
+      { text: 'Network of attorneys', icon: HiOutlineUsers },
+      { text: 'In-court representation', icon: HiOutlineScale },
+      { text: 'Accidental death legal expenses cover', icon: HiOutlineShieldCheck },
     ],
     coverage: [
       { title: 'Civil Matters', content: 'Breach of contract, defective goods, evictions, uncontested divorce.' },
@@ -140,13 +210,13 @@ const ProductsData = [
     name: 'Micro Loans',
     tagline: 'Immediate Access to Cash',
     heroImage: '/micro.jpg',
-    overview: 'Short-term loans up to E50,000 for individuals who are gainfully employed.',
+    overview: 'Our Micro Loans service provides immediate financial assistance for employed individuals across Eswatini who need quick access to cash for emergencies, opportunities, or unexpected expenses. We offer loans up to E50,000 with flexible repayment terms extending up to 36 months, designed to fit your financial situation and budget. The application process is simple and straightforward, with immediate payment upon approval to ensure you get the funds when you need them most. Our salary deduction option makes repayment convenient and hassle-free, automatically deducting payments from your salary. We understand that financial needs can arise unexpectedly, which is why we\'ve designed our micro loans to be accessible, transparent, and reliable. Whether you\'re facing medical expenses, home repairs, educational costs, or simply need a financial boost, our micro loans provide the solution you need with the trust and reliability that comes from being a 100% Eswatini-owned financial service provider.',
     stats: ['Up to E50,000', 'Immediate payment', 'Easy application'],
     benefits: [
-      'Financial boost when you need it',
-      'Easy pay options (salary deduction)',
-      'Immediate payment on approval',
-      'Simple application process',
+      { text: 'Financial boost when you need it', icon: HiOutlineCash },
+      { text: 'Easy pay options (salary deduction)', icon: HiOutlineCreditCard },
+      { text: 'Immediate payment on approval', icon: HiOutlineHand },
+      { text: 'Simple application process', icon: HiOutlineDocumentText },
     ],
     coverage: [
       { title: 'Loan Amount', content: 'Up to E50,000, payable within 36 months.' },
@@ -181,16 +251,16 @@ const ProductsData = [
     name: 'Dignified Family Support Cover',
     tagline: 'Support for Your Loved Ones',
     heroImage: '/family-support.jpg',
-    overview: 'Provides interim financial support for your family after your passing, with monthly income for six months.',
+    overview: 'Our Dignified Family Support Cover provides essential financial protection for your loved ones during the difficult period following your passing. This compassionate coverage offers interim financial support through monthly income payments to your beneficiaries for six months, helping to bridge the income gap and maintain family stability. With payouts up to E30,000 and affordable premiums starting from just E12.50 per month, this policy ensures your family can cover essential living expenses while adjusting to new circumstances. The first instalment is paid immediately after your passing once the claim is approved, providing timely assistance when it\'s needed most. We understand that financial worries should be the last thing on your family\'s mind during such challenging times, which is why we\'ve designed this coverage to be accessible, reliable, and dignified. Thousands of Eswatini families trust us to provide this crucial safety net, ensuring their loved ones are protected and supported.',
     stats: ['Up to E30,000 payout', 'From E12.50/month', 'Interim assistance'],
     benefits: [
-      'Monthly income for beneficiaries',
-      'Immediate first instalment after passing',
-      'Affordable premiums',
-      'Bridges income gap for families',
+      { text: 'Monthly income for beneficiaries', icon: HiOutlineCash },
+      { text: 'Immediate first instalment after passing', icon: HiOutlineCurrencyDollar },
+      { text: 'Affordable premiums', icon: HiOutlineHand },
+      { text: 'Bridges income gap for families', icon: HiOutlineUsers },
     ],
     coverage: [
-      { title: 'Interim Assistance', content: 'Monthly income for six months after policyholder’s death.' },
+      { title: 'Interim Assistance', content: 'Monthly income for six months after policyholder\'s death.' },
       { title: 'Payout', content: 'Up to E30,000 to the beneficiary.' },
     ],
     exclusions: [
@@ -221,9 +291,13 @@ const ProductsData = [
     name: 'Comprehensive Motor Insurance',
     tagline: 'Full vehicle protection',
     heroImage: '/car.jpg',
-    overview: 'Covers your vehicle for accident, theft, fire, and third-party liability.',
+    overview: 'Our Comprehensive Motor Insurance provides the highest level of protection for your vehicle, covering virtually all risks you might encounter on Eswatini roads. This all-inclusive policy protects against accident damage, theft, fire, collision, lightning, explosion, and includes essential third-party liability coverage. Beyond standard protection, we offer valuable additional benefits including free towing services, windscreen cover, and funeral cover in case of accidental death. We understand that your vehicle represents a significant investment and is essential for your daily activities, which is why we provide 24/7 claims support and assistance. Our comprehensive coverage is designed to give you complete peace of mind, knowing that whether you\'re facing minor damage or major incidents, you\'re fully protected. With thousands of motorists across Eswatini trusting us with their comprehensive coverage needs, you can drive with confidence knowing you have reliable protection from a locally-owned insurance provider that understands your needs.',
     stats: ['Comprehensive cover', 'Third-party liability', 'Fire & theft'],
-    benefits: ['Accident cover', 'Fire & theft', 'Third-party liability'],
+    benefits: [
+      { text: 'Accident cover', icon: HiOutlineExclamationCircle },
+      { text: 'Fire & theft', icon: HiOutlineFire },
+      { text: 'Third-party liability', icon: HiOutlineShieldCheck },
+    ],
     coverage: [{ title: 'Comprehensive', content: 'All risks including accident, theft, fire, and third-party.' }],
     exclusions: [], eligibility: [], howToApply: [], paymentMethods: [], faqs: [], related: [], trust: ''
   },
@@ -232,9 +306,12 @@ const ProductsData = [
     name: 'Third Party Motor Insurance',
     tagline: 'Liability protection',
     heroImage: '/car.jpg',
-    overview: 'Covers your legal liability for injury or damage to others.',
+    overview: 'Our Third Party Motor Insurance provides essential legal liability coverage that protects you financially if you cause injury, death, or property damage to others while operating your vehicle. This cost-effective insurance meets legal requirements while providing crucial protection against potentially significant third-party claims. While it doesn\'t cover damage to your own vehicle, it ensures that if you\'re responsible for an accident, the costs associated with injury to other people or damage to their property are covered. We understand that responsible vehicle ownership includes being prepared for unexpected incidents, which is why we\'ve made this basic but essential coverage accessible and affordable. Our straightforward application process and flexible payment options make it easy to obtain the necessary legal protection without complexity or delay. Thousands of responsible motorists across Eswatini trust us for their third-party insurance needs, knowing they have reliable coverage from a locally-owned provider that prioritizes customer service and support.',
     stats: ['Third-party only'],
-    benefits: ['Covers injury to others', 'Covers property damage'],
+    benefits: [
+      { text: 'Covers injury to others', icon: HiOutlineShieldCheck },
+      { text: 'Covers property damage', icon: HiOutlineShieldCheck },
+    ],
     coverage: [{ title: 'Third Party', content: 'Legal liability for injury or property damage to others.' }],
     exclusions: [], eligibility: [], howToApply: [], paymentMethods: [], faqs: [], related: [], trust: ''
   },
@@ -243,9 +320,13 @@ const ProductsData = [
     name: 'Third Party, Fire & Theft Motor Insurance',
     tagline: 'Liability plus fire/theft',
     heroImage: '/car.jpg',
-    overview: 'Covers third-party liability plus fire and theft of your vehicle.',
+    overview: 'Our Third Party, Fire & Theft Motor Insurance offers balanced protection that combines essential third-party liability coverage with important protection for your own vehicle against fire and theft risks. This middle-ground option provides legal liability coverage for injury or damage to others while also safeguarding your investment against fire damage, lightning, explosion, and theft. We understand that many vehicle owners want more than basic third-party coverage but may not need full comprehensive protection, which is why we designed this flexible option. It provides the peace of mind of knowing you\'re covered for significant risks like vehicle theft and fire damage while maintaining affordable premiums. Our claims process is straightforward and efficient, with support available 24/7 to assist when you need it most. This popular coverage option has been trusted by thousands of Eswatini motorists who value the balanced protection and affordable pricing that meets their specific needs and budget requirements.',
     stats: ['Third-party', 'Fire', 'Theft'],
-    benefits: ['Fire cover', 'Theft cover', 'Third-party liability'],
+    benefits: [
+      { text: 'Fire cover', icon: HiOutlineFire },
+      { text: 'Theft cover', icon: HiOutlineLockClosed },
+      { text: 'Third-party liability', icon: HiOutlineShieldCheck },
+    ],
     coverage: [{ title: 'Third Party, Fire & Theft', content: 'Covers fire, theft, and third-party liability.' }],
     exclusions: [], eligibility: [], howToApply: [], paymentMethods: [], faqs: [], related: [], trust: ''
   },
@@ -254,9 +335,13 @@ const ProductsData = [
     name: 'Buildings, Outbuildings & Contents Insurance',
     tagline: 'Protect your property and belongings',
     heroImage: '/home.jpg',
-    overview: 'Covers your home, outbuildings, and contents against major risks.',
+    overview: 'Our Buildings, Outbuildings & Contents Insurance provides complete protection for your entire property, including your main residence, additional structures, and all personal belongings within. This comprehensive coverage safeguards against fire, theft, natural disasters, and other specified risks that could damage your property or possessions. We understand that your home is more than just a building - it\'s filled with valuable items and memories that need protection. Our policy covers everything from structural damage to loss of personal contents, with additional benefits like debris removal costs and alternative accommodation if your home becomes uninhabitable. With coverage extending up to E50,000 and flexible payment options designed for Eswatini homeowners, you can customize protection that fits your specific needs and budget. Thousands of families across Eswatini trust us to protect their homes and belongings, knowing they have reliable coverage from a locally-owned insurance provider that understands local risks and needs.',
     stats: ['Buildings', 'Contents', 'Outbuildings'],
-    benefits: ['Fire', 'Theft', 'Natural disasters'],
+    benefits: [
+      { text: 'Fire', icon: HiOutlineFire },
+      { text: 'Theft', icon: HiOutlineLockClosed },
+      { text: 'Natural disasters', icon: HiOutlineCloud },
+    ],
     coverage: [{ title: 'Buildings & Contents', content: 'Covers structure and belongings.' }],
     exclusions: [], eligibility: [], howToApply: [], paymentMethods: [], faqs: [], related: [], trust: ''
   },
@@ -265,9 +350,13 @@ const ProductsData = [
     name: 'Personal Accident Insurance',
     tagline: 'Lump sum payout for injury, disability, or death',
     heroImage: '/accident.jpg',
-    overview: 'Pays a lump sum if you are injured, disabled, or die in an accident.',
+    overview: 'Our Personal Accident Insurance provides crucial financial protection if you suffer injury, disability, or death due to an accident. This essential coverage pays a lump sum benefit that can help cover medical expenses, replace lost income during recovery, or provide financial support to your family in case of accidental death. We understand that accidents can happen unexpectedly and often result in significant financial burdens, which is why we\'ve designed this coverage to provide immediate financial assistance when you need it most. The lump sum payout can be used flexibly to cover hospital bills, rehabilitation costs, household expenses, or any other needs that arise following an accident. Our straightforward claims process and 24/7 support ensure that you receive assistance quickly during difficult times. Thousands of individuals and families across Eswatini trust our personal accident coverage for peace of mind, knowing they have reliable financial protection from unexpected accidents that could otherwise create significant financial hardship.',
     stats: ['Lump sum payout'],
-    benefits: ['Injury cover', 'Disability cover', 'Death cover'],
+    benefits: [
+      { text: 'Injury cover', icon: HiOutlineHeart },
+      { text: 'Disability cover', icon: HiOutlineShieldCheck },
+      { text: 'Death cover', icon: HiOutlineShieldCheck },
+    ],
     coverage: [{ title: 'Accident', content: 'Lump sum for injury, disability, or death.' }],
     exclusions: [], eligibility: [], howToApply: [], paymentMethods: [], faqs: [], related: [], trust: ''
   },
@@ -276,9 +365,12 @@ const ProductsData = [
     name: 'Political Violence & Terrorism Insurance',
     tagline: 'Protection against unrest, riots, terrorism',
     heroImage: '/political.jpg',
-    overview: 'Safeguards your business against losses from unrest, riots, and terrorism.',
+    overview: 'Our Political Violence & Terrorism Insurance provides essential protection for businesses and property owners against losses resulting from civil unrest, riots, strikes, terrorism, and other political violence events. This specialized coverage is particularly important in today\'s unpredictable environment, safeguarding your commercial assets, inventory, and business continuity against politically-motivated incidents. We understand that businesses face unique risks that extend beyond traditional insurance coverage, which is why we offer this targeted protection specifically designed for the Eswatini market. Whether you operate a retail establishment, manufacturing facility, or own commercial property, this coverage ensures that unexpected political events don\'t jeopardize your financial stability. Our claims handling is efficient and understanding of the sensitive nature of political violence incidents, with support available to help you recover and resume operations as quickly as possible. Business owners across Eswatini trust us to provide this crucial protection, knowing they have comprehensive coverage from a locally-owned provider that understands regional risks.',
     stats: ['Unrest', 'Riots', 'Terrorism'],
-    benefits: ['Business protection', 'Covers political violence'],
+    benefits: [
+      { text: 'Business protection', icon: HiOutlineShieldCheck },
+      { text: 'Covers political violence', icon: HiOutlineExclamationCircle },
+    ],
     coverage: [{ title: 'Political Violence', content: 'Covers losses from political violence and terrorism.' }],
     exclusions: [], eligibility: [], howToApply: [], paymentMethods: [], faqs: [], related: [], trust: ''
   },
@@ -287,9 +379,12 @@ const ProductsData = [
     name: 'Engineering Policies & Guarantees',
     tagline: 'For contractors, developers, construction projects',
     heroImage: '/engineering.jpg',
-    overview: 'Insurance and guarantees for construction and engineering projects.',
+    overview: 'Our Engineering Policies & Guarantees provide comprehensive insurance solutions for contractors, developers, and construction projects across Eswatini. This specialized coverage protects against risks specific to engineering and construction work, including contractor\'s all risk, erection all risk, machinery breakdown, and various guarantee bonds required for project completion. We understand that construction and engineering projects involve significant investments and complex risks that require tailored insurance solutions. Our policies cover everything from site works and equipment to liability and project delays, ensuring that your project remains protected throughout all phases of development. Additionally, we provide guarantee bonds that may be required for tender purposes, performance guarantees, or advance payment protections. Construction professionals and developers across Eswatini trust our engineering insurance expertise, knowing they have comprehensive protection from a locally-owned provider that understands the unique challenges and requirements of the construction industry in our region.',
     stats: ['Contractors', 'Developers', 'Construction'],
-    benefits: ['Project cover', 'Equipment cover'],
+    benefits: [
+      { text: 'Project cover', icon: HiOutlineBriefcase },
+      { text: 'Equipment cover', icon: HiOutlineChip },
+    ],
     coverage: [{ title: 'Engineering', content: 'Covers site works, equipment, and liability.' }],
     exclusions: [], eligibility: [], howToApply: [], paymentMethods: [], faqs: [], related: [], trust: ''
   },
@@ -298,9 +393,11 @@ const ProductsData = [
     name: 'Multimark Policy',
     tagline: 'All-inclusive corporate/business cover',
     heroImage: '/multimark.jpg',
-    overview: 'Comprehensive insurance for businesses against unforeseen risks.',
+    overview: 'Our Multimark Policy offers all-inclusive insurance protection for businesses and corporations operating in Eswatini, providing comprehensive coverage against a wide range of commercial risks in a single, convenient package. This versatile policy can be customized to include property damage, business interruption, liability coverage, theft, money protection, and various other commercial risks specific to your industry and operations. We understand that businesses need efficient, comprehensive insurance solutions that minimize complexity while maximizing protection, which is why we\'ve designed the Multimark Policy as a flexible, all-in-one solution. Whether you operate a small retail business, manufacturing facility, service company, or large corporation, this policy can be tailored to your specific risk profile and coverage needs. Business owners and corporate risk managers across Eswatini trust our Multimark Policy for reliable, comprehensive protection that simplifies insurance management while ensuring all critical business assets and operations are properly safeguarded against unexpected events.',
     stats: ['Corporate', 'Business', 'All risks'],
-    benefits: ['All-in-one business cover'],
+    benefits: [
+      { text: 'All-in-one business cover', icon: HiOutlineOfficeBuilding },
+    ],
     coverage: [{ title: 'Multimark', content: 'Covers multiple business risks.' }],
     exclusions: [], eligibility: [], howToApply: [], paymentMethods: [], faqs: [], related: [], trust: ''
   },
@@ -309,9 +406,11 @@ const ProductsData = [
     name: 'Medical Malpractice Insurance',
     tagline: 'For healthcare professionals',
     heroImage: '/medical.jpg',
-    overview: 'Covers doctors, nurses, dentists, and healthcare professionals for liability.',
+    overview: 'Our Medical Malpractice Insurance provides essential professional liability coverage for healthcare professionals across Eswatini, including doctors, nurses, dentists, specialists, and other medical practitioners. This specialized insurance protects against claims of negligence, errors, or omissions in professional medical services that could result in patient injury, complications, or other adverse outcomes. We understand that healthcare professionals face unique liability risks in their practice, which is why we offer comprehensive malpractice coverage specifically designed for the medical field. Our policies include legal defense costs, settlement amounts, and damages awarded, ensuring that your professional reputation and financial stability are protected against malpractice claims. Healthcare professionals throughout Eswatini trust our medical malpractice coverage for reliable protection that allows them to focus on providing quality patient care without the constant worry of potential liability claims. Our understanding of the healthcare industry and local legal environment ensures that you receive appropriate coverage tailored to your specific practice and risk exposure.',
     stats: ['Doctors', 'Nurses', 'Dentists'],
-    benefits: ['Professional liability'],
+    benefits: [
+      { text: 'Professional liability', icon: HiOutlineUser },
+    ],
     coverage: [{ title: 'Malpractice', content: 'Covers professional errors and negligence.' }],
     exclusions: [], eligibility: [], howToApply: [], paymentMethods: [], faqs: [], related: [], trust: ''
   },
@@ -320,9 +419,11 @@ const ProductsData = [
     name: 'Professional Indemnity Insurance',
     tagline: 'Covers professional errors, negligence',
     heroImage: '/indemnity.jpg',
-    overview: 'Protects professionals against claims of negligence or errors.',
+    overview: 'Our Professional Indemnity Insurance provides crucial protection for professionals across various industries against claims of negligence, errors, omissions, or breach of duty in their professional services. This essential coverage is designed for consultants, advisors, architects, engineers, accountants, and other professionals who provide expert advice or services to clients. We understand that even the most careful professionals can face allegations of inadequate work or advice, which is why we offer comprehensive indemnity coverage that includes legal defense costs, settlement amounts, and damages awarded. Our policies are tailored to specific professions, ensuring that you receive appropriate protection for your particular risk exposure and professional responsibilities. Professionals throughout Eswatini trust our indemnity insurance for reliable protection that safeguards their practice, reputation, and financial stability against potential claims. With our understanding of local professional standards and legal requirements, we provide coverage that meets the specific needs of Eswatini professionals across various sectors and specializations.',
     stats: ['Professional errors', 'Negligence'],
-    benefits: ['Indemnity cover'],
+    benefits: [
+      { text: 'Indemnity cover', icon: <HiOutlineDocument /> },
+    ],
     coverage: [{ title: 'Indemnity', content: 'Covers professional errors and negligence.' }],
     exclusions: [], eligibility: [], howToApply: [], paymentMethods: [], faqs: [], related: [], trust: ''
   },
@@ -331,9 +432,11 @@ const ProductsData = [
     name: 'Fidelity Guarantee Insurance',
     tagline: 'Protection against employee fraud/theft',
     heroImage: '/fidelity.jpg',
-    overview: 'Covers losses from employee fraud or theft.',
+    overview: 'Our Fidelity Guarantee Insurance provides essential protection for businesses against financial losses resulting from employee fraud, theft, or dishonesty. This specialized coverage safeguards your company\'s assets, cash, inventory, and other valuable property against internal threats that could significantly impact your financial stability and operations. We understand that businesses of all sizes face risks from internal dishonesty, which is why we offer comprehensive fidelity coverage that can be customized based on your employee structure, cash handling procedures, and specific vulnerability areas. Our policies cover direct financial losses, investigation costs, and recovery expenses associated with employee dishonesty incidents. Business owners and financial managers across Eswatini trust our fidelity guarantee insurance for reliable protection that complements their internal controls and security measures. With our understanding of local business environments and risk factors, we provide coverage that addresses the specific fidelity risks faced by Eswatini businesses, ensuring comprehensive protection against potential internal threats.',
     stats: ['Employee fraud', 'Theft'],
-    benefits: ['Fidelity guarantee'],
+    benefits: [
+      { text: 'Fidelity guarantee', icon: HiOutlineLockClosed },
+    ],
     coverage: [{ title: 'Fidelity', content: 'Covers employee fraud and theft.' }],
     exclusions: [], eligibility: [], howToApply: [], paymentMethods: [], faqs: [], related: [], trust: ''
   },
@@ -342,9 +445,11 @@ const ProductsData = [
     name: 'Dignified Tribute Cover',
     tagline: 'Cash payout for memorial arrangements',
     heroImage: '/tribute.jpg',
-    overview: 'Pays out cash to nominated beneficiary for memorial arrangements.',
+    overview: 'Our Dignified Tribute Cover provides a cash payout to your nominated beneficiary to help cover memorial arrangement costs and related expenses following your passing. This thoughtful coverage ensures that your loved ones have immediate access to funds for memorial services, tribute events, and other arrangements that honor your memory with dignity and respect. We understand that memorial arrangements involve both emotional significance and practical financial considerations, which is why we offer this dedicated coverage specifically designed for tribute expenses. The cash payout provides flexibility for your beneficiaries to create a meaningful tribute that reflects your life and values without financial strain during an emotionally difficult time. Families across Eswatini trust our Dignified Tribute Cover for compassionate financial support that allows them to focus on honoring their loved one\'s memory rather than worrying about immediate expenses. Our straightforward claims process ensures timely access to funds when they\'re needed most.',
     stats: ['Memorial payout'],
-    benefits: ['Cash for memorials'],
+    benefits: [
+      { text: 'Cash for memorials', icon: HiOutlineCalendar },
+    ],
     coverage: [{ title: 'Tribute', content: 'Cash payout for memorial arrangements.' }],
     exclusions: [], eligibility: [], howToApply: [], paymentMethods: [], faqs: [], related: [], trust: ''
   },
@@ -353,9 +458,11 @@ const ProductsData = [
     name: 'Funeral Assurance',
     tagline: 'Funeral support for individuals and groups',
     heroImage: '/funeral.jpg',
-    overview: 'Funeral insurance for individuals and groups, covering funeral expenses.',
+    overview: 'Our Funeral Assurance provides comprehensive funeral expense coverage for both individuals and groups, ensuring that funeral costs don\'t create additional financial burden during times of loss. This essential coverage helps cover funeral services, burial or cremation expenses, transportation, and other related costs associated with final arrangements. We understand that funeral expenses can be significant and often arise unexpectedly, which is why we offer flexible individual and group coverage options designed for Eswatini families and organizations. Our individual policies provide personal protection, while our group options are ideal for employers, associations, or community organizations wanting to provide funeral benefits to members or employees. Families and organizations across Eswatini trust our funeral assurance for reliable, compassionate coverage that honors cultural traditions and provides financial support when it\'s needed most. Our efficient claims process ensures timely payout to help cover expenses without delay during difficult times.',
     stats: ['Individual', 'Group'],
-    benefits: ['Funeral expense cover'],
+    benefits: [
+      { text: 'Funeral expense cover', icon: HiOutlineUsers },
+    ],
     coverage: [{ title: 'Funeral', content: 'Covers funeral expenses for individuals and groups.' }],
     exclusions: [], eligibility: [], howToApply: [], paymentMethods: [], faqs: [], related: [], trust: ''
   },
@@ -364,9 +471,11 @@ const ProductsData = [
     name: 'Umlamleli Loan (Salary Advance)',
     tagline: 'Mid-month salary boost',
     heroImage: '/loan.jpg',
-    overview: 'Short-term salary advance for mid-month cash needs.',
+    overview: 'Our Umlamleli Loan service provides convenient salary advance solutions for employed individuals across Eswatini who need mid-month financial assistance between pay periods. This short-term loan option offers quick access to cash for unexpected expenses, emergencies, or opportunities that arise before your next salary payment. We understand that financial needs don\'t always align with pay schedules, which is why we offer this flexible salary advance service with simple application requirements and rapid approval. The repayment is conveniently structured through salary deduction, making it hassle-free and ensuring you don\'t face additional administrative burdens. Employed individuals throughout Eswatini trust our Umlamleli Loans for reliable, transparent short-term financing that provides immediate financial relief when needed. Our commitment to responsible lending ensures that loans are structured affordably based on your income, helping you manage temporary cash flow challenges without creating long-term financial strain.',
     stats: ['Salary advance'],
-    benefits: ['Quick salary boost'],
+    benefits: [
+      { text: 'Quick salary boost', icon: HiOutlineTrendingUp },
+    ],
     coverage: [{ title: 'Salary Advance', content: 'Short-term loan against salary.' }],
     exclusions: [], eligibility: [], howToApply: [], paymentMethods: [], faqs: [], related: [], trust: ''
   },
@@ -375,20 +484,24 @@ const ProductsData = [
     name: 'Shesha Loans',
     tagline: 'Fast-access emergency funds',
     heroImage: '/shesha.jpg',
-    overview: 'Quick loans for emergencies and urgent needs.',
+    overview: 'Our Shesha Loans provide fast-access emergency funds for employed individuals across Eswatini who need immediate financial assistance for urgent needs or unexpected expenses. This quick loan service is designed for speed and convenience, with streamlined application processes and rapid approval to ensure you receive funds when you need them most. We understand that financial emergencies can arise unexpectedly and require immediate attention, which is why we\'ve designed our Shesha Loans to provide timely solutions without unnecessary delays or complexity. Whether you\'re facing medical emergencies, vehicle repairs, home maintenance issues, or other urgent financial needs, our quick loan service offers reliable access to emergency funds. Employed individuals throughout Eswatini trust our Shesha Loans for transparent, responsible emergency financing that provides immediate relief during challenging financial situations. Our commitment to customer service ensures you receive professional assistance throughout the borrowing process.',
     stats: ['Fast approval'],
-    benefits: ['Emergency funds'],
+    benefits: [
+      { text: 'Emergency funds', icon: HiOutlineExclamationCircle },
+    ],
     coverage: [{ title: 'Emergency Loan', content: 'Quick loan for urgent needs.' }],
     exclusions: [], eligibility: [], howToApply: [], paymentMethods: [], faqs: [], related: [], trust: ''
   },
-  // Contractor’s All Risk (via Engineering)
+  // Contractor\'s All Risk (via Engineering)
   {
-    name: 'Contractor’s All Risk',
+    name: 'Contractor\'s All Risk',
     tagline: 'Site works, equipment, liability',
     heroImage: '/engineering.jpg',
-    overview: 'Covers site works, equipment, and liability for contractors.',
+    overview: 'Our Contractor\'s All Risk insurance provides comprehensive protection for construction projects, contractors, and developers across Eswatini, covering site works, equipment, materials, and liability exposures specific to construction activities. This specialized coverage is essential for any construction project, protecting against damage to the works, theft of materials and equipment, natural disasters, and third-party liability claims arising from construction operations. We understand that construction projects involve significant investments and complex risks that require tailored insurance solutions, which is why we offer comprehensive all-risk coverage specifically designed for the construction industry. Our policies can be customized based on project size, duration, and specific risk factors, ensuring appropriate protection throughout the construction phase. Contractors and developers throughout Eswatini trust our Contractor\'s All Risk coverage for reliable protection that safeguards their projects, equipment, and financial investments against the unique risks faced in the construction industry.',
     stats: ['All risk', 'Contractors'],
-    benefits: ['Site and equipment cover'],
+    benefits: [
+      { text: 'Site and equipment cover', icon: HiOutlineBriefcase },
+    ],
     coverage: [{ title: 'All Risk', content: 'Covers site works, equipment, and liability.' }],
     exclusions: [], eligibility: [], howToApply: [], paymentMethods: [], faqs: [], related: [], trust: ''
   },
@@ -397,11 +510,14 @@ const ProductsData = [
     name: 'Business Interruption / Corporate Extensions',
     tagline: 'Linked to Multimark & Engineering',
     heroImage: '/business.jpg',
-    overview: 'Covers loss of income due to business interruption, linked to Multimark and Engineering policies.',
+    overview: 'Our Business Interruption and Corporate Extensions provide crucial coverage for loss of income and additional expenses when your business operations are disrupted by insured events covered under your Multimark or Engineering policies. This essential protection helps maintain financial stability during periods when your business cannot operate normally due to damage from fire, natural disasters, equipment breakdown, or other covered incidents. We understand that business interruption can create significant financial challenges beyond direct physical damage, which is why we offer comprehensive coverage for lost profits, fixed expenses, and extra costs incurred to minimize disruption. Our policies can be tailored to your specific business operations, revenue patterns, and recovery needs, ensuring appropriate protection against operational disruptions. Business owners throughout Eswatini trust our business interruption coverage for reliable financial protection that helps maintain stability during recovery periods, ensuring that temporary operational disruptions don\'t become permanent business failures.',
     stats: ['Business interruption'],
-    benefits: ['Income protection'],
+    benefits: [
+      { text: 'Income protection', icon: HiOutlineCurrencyDollar },
+    ],
     coverage: [{ title: 'Business Interruption', content: 'Covers loss of income due to interruption.' }],
     exclusions: [], eligibility: [], howToApply: [], paymentMethods: [], faqs: [], related: [], trust: ''
   },
 ]
+
 export default ProductsData;

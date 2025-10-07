@@ -8,12 +8,8 @@ import {
     IoBriefcaseOutline,
     IoCashOutline
 } from "react-icons/io5";
-import { PiCrossLight } from "react-icons/pi";
-import { GoLaw } from "react-icons/go";
-import { GrUserWorker } from "react-icons/gr";
-import Agent from './Agent';
-import ProductsData from './ProductsData';
-import { BsPlus } from 'react-icons/bs';
+import Link from 'next/link';
+import RenderForm from './RenderForm';
 
 // Reusable Input Field Component
 const InputField = ({ label, name, type = 'text', value, onChange, required = false, className = '', ...props }) => (
@@ -25,7 +21,7 @@ const InputField = ({ label, name, type = 'text', value, onChange, required = fa
             value={value}
             onChange={onChange}
             required={required}
-            className="w-full px-4 py-2  bg-white border-gray-200 border rounded-xl placeholder-gray-800  "
+            className="w-full px-4 py-2 bg-white border-gray-200 border rounded-xl placeholder-gray-800"
             {...props}
         />
     </div>
@@ -40,8 +36,9 @@ const SelectField = ({ label, name, value, onChange, options, required = false, 
             value={value}
             onChange={onChange}
             required={required}
-            className="w-full px-4 py-2  bg-white border-gray-200 border rounded-xl placeholder-gray-800  "
+            className="w-full px-4 py-2 bg-white border-gray-200 border rounded-xl placeholder-gray-800"
         >
+            <option value="">Select {label}</option>
             {options.map((option) => (
                 <option key={option.value} value={option.value}>
                     {option.label}
@@ -51,68 +48,35 @@ const SelectField = ({ label, name, value, onChange, options, required = false, 
     </div>
 );
 
-// Reusable Textarea Field Component
-const TextareaField = ({ label, name, value, onChange, rows = 3, className = '' }) => (
-    <div className={className}>
-        <label className="block text-sm font-medium text-gray-800  mb-1">{label}</label>
-        <textarea
-            name={name}
-            value={value}
-            onChange={onChange}
-            rows={rows}
-            className="w-full px-4 py-2 rounded-md"
-        />
-    </div>
-);
-
-// Reusable Checkbox Group Component
-const CheckboxGroup = ({ label, name, options, value = [], onChange, className = '', gridCols = 'grid-cols-2 md:grid-cols-4' }) => (
-    <div className={className}>
-        <label className="block text-sm font-medium text-gray-800 mb-2">{label}</label>
-        <div className={`grid ${gridCols} gap-2`}>
-            {options.map((option) => (
-                <label key={option.value} className="flex items-center">
-                    <input
-                        type="checkbox"
-                        name={name}
-                        value={option.value}
-                        checked={value.includes(option.value)}
-                        onChange={onChange}
-                        className="mr-2"
-                    />
-                    <span className="text-gray-800">{option.label}</span>
-                </label>
-            ))}
-        </div>
-    </div>
-);
-
 // Reusable Tab Button Component
-const TabButton = ({ id, label, icon, active, onClick }) => (
-    <button
-        className={`flex flex-col items-center justify-center h-[150px] w-[150px] rounded-full relative   py-4 px-2   transition-all duration-200 ${active
+const TabButton = ({ id, label, icon, active, onClick, slug }) => (
+    <Link
+        href={slug ? `/products/${slug}` : '#'}
+        className={`flex flex-col items-center justify-center h-[150px] w-[150px] rounded-full relative py-4 px-2 transition-all duration-200 ${active
             ? ' text-[#9b1c20] bg-white shadow-lg transform -translate-y-1'
-            : '  text-white border border-white hover:bg-[#801619] hover:-translate-y-2 transition-all  ease-in-out hover:shadow-md'
+            : ' text-white border border-white hover:bg-[#801619] hover:-translate-y-2 transition-all ease-in-out hover:shadow-md'
             }`}
         onClick={onClick}
     >
-
-        <div className=' flex flex-col h-full  items-center justify-center  w-full '>
-            <div className='w-full '>
-                <div className="text-6xl   top-0  flex justify-center p-2 rounded-full left-0">{icon}</div>
+        <div className='flex flex-col h-full items-center justify-center w-full'>
+            <div className='w-full'>
+                <div className="text-6xl top-0 flex justify-center p-2 rounded-full left-0">{icon}</div>
             </div>
-            <div className='w-full '>
-                <span className="font-medium text-lg bg">{label}</span>
+            <div className='w-full flex items-center justify-center'>
+                <span className="font-medium text-lg">{label}</span>
             </div>
         </div>
-    </button>
+    </Link>
 );
 
 export default function StartQuote() {
     const [activeTab, setActiveTab] = useState('car');
+    const [submitted, setSubmitted] = useState(false);
     const [formData, setFormData] = useState({
         // Common fields
         name: '',
+        surname: '',
+        idPassport: '',
         email: '',
         phone: '',
 
@@ -211,7 +175,7 @@ export default function StartQuote() {
         loanEmployment: '',
         loanCollateral: '',
         loanCoverageType: 'default',
-        loanAddons: []
+        loanAddons: [],
     });
 
     const handleInputChange = (e) => {
@@ -227,16 +191,29 @@ export default function StartQuote() {
                 }
             });
         } else {
-            setFormData({
-                ...formData,
+            setFormData(prev => ({
+                ...prev,
                 [name]: value
-            });
+            }));
         }
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        alert('Quote request submitted! We will contact you shortly.');
+        setSubmitted(true);
+        setTimeout(() => setSubmitted(false), 3000);
+    };
+
+    // Map tab id to product slug
+    const tabSlugMap = {
+        life: 'life-insurance',
+        car: 'motor-insurance',
+        home: 'home-insurance',
+        business: 'multimark-policy',
+        funeral: 'funeral-assurance',
+        legal: 'legal-insurance',
+        professional: 'professional-indemnity-insurance',
+        micro: 'micro-loans',
     };
 
     const tabs = [
@@ -250,150 +227,6 @@ export default function StartQuote() {
         { id: 'micro', label: 'Micro Loans', icon: <IoCashOutline className="text-5xl" /> },
     ];
 
-    // Render the appropriate form based on activeTab using reusable components
-    const renderForm = () => {
-        switch (activeTab) {
-            case 'life':
-                return (
-                    <div className="grid grid-cols-3 md:grid-cols-2 gap-6">
-                        <InputField label="Date of Birth" name="lifeDob" type="date" value={formData.lifeDob} onChange={handleInputChange} required />
-                        <SelectField
-                            label="Gender"
-                            name="lifeGender"
-                            value={formData.lifeGender}
-                            onChange={handleInputChange}
-                            options={[
-                                { value: '', label: 'Select Gender' },
-                                { value: 'male', label: 'Male' },
-                                { value: 'female', label: 'Female' },
-                                { value: 'other', label: 'Other' }
-                            ]}
-                            required
-                        />
-                        <InputField label="Coverage Amount (SZL)" name="lifeCoverageAmount" type="number" value={formData.lifeCoverageAmount} onChange={handleInputChange} required />
-                    </div>
-                );
-
-            case 'health':
-                return (
-                    <div className="grid grid-cols-3 md:grid-cols-2 gap-6">
-                        <InputField label="Date of Birth" name="healthDob" type="date" value={formData.healthDob} onChange={handleInputChange} required />
-                        <SelectField
-                            label="Gender"
-                            name="healthGender"
-                            value={formData.healthGender}
-                            onChange={handleInputChange}
-                            options={[
-                                { value: '', label: 'Select Gender' },
-                                { value: 'male', label: 'Male' },
-                                { value: 'female', label: 'Female' },
-                                { value: 'other', label: 'Other' }
-                            ]}
-                            required
-                        />
-                        <SelectField
-                            label="Coverage Type"
-                            name="healthCoverageType"
-                            value={formData.healthCoverageType}
-                            onChange={handleInputChange}
-                            options={[
-                                { value: 'individual', label: 'Individual' },
-                                { value: 'family', label: 'Family' }
-                            ]}
-                            required
-                        />
-                    </div>
-                );
-
-            case 'car':
-                return (
-                    <div className="grid grid-cols-3 md:grid-cols-2 gap-6">
-                        <SelectField
-                            label="Vehicle Type"
-                            name="vehicleType"
-                            value={formData.vehicleType}
-                            onChange={handleInputChange}
-                            options={[
-                                { value: 'car', label: 'Car' },
-                                { value: 'suv', label: 'SUV' },
-                                { value: 'truck', label: 'Truck' },
-                                { value: 'motorcycle', label: 'Motorcycle' }
-                            ]}
-                            required
-                        />
-                        <InputField label="Vehicle Make" name="vehicleMake" value={formData.vehicleMake} onChange={handleInputChange} required />
-                        <InputField label="Year" name="vehicleYear" type="number" value={formData.vehicleYear} onChange={handleInputChange} required />
-                        <InputField label="Estimated Vehicle Value (SZL)" name="vehicleValue" type="number" value={formData.vehicleValue} onChange={handleInputChange} required />
-                    </div>
-                );
-
-            case 'home':
-                return (
-                    <div className="grid grid-cols-3 md:grid-cols-2 gap-6">
-                        <InputField label="Property Address" name="homeAddress" value={formData.homeAddress} onChange={handleInputChange} required className="md:col-span-2" />
-                        <SelectField
-                            label="Ownership Status"
-                            name="homeOwnership"
-                            value={formData.homeOwnership}
-                            onChange={handleInputChange}
-                            options={[
-                                { value: 'owned', label: 'Owned' },
-                                { value: 'mortgaged', label: 'Mortgaged' },
-                                { value: 'rented', label: 'Rented' }
-                            ]}
-                            required
-                        />
-                        <InputField label="Estimated Property Value (SZL)" name="homePropertyValue" type="number" value={formData.homePropertyValue} onChange={handleInputChange} required />
-                        <SelectField
-                            label="Coverage Type"
-                            name="homeCoverageType"
-                            value={formData.homeCoverageType}
-                            onChange={handleInputChange}
-                            options={[
-                                { value: 'building', label: 'Building Only' },
-                                { value: 'contents', label: 'Contents Only' },
-                                { value: 'both', label: 'Both' }
-                            ]}
-                            required
-                        />
-                    </div>
-                );
-
-            case 'business':
-                return (
-                    <div className="grid grid-cols-3 md:grid-cols-2 gap-6">
-                        <InputField label="Business Name" name="businessName" value={formData.businessName} onChange={handleInputChange} required />
-                        <InputField label="Owner's Name" name="businessOwner" value={formData.businessOwner} onChange={handleInputChange} required />
-                        <SelectField
-                            label="Business Type"
-                            name="businessType"
-                            value={formData.businessType}
-                            onChange={handleInputChange}
-                            options={[
-                                { value: 'retail', label: 'Retail' },
-                                { value: 'services', label: 'Services' },
-                                { value: 'manufacturing', label: 'Manufacturing' },
-                                { value: 'other', label: 'Other' }
-                            ]}
-                            required
-                        />
-                        <InputField label="Estimated Annual Revenue (SZL)" name="businessRevenue" type="number" value={formData.businessRevenue} onChange={handleInputChange} required />
-                    </div>
-                );
-
-            // Placeholder for other forms (funeral, legal, professional, micro) - can be implemented similarly using reusable components
-            default:
-                return (
-                    <div className="grid grid-cols-3 md:grid-cols-2 gap-6">
-                        <InputField label="Contact Name" name="name" value={formData.name} onChange={handleInputChange} />
-                        <InputField label="Contact Phone" name="phone" value={formData.phone} onChange={handleInputChange} />
-                        <p className="text-white text-center py-4 md:col-span-2">Select a product tab to show a brief quote form.</p>
-                    </div>
-                );
-        }
-    };
-
-
     const statsData = [
         { value: 70, label: "Years in Business", color: "text-[#9b1c20]", prefix: "+" },
         { value: 3, label: "Group Companies", color: "text-[#9b1c20]" },
@@ -401,14 +234,13 @@ export default function StartQuote() {
         { value: 98, label: "Claim Satisfaction", color: "text-[#9b1c20]", suffix: "%" },
         { value: 50000, label: "Happy Clients", color: "text-[#9b1c20]", prefix: "+" },
         { value: 100, label: "% Swazi Owned", color: "text-[#9b1c20]", suffix: "%" },
-
     ];
 
     // Carousel state
     const [statIndex, setStatIndex] = useState(0);
+    const [displayValue, setDisplayValue] = useState(statsData[0].value);
 
     // Animate stat value
-    const [displayValue, setDisplayValue] = useState(statsData[0].value);
     React.useEffect(() => {
         let start = 0;
         let end = statsData[statIndex].value;
@@ -416,6 +248,7 @@ export default function StartQuote() {
         let startTime = null;
         let prefix = statsData[statIndex].prefix || '';
         let suffix = statsData[statIndex].suffix || '';
+
         function animateCountUp(ts) {
             if (!startTime) startTime = ts;
             const progress = Math.min((ts - startTime) / duration, 1);
@@ -440,44 +273,74 @@ export default function StartQuote() {
 
     const StatCarousel = () => {
         const stat = statsData[statIndex];
-        // Format number with commas
         const formatNumber = (num) => {
             if (typeof num === 'number') {
                 return num.toLocaleString();
             }
             return num;
         };
+
         return (
             <div className="flex flex-col items-center justify-center min-w-[180px] px-8 py-4">
-                <div className={`text-5xl font-bold ${stat.color}`}>{stat.prefix || ''}{formatNumber(displayValue)}{stat.suffix || ''}</div>
+                <div className={`text-5xl font-bold ${stat.color}`}>
+                    {stat.prefix || ''}{formatNumber(displayValue)}{stat.suffix || ''}
+                </div>
                 <div className="text-gray-600 text-base mt-2 text-center">{stat.label}</div>
             </div>
         );
     };
 
+    // Get current product for RenderForm
+    const getCurrentProduct = () => {
+        // Create a simple product object based on active tab
+        const productTitles = {
+            life: 'Life Insurance',
+            car: 'Motor Insurance',
+            home: 'Home Insurance',
+            business: 'Business Insurance',
+            funeral: 'Funeral Cover',
+            legal: 'Legal Insurance',
+            professional: 'Professional Insurance',
+            micro: 'Micro Loans'
+        };
+
+        const productTaglines = {
+            life: 'Protect your loved ones with comprehensive life coverage',
+            car: 'Comprehensive, Third Party, Fire & Theft coverage for your vehicle',
+            home: 'Protect Your Home and Peace of Mind',
+            business: 'All-inclusive corporate/business cover',
+            funeral: 'Funeral support for individuals and groups',
+            legal: 'Legal Protection for You & Family',
+            professional: 'Covers professional errors and negligence',
+            micro: 'Immediate Access to Cash'
+        };
+
+        return {
+            name: productTitles[activeTab] || 'Insurance',
+            tagline: productTaglines[activeTab] || 'Get the coverage you need'
+        };
+    };
+
     return (
-        <div className="  w-full mx-auto text-[#9b1c20]  flex flex-col ">
+        <div className="w-full mx-auto text-[#9b1c20] flex flex-col">
             {/* Header */}
             <header className="max-w-[1400px] w-full border-b border-gray-200 mx-auto">
-                <div className="container mx-auto px-4 pb-8 flex  md:flex-row justify-between items-center ">
-                    <div className="text-4xl text-[#9b1c20]  md:mb-0">
+                <div className="container mx-auto px-4 pb-8 flex md:flex-row justify-between items-center">
+                    <div className="text-4xl text-[#9b1c20] md:mb-0">
                         <p> Lets get you the <span className="text-[#9b1c20] font-semibold">Cover</span> You Deserve... <br />and<span className="text-[#9b1c20] font-semibold"> Sign you up</span>  Today!</p>
                     </div>
                     <StatCarousel />
                 </div>
             </header>
 
-
             {/* Main Content */}
-            <main className="w-full   bg-[#9b1c20]">
-                <div className=" max-w-[1400px] mx-auto  py-6 px-6 rounded-2xl">
+            <main className="w-full bg-[#9b1c20]">
+                <div className="max-w-[1400px] mx-auto py-6 px-6 rounded-2xl">
                     {/* Insurance Type Tabs */}
-                    <div className='flex  items-start justify-between  '>
-
-                        <p className='text-2xl max-w-sm mb-8  text-white '> Explore our wide range of offerings tailored to your insurance needs</p>
-
+                    <div className='flex items-start justify-between'>
+                        <p className='text-2xl max-w-sm mb-8 text-white'> Explore our wide range of offerings tailored to your insurance needs</p>
                     </div>
-                    <div className="gap-2 grid  grid-cols-3 lg:grid-cols-8  w-full  pt-4 pb-4 rounded-lg ">
+                    <div className="gap-2 grid grid-cols-3 lg:grid-cols-8 w-full pt-4 pb-4 rounded-lg ">
                         {tabs.map((tab) => (
                             <TabButton
                                 key={tab.id}
@@ -486,20 +349,18 @@ export default function StartQuote() {
                                 icon={tab.icon}
                                 active={activeTab === tab.id}
                                 onClick={() => setActiveTab(tab.id)}
+                                slug={tabSlugMap[tab.id]}
                             />
                         ))}
                     </div>
-                    <div className='flex  items-start justify-end  '>
-                        <p className='text-xl underline max-w-sm mt-8 text-end text-white '> View all of our products</p>
-
+                    <div className='flex items-start justify-end'>
+                        <p className='text-xl underline max-w-sm mt-8 text-end text-white'> View all of our products</p>
                     </div>
 
-                    {/* Quote Form */}
-
+                    {/* Quote Form Section */}
+                   \
                 </div>
             </main>
-
-
         </div>
     );
 }

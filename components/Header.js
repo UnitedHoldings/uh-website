@@ -2,6 +2,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useState, useMemo } from 'react';
+import { FaInstagram, FaFacebookF, FaLinkedin, FaYoutube } from 'react-icons/fa';
 import {
     SlSocialFacebook,
     SlSocialInstagram,
@@ -18,6 +19,12 @@ import {
 } from 'react-icons/sl';
 
 export default function Header() {
+    const socialLinks = [
+        { name: 'Instagram', url: 'https://www.instagram.com/unitedholdingseswatini', icon: <FaInstagram className="inline-block mr-2 text-xl align-middle" aria-label="Instagram" /> },
+        { name: 'Facebook', url: 'https://www.facebook.com/UnitedHSD/', icon: <FaFacebookF className="inline-block mr-2 text-xl align-middle" aria-label="Facebook" /> },
+        { name: 'LinkedIn', url: 'https://www.linkedin.com/company/united-holdings-limited-swaziland', icon: <FaLinkedin className="inline-block mr-2 text-xl align-middle" aria-label="LinkedIn" /> },
+        { name: 'YouTube', url: 'https://www.youtube.com/channel/UCpNKo7EddA4KhBenXb2X1fA', icon: <FaYoutube className="inline-block mr-2 text-xl align-middle" aria-label="Youtube" /> },
+    ];
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
     const [mobileActiveDropdown, setMobileActiveDropdown] = useState(null);
 
@@ -186,9 +193,11 @@ export default function Header() {
                 <div className="hidden lg:flex px-12 w-full rounded-2xl mx-auto flex-wrap items-center justify-between py-2 gap-y-4">
                     {/* Social Icons */}
                     <ul className="flex space-x-4 text-base text-gray-100">
-                        {[SlSocialFacebook, SlSocialInstagram, SlSocialTwitter, SlSocialYoutube, SlSocialLinkedin].map((Icon, index) => (
-                            <li key={index} className="cursor-pointer hover:text-gray-200 hover:scale-105 transition duration-150 ease-in-out">
-                                <Icon />
+                        {socialLinks.map((item, idx) => (
+                            <li key={item.name} className="cursor-pointer hover:text-gray-200 hover:scale-105 transition duration-150 ease-in-out">
+                                <a href={item.url} target="_blank" rel="noopener noreferrer" aria-label={item.name}>
+                                    {item.icon}
+                                </a>
                             </li>
                         ))}
                     </ul>
