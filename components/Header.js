@@ -2,28 +2,43 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useState, useMemo } from 'react';
-import { FaInstagram, FaFacebookF, FaLinkedin, FaYoutube } from 'react-icons/fa';
 import {
-    SlSocialFacebook,
-    SlSocialInstagram,
-    SlSocialTwitter,
-    SlSocialYoutube,
-    SlSocialLinkedin,
-    SlLocationPin,
-    SlPhone,
-    SlEnvolope,
-    SlMenu,
-    SlClose,
-    SlArrowDown,
-    SlArrowUp
-} from 'react-icons/sl';
+    PiInstagramLogo,
+    PiFacebookLogo,
+    PiLinkedinLogo,
+    PiYoutubeLogo,
+    PiMapPin,
+    PiPhone,
+    PiEnvelope,
+    PiList,
+    PiX,
+    PiCaretDown,
+    PiCaretUp,
+    PiHeart,
+    PiHouse,
+    PiCar,
+    PiShieldCheck,
+    PiBriefcase,
+    PiMoney,
+    PiUsers,
+    PiScales,
+    PiFileText,
+    PiBuildingOffice,
+    PiUser,
+    PiLock,
+    PiCalendar,
+    PiTrendUp,
+    PiWarningCircle,
+    PiFire,
+    PiCloud
+} from 'react-icons/pi';
 
 export default function Header() {
     const socialLinks = [
-        { name: 'Instagram', url: 'https://www.instagram.com/unitedholdingseswatini', icon: <FaInstagram className="inline-block mr-2 text-xl align-middle" aria-label="Instagram" /> },
-        { name: 'Facebook', url: 'https://www.facebook.com/UnitedHSD/', icon: <FaFacebookF className="inline-block mr-2 text-xl align-middle" aria-label="Facebook" /> },
-        { name: 'LinkedIn', url: 'https://www.linkedin.com/company/united-holdings-limited-swaziland', icon: <FaLinkedin className="inline-block mr-2 text-xl align-middle" aria-label="LinkedIn" /> },
-        { name: 'YouTube', url: 'https://www.youtube.com/channel/UCpNKo7EddA4KhBenXb2X1fA', icon: <FaYoutube className="inline-block mr-2 text-xl align-middle" aria-label="Youtube" /> },
+        { name: 'Instagram', url: 'https://www.instagram.com/unitedholdingseswatini', icon: <PiInstagramLogo className="inline-block mr-2 text-xl align-middle" aria-label="Instagram" /> },
+        { name: 'Facebook', url: 'https://www.facebook.com/UnitedHSD/', icon: <PiFacebookLogo className="inline-block mr-2 text-xl align-middle" aria-label="Facebook" /> },
+        { name: 'LinkedIn', url: 'https://www.linkedin.com/company/united-holdings-limited-swaziland', icon: <PiLinkedinLogo className="inline-block mr-2 text-xl align-middle" aria-label="LinkedIn" /> },
+        { name: 'YouTube', url: 'https://www.youtube.com/channel/UCpNKo7EddA4KhBenXb2X1fA', icon: <PiYoutubeLogo className="inline-block mr-2 text-xl align-middle" aria-label="Youtube" /> },
     ];
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
     const [mobileActiveDropdown, setMobileActiveDropdown] = useState(null);
@@ -36,35 +51,58 @@ export default function Header() {
         setMobileActiveDropdown(mobileActiveDropdown === item ? null : item);
     };
 
-    // Memoized dropdown data
-    const dropdownItems = useMemo(() => ({
-        about: [
-            { name: "Our Team", link: "/about#team" },
-            { name: "Careers", link: "/about#careers" },
-            { name: "Upcoming Events", link: "/about#events" },
-            { name: "Know your Insurer", link: "/about#insurer" },
-            { name: "Gallery", link: "/about#gallery" },
-            { name: "In the news", link: "/news" }
-        ],
-        insurance: [
-            { name: "Motor Insurance", link: "/services#motor" },
-            { name: "Legal Insurance", link: "/services#legal" },
-            { name: "Home Insurance", link: "/services#home" },
-            { name: "Medical Malpractice Insurance", link: "/services#medical-malpractice" },
-            { name: "Professional Indemnity and Fidelity Guarantee Insurance", link: "/services#indemnity" }
-        ],
-        pay: [
-            { name: "Micro Loans", link: "/services#micro-loans" },
-            { name: "Shesha Loans", link: "/services#shesha-loans" },
-            { name: "Umlamleli", link: "/services#umlamleli" }
-        ],
-        life: [
-            { name: "Dignified Funeral Plan Cover", link: "/services#funeral" },
-            { name: "Dignified Senior Citizen Cover", link: "/services#senior" },
-            { name: "Credit Line Insurance", link: "/services#credit-line" },
-            { name: "Dignified Homelink Cover", link: "/services#homelink" }
-        ]
-    }), []);
+    // Memoized products dropdown data using product slugs with icons
+    const productsDropdown = useMemo(() => [
+        {
+            category: 'Life Assurance',
+            icon: PiHeart,
+            items: [
+                { name: 'Life Assurance', link: '/products/life-assurance', icon: PiHeart },
+                { name: 'Dignified Family Support Cover', link: '/products/dignified-family-support-cover', icon: PiUsers },
+                { name: 'Funeral Assurance', link: '/products/funeral-assurance', icon: PiCalendar },
+                { name: 'Dignified Tribute Cover', link: '/products/dignified-tribute-cover', icon: PiCalendar },
+            ]
+        },
+        {
+            category: 'General Insurance',
+            icon: PiShieldCheck,
+            items: [
+                { name: 'Motor Insurance', link: '/products/motor-insurance', icon: PiCar },
+                { name: 'Home Insurance', link: '/products/home-insurance', icon: PiHouse },
+                { name: 'Legal Insurance', link: '/products/legal-insurance', icon: PiScales },
+                { name: 'Personal Accident Insurance', link: '/products/personal-accident-insurance', icon: PiWarningCircle },
+            ]
+        },
+        {
+            category: 'Business Insurance',
+            icon: PiBriefcase,
+            items: [
+                { name: 'Multimark Policy', link: '/products/multimark-policy', icon: PiBuildingOffice },
+                { name: 'Medical Malpractice Insurance', link: '/products/medical-malpractice-insurance', icon: PiUser },
+                { name: 'Professional Indemnity Insurance', link: '/products/professional-indemnity-insurance', icon: PiFileText },
+                { name: 'Fidelity Guarantee Insurance', link: '/products/fidelity-guarantee-insurance', icon: PiLock },
+            ]
+        },
+        {
+            category: 'Loans & Financing',
+            icon: PiMoney,
+            items: [
+                { name: 'Micro Loans', link: '/products/micro-loans', icon: PiMoney },
+                { name: 'Umlamleli Loan (Salary Advance)', link: '/products/umlamleli-loan', icon: PiTrendUp },
+                { name: 'Shesha Loans', link: '/products/shesha-loans', icon: PiWarningCircle },
+            ]
+        }
+    ], []);
+
+    // Memoized about dropdown data
+    const aboutDropdown = useMemo(() => [
+        { name: "Our Team", link: "/about#team" },
+        { name: "Careers", link: "/about#careers" },
+        { name: "Upcoming Events", link: "/about#events" },
+        { name: "Know your Insurer", link: "/about#insurer" },
+        { name: "Gallery", link: "/about#gallery" },
+        { name: "In the news", link: "/news" }
+    ], []);
 
     return (
         <div className="w-full sticky top-0 z-50">
@@ -82,7 +120,7 @@ export default function Header() {
                     <div className="flex justify-between items-center mb-8">
                         <Image src={'/logo.svg'} alt="Logo" width={110} height={100} priority />
                         <button onClick={toggleDrawer} className="p-2">
-                            <SlClose className="text-2xl" />
+                            <PiX className="text-2xl" />
                         </button>
                     </div>
 
@@ -93,29 +131,21 @@ export default function Header() {
 
                         {/* About with dropdown */}
                         <li className='border-b border-gray-100'>
-                            <Link href="/about">PROJECTS</Link>
-
-                        </li>
-
-                        <li className='font-semibold cursor-pointer hover:text-[#9b1c20] transition duration-150 ease-in-out py-2 border-b border-gray-100'>
-                            <Link href="/services">SERVICES</Link>
-                        </li>
-
-                        {/* United Pay with dropdown */}
-                        <li className='border-b border-gray-100'>
                             <div
                                 className="flex justify-between items-center font-semibold cursor-pointer py-2 hover:text-[#9b1c20] transition duration-150 ease-in-out"
                                 onClick={(e) => {
                                     e.stopPropagation();
-                                    toggleMobileDropdown('pay');
+                                    toggleMobileDropdown('about');
                                 }}
                             >
-                                <p>UNITED PAY</p>
-                                {mobileActiveDropdown === 'pay' ? <SlArrowUp /> : <SlArrowDown />}
+                                <Link href="/about">ABOUT US</Link>
+                                {aboutDropdown.length > 0 && (
+                                    mobileActiveDropdown === 'about' ? <PiCaretUp /> : <PiCaretDown />
+                                )}
                             </div>
-                            {mobileActiveDropdown === 'pay' && (
+                            {mobileActiveDropdown === 'about' && aboutDropdown.length > 0 && (
                                 <ul className="pl-4 pb-2 space-y-2">
-                                    {dropdownItems.pay.map((item, index) => (
+                                    {aboutDropdown.map((item, index) => (
                                         <li key={index} className="text-sm py-1 hover:text-[#9b1c20] transition duration-150 ease-in-out">
                                             <Link href={item.link}>{item.name}</Link>
                                         </li>
@@ -124,26 +154,45 @@ export default function Header() {
                             )}
                         </li>
 
-                        {/* United Life Assurance with dropdown */}
+                        {/* Products with dropdown */}
                         <li className='border-b border-gray-100'>
                             <div
                                 className="flex justify-between items-center font-semibold cursor-pointer py-2 hover:text-[#9b1c20] transition duration-150 ease-in-out"
                                 onClick={(e) => {
                                     e.stopPropagation();
-                                    toggleMobileDropdown('life');
+                                    toggleMobileDropdown('products');
                                 }}
                             >
-                                <p>UNITED LIFE ASSURANCE</p>
-                                {mobileActiveDropdown === 'life' ? <SlArrowUp /> : <SlArrowDown />}
+                                <p>PRODUCTS</p>
+                                {mobileActiveDropdown === 'products' ? <PiCaretUp /> : <PiCaretDown />}
                             </div>
-                            {mobileActiveDropdown === 'life' && (
-                                <ul className="pl-4 pb-2 space-y-2">
-                                    {dropdownItems.life.map((item, index) => (
-                                        <li key={index} className="text-sm py-1 hover:text-[#9b1c20] transition duration-150 ease-in-out">
-                                            <Link href={item.link}>{item.name}</Link>
-                                        </li>
-                                    ))}
-                                </ul>
+                            {mobileActiveDropdown === 'products' && (
+                                <div className="pl-4 pb-2 space-y-6">
+                                    {productsDropdown.map((category, categoryIndex) => {
+                                        const CategoryIcon = category.icon;
+                                        return (
+                                            <div key={categoryIndex}>
+                                                <div className="flex items-center gap-2 mb-3">
+                                                    <CategoryIcon className="w-4 h-4 text-[#9b1c20]" />
+                                                    <p className="font-semibold text-sm text-gray-800">{category.category}</p>
+                                                </div>
+                                                <ul className="space-y-2 mb-4 pl-6">
+                                                    {category.items.map((item, itemIndex) => {
+                                                        const ItemIcon = item.icon;
+                                                        return (
+                                                            <li key={itemIndex} className="text-lg py-1 hover:text-[#9b1c20] transition duration-150 ease-in-out">
+                                                                <Link href={item.link} className="flex items-center gap-2">
+                                                                    <ItemIcon className="w-3 h-3 text-gray-500" />
+                                                                   <p>{item.name}</p>
+                                                                </Link>
+                                                            </li>
+                                                        );
+                                                    })}
+                                                </ul>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
                             )}
                         </li>
 
@@ -161,23 +210,23 @@ export default function Header() {
                     <div className="mt-8 pt-6 border-t border-gray-200">
                         <div className="flex flex-col space-y-4">
                             <div className="flex items-center space-x-2 text-gray-800">
-                                <SlLocationPin />
+                                <PiMapPin />
                                 <p className="font-semibold">Address</p>
                             </div>
                             <div className="flex items-center space-x-2">
-                                <SlPhone />
+                                <PiPhone />
                                 <a href="tel:8001010" className="font-semibold text-[#F7941D]">
                                     800 1010
                                 </a>
                             </div>
                             <div className="flex items-center space-x-2">
-                                <SlPhone />
+                                <PiPhone />
                                 <a href="tel:+26825086000" className="font-semibold text-[#F7941D]">
                                     (+268) 2508 6000
                                 </a>
                             </div>
                             <div className="flex items-center space-x-2">
-                                <SlEnvolope />
+                                <PiEnvelope />
                                 <a href="mailto:info@united.co.sz" className="font-semibold text-[#F7941D]">
                                     info@united.co.sz
                                 </a>
@@ -204,7 +253,7 @@ export default function Header() {
 
                     {/* Location */}
                     <div className="flex items-center space-x-2 text-base text-gray-100 cursor-pointer hover:text-gray-200">
-                        <SlLocationPin className="hover:scale-105 transition duration-150 ease-in-out" />
+                        <PiMapPin className="hover:scale-105 transition duration-150 ease-in-out" />
                         <p className="font-semibold border-b border-dotted border-gray-600 hover:scale-105 transition duration-150 ease-in-out">
                             Address
                         </p>
@@ -215,7 +264,7 @@ export default function Header() {
                         <div className="flex flex-col sm:flex-row items-center gap-4">
                             <div className="flex items-center gap-2">
                                 <div className=' rounded-full p-2 text-white'>
-                                    <SlPhone className="text-base hover:underline transition duration-150 ease-in-out" />
+                                    <PiPhone className="text-base hover:underline transition duration-150 ease-in-out" />
                                 </div>
                                 <a href="tel:8001010" className="font-normal text-base text-white hover:underline transition hover:text-gray-200">
                                     800 1010
@@ -227,7 +276,7 @@ export default function Header() {
                             </div>
                             <div className="flex items-center gap-2">
                                 <div className='b rounded-full p-2 text-white'>
-                                    <SlEnvolope className="text-base hover:underline transition duration-150 ease-in-out" />
+                                    <PiEnvelope className="text-base hover:underline transition duration-150 ease-in-out" />
                                 </div>
                                 <a href="mailto:info@united.co.sz" className="font-normal text-base text-white hover:underline transition hover:text-gray-200">
                                     info@united.co.sz
@@ -259,82 +308,85 @@ export default function Header() {
                                 <Link href="/">HOME</Link>
                             </li>
 
-                            {/* About with dropdown */}
+                            {/* About with dropdown - FIXED HOVER */}
                             <li className="font-semibold cursor-pointer hover:underline transition duration-150 ease-in-out relative group">
-                                <Link href="/about">ABOUT US</Link>
+                                <div className="flex items-center py-2">
+                                    <Link href="/about">ABOUT US</Link>
+                                    {aboutDropdown.length > 0 && (
+                                        <PiCaretDown className="ml-2 text-[8px] text-gray-600" />
+                                    )}
+                                </div>
+                                {aboutDropdown.length > 0 && (
+                                    <div className="absolute left-0 top-full pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                                        <div className="w-48 bg-white rounded-md shadow-lg py-2 border border-gray-100">
+                                            {aboutDropdown.map((item, index) => (
+                                                <Link
+                                                    key={index}
+                                                    href={item.link}
+                                                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-[#9b1c20] transition duration-150 ease-in-out"
+                                                >
+                                                    {item.name}
+                                                </Link>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
                             </li>
 
-                            {/* United General Insurance with dropdown */}
+                            {/* Products with mega dropdown - CENTERED ON SCREEN */}
                             <li className="font-semibold cursor-pointer hover:underline transition duration-150 ease-in-out relative group">
-                                <div className="flex items-center">
-                                    <p>UNITED GENERAL INSURANCE</p>
-                                    <SlArrowDown className="ml-2 text-[8px] text-gray-600" />
+                                <div className="flex items-center py-2">
+                                    <p>PRODUCTS</p>
+                                    <PiCaretDown className="ml-2 text-[8px] text-gray-600" />
                                 </div>
-                                <div className="absolute left-0 mt-2 w-72 bg-white rounded-md shadow-lg py-2 z-50 hidden group-hover:block">
-                                    {dropdownItems.insurance.map((item, index) => (
-                                        <a
-                                            key={index}
-                                            href={item.link}
-                                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-[#9b1c20]"
-                                        >
-                                            {item.name}
-                                        </a>
-                                    ))}
-                                </div>
-                            </li>
-
-                            {/* United Pay with dropdown */}
-                            <li className="font-semibold cursor-pointer hover:underline transition duration-150 ease-in-out relative group">
-                                <div className="flex items-center">
-                                    <p>UNITED PAY</p>
-                                    <SlArrowDown className="ml-2 text-[8px] text-gray-600" />
-                                </div>
-                                <div className="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-2 z-50 hidden group-hover:block">
-                                    {dropdownItems.pay.map((item, index) => (
-                                        <a
-                                            key={index}
-                                            href={item.link}
-                                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-[#9b1c20]"
-                                        >
-                                            {item.name}
-                                        </a>
-                                    ))}
-                                </div>
-                            </li>
-
-                            {/* United Life Assurance with dropdown */}
-                            <li className="font-semibold cursor-pointer hover:underline transition duration-150 ease-in-out relative group">
-                                <div className="flex items-center">
-                                    <p>UNITED LIFE ASSURANCE</p>
-                                    <SlArrowDown className="ml-2 text-[8px] text-gray-600" />
-                                </div>
-                                <div className="absolute left-0 mt-2 w-60 bg-white rounded-md shadow-lg py-2 z-50 hidden group-hover:block">
-                                    {dropdownItems.life.map((item, index) => (
-                                        <a
-                                            key={index}
-                                            href={item.link}
-                                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-[#9b1c20]"
-                                        >
-                                            {item.name}
-                                        </a>
-                                    ))}
+                                <div className="absolute z-50 left-1/2  pt-2 top-14 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform -translate-x-1/2">
+                                    <div className="w-[1200px] bg-white rounded-md shadow-xl py-6 border border-gray-100">
+                                        <div className="grid grid-cols-4 gap-8 p-6">
+                                            {productsDropdown.map((category, categoryIndex) => {
+                                                const CategoryIcon = category.icon;
+                                                return (
+                                                    <div key={categoryIndex} className="space-y-3">
+                                                        <div className="flex items-center gap-2 mb-3">
+                                                            <CategoryIcon className="w-5 h-5 text-[#9b1c20]" />
+                                                            <p className="font-bold text-lg text-gray-800 border-b pb-1">{category.category}</p>
+                                                        </div>
+                                                        <ul className="space-y-1">
+                                                            {category.items.map((item, itemIndex) => {
+                                                                const ItemIcon = item.icon;
+                                                                return (
+                                                                    <li key={itemIndex}>
+                                                                        <Link
+                                                                            href={item.link}
+                                                                            className="flex text-base items-center gap-2  font-light text-gray-600 hover:text-[#9b1c20] hover:underline transition duration-150 ease-in-out py-1 group/item"
+                                                                        >
+                                                                            <ItemIcon className="w-4 h-4 text-gray-600 group-hover/item:text-[#9b1c20] transition duration-150 ease-in-out" />
+                                                                            {item.name}
+                                                                        </Link>
+                                                                    </li>
+                                                                );
+                                                            })}
+                                                        </ul>
+                                                    </div>
+                                                );
+                                            })}
+                                        </div>
+                                    </div>
                                 </div>
                             </li>
 
                             <li className='font-semibold cursor-pointer hover:underline transition duration-150 ease-in-out'>
-                                <Link href="/projects">PROJECTS</Link>
+                                <Link href="/projects">NEWS BLOG</Link>
                             </li>
                             <li className='font-semibold cursor-pointer hover:underline transition duration-150 ease-in-out'>
-                                <Link href="/news">NEWS</Link>
+                                <Link href="/news">DOCUMENTS</Link>
                             </li>
                             <li className='font-semibold cursor-pointer hover:underline transition duration-150 ease-in-out'>
-                                <Link href="/contact">CONTACT</Link>
+                                <Link href="/contact">CONTACT US</Link>
                             </li>
                         </ul>
                     </div>
 
                     {/* Mobile Contact Button - Visible only on mobile */}
-
                     <div className="flex items-center gap-4 mr-4">
                         {/* Desktop: Login & Sign Up */}
                         <a href="/login" className="hidden lg:inline-block px-8 py-2 bg-white text-[#9b1c20] border border-[#9b1c20] rounded-full font-semibold hover:bg-[#9b1c20] hover:text-white transition">Login</a>
@@ -344,7 +396,7 @@ export default function Header() {
                             onClick={toggleDrawer}
                             className="lg:hidden p-2 mr-4"
                         >
-                            <SlMenu className="text-lg text-[#9b1c20]" />
+                            <PiList className="text-lg text-[#9b1c20]" />
                         </button>
                     </div>
                 </div>
