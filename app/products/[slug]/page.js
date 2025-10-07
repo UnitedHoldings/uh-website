@@ -129,7 +129,6 @@ export default function ProductPage({ params }) {
                                         <p className=' text-3xl font-light mb-2'>Let&apos;s get started</p>
                                         <p className='font-semibold text-lg mb-8'>Please complete the details of the person taking out the policy (e.g. policyholder)</p>
                                     </div>
-                                    <div className='h-[0.5px] w-full bg-gray-300 mt-1' />
 
                                     <RenderForm product={product} formData={formData} handleInputChange={handleInputChange} />
                                     <div className='w-full space-x-2 mt-6'>
