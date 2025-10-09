@@ -192,7 +192,7 @@ export default function Contact() {
           priority
         />
         
-        <div className="absolute lg:right-[10%] lg:top-[0%] top-[5%] left-0 lg:left-auto right-0 flex items-center">
+        <div className="absolute lg:right-[10%] lg:top-[10%] top-[5%] left-0 lg:left-auto right-0 flex items-center">
           <div className="max-w-[1100px] mx-auto px-4 w-full">
             <div className="bg-[#9b1c20] px-8 flex flex-col mx-auto text-white py-8">
               <div className='left-[13%] space-y-4 top-[30%] text-white'>
