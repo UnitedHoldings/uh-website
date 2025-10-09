@@ -1,115 +1,137 @@
-"use client"; // if using Next.js App Router
+"use client";
 
+import { useState } from "react";
 import { MapContainer, TileLayer, Marker, Tooltip } from "react-leaflet";
 import L from "leaflet";
-
-// Fix default marker icon issue in Next.js
 import "leaflet/dist/leaflet.css";
+
+const DEPARTMENT_COLORS = {
+  "Life Assurance": "#3d834d",
+  "General Insurance": "#286278",
+  "United Pay": "#f79620",
+  "All": "#9b1c20",
+};
+
+// Function to open Google Maps with coordinates
+const openGoogleMaps = (coords, branchName) => {
+  const [lat, lng] = coords;
+  const googleMapsUrl = `https://www.google.com/maps?q=${lat},${lng}&layer=c&cbll=${lat},${lng}&cbp=`;
+  window.open(googleMapsUrl, '_blank', 'noopener,noreferrer');
+};
+
+// Fix for default markers in Leaflet with Next.js
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
-    iconRetinaUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png",
-    iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
-    shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
+  iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png',
+  iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
+  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
 });
 
-export default function BranchMap() {
-    // Example branch data
-    // data/branches.js
-    const branches = [
-        {
-            name: "Manzini – Head Office",
-            phone: "+268 2508 6000",
-            coords: [-26.4988, 31.3800],
-            hours: "Mon–Fri: 8am–5pm",
-        },
-        {
-            name: "Manzini 1",
-            phone: "+268 2508 6124",
-            coords: [-26.4985, 31.3812],
-            hours: "Mon–Fri: 8am–5pm",
-        },
-        {
-            name: "Matsapha",
-            phone: "+268 2508 6125",
-            coords: [-26.5167, 31.3167],
-            hours: "Mon–Fri: 8am–5pm",
-        },
-        {
-            name: "Ezulwini",
-            phone: "+268 2508 6126",
-            coords: [-26.4167, 31.2000],
-            hours: "Mon–Fri: 8am–5pm",
-        },
-        {
-            name: "Mbabane",
-            phone: "+268 2508 6120",
-            coords: [-26.3054, 31.1367],
-            hours: "Mon–Fri: 8am–5pm",
-        },
-        {
-            name: "Piggs Peak",
-            phone: "+268 2508 6122",
-            coords: [-25.9670, 31.2500],
-            hours: "Mon–Fri: 8am–5pm",
-        },
-        {
-            name: "Simunye",
-            phone: "+268 2508 6127",
-            coords: [-26.2020, 31.9330],
-            hours: "Mon–Fri: 8am–5pm",
-        },
-        {
-            name: "Siteki",
-            phone: "+268 2508 6123",
-            coords: [-26.4500, 31.9500],
-            hours: "Mon–Fri: 8am–5pm",
-        },
-        {
-            name: "Matata",
-            phone: "+268 2508 6128",
-            coords: [-27.0000, 31.6333],
-            hours: "Mon–Fri: 8am–5pm",
-        },
-        {
-            name: "Nhlangano",
-            phone: "+268 2508 6121",
-            coords: [-27.1167, 31.2000],
-            hours: "Mon–Fri: 8am–5pm",
-        },
-        {
-            name: "Buhleni",
-            phone: "+268 3460 1767",
-            coords: [-26.0333, 31.3167],
-            hours: "Mon–Fri: 8am–5pm",
-        },
-        {
-            name: "Hlathikhulu",
-            phone: "N/A",
-            coords: [-27.2167, 31.2167],
-            hours: "Mon–Fri: 8am–5pm",
-        },
-    ];
+// Utility to create colored pin icons
+const createIcon = (color) =>
+  L.divIcon({
+    html: `
+      <svg xmlns="http://www.w3.org/2000/svg" width="25" height="41" viewBox="0 0 25 41">
+        <path d="M12.5 0C5.6 0 0 5.6 0 12.5c0 9.4 12.5 28.5 12.5 28.5S25 21.9 25 12.5C25 5.6 19.4 0 12.5 0z" fill="${color}"/>
+        <circle cx="12.5" cy="12.5" r="5" fill="white"/>
+      </svg>
+    `,
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    tooltipAnchor: [16, -28],
+    className: 'custom-div-icon'
+  });
 
-    return (
-        <MapContainer
-            center={[-26.5, 31.4]} // Eswatini center
-            zoom={8}
-            style={{ height: "500px", width: "100%" }}
-        >
-            <TileLayer
-                attribution='&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a>'
-                url="https://cartodb-basemaps-a.global.ssl.fastly.net/light_all/{z}/{x}/{y}{r}.png"
-            />
+export default function BranchMap({ branches = [] }) {
+  const [activeTab, setActiveTab] = useState("All");
 
-            {branches.map((branch, idx) => (
-                <Marker key={idx} position={branch.coords}>
-                    <Tooltip>
-                        <strong>{branch.name}</strong>
-                        <br />
-                        {branch.hours}
-                    </Tooltip>
-                </Marker>
-            ))}
-        </MapContainer>
-    );
+  // Filter branches based on active tab
+  const filteredBranches =
+    activeTab === "All"
+      ? branches
+      : branches.filter((b) => b.departments.includes(activeTab));
+
+  return (
+    <div>
+      {/* Tabs */}
+      <div className="flex justify-center mb-4 gap-4 flex-wrap">
+        {["All", "Life Assurance", "General Insurance", "United Pay"].map(
+          (tab) => (
+            <button
+              key={tab}
+              onClick={() => setActiveTab(tab)}
+              className={`px-4 py-2 rounded-full transition-colors font-semibold ${
+                activeTab === tab 
+                  ? 'text-white' 
+                  : 'text-gray-700 hover:bg-gray-200'
+              }`}
+              style={{
+                backgroundColor: activeTab === tab ? DEPARTMENT_COLORS[tab] : '#f3f4f6',
+              }}
+            >
+              {tab === "All" ? "All Branches" : tab}
+            </button>
+          )
+        )}
+      </div>
+
+      {/* Map */}
+      <MapContainer
+        center={[-26.5, 31.4]}
+        zoom={8}
+        style={{
+          height: "500px",
+          width: "100%",
+          background: "white",
+          position: "relative",
+          zIndex: 10,
+        }}
+      >
+        <TileLayer
+          attribution='&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a>'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
+
+        {filteredBranches.map((branch, idx) => (
+          <Marker
+            key={idx}
+            position={branch.coords}
+            icon={createIcon(
+              activeTab === "All"
+                ? DEPARTMENT_COLORS["All"]
+                : DEPARTMENT_COLORS[activeTab]
+            )}
+            eventHandlers={{
+              click: () => openGoogleMaps(branch.coords, branch.name)
+            }}
+          >
+            <Tooltip>
+              <div className="text-sm max-w-xs">
+                <strong className="text-base">{branch.name}</strong>
+                <br />
+                📞 {branch.phone}
+                <br />
+                🕒 {branch.hours}
+                <br />
+                📍 {branch.region}
+                <br />
+                🏢 {branch.departments.join(", ")}
+                <br />
+                <button 
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    openGoogleMaps(branch.coords, branch.name);
+                  }}
+                  className="mt-2 text-blue-600 underline hover:text-blue-800 font-semibold"
+                >
+                  Get Directions
+                </button>
+              </div>
+            </Tooltip>
+          </Marker>
+        ))}
+      </MapContainer>
+    </div>
+  );
 }

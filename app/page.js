@@ -4,18 +4,93 @@ import Hero from '@/components/Hero';
 import Products from '@/components/Products';
 import StartQuote from '@/components/Startqoute';
 import WhyChooseUs from '@/components/WhyChooseUs';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useMemo } from 'react';
+
+// Department colors and mappings
+const DEPARTMENT_COLORS = {
+  'Life Assurance': '#3d834d', // Green
+  'General Insurance': '#286278', // Blue
+  'United Pay': '#f79620', // Orange
+};
+
+const SLIDE_DEPARTMENTS = {
+  'life': 'Life Assurance',
+  'general': 'General Insurance', 
+  'pay': 'United Pay'
+};
+
+const TAB_CONFIG = [
+  { name: 'Life Assurance', slideId: 'life', shortName: 'Life' },
+  { name: 'General Insurance', slideId: 'general', shortName: 'General' },
+  { name: 'United Pay', slideId: 'pay', shortName: 'Pay' }
+];
+
+const slidesData = [
+  {
+    id: 'life',
+    image: '/slide1.jpg',
+    imageSM: '/slide1-SM.jpg',
+    title1: 'United',
+    title11: 'Life',
+    title2: 'Assurance',
+    description: 'Protect your loved ones with comprehensive life insurance coverage. From funeral plans to family protection, we have you covered.',
+    button: 'Learn More',
+    url: 'https://united.co.sz/life-assurance',
+  },
+  {
+    id: 'general',
+    image: '/home.jpg',
+    imageSM: '/homeSM.jpg',
+    title1: 'United',
+    title11: 'General',
+    title2: 'Insurance',
+    description: 'Comprehensive insurance solutions for your home, motor, and business. Get protected against unexpected events and losses.',
+    button: 'Get Covered',
+    url: 'https://united.co.sz/general-insurance',
+  },
+  {
+    id: 'pay',
+    image: '/micro.jpg',
+    imageSM: '/microSM.jpg',
+    title1: 'United',
+    title11: 'Pay',
+    title2: 'Solutions',
+    description: 'Fast and convenient financial solutions including Shesha Loans. Get access to funds when you need them most.',
+    button: 'Apply Now',
+    url: 'https://united.co.sz/united-pay',
+  },
+];
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState(0);
   const [currentSlide, setCurrentSlide] = useState(0);
   const intervalRef = useRef(null);
-  const tabCount = 4; // Life, Home, Car, Loan
+  const tabCount = TAB_CONFIG.length;
   
-  // Tab to slide mapping: Life->0, Home->2, Car->3, Loan->1
-  const slideMap = [0, 2, 3, 1];
-  // Slide to tab mapping: 0->0(Life), 1->3(Loan), 2->1(Home), 3->2(Car)
-  const tabMap = [0, 3, 1, 2];
+  // Use useMemo to prevent recreation of arrays on every render
+  const slideMap = useMemo(() => 
+    TAB_CONFIG.map(tab => slidesData.findIndex(slide => slide.id === tab.slideId)),
+    [] // Empty dependency array since TAB_CONFIG and slidesData are static
+  );
+  
+  const tabMap = useMemo(() => 
+    slidesData.map(slide => TAB_CONFIG.findIndex(tab => tab.slideId === slide.id)),
+    [] // Empty dependency array since TAB_CONFIG and slidesData are static
+  );
+
+  // Get current department color
+  const getCurrentDepartmentColor = () => {
+    const currentSlideData = slidesData[currentSlide];
+    const department = SLIDE_DEPARTMENTS[currentSlideData.id];
+    return DEPARTMENT_COLORS[department];
+  };
+
+  // Get tab color
+  const getTabColor = (tabIndex) => {
+    const slideId = TAB_CONFIG[tabIndex].slideId;
+    const department = SLIDE_DEPARTMENTS[slideId];
+    return DEPARTMENT_COLORS[department];
+  };
 
   // Start the interval when component mounts
   useEffect(() => {
@@ -50,19 +125,19 @@ export default function Home() {
     if (correspondingTab !== undefined && correspondingTab !== activeTab) {
       setActiveTab(correspondingTab);
     }
-  }, [currentSlide]);
+  }, [currentSlide, activeTab, tabMap]); // Now tabMap is stable
 
   const handleTabClick = (index) => {
     const newSlide = slideMap[index];
     setActiveTab(index);
     setCurrentSlide(newSlide);
-    resetInterval(); // Reset the interval when a tab is clicked
+    resetInterval();
   };
 
   // Handle manual carousel navigation
   const handleCarouselChange = (index) => {
     setCurrentSlide(index);
-    resetInterval(); // Reset interval on manual carousel navigation
+    resetInterval();
   };
 
   const resetInterval = () => {
@@ -72,8 +147,10 @@ export default function Home() {
     startInterval();
   };
 
+  const currentColor = getCurrentDepartmentColor();
+
   return (
-    <div className='flex flex-col  pb-16 lg:space-y-16'>
+    <div className='flex flex-col pb-16 lg:space-y-16'>
       <div className='relative lg:px-2 mb-4 lg:mb-8 flex flex-col items-center'>
         <Hero 
           currentSlide={currentSlide} 
@@ -81,35 +158,51 @@ export default function Home() {
         />
         
         {/* Tab Navigation */}
-        <div className='w-full'>
-          <div className='absolute z-40 lg:bottom-2 bottom-[-5%] w-full flex'>
-            <ul className="bg-gray-100 p-2 flex gap-2 space-x-1 h-14 mx-auto drop-shadow-lg border-[#9b1c20] border-2 rounded-full relative">
-              {/* Animated highlight bar */}
-              <div
-                className="absolute bg-[#9b1c20] h-9 rounded-full transition-all duration-500 ease-in-out"
-                style={{
-                  width: `calc(25% - 4px)`,
-                  transform: `translateX(${activeTab * 100}%)`
-                }}
-              />
+        <div className='w-full  '>
+          <div className='absolute z-40 lg:bottom-[-4%] bottom-[-5%] w-full flex'>
+            <div className="mx-auto">
+              <ul 
+                className="bg-gray-100 p-2 flex h-14 drop-shadow-lg rounded-full relative border-2"
+                style={{ borderColor: currentColor }}
+              >
+                {/* Animated highlight bar */}
+                <div
+                  className="absolute h-9 rounded-full transition-all duration-500 ease-in-out top-2"
+                  style={{
+                    width: `calc(${100 / tabCount}% - 8px)`,
+                    transform: `translateX(calc(${activeTab * 100}% + 4px))`,
+                    backgroundColor: currentColor
+                  }}
+                />
 
-              {/* Tabs */}
-              {['Life', 'Home', 'Car', 'Loan'].map((tab, index) => (
-                <li
-                  key={index}
-                  className={`cursor-pointer relative z-10 lg:min-w-20 flex items-center justify-center py-1 font-bold lg:text-lg px-4 rounded-full transition-all duration-300 ease-in-out ${
-                    index === activeTab
-                      ? 'text-white'
-                      : 'text-[#9b1c20] hover:bg-[#f9af5525]'
-                  }`}
-                  onClick={() => handleTabClick(index)}
-                >
-                  {tab}
-                </li>
-              ))}
-            </ul>
+                {/* Tabs */}
+                {TAB_CONFIG.map((tab, index) => (
+                  <li
+                    key={index}
+                    className={`cursor-pointer relative z-10 flex-1 flex items-center justify-center py-1 font-bold lg:text-lg px-4 rounded-full transition-all duration-300 ease-in-out ${
+                      index === activeTab
+                        ? 'text-white'
+                        : 'hover:bg-opacity-10'
+                    }`}
+                    style={{
+                      color: index === activeTab ? 'white' : getTabColor(index),
+                      backgroundColor: index === activeTab ? 'transparent' : 'transparent',
+                      minWidth: '100px'
+                    }}
+                    onClick={() => handleTabClick(index)}
+                  >
+                    <span className="text-center whitespace-nowrap">
+                      {/* Show full name on large screens, short name on small screens */}
+                      <span className="">{tab.shortName}</span>
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
+
+        
       </div>
       
       <StartQuote />
