@@ -146,7 +146,7 @@ export default function Header() {
     };
 
     return (
-        <div className="w-full sticky top-0 z-50 bg-white shadow-sm">
+        <div className="w-full sticky top-0 z-50 bg-white ">
             {/* Mobile Drawer Overlay */}
             {isDrawerOpen && (
                 <div
@@ -156,7 +156,7 @@ export default function Header() {
             )}
 
             {/* Mobile Drawer */}
-            <div className={`fixed top-0 left-0 h-full w-80 bg-white shadow-xl z-60 transform transition-transform duration-300 ease-in-out lg:hidden ${isDrawerOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+            <div className={`fixed top-0 left-0 h-full w-80 bg-white  z-60 transform transition-transform duration-300 ease-in-out lg:hidden ${isDrawerOpen ? 'translate-x-0' : '-translate-x-full'}`}>
                 <div className="p-6 h-full flex flex-col">
                     {/* Header */}
                     <div className="flex justify-between items-center mb-8">

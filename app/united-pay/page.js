@@ -290,7 +290,7 @@ export default function UnitedPay() {
           <div className="text-center mb-12">
             <h2 className="text-3xl sm:text-4xl font-bold mb-4">Why Choose United Pay?</h2>
             <p className="text-xl text-white/80 max-w-3xl mx-auto">
-              Trusted financial solutions designed specifically for Eswatini's working population
+              Trusted financial solutions designed specifically for Eswatini&apos;s working population
             </p>
           </div>
 
@@ -321,7 +321,7 @@ export default function UnitedPay() {
               </div>
               <h3 className="text-xl font-semibold mb-3">Credit Building</h3>
               <p className="text-white/80">
-                Build your credit history while accessing the funds you need for life's opportunities.
+                Build your credit history while accessing the funds you need for life&apos;s opportunities.
               </p>
             </div>
           </div>

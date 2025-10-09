@@ -63,7 +63,7 @@ export default function About() {
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 py-4 sm:py-6">
                             <p className="text-gray-700 leading-relaxed text-lg">
                                 United Holdings Ltd – Live With Purpose.
-                                United Holdings is a proudly Eswatini‑owned financial services group that has steadily grown into one of the Kingdom's most trusted providers of insurance and financial solutions. Since acquiring our operating license in 2016, we have been on a mission to transform the way individuals, families, and businesses access financial protection.
+                                United Holdings is a proudly Eswatini‑owned financial services group that has steadily grown into one of the Kingdom&apos;s most trusted providers of insurance and financial solutions. Since acquiring our operating license in 2016, we have been on a mission to transform the way individuals, families, and businesses access financial protection.
                             </p>
                             <p className="text-gray-700 leading-relaxed text-lg">
                                 Our story is one of resilience, innovation, and deep commitment to the people of Eswatini. We were founded on the belief that financial services should not be a privilege for the few, but a right for all. Today, we stand as a diversified group under the Dups Group of Companies, offering a wide range of products that address both short‑term and long‑term financial needs.
@@ -96,7 +96,7 @@ export default function About() {
                                     United Life Assurance
                                 </h3>
                                 <p className="text-white text-lg leading-relaxed">
-                                    Offering long‑term insurance solutions such as funeral plans, credit life, and group life cover. These products provide families with dignity, security, and peace of mind during life's most challenging moments.
+                                    Offering long‑term insurance solutions such as funeral plans, credit life, and group life cover. These products provide families with dignity, security, and peace of mind during life&apos;s most challenging moments.
                                 </p>
                             </div>
                         </div>

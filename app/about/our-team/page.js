@@ -136,7 +136,7 @@ export default function OurTeam() {
           <div className="text-center">
             <h1 className="text-4xl md:text-6xl font-bold mb-6">Our Leadership Team</h1>
             <p className="text-xl md:text-2xl text-blue-100 max-w-3xl mx-auto leading-relaxed">
-              Meet the dedicated professionals driving United Holdings' mission to protect and empower Eswatini families and businesses
+              Meet the dedicated professionals driving United Holdings&apos; mission to protect and empower Eswatini families and businesses
             </p>
           </div>
         </div>

@@ -191,7 +191,7 @@ export default function UnitedLifeAssurance() {
               </div>
             </div>
             <div className=" rounded-2xl bg-[#3d834d] p-6 min-w-[300px] ">
-              <h3 className="text-white font-semibold text-lg mb-3">Secure Your Family's Future</h3>
+              <h3 className="text-white font-semibold text-lg mb-3">Secure Your Family&apos;s Future</h3>
               <p className="text-white/80 text-sm mb-4">
                 Trusted by thousands of Eswatini families for life protection and peace of mind
               </p>
@@ -315,7 +315,7 @@ export default function UnitedLifeAssurance() {
               </div>
               <h3 className="text-xl font-semibold mb-3">Family-Focused Protection</h3>
               <p className="text-white/80">
-                We understand the importance of family and provide comprehensive coverage to protect your loved ones' future.
+                We understand the importance of family and provide comprehensive coverage to protect your loved ones&apos; future.
               </p>
             </div>
 
@@ -346,7 +346,7 @@ export default function UnitedLifeAssurance() {
       <section className="py-16 bg-white">
         <div className="max-w-[1400px] mx-auto px-4 sm:px-6 text-center">
           <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
-            Ready to Secure Your Family's Future?
+            Ready to Secure Your Family&apos;s Future?
           </h2>
           <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
             Join thousands of satisfied families who trust United Life Assurance for their protection needs.
