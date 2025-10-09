@@ -14,11 +14,11 @@ function Agent() {
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center">
               <div className="flex  flex-col md:flex-row md:items-center ">
                 <div className="text-xl text-[#9b1c20] sm:text-2xl min-w-xs font-semibold ">
-                  <p>Speak to an Agent</p>
+                  <p>Speak to an Officer</p>
                 </div>
                 <div className="text-xl sm:text-2xl md:text-3xl max-w-3xl">
                   <p className='text-[#9b1c20]'>
-                    <span className="text-[#9b1c20] font-light">Connect</span> with one of our agents to explore tailored solutions.
+                    <span className="text-[#9b1c20] font-light">Connect</span> with one of our officers to explore tailored solutions.
                   </p>
                 </div>
               </div>
@@ -36,15 +36,12 @@ function Agent() {
                   className="bg-[#9b1c20] p-2 sm:p-3 px-4 rounded-full border border-white text-sm sm:text-base w-full sm:w-auto text-white placeholder-white"
                 />
                 <select className="bg-[#9b1c20] p-2 sm:p-3 px-4 rounded-full border border-white text-sm sm:text-base w-full sm:w-auto text-white">
-                  <option value="">Select Product</option>
-                  <option value="legal-insurance">Legal Insurance</option>
-                  <option value="funeral-assurance">Funeral Assurance</option>
-                  <option value="motor-insurance">Motor Insurance</option>
-                  <option value="dignified-family-support">Dignified Family Support Cover</option>
-                  <option value="micro-loans">Micro Loans</option>
-                  <option value="united-pay">United Pay</option>
-                  <option value="life-assurance">Life Assurance</option>
-                  <option value="general-insurance">General Insurance</option>
+                  <option value="">Select Reason</option>
+                  <option value="legal-insurance">Get A Qoute</option>
+                  <option value="funeral-assurance">File A Claim</option>
+                  <option value="motor-insurance">Ask Questions</option>
+                  <option value="dignified-family-support">Account Statement</option>
+                  <option value="micro-loans">Other</option>
                 </select>
                 <button className="bg-white space-x-2 text-[#9b1c20] px-4 sm:px-6 lg:px-16 py-2 sm:py-3 rounded-full h-12 shadow-md flex items-center justify-center text-sm sm:text-base font-bold">
                   <SlPhone />
