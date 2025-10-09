@@ -61,9 +61,8 @@ export default function StartQuote() {
     ];
 
     const statsData = [
-        { value: 70, label: "Years in Business", color: "text-[#9b1c20]", prefix: "+" },
+        { value: 80, label: "Years in Business", color: "text-[#9b1c20]", prefix: "+" },
         { value: 3, label: "Group Companies", color: "text-[#9b1c20]" },
-        { value: 24, label: "Customer Support", color: "text-[#9b1c20]", suffix: "/7" },
         { value: 98, label: "Claim Satisfaction", color: "text-[#9b1c20]", suffix: "%" },
         { value: 50000, label: "Happy Clients", color: "text-[#9b1c20]", prefix: "+" },
         { value: 100, label: "% Swazi Owned", color: "text-[#9b1c20]", suffix: "%" },

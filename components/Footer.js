@@ -19,6 +19,7 @@ function Footer() {
         { title: 'Proof Insurance', path: '/faq#proof-insurance' },
         { title: 'Claims', path: '/claims' },
         { title: 'Vacancies', path: '/about#careers' },
+        { title: 'Policies Documents', path: '/policies' },
     ];
     const socialLinks = [
         { name: 'Instagram', url: 'https://www.instagram.com/unitedholdingseswatini', icon: <FaInstagram className="inline-block mr-2 text-xl align-middle" aria-label="Instagram" /> },

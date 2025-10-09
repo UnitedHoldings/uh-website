@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useState, useMemo } from 'react';
-import BranchMap from '@/components/BranchMap';
+import React, { useState, useMemo, Suspense } from 'react';
+import dynamic from 'next/dynamic';
 import Image from 'next/image';
 
 // Complete branch data with departments and regions
@@ -116,12 +116,19 @@ const completeBranches = [
   },
 ];
 
-// Function to open Google Maps with coordinates
+// Browser-safe function to open Google Maps
 const openGoogleMaps = (coords, branchName) => {
+  if (typeof window === 'undefined') return;
   const [lat, lng] = coords;
   const googleMapsUrl = `https://www.google.com/maps?q=${lat},${lng}&layer=c&cbll=${lat},${lng}&cbp=`;
   window.open(googleMapsUrl, '_blank', 'noopener,noreferrer');
 };
+
+// Dynamically import BranchMap with no SSR
+const BranchMap = dynamic(() => import('@/components/BranchMap'), {
+  ssr: false,
+  loading: () => <div className="h-[500px] bg-gray-200 rounded-lg flex items-center justify-center">Loading map...</div>
+});
 
 export default function Contact() {
   const [form, setForm] = useState({ name: '', email: '', message: '' });
@@ -216,7 +223,6 @@ export default function Contact() {
       <div className='max-w-[1400px] px-4 mt-8 lg:mb-16 mb-12 space-y-6 mx-auto'>
         <div className="flex justify-between items-center md:flex-row md:items-center gap-4 md:gap-8">
           <p className='max-w-[800px] text-2xl'>We have multiple branches across the country. Find the one nearest to you or reach out through our contact channels.</p>
-          
         </div>
       </div>
 
@@ -306,7 +312,9 @@ export default function Contact() {
             {activeTab === 'branches' ? (
               <div className="space-y-6">
                 <div className="h-[500px] rounded-lg overflow-hidden">
-                  <BranchMap branches={completeBranches} />
+                  <Suspense fallback={<div className="h-full bg-gray-200 flex items-center justify-center">Loading map...</div>}>
+                    <BranchMap branches={completeBranches} />
+                  </Suspense>
                 </div>
                 
                 {/* Search and Filters */}
@@ -371,7 +379,7 @@ export default function Contact() {
                       <p className="text-md text-gray-300 mb-4">{branch.hours}</p>
                       <button 
                         onClick={() => openGoogleMaps(branch.coords, branch.name)}
-                        className="text-gray-300 font-semibold underline hover:text-[#881a1e] transition-colors"
+                        className="text-gray-300 font-semibold underline hover:text-white transition-colors"
                       >
                         Get Directions
                       </button>

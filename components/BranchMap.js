@@ -12,20 +12,25 @@ const DEPARTMENT_COLORS = {
   "All": "#9b1c20",
 };
 
-// Function to open Google Maps with coordinates
+// Browser-safe function to open Google Maps
 const openGoogleMaps = (coords, branchName) => {
+  // Check if window is available (client-side only)
+  if (typeof window === 'undefined') return;
+  
   const [lat, lng] = coords;
   const googleMapsUrl = `https://www.google.com/maps?q=${lat},${lng}&layer=c&cbll=${lat},${lng}&cbp=`;
   window.open(googleMapsUrl, '_blank', 'noopener,noreferrer');
 };
 
 // Fix for default markers in Leaflet with Next.js
-delete L.Icon.Default.prototype._getIconUrl;
-L.Icon.Default.mergeOptions({
-  iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png',
-  iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
-  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
-});
+if (typeof window !== 'undefined') {
+  delete L.Icon.Default.prototype._getIconUrl;
+  L.Icon.Default.mergeOptions({
+    iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png',
+    iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
+    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
+  });
+}
 
 // Utility to create colored pin icons
 const createIcon = (color) =>
