@@ -129,7 +129,7 @@ export default function PolicyPage() {
                                     
                                     <div className="mb-6">
                                         <p className="mb-4">
-                                            United Holdings Limited (&quot;United Holdings,&quot; &quot;we,&quot; &quot;us,&quot; or &quot;our&quot;) is dedicated to upholding the highest standards of consumer protection in all our electronic communications and transactions. This Consumer Protection Policy (the cPolicy&quot;) outlines your rights and our commitments when using our website (the &quot;Website&quot;), signing up as a client, accessing the client portal, or engaging with our insurance services. It complies with the Electronic Communications (Consumer Protection) Regulations, 2016 (&quot;Regulations&quot;), the Electronic Communications and Transactions Act, 2022 ("ECTA") Part VIII, and oversight by the Eswatini Communications Commission (ESCCOM) and the Financial Services Regulatory Authority (FSRA).
+                                            United Holdings Limited (&quot;United Holdings,&quot; &quot;we,&quot; &quot;us,&quot; or &quot;our&quot;) is dedicated to upholding the highest standards of consumer protection in all our electronic communications and transactions. This Consumer Protection Policy (the cPolicy&quot;) outlines your rights and our commitments when using our website (the &quot;Website&quot;), signing up as a client, accessing the client portal, or engaging with our insurance services. It complies with the Electronic Communications (Consumer Protection) Regulations, 2016 (&quot;Regulations&quot;), the Electronic Communications and Transactions Act, 2022 (&quot;ECTA&quot;) Part VIII, and oversight by the Eswatini Communications Commission (ESCCOM) and the Financial Services Regulatory Authority (FSRA).
                                         </p>
                                         
                                         <div className="p-4 bg-yellow-50 border-l-4 border-yellow-400 mb-6">
@@ -181,7 +181,7 @@ export default function PolicyPage() {
                                                 <li>We send prompt confirmations (e.g., email) with full transaction records, retainable for your records.</li>
                                             </ul>
                                             <p className="mt-3">
-                                                <strong>Cooling-Off Period:</strong> For non-insurance digital services (e.g., portal subscriptions), a 7-day cooling-off applies (Regulation 13). Cancel without penalty by notifying us; we'll refund promptly. For insurance, standard policy cancellation rules apply, but we honor fair withdrawals.
+                                                <strong>Cooling-Off Period:</strong> For non-insurance digital services (e.g., portal subscriptions), a 7-day cooling-off applies (Regulation 13). Cancel without penalty by notifying us; we&apos;ll refund promptly. For insurance, standard policy cancellation rules apply, but we honor fair withdrawals.
                                             </p>
                                             <p className="mt-2">
                                                 In the industry, cooling-off prevents buyer&apos;s remorse—use it wisely to reassess risks.
@@ -340,7 +340,7 @@ export default function PolicyPage() {
                                             <ul className="list-disc pl-6 space-y-2">
                                                 <li><strong>Manage Preferences:</strong> You can accept all, reject non-essential, or customize via the banner or settings link in the footer.</li>
                                                 <li><strong>Browser Settings:</strong> Block or delete cookies through your browser (e.g., Chrome, Firefox). Note: Disabling essential cookies may impair Website functionality.</li>
-                                                <li><strong>Opt-Out Tools:</strong> For advertising, use tools like the Digital Advertising Alliance's opt-out page (if applicable globally).</li>
+                                                <li><strong>Opt-Out Tools:</strong> For advertising, use tools like the Digital Advertising Alliance&apos;s opt-out page (if applicable globally).</li>
                                                 <li><strong>Do Not Track (DNT):</strong> We honor DNT signals where feasible.</li>
                                             </ul>
                                             <p className="mt-3">
@@ -547,7 +547,7 @@ export default function PolicyPage() {
                                                 <li>Use retained data ethically to improve services, such as offering tailored insurance products over time</li>
                                             </ul>
                                             <p className="mt-3">
-                                                In insurance, retention prevents "data amnesia"—losing historical claims data could invalidate policies or expose us to fraud. Backups are our safety net, ensuring we can recover from incidents.
+                                                In insurance, retention prevents &quot;data amnesia&quot;—losing historical claims data could invalidate policies or expose us to fraud. Backups are our safety net, ensuring we can recover from incidents.
                                             </p>
                                         </div>
                                         
@@ -566,7 +566,7 @@ export default function PolicyPage() {
                                     
                                     <div className="mb-6">
                                         <p>
-                                            United Holdings Limited (&quot;United Holdings,&quot; &quot;we,&quot; &quot;us,&quot; or &quot;our&quot;) provides this Disclaimer and Risk Disclosure to ensure transparency regarding the information and services on our website (the "Website"), including client sign-ups, portal access, and insurance products. This document complies with the Financial Services Regulatory Authority (FSRA) oversight for insurance disclosures, the Electronic Communications and Transactions Act, 2022 (ECTA) Sections 29-31 (supplier performance and obligations), and the Electronic Communications (Consumer Protection) Regulations, 2016 (fair practices under Regulation 7).
+                                            United Holdings Limited (&quot;United Holdings,&quot; &quot;we,&quot; &quot;us,&quot; or &quot;our&quot;) provides this Disclaimer and Risk Disclosure to ensure transparency regarding the information and services on our website (the &quot;Website&quot;), including client sign-ups, portal access, and insurance products. This document complies with the Financial Services Regulatory Authority (FSRA) oversight for insurance disclosures, the Electronic Communications and Transactions Act, 2022 (ECTA) Sections 29-31 (supplier performance and obligations), and the Electronic Communications (Consumer Protection) Regulations, 2016 (fair practices under Regulation 7).
                                         </p>
                                         <p className="mt-3">
                                             By using the Website or our services, you acknowledge these disclaimers and risks. If you do not agree, please do not proceed.
@@ -587,7 +587,7 @@ export default function PolicyPage() {
                                                 </div>
                                                 <div>
                                                     <h4 className="font-semibold">Accuracy and Completeness</h4>
-                                                    <p>While we strive for accuracy, information may contain errors, omissions, or become outdated. We disclaim liability for reliance on such content. In insurance, this is key—policy terms evolve, and site info doesn't replace official documents.</p>
+                                                    <p>While we strive for accuracy, information may contain errors, omissions, or become outdated. We disclaim liability for reliance on such content. In insurance, this is key—policy terms evolve, and site info doesn&apos;t replace official documents.</p>
                                                 </div>
                                                 <div>
                                                     <h4 className="font-semibold">Third-Party Content</h4>
