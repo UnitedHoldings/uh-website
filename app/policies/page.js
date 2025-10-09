@@ -129,7 +129,7 @@ export default function PolicyPage() {
                                     
                                     <div className="mb-6">
                                         <p className="mb-4">
-                                            United Holdings Limited (&quot;United Holdings,&quot; &quot;we,&quot; &quot;us,&quot; or &quot;our&quot;) is dedicated to upholding the highest standards of consumer protection in all our electronic communications and transactions. This Consumer Protection Policy (the cPolicy&quot;) outlines your rights and our commitments when using our website (the "Website"), signing up as a client, accessing the client portal, or engaging with our insurance services. It complies with the Electronic Communications (Consumer Protection) Regulations, 2016 ("Regulations"), the Electronic Communications and Transactions Act, 2022 ("ECTA") Part VIII, and oversight by the Eswatini Communications Commission (ESCCOM) and the Financial Services Regulatory Authority (FSRA).
+                                            United Holdings Limited (&quot;United Holdings,&quot; &quot;we,&quot; &quot;us,&quot; or &quot;our&quot;) is dedicated to upholding the highest standards of consumer protection in all our electronic communications and transactions. This Consumer Protection Policy (the cPolicy&quot;) outlines your rights and our commitments when using our website (the &quot;Website&quot;), signing up as a client, accessing the client portal, or engaging with our insurance services. It complies with the Electronic Communications (Consumer Protection) Regulations, 2016 (&quot;Regulations&quot;), the Electronic Communications and Transactions Act, 2022 ("ECTA") Part VIII, and oversight by the Eswatini Communications Commission (ESCCOM) and the Financial Services Regulatory Authority (FSRA).
                                         </p>
                                         
                                         <div className="p-4 bg-yellow-50 border-l-4 border-yellow-400 mb-6">
@@ -176,7 +176,7 @@ export default function PolicyPage() {
                                                 For sign-ups or purchases, we follow Regulations 10-12 and ECTA Sections 8-15:
                                             </p>
                                             <ul className="list-disc pl-6 space-y-2">
-                                                <li>Contracts are valid electronically (e.g., clicking "Accept" as a signature).</li>
+                                                <li>Contracts are valid electronically (e.g., clicking &quot;Accept&quot; as a signature).</li>
                                                 <li>You can review, correct errors, and confirm details before completion.</li>
                                                 <li>We send prompt confirmations (e.g., email) with full transaction records, retainable for your records.</li>
                                             </ul>
@@ -184,7 +184,7 @@ export default function PolicyPage() {
                                                 <strong>Cooling-Off Period:</strong> For non-insurance digital services (e.g., portal subscriptions), a 7-day cooling-off applies (Regulation 13). Cancel without penalty by notifying us; we'll refund promptly. For insurance, standard policy cancellation rules apply, but we honor fair withdrawals.
                                             </p>
                                             <p className="mt-2">
-                                                In the industry, cooling-off prevents buyer's remorse—use it wisely to reassess risks.
+                                                In the industry, cooling-off prevents buyer&apos;s remorse—use it wisely to reassess risks.
                                             </p>
                                         </div>
                                         
