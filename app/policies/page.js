@@ -36,7 +36,7 @@ export default function PolicyPage() {
                         <div className="bg-[#9b1c20] px-8 flex flex-col mx-auto text-white py-8">
                             <div className='left-[13%] space-y-4 top-[30%] text-white'>
                                 <p className='text-4xl max-w-96 font-semibold'>Transparent Policies for Your Peace of Mind</p>
-                                <p className='text-sm font-light'>We're committed to clear communication about how we protect your rights and data.</p>
+                                <p className='text-sm font-light'>We&apos;re committed to clear communication about how we protect your rights and data.</p>
                             </div>
                             
                             <div className="mt-4 flex flex-col sm:flex-row gap-3 sm:items-center">
@@ -129,7 +129,7 @@ export default function PolicyPage() {
                                     
                                     <div className="mb-6">
                                         <p className="mb-4">
-                                            United Holdings Limited (&quot;United Holdings,&quot; &quot;we,&quot; &quot;us,&quot; or &quot;our&quot;) is dedicated to upholding the highest standards of consumer protection in all our electronic communications and transactions. This Consumer Protection Policy (the "Policy") outlines your rights and our commitments when using our website (the "Website"), signing up as a client, accessing the client portal, or engaging with our insurance services. It complies with the Electronic Communications (Consumer Protection) Regulations, 2016 ("Regulations"), the Electronic Communications and Transactions Act, 2022 ("ECTA") Part VIII, and oversight by the Eswatini Communications Commission (ESCCOM) and the Financial Services Regulatory Authority (FSRA).
+                                            United Holdings Limited (&quot;United Holdings,&quot; &quot;we,&quot; &quot;us,&quot; or &quot;our&quot;) is dedicated to upholding the highest standards of consumer protection in all our electronic communications and transactions. This Consumer Protection Policy (the cPolicy&quot;) outlines your rights and our commitments when using our website (the "Website"), signing up as a client, accessing the client portal, or engaging with our insurance services. It complies with the Electronic Communications (Consumer Protection) Regulations, 2016 ("Regulations"), the Electronic Communications and Transactions Act, 2022 ("ECTA") Part VIII, and oversight by the Eswatini Communications Commission (ESCCOM) and the Financial Services Regulatory Authority (FSRA).
                                         </p>
                                         
                                         <div className="p-4 bg-yellow-50 border-l-4 border-yellow-400 mb-6">
