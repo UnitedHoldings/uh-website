@@ -101,41 +101,68 @@ export default function ProductPage({ params }) {
         <div className="min-h-screen font-outfit mx-auto">
             <div className='bg-[#881a1e] h-8 w-full' />
             <div className='bg-[#9b1c20] py-4'>
-                <header className=" max-w-[1400px] mx-auto">
-                    <h1 className="text-2xl md:text-4xl font-semibold text-white"> {product.tagline}</h1>
+                <header className="max-w-[1400px] mx-auto px-4">
+                    <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-semibold text-white text-center md:text-left">
+                        {product.tagline}
+                    </h1>
                 </header>
             </div>
+            
+            {/* Hero Section */}
             <div className='relative'>
-                <div className='absolute w-full -z-10' >
+                <div className='absolute w-full -z-10'>
                     <div className='bg-gradient-to-r absolute from-[#9b1c20]/20 to-[#9b1c20]/10 h-full w-full' />
-                    <img src={product.heroImage} alt={product.name} className="w-full h-[720px] object-cover" />
+                    <img 
+                        src={product.heroImage} 
+                        alt={product.name} 
+                        className="w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px] xl:h-[720px] object-cover"
+                    />
                 </div>
-                <div className=" pt-32 flex items-center">
-                    <div className="max-w-[1400px] mx-auto px-4 w-full gap-32 flex flex-col">
-                        <div className='flex items-center justify-center'>
-                            <p className='font-bold text-white text-8xl'>{product.name}</p>
+                
+                <div className="pt-16 sm:pt-20 md:pt-24 lg:pt-32 flex items-center">
+                    <div className="max-w-[1400px] mx-auto px-4 w-full gap-8 sm:gap-12 md:gap-16 lg:gap-24 flex flex-col">
+                        {/* Product Name */}
+                        <div className='flex items-center justify-center text-center'>
+                            <h1 className='font-bold text-white text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl leading-tight'>
+                                {product.name}
+                            </h1>
                         </div>
+                        
+                        {/* Quote Form Section */}
                         <div 
-                            className="w-full px-8 flex flex-col rounded-2xl shadow-xl mx-auto text-white py-8"
+                            className="w-full px-4 sm:px-6 md:px-8 flex flex-col rounded-xl sm:rounded-2xl shadow-xl mx-auto text-white py-6 sm:py-8"
                             style={{ backgroundColor: departmentColor }}
                         >
-                            <div className='left-[13%] space-y-4 top-[30%] text-white '>
-                                <p className='text-4xl max-w-lg font-semibold'>Get hassle-free cover for all your needs</p>
-                                <p className='text-sm font-light'>{product.tagline}</p>
+                            <div className='space-y-3 sm:space-y-4 text-center sm:text-left'>
+                                <p className='text-2xl sm:text-3xl md:text-4xl font-semibold max-w-lg mx-auto sm:mx-0'>
+                                    Get hassle-free cover for all your needs
+                                </p>
+                                <p className='text-sm sm:text-base font-light max-w-md mx-auto sm:mx-0'>
+                                    {product.tagline}
+                                </p>
                             </div>
-                            <div className="mt-4 flex flex-col sm:flex-row gap-3 sm:items-center">
-                                <form onSubmit={handleSubmit} className="bg-white w-full rounded-lg shadow-lg p-8 flex flex-col gap-2 items-center  mx-auto text-black">
-                                    <div className='w-full flex flex-col'>
-                                        <p className=' text-3xl font-light mb-2'>Let&apos;s get started</p>
-                                        <p className='font-semibold text-lg mb-8'>Please complete the details of the person taking out the policy (e.g. policyholder)</p>
+                            
+                            <div className="mt-4 sm:mt-6 flex flex-col sm:flex-row gap-3 sm:items-center">
+                                <form 
+                                    onSubmit={handleSubmit} 
+                                    className="bg-white w-full rounded-lg sm:rounded-xl shadow-lg p-4 sm:p-6 md:p-8 flex flex-col gap-3 sm:gap-4 items-center mx-auto text-black"
+                                >
+                                    <div className='w-full flex flex-col text-center sm:text-left'>
+                                        <p className='text-xl sm:text-2xl md:text-3xl font-light mb-2'>
+                                            Let&apos;s get started
+                                        </p>
+                                        <p className='font-semibold text-base sm:text-lg md:text-xl mb-4 sm:mb-6 md:mb-8'>
+                                            Please complete the details of the person taking out the policy
+                                        </p>
                                     </div>
 
                                     <RenderForm product={product} formData={formData} handleInputChange={handleInputChange} />
-                                    <div className='w-full space-x-2 mt-6'>
+                                    
+                                    <div className='w-full flex flex-col sm:flex-row gap-3 sm:gap-2 justify-center sm:justify-start mt-4 sm:mt-6'>
                                         {/* Request A Call Button */}
                                         <button
                                             type="button"
-                                            className={`px-8 py-2 border rounded-full font-semibold transition ${
+                                            className={`px-6 sm:px-8 py-2 sm:py-3 border rounded-full font-semibold transition flex-1 sm:flex-none text-sm sm:text-base ${
                                                 isLightColor 
                                                     ? 'border-gray-600 text-gray-600 hover:bg-gray-600 hover:text-white' 
                                                     : `border-[${departmentColor}] text-[${departmentColor}] hover:bg-[${departmentColor}] hover:text-white`
@@ -157,13 +184,13 @@ export default function ProductPage({ params }) {
                                                 }
                                             }}
                                         >
-                                            Request A Call
+                                            Request A Qoute
                                         </button>
 
                                         {/* Sign Me Up Today Button */}
                                         <button
                                             type="submit"
-                                            className={`px-8 py-2 rounded-full font-semibold transition ${
+                                            className={`px-6 sm:px-8 py-2 sm:py-3 rounded-full font-semibold transition flex-1 sm:flex-none text-sm sm:text-base ${
                                                 isLightColor 
                                                     ? 'bg-gray-600 text-white hover:bg-white hover:text-gray-600 hover:border-gray-600 border' 
                                                     : `bg-[${departmentColor}] text-white hover:bg-white hover:text-[${departmentColor}] hover:border-[${departmentColor}] border`
@@ -190,12 +217,22 @@ export default function ProductPage({ params }) {
                                         </button>
                                     </div>
 
-                                    {submitted && <div className="text-green-700 text-sm mt-2">Quote request submitted! We&apos;ll contact you soon.</div>}
+                                    {submitted && (
+                                        <div className="text-green-700 text-sm mt-2 text-center sm:text-left">
+                                            Quote request submitted! We&apos;ll contact you soon.
+                                        </div>
+                                    )}
                                 </form>
                             </div>
-                            <div className={`text-xs mt-4 space-y-1 ${isLightColor ? 'text-gray-700' : 'text-gray-200'}`}>
-                                <p className={`font-bold text-xl ${isLightColor ? 'text-gray-800' : 'text-gray-100'}`}>Disclaimer</p>
-                                <p>We value your privacy and are committed to safeguarding your personal information. By submitting your details, you consent to us processing them for the purpose of providing you with a personalized quote. Please note that some of our advisors operate under supervision to ensure consistently excellent service. Quoted premiums are based on your individual risk profile and are subject to annual review in line with economic conditions and underwriting criteria. Terms, conditions, and benefit limits apply. It is essential that all information provided is accurate, as discrepancies may impact the validity or outcome of any future claims.</p>
+                            
+                            {/* Disclaimer */}
+                            <div className={`text-xs mt-4 sm:mt-6 space-y-2 ${isLightColor ? 'text-gray-700' : 'text-gray-200'}`}>
+                                <p className={`font-bold text-lg sm:text-xl ${isLightColor ? 'text-gray-800' : 'text-gray-100'}`}>
+                                    Disclaimer
+                                </p>
+                                <p className='text-justify'>
+                                    We value your privacy and are committed to safeguarding your personal information. By submitting your details, you consent to us processing them for the purpose of providing you with a personalized quote. Please note that some of our advisors operate under supervision to ensure consistently excellent service. Quoted premiums are based on your individual risk profile and are subject to annual review in line with economic conditions and underwriting criteria. Terms, conditions, and benefit limits apply. It is essential that all information provided is accurate, as discrepancies may impact the validity or outcome of any future claims.
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -203,24 +240,32 @@ export default function ProductPage({ params }) {
             </div>
 
             {/* Product Details Sections */}
-            <div className='max-w-[1400px] px-4   my-16 space-y-6 mx-auto flex'>
-                <div className='min-w-3/12'>
-                    <p className='font-semibold text-3xl'>{product.name}</p>
-                    <p className='font-light text-gray-600'>{product.tagline}</p>
-                    <div className="flex flex-col  w-full justify-between py-6 "></div>
+            <div className='max-w-[1400px] px-4 my-8 sm:my-12 md:my-16 space-y-6 mx-auto flex flex-col lg:flex-row'>
+                {/* Left Column - Product Title */}
+                <div className='lg:min-w-3/12 w-full lg:w-auto'>
+                    <h2 className='font-semibold text-2xl sm:text-3xl lg:text-4xl text-center lg:text-left'>
+                        {product.name}
+                    </h2>
+                    <p className='font-light text-gray-600 text-center lg:text-left mt-2'>
+                        {product.tagline}
+                    </p>
+                    <div className="flex flex-col w-full justify-between py-4 lg:py-6"></div>
                 </div>
 
-                <div className='w-full border-l border-gray-400 pl-6'>
-                    <section className="mb-8 grid grid-cols-1 md:grid-cols-2 gap-8">
+                {/* Right Column - Content */}
+                <div className='w-full lg:border-l lg:border-gray-400 lg:pl-6'>
+                    <section className="mb-8 grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
                         <div>
-                            <p className="text-gray-500 max-w-4xl text-lg">{product.overview}</p>
+                            <p className="text-gray-500 max-w-4xl text-base sm:text-lg leading-relaxed">
+                                {product.overview}
+                            </p>
                         </div>
                         <div>
-                            <div className="flex gap-4 mt-4 flex-wrap">
-                                {product.stats && product.stats.map(stat => (
-                                    <div key={stat} className="text-center">
+                            <div className="flex gap-3 sm:gap-4 mt-4 flex-wrap justify-center md:justify-start">
+                                {product.stats && product.stats.map((stat, index) => (
+                                    <div key={index} className="text-center">
                                         <div 
-                                            className="text-white px-4 rounded-full py-2 font-bold"
+                                            className="text-white px-3 sm:px-4 py-2 rounded-full font-bold text-sm sm:text-base whitespace-nowrap"
                                             style={{ backgroundColor: departmentColor }}
                                         >
                                             {stat}
@@ -233,11 +278,15 @@ export default function ProductPage({ params }) {
                 </div>
             </div>
 
-            <div className='max-w-[1400px] px-4 mb-16  mx-auto'>
+            {/* Additional Product Sections */}
+            <div className='max-w-[1400px] px-4 mb-8 sm:mb-12 md:mb-16 mx-auto'>
                 <ProductBenefits benefits={product.benefits} />
                 <ProductEligibility eligibility={product.eligibility} />
+                
                 {/* Final CTA */}
-                <Agent />
+                <div className="mt-12 sm:mt-16">
+                    <Agent />
+                </div>
             </div>
         </div>
     );
