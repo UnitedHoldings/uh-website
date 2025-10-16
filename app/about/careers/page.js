@@ -322,7 +322,7 @@ export default function CareersPage() {
           <div className="text-center">
             <h1 className="text-4xl md:text-5xl font-bold mb-4">Join Our Team</h1>
             <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">
-              Build your career with Eswatini's leading insurance and financial services group
+              Build your career with Eswatini&lsquo;s leading insurance and financial services group
             </p>
             <div className="flex flex-wrap justify-center gap-4 mb-8">
               <div className="bg-white/20 rounded-full px-6 py-2">
@@ -638,7 +638,7 @@ export default function CareersPage() {
                         <div className="bg-blue-50 p-6 rounded-lg">
                           <h3 className="text-lg font-semibold mb-2">Ready to Apply?</h3>
                           <p className="text-gray-700 mb-4">
-                            Join our team and build your career with Eswatini's leading financial services group.
+                            Join our team and build your career with Eswatini&lsquo;s leading financial services group.
                           </p>
                           <div className="flex gap-4">
                             <button className="bg-[#9b1c20] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#881a1e] transition-colors flex items-center gap-2">
