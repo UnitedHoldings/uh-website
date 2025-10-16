@@ -8,7 +8,7 @@ export default function Projects() {
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {projects.map(p => (
-          <article key={p.id} className="bg-white p-6 rounded-xl shadow-sm">
+          <article key={p.id} className="bg-white p-6 rounded-xl -sm">
             <h3 className="text-xl font-semibold mb-2">{p.title}</h3>
             <p className="text-gray-600">{p.summary}</p>
             <p className="text-sm text-gray-400 mt-3">{p.year}</p>

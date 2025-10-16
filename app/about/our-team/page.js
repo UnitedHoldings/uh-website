@@ -184,7 +184,7 @@ export default function Team() {
 
   // Team Card Component for consistent styling
   const TeamCard = ({ member }) => (
-    <div className="bg-[#9b1c20] rounded-xl flex flex-col md:flex-row lg:flex-row hover:shadow-xl transition-all duration-300 overflow-hidden group border border-gray-100 h-full">
+    <div className="bg-[#9b1c20] rounded-xl flex flex-col md:flex-row lg:flex-row hover:-xl transition-all duration-300 overflow-hidden group border border-gray-100 h-full">
       <div className="relative min-h-[350px] h-full  min-w-[40%]   bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
         <Image
           src={member.image}

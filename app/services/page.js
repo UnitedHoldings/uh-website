@@ -13,7 +13,7 @@ export default function Services() {
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {services.map(s => (
-          <div key={s.id} className="bg-white p-6 rounded-xl shadow-sm">
+          <div key={s.id} className="bg-white p-6 rounded-xl -sm">
             <h3 className="text-xl font-semibold text-gray-800 mb-2">{s.title}</h3>
             <p className="text-gray-600">{s.desc}</p>
           </div>

@@ -347,7 +347,7 @@ export default function CareersPage() {
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
           {/* Filters Sidebar */}
           <div className="lg:col-span-1">
-            <div className="bg-white rounded-lg shadow-lg p-6 sticky top-8">
+            <div className="bg-white rounded-lg -lg p-6 sticky top-8">
               <h3 className="text-lg font-semibold mb-4">Filter Jobs</h3>
               
               {/* Search */}
@@ -452,7 +452,7 @@ export default function CareersPage() {
             <div className="flex flex-col gap-8 lg:gap-12">
               {/* Jobs List */}
               <div className="xl:col-span-1">
-                <div className="bg-white rounded-lg shadow-lg">
+                <div className="bg-white rounded-lg -lg">
                   <div className="p-4 border-b border-gray-200">
                     <h3 className="text-lg font-semibold">
                       Available Positions ({filteredJobs.length})
@@ -530,7 +530,7 @@ export default function CareersPage() {
 
               {/* Job Details */}
               <div className="xl:col-span-2">
-                <div className="bg-white rounded-lg shadow-lg p-6">
+                <div className="bg-white rounded-lg -lg p-6">
                   {selectedJob && (
                     <div>
                       <div className="flex justify-between items-start mb-6">

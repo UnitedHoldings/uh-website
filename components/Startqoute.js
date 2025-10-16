@@ -37,8 +37,8 @@ const TabButton = ({ label, icon, active, slug }) => (
     <Link
         href={`/products/${slug}`}
         className={`flex flex-col items-center justify-center bgbl rounded-full lg:h-36 lg:w-36 w-28 h-28 relative p-4 transition-all duration-300 transform hover:scale-105 ${active
-                ? 'text-[#9b1c20] bg-white shadow-lg border-2 border-[#9b1c20]'
-                : 'text-white   hover:bg-white hover:shadow-lg border '
+                ? 'text-[#9b1c20] bg-white -lg border-2 border-[#9b1c20]'
+                : 'text-white   hover:bg-white hover:-lg border '
             }`}
     >
         <div className="flex flex-col items-center justify-center w-full space-y-2">

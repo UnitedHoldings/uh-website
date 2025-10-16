@@ -43,7 +43,7 @@ function Agent() {
                   <option value="dignified-family-support">Account Statement</option>
                   <option value="micro-loans">Other</option>
                 </select>
-                <button className="bg-white space-x-2 text-[#9b1c20] px-4 sm:px-6 lg:px-16 py-2 sm:py-3 rounded-full h-12 shadow-md flex items-center justify-center text-sm sm:text-base font-bold">
+                <button className="bg-white space-x-2 text-[#9b1c20] px-4 sm:px-6 lg:px-16 py-2 sm:py-3 rounded-full h-12 -md flex items-center justify-center text-sm sm:text-base font-bold">
                   <SlPhone />
                   <p className="whitespace-nowrap">Send Callback</p>
                 </button>

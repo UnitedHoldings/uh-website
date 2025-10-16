@@ -187,7 +187,7 @@ export default function ProductPage({ params }) {
             
             {/* Quote Form Section */}
             <div 
-              className="w-full px-4 sm:px-6 md:px-8 flex flex-col rounded-xl sm:rounded-2xl shadow-xl mx-auto text-white py-6 sm:py-8"
+              className="w-full px-4 sm:px-6 md:px-8 flex flex-col rounded-xl sm:rounded-2xl -xl mx-auto text-white py-6 sm:py-8"
               style={{ backgroundColor: departmentColor }}
             >
               <div className='space-y-3 sm:space-y-4 text-center sm:text-left'>
@@ -202,7 +202,7 @@ export default function ProductPage({ params }) {
               <div className="mt-4 sm:mt-6 flex flex-col sm:flex-row gap-3 sm:items-center">
                 <form 
                   onSubmit={handleSubmit} 
-                  className="bg-white w-full rounded-lg sm:rounded-xl shadow-lg p-4 sm:p-6 md:p-8 flex flex-col gap-3 sm:gap-4 items-center mx-auto text-black"
+                  className="bg-white w-full rounded-lg sm:rounded-xl -lg p-4 sm:p-6 md:p-8 flex flex-col gap-3 sm:gap-4 items-center mx-auto text-black"
                 >
                   <div className='w-full flex flex-col text-center sm:text-left'>
                     <p className='text-xl sm:text-2xl md:text-3xl font-light mb-2'>

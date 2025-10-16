@@ -162,7 +162,7 @@ export default function Home() {
           <div className='absolute z-40 lg:bottom-[-4%] bottom-[-5%] w-full flex'>
             <div className="mx-auto">
               <ul 
-                className="bg-gray-100 p-2 flex h-14 drop-shadow-lg rounded-full relative border-2"
+                className="bg-gray-100 p-2 flex h-14 drop--lg rounded-full relative border-2"
                 style={{ borderColor: currentColor }}
               >
                 {/* Animated highlight bar */}

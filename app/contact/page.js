@@ -363,7 +363,7 @@ export default function Contact() {
                 {/* Branches List */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {displayedBranches.map((branch, index) => (
-                    <div key={index} className="p-6 border bg-[#9b1c20] rounded-lg hover:shadow-md transition-shadow">
+                    <div key={index} className="p-6 border bg-[#9b1c20] rounded-lg hover:-md transition-">
                       <h4 className="text-xl font-semibold text-white mb-2">{branch.name}</h4>
                       <div className="flex items-center gap-2 mb-2">
                         <span className="text-sm border text-white px-2 py-1 rounded">

@@ -155,7 +155,7 @@ const shuffleArray = (array) => {
 
 const CompanyBadge = ({ company, color }) => (
     <div 
-        className="absolute top-4 left-4 z-10 px-3 py-1 rounded-full bg-white/20 backdrop-blur-sm text-white text-xs font-semibold shadow-lg border border-white/30"
+        className="absolute top-4 left-4 z-10 px-3 py-1 rounded-full bg-white/20 backdrop-blur-sm text-white text-xs font-semibold -lg border border-white/30"
     >
         {company}
     </div>
@@ -164,7 +164,7 @@ const CompanyBadge = ({ company, color }) => (
 const ProductCard = ({ title, desc, img, company, icon, stats, link, color, bgColor }) => (
     <Link href={link} className="block group h-full">
         <div 
-            className="rounded-xl hover:shadow-2xl relative flex flex-col h-full cursor-pointer transition-all duration-500 overflow-hidden"
+            className="rounded-xl hover:-2xl relative flex flex-col h-full cursor-pointer transition-all duration-500 overflow-hidden"
             style={{ backgroundColor: bgColor }}
         >
             {/* Company Badge */}
@@ -432,7 +432,7 @@ function Products() {
                                     className={`p-3 rounded-xl border-2 transition-all duration-300 ${
                                         isBeginning 
                                             ? 'text-gray-300 border-gray-200 cursor-not-allowed' 
-                                            : 'text-[#9b1c20] border-[#9b1c20] hover:bg-[#9b1c20] hover:text-white shadow-lg hover:shadow-xl'
+                                            : 'text-[#9b1c20] border-[#9b1c20] hover:bg-[#9b1c20] hover:text-white -lg hover:-xl'
                                     }`}
                                     aria-label="Previous products"
                                 >
@@ -444,7 +444,7 @@ function Products() {
                                     className={`p-3 rounded-xl border-2 transition-all duration-300 ${
                                         isEnd 
                                             ? 'text-gray-300 border-gray-200 cursor-not-allowed' 
-                                            : 'text-[#9b1c20] border-[#9b1c20] hover:bg-[#9b1c20] hover:text-white shadow-lg hover:shadow-xl'
+                                            : 'text-[#9b1c20] border-[#9b1c20] hover:bg-[#9b1c20] hover:text-white -lg hover:-xl'
                                     }`}
                                     aria-label="Next products"
                                 >
@@ -513,7 +513,7 @@ function Products() {
                 <div className="text-center pt-8">
                     <Link
                         href="/products"
-                        className="inline-flex items-center gap-3 px-8 py-4 bg-[#9b1c20] text-white rounded-xl font-semibold text-lg hover:bg-[#881a1e] transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
+                        className="inline-flex items-center gap-3 px-8 py-4 bg-[#9b1c20] text-white rounded-xl font-semibold text-lg hover:bg-[#881a1e] transition-all duration-300 -lg hover:-xl hover:scale-105"
                     >
                         View All Products
                         <BsArrowRight className="text-xl" />

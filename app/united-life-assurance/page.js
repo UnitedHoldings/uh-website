@@ -86,7 +86,7 @@ export default function UnitedLifeAssurance() {
     const colorClass = categoryColors[product.name];
 
     return (
-      <div className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group hover:transform hover:-translate-y-2">
+      <div className="bg-white rounded-2xl -lg hover:-xl transition-all duration-300 overflow-hidden group hover:transform hover:-translate-y-2">
         {/* Image Section */}
         <div className="relative h-48 bg-gradient-to-br from-gray-100 to-gray-200 overflow-hidden">
           <div className="absolute inset-0 bg-black/10 group-hover:bg-black/20 transition-colors" />

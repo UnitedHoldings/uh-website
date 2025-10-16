@@ -27,7 +27,7 @@ export default function ClientLogin({ onAuth }) {
   }
 
   return (
-    <div className="max-w-md mx-auto bg-white/60 backdrop-blur-md p-6 rounded-md shadow">
+    <div className="max-w-md mx-auto bg-white/60 backdrop-blur-md p-6 rounded-md ">
       <h3 className="text-2xl font-semibold mb-3">Policyholder Login</h3>
       <p className="text-sm text-gray-700 mb-4">Enter your policy number and ID to access the client area.</p>
       <form onSubmit={handleSubmit} className="flex flex-col gap-3">

@@ -461,7 +461,7 @@ export default function GalleryPage() {
               return (
                 <div
                   key={album.id}
-                  className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 cursor-pointer group"
+                  className="bg-white rounded-lg -lg overflow-hidden hover:-xl transition-all duration-300 cursor-pointer group"
                   onClick={() => openAlbum(album)}
                 >
                   {/* Album Cover */}
@@ -529,7 +529,7 @@ export default function GalleryPage() {
           </div>
         ) : (
           /* Album Detail View */
-          <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+          <div className="bg-white rounded-lg -lg overflow-hidden">
             {/* Album Header */}
             <div className="p-6 border-b border-gray-200">
               <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">

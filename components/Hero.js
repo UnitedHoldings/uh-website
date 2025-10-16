@@ -126,7 +126,7 @@ const Hero = ({ currentSlide = 0, setCurrentSlide }) => {
               <div className="hidden lg:block z-50 absolute w-full mx-auto top-0 left-0 right-0 h-full">
                 <div className="max-w-[1400px] pt-48 mx-auto justify-center flex items-center h-full w-full">
                   <div className='h-full space-y-6 max-w-3xl flex flex-col'>
-                    <h1 className="text-7xl font-bold font-outfit text-center text-shadow-2xs">
+                    <h1 className="text-7xl font-bold font-outfit text-center text--2xs">
                       <span style={{ color: 'white' }}>{slide.title1}</span>{' '}
                       <span style={{ color: 'white' }}>{slide.title11}</span>{' '}
                       <span style={{ color: color }}>{slide.title2}</span>

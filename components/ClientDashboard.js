@@ -26,7 +26,7 @@ export default function ClientDashboard({ user, data }) {
 
   return (
     <div className="space-y-6">
-      <header className="bg-white/40 p-4 rounded-md shadow flex justify-between items-center">
+      <header className="bg-white/40 p-4 rounded-md  flex justify-between items-center">
         <div>
           <h2 className="text-2xl font-bold">Welcome, {user.name}</h2>
           <p className="text-sm text-gray-700">Policy: {user.policyNumber}</p>

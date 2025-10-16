@@ -92,7 +92,7 @@ const StarRating = ({ rating }) => {
 
 const ReviewCard = ({ review, variant = 'center' }) => {
   // variant: 'center' | 'side' | 'small' - adjusts size/opacity/positioning
-  const base = 'bg-white rounded-2xl p-4 sm:p-6 shadow-lg border border-gray-100 transition-all duration-500 flex-shrink-0';
+  const base = 'bg-white rounded-2xl p-4 sm:p-6 -lg border border-gray-100 transition-all duration-500 flex-shrink-0';
   const variants = {
     center: 'opacity-100 scale-105 z-20',
     side: 'opacity-95 scale-95 z-10',
@@ -122,7 +122,7 @@ const ReviewCard = ({ review, variant = 'center' }) => {
 };
 
 const ReasonCard = ({ title, content, icon }) => (
-  <div className="bg-[#9b1c20] rounded-2xl p-4 sm:p-6 border border-gray-100 transition-shadow duration-300 flex flex-col items-start">
+  <div className="bg-[#9b1c20] rounded-2xl p-4 sm:p-6 border border-gray-100 transition- duration-300 flex flex-col items-start">
     <div className='bg-white mb-8 flex items-center justify-center pt-1 rounded-full h-16 w-16'>{icon}</div>
     <h3 className="text-lg sm:text-xl font-semibold text-white  mb-4 font-outfit">{title}</h3>
     <p className="text-white/80 font-light text-sm sm:text-base leading-relaxed">{content}</p>

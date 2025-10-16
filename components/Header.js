@@ -288,7 +288,7 @@ export default function Header() {
         if (item.name === "PRODUCTS") {
             return (
                 <div className="absolute left-1/2 transform -translate-x-1/2 top-full pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 w-screen max-w-4xl">
-                    <div className="bg-white rounded-lg shadow-xl border border-gray-200 py-6">
+                    <div className="bg-white rounded-lg -xl border border-gray-200 py-6">
                         <div className="grid grid-cols-4 gap-8 px-8">
                             {item.dropdown.map((category, categoryIndex) => {
                                 const CategoryIcon = category.icon;
@@ -330,7 +330,7 @@ export default function Header() {
             // Uniform dropdown for About and Resources
             return (
                 <div className="absolute left-0 top-full pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
-                    <div className="bg-white rounded-md shadow-lg py-3 border border-gray-200 min-w-64">
+                    <div className="bg-white rounded-md -lg py-3 border border-gray-200 min-w-64">
                         {item.dropdown.map((subItem, subIndex) => {
                             const SubItemIcon = subItem.icon;
                             return (

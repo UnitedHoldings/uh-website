@@ -113,7 +113,7 @@ export default function ClaimForm() {
           <button
             type="submit"
             disabled={submitting}
-            className="bg-[#9b1c20] text-white px-6 py-3 rounded-full font-semibold shadow"
+            className="bg-[#9b1c20] text-white px-6 py-3 rounded-full font-semibold "
           >
             {submitting ? 'Submitting...' : 'Submit Claim'}
           </button>
