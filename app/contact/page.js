@@ -8,7 +8,7 @@ import Image from 'next/image';
 const completeBranches = [
   {
     name: "Manzini – Head Office",
-    phone: "+268 2508 6000", 
+    phone: "+268 2508 6000",
     coords: [-26.4988, 31.3800],
     hours: "Mon–Fri: 8am–5pm",
     departments: ["Life Assurance", "General Insurance", "United Pay"],
@@ -47,7 +47,7 @@ const completeBranches = [
     phone: "+268 2508 6120",
     coords: [-26.3054, 31.1367],
     hours: "Mon–Fri: 8am–5pm",
-    departments: ["Life Assurance", "General Insurance", "United Pay"],
+    departments: ["Life Assurance", "General Insurance", "United Pay"], // ✅ updated
     region: "Hhohho",
     address: "Mbabane, Eswatini"
   },
@@ -74,7 +74,7 @@ const completeBranches = [
     phone: "+268 2508 6123",
     coords: [-26.4500, 31.9500],
     hours: "Mon–Fri: 8am–5pm",
-    departments: ["Life Assurance"],
+    departments: ["Life Assurance", "General Insurance", "United Pay"], // ✅ updated
     region: "Lubombo",
     address: "Siteki, Eswatini"
   },
@@ -92,7 +92,7 @@ const completeBranches = [
     phone: "+268 2508 6121",
     coords: [-27.1167, 31.2000],
     hours: "Mon–Fri: 8am–5pm",
-    departments: ["Life Assurance"],
+    departments: ["Life Assurance", "General Insurance", "United Pay"], // ✅ updated
     region: "Shiselweni",
     address: "Nhlangano, Eswatini"
   },
@@ -311,7 +311,7 @@ export default function Contact() {
           <div className='w-full lg:border-l lg:border-gray-400 lg:pl-6 mt-8 lg:mt-0'>
             {activeTab === 'branches' ? (
               <div className="space-y-6">
-                <div className="h-[500px] rounded-lg overflow-hidden">
+                <div className="h-[800px] rounded-lg overflow-hidden">
                   <Suspense fallback={<div className="h-full bg-gray-200 flex items-center justify-center">Loading map...</div>}>
                     <BranchMap branches={completeBranches} />
                   </Suspense>

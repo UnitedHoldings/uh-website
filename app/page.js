@@ -10,19 +10,19 @@ import { useEffect, useRef, useState, useMemo } from 'react';
 const DEPARTMENT_COLORS = {
   'Life Assurance': '#3d834d', // Green
   'General Insurance': '#286278', // Blue
-  'United Pay': '#f79620', // Orange
+  'Loans': '#f79620', // Orange
 };
 
 const SLIDE_DEPARTMENTS = {
   'life': 'Life Assurance',
   'general': 'General Insurance', 
-  'pay': 'United Pay'
+  'loans': 'Loans'
 };
 
 const TAB_CONFIG = [
   { name: 'Life Assurance', slideId: 'life', shortName: 'Life' },
   { name: 'General Insurance', slideId: 'general', shortName: 'General' },
-  { name: 'United Pay', slideId: 'pay', shortName: 'Pay' }
+  { name: 'Loans', slideId: 'loans', shortName: 'Loans' }
 ];
 
 const slidesData = [
@@ -49,15 +49,15 @@ const slidesData = [
     url: 'https://united.co.sz/general-insurance',
   },
   {
-    id: 'pay',
+    id: 'loans',
     image: '/micro.jpg',
     imageSM: '/microSM.jpg',
     title1: 'United',
-    title11: 'Pay',
+    title11: 'Loans',
     title2: 'Solutions',
-    description: 'Fast and convenient financial solutions including Shesha Loans. Get access to funds when you need them most.',
+    description: 'We know mid-month crisis is not easy to get over, Umlamleli is there boost you need to get through the month. Umlamleli provides loans from E1, 000.00 – E5,000.00 payable within 3 months.',
     button: 'Apply Now',
-    url: 'https://united.co.sz/united-pay',
+    url: 'https://united.co.sz/loans',
   },
 ];
 
@@ -200,11 +200,8 @@ export default function Home() {
               </ul>
             </div>
           </div>
-        </div>
-
-        
+        </div>   
       </div>
-      
       <StartQuote />
       <Agent />
       <Products />

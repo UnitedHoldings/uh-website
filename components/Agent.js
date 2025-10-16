@@ -27,7 +27,7 @@ function Agent() {
           <div className="bg-[#9b1c20] rounded-2xl items-center flex flex-col lg:flex-row justify-between">
             <div className="space-y-6 py-6 sm:pt-8 px-4 sm:px-6 lg:px-8 w-full">
               <div className="flex flex-col gap-4 sm:gap-6 md:gap-8 font-semibold text-white text-xl sm:text-2xl">
-                <p>Request a Quote</p>
+                <p>Request a Callback</p>
               </div>
               <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 w-full">
                 <input

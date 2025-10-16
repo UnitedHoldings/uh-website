@@ -29,6 +29,15 @@ import {
     PiCalendar,
     PiTrendUp,
     PiWarningCircle,
+    PiFolderOpen,
+    PiNewspaper,
+    PiFile,
+    PiInfo,
+    PiUsersThree,
+    PiBriefcaseMetal,
+    PiCalendarCheck,
+    PiShieldStar,
+    PiImages,
 } from 'react-icons/pi';
 
 export default function Header() {
@@ -108,14 +117,72 @@ export default function Header() {
         }
     ], []);
 
-    // About dropdown data
+    // About dropdown data with icons
     const aboutDropdown = useMemo(() => [
-        { name: "Our Team", link: "/about#team" },
-        { name: "Careers", link: "/about#careers" },
-        { name: "Upcoming Events", link: "/about#events" },
-        { name: "Know your Insurer", link: "/about#insurer" },
-        { name: "Gallery", link: "/about#gallery" },
-        { name: "In the news", link: "/news" }
+        { 
+            name: "Our Journey", 
+            link: "/about", 
+            icon: PiHouse,
+            description: "Our story and mission"
+        },
+        { 
+            name: "Our Team", 
+            link: "/about/our-team", 
+            icon: PiUsersThree,
+            description: "Meet our dedicated team"
+        },
+        { 
+            name: "Careers", 
+            link: "/about/careers", 
+            icon: PiBriefcaseMetal,
+            description: "Join our growing team"
+        },
+        { 
+            name: "Upcoming Events", 
+            link: "/about/events", 
+            icon: PiCalendarCheck,
+            description: "Company events and activities"
+        },
+        { 
+            name: "Know your Insurer", 
+            link: "/about/insurer", 
+            icon: PiShieldStar,
+            description: "Learn about our insurance expertise"
+        },
+        { 
+            name: "Gallery", 
+            link: "/about/gallery", 
+            icon: PiImages,
+            description: "Photos from our events"
+        },
+        { 
+            name: "In the news", 
+            link: "/news", 
+            icon: PiNewspaper,
+            description: "Latest company news"
+        }
+    ], []);
+
+    // Resources dropdown data
+    const resourcesDropdown = useMemo(() => [
+        { 
+            name: "Documents", 
+            link: "/documents", 
+            icon: PiFolderOpen,
+            description: "Important forms and documents"
+        },
+        { 
+            name: "Policies", 
+            link: "/policies", 
+            icon: PiFile,
+            description: "Company policies and procedures"
+        },
+        { 
+            name: "News & Reports", 
+            link: "/news", 
+            icon: PiNewspaper,
+            description: "Latest news and financial reports"
+        },
     ], []);
 
     // Main navigation items
@@ -126,8 +193,7 @@ export default function Header() {
         { name: "UNITED LIFE ASSURANCE", link: "/united-life-assurance" },
         { name: "UNITED GENERAL INSURANCE", link: "/united-general-insurance" },
         { name: "UNITED PAY", link: "/united-pay" },
-        { name: "DOCUMENTS", link: "/documents" },
-        { name: "NEWS & REPORTS", link: "/news" },
+        { name: "RESOURCES", dropdown: resourcesDropdown },
         { name: "CONTACT US", link: "/contact" },
     ];
 
@@ -143,6 +209,152 @@ export default function Header() {
     const closeDrawer = () => {
         setIsDrawerOpen(false);
         setMobileActiveDropdown(null);
+    };
+
+    // Render mobile dropdown content
+    const renderMobileDropdown = (item) => {
+        if (item.name === "PRODUCTS") {
+            return (
+                <div className="space-y-6">
+                    {item.dropdown.map((category, categoryIndex) => {
+                        const CategoryIcon = category.icon;
+                        return (
+                            <div key={categoryIndex} className="ml-4">
+                                <div className="flex items-center gap-2 mb-3">
+                                    <CategoryIcon className="w-4 h-4 text-[#9b1c20]" />
+                                    <Link 
+                                        href={category.link || '#'}
+                                        onClick={closeDrawer}
+                                        className="font-semibold text-sm text-gray-800 hover:text-[#9b1c20]"
+                                    >
+                                        {category.category}
+                                    </Link>
+                                </div>
+                                <ul className="space-y-2 mb-4 ml-6">
+                                    {category.items.map((subItem, itemIndex) => {
+                                        const ItemIcon = subItem.icon;
+                                        return (
+                                            <li key={itemIndex}>
+                                                <Link
+                                                    href={subItem.link}
+                                                    onClick={closeDrawer}
+                                                    className="flex items-center gap-2 text-sm text-gray-600 hover:text-[#9b1c20] transition duration-150 ease-in-out py-1"
+                                                >
+                                                    <ItemIcon className="w-3 h-3 text-gray-500" />
+                                                    {subItem.name}
+                                                </Link>
+                                            </li>
+                                        );
+                                    })}
+                                </ul>
+                            </div>
+                        );
+                    })}
+                </div>
+            );
+        } else {
+            // Uniform dropdown for About and Resources
+            return (
+                <ul className="ml-4 space-y-2">
+                    {item.dropdown.map((subItem, subIndex) => {
+                        const SubItemIcon = subItem.icon;
+                        return (
+                            <li key={subIndex}>
+                                <Link
+                                    href={subItem.link}
+                                    onClick={closeDrawer}
+                                    className="flex items-center gap-3 text-sm py-2 hover:text-[#9b1c20] transition duration-150 ease-in-out group"
+                                >
+                                    <SubItemIcon className="w-4 h-4 text-gray-500 group-hover:text-[#9b1c20] transition-colors" />
+                                    <div>
+                                        <div className="font-medium">{subItem.name}</div>
+                                        {subItem.description && (
+                                            <div className="text-xs text-gray-500 mt-1">
+                                                {subItem.description}
+                                            </div>
+                                        )}
+                                    </div>
+                                </Link>
+                            </li>
+                        );
+                    })}
+                </ul>
+            );
+        }
+    };
+
+    // Render desktop dropdown content
+    const renderDesktopDropdown = (item) => {
+        if (item.name === "PRODUCTS") {
+            return (
+                <div className="absolute left-1/2 transform -translate-x-1/2 top-full pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 w-screen max-w-4xl">
+                    <div className="bg-white rounded-lg shadow-xl border border-gray-200 py-6">
+                        <div className="grid grid-cols-4 gap-8 px-8">
+                            {item.dropdown.map((category, categoryIndex) => {
+                                const CategoryIcon = category.icon;
+                                return (
+                                    <div key={categoryIndex} className="space-y-3">
+                                        <div className="flex items-center space-x-2 mb-3">
+                                            <CategoryIcon className="w-5 h-5 text-[#9b1c20]" />
+                                            <Link 
+                                                href={category.link || '#'}
+                                                className="font-bold text-gray-800 hover:text-[#9b1c20] border-b pb-1"
+                                            >
+                                                {category.category}
+                                            </Link>
+                                        </div>
+                                        <ul className="space-y-2">
+                                            {category.items.map((subItem, itemIndex) => {
+                                                const ItemIcon = subItem.icon;
+                                                return (
+                                                    <li key={itemIndex}>
+                                                        <Link
+                                                            href={subItem.link}
+                                                            className="flex items-center space-x-2 text-gray-600 hover:text-[#9b1c20] hover:underline transition duration-150 ease-in-out py-1 group"
+                                                        >
+                                                            <ItemIcon className="w-4 h-4 text-gray-400 group-hover:text-[#9b1c20] transition-colors" />
+                                                            <span className="text-sm">{subItem.name}</span>
+                                                        </Link>
+                                                    </li>
+                                                );
+                                            })}
+                                        </ul>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </div>
+                </div>
+            );
+        } else {
+            // Uniform dropdown for About and Resources
+            return (
+                <div className="absolute left-0 top-full pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                    <div className="bg-white rounded-md shadow-lg py-3 border border-gray-200 min-w-64">
+                        {item.dropdown.map((subItem, subIndex) => {
+                            const SubItemIcon = subItem.icon;
+                            return (
+                                <Link
+                                    key={subIndex}
+                                    href={subItem.link}
+                                    className="flex items-start space-x-3 px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#9b1c20] transition duration-150 ease-in-out group"
+                                >
+                                    <SubItemIcon className="w-5 h-5 text-gray-400 group-hover:text-[#9b1c20] transition-colors mt-0.5 flex-shrink-0" />
+                                    <div>
+                                        <div className="font-medium">{subItem.name}</div>
+                                        {subItem.description && (
+                                            <div className="text-xs text-gray-500 mt-1">
+                                                {subItem.description}
+                                            </div>
+                                        )}
+                                    </div>
+                                </Link>
+                            );
+                        })}
+                    </div>
+                </div>
+            );
+        }
     };
 
     return (
@@ -198,58 +410,7 @@ export default function Header() {
                                             </button>
                                             {mobileActiveDropdown === item.name && (
                                                 <div className="pb-3">
-                                                    {item.name === "PRODUCTS" ? (
-                                                        <div className="space-y-6">
-                                                            {item.dropdown.map((category, categoryIndex) => {
-                                                                const CategoryIcon = category.icon;
-                                                                return (
-                                                                    <div key={categoryIndex} className="ml-4">
-                                                                        <div className="flex items-center gap-2 mb-3">
-                                                                            <CategoryIcon className="w-4 h-4 text-[#9b1c20]" />
-                                                                            <Link 
-                                                                                href={category.link || '#'}
-                                                                                onClick={closeDrawer}
-                                                                                className="font-semibold text-sm text-gray-800 hover:text-[#9b1c20]"
-                                                                            >
-                                                                                {category.category}
-                                                                            </Link>
-                                                                        </div>
-                                                                        <ul className="space-y-2 mb-4 ml-6">
-                                                                            {category.items.map((subItem, itemIndex) => {
-                                                                                const ItemIcon = subItem.icon;
-                                                                                return (
-                                                                                    <li key={itemIndex}>
-                                                                                        <Link
-                                                                                            href={subItem.link}
-                                                                                            onClick={closeDrawer}
-                                                                                            className="flex items-center gap-2 text-sm text-gray-600 hover:text-[#9b1c20] transition duration-150 ease-in-out py-1"
-                                                                                        >
-                                                                                            <ItemIcon className="w-3 h-3 text-gray-500" />
-                                                                                            {subItem.name}
-                                                                                        </Link>
-                                                                                    </li>
-                                                                                );
-                                                                            })}
-                                                                        </ul>
-                                                                    </div>
-                                                                );
-                                                            })}
-                                                        </div>
-                                                    ) : (
-                                                        <ul className="ml-4 space-y-2">
-                                                            {item.dropdown.map((subItem, subIndex) => (
-                                                                <li key={subIndex}>
-                                                                    <Link
-                                                                        href={subItem.link}
-                                                                        onClick={closeDrawer}
-                                                                        className="block text-sm py-2 hover:text-[#9b1c20] transition duration-150 ease-in-out"
-                                                                    >
-                                                                        {subItem.name}
-                                                                    </Link>
-                                                                </li>
-                                                            ))}
-                                                        </ul>
-                                                    )}
+                                                    {renderMobileDropdown(item)}
                                                 </div>
                                             )}
                                         </div>
@@ -371,62 +532,7 @@ export default function Header() {
                                                     <span>{item.name}</span>
                                                     <PiCaretDown className="w-3 h-3 text-gray-500" />
                                                 </button>
-                                                {item.name === "PRODUCTS" ? (
-                                                    // Mega dropdown for products
-                                                    <div className="absolute left-1/2 transform -translate-x-1/2 top-full pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 w-screen max-w-4xl">
-                                                        <div className="bg-white rounded-lg shadow-xl border border-gray-200 py-6">
-                                                            <div className="grid grid-cols-4 gap-8 px-8">
-                                                                {item.dropdown.map((category, categoryIndex) => {
-                                                                    const CategoryIcon = category.icon;
-                                                                    return (
-                                                                        <div key={categoryIndex} className="space-y-3">
-                                                                            <div className="flex items-center space-x-2 mb-3">
-                                                                                <CategoryIcon className="w-5 h-5 text-[#9b1c20]" />
-                                                                                <Link 
-                                                                                    href={category.link || '#'}
-                                                                                    className="font-bold text-gray-800 hover:text-[#9b1c20] border-b pb-1"
-                                                                                >
-                                                                                    {category.category}
-                                                                                </Link>
-                                                                            </div>
-                                                                            <ul className="space-y-2">
-                                                                                {category.items.map((subItem, itemIndex) => {
-                                                                                    const ItemIcon = subItem.icon;
-                                                                                    return (
-                                                                                        <li key={itemIndex}>
-                                                                                            <Link
-                                                                                                href={subItem.link}
-                                                                                                className="flex items-center space-x-2 text-gray-600 hover:text-[#9b1c20] hover:underline transition duration-150 ease-in-out py-1 group"
-                                                                                            >
-                                                                                                <ItemIcon className="w-4 h-4 text-gray-400 group-hover:text-[#9b1c20] transition-colors" />
-                                                                                                <span className="text-sm">{subItem.name}</span>
-                                                                                            </Link>
-                                                                                        </li>
-                                                                                    );
-                                                                                })}
-                                                                            </ul>
-                                                                        </div>
-                                                                    );
-                                                                })}
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                ) : (
-                                                    // Regular dropdown for about
-                                                    <div className="absolute left-0 top-full pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
-                                                        <div className="w-48 bg-white rounded-md shadow-lg py-2 border border-gray-200">
-                                                            {item.dropdown.map((subItem, subIndex) => (
-                                                                <Link
-                                                                    key={subIndex}
-                                                                    href={subItem.link}
-                                                                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#9b1c20] transition duration-150 ease-in-out"
-                                                                >
-                                                                    {subItem.name}
-                                                                </Link>
-                                                            ))}
-                                                        </div>
-                                                    </div>
-                                                )}
+                                                {renderDesktopDropdown(item)}
                                             </div>
                                         ) : (
                                             <Link

@@ -2,16 +2,34 @@
 import React, { useState, useEffect } from 'react';
 import {
     IoHeartOutline,
-    IoHeartCircleOutline,
     IoCarSportOutline,
     IoHomeOutline,
     IoBriefcaseOutline,
     IoCashOutline,
     IoChevronForwardOutline,
-    IoStatsChartOutline,
     IoShieldOutline,
-    IoDocumentTextOutline
+    IoDocumentTextOutline,
+    IoBusinessOutline,
+    IoConstructOutline,
+    IoCloseOutline
 } from "react-icons/io5";
+import {
+    PiHeart,
+    PiShieldCheck,
+    PiBriefcase,
+    PiMoney,
+    PiUsers,
+    PiUser,
+    PiCalendar,
+    PiCar,
+    PiHouse,
+    PiScales,
+    PiWarningCircle,
+    PiBuildingOffice,
+    PiFileText,
+    PiLock,
+    PiTrendUp
+} from "react-icons/pi";
 import Link from 'next/link';
 
 // Reusable Tab Button Component
@@ -35,29 +53,93 @@ const TabButton = ({ label, icon, active, slug }) => (
 );
 
 export default function StartQuote() {
-    const [activeTab, setActiveTab] = useState('car');
+    const [activeTab, setActiveTab] = useState('motor');
+    const [showAllProducts, setShowAllProducts] = useState(false);
 
-    // Map tab id to product slug
+    // Balanced product distribution - 3 UGI, 3 ULA, 2 UP
     const tabSlugMap = {
-        life: 'life-insurance',
-        car: 'motor-insurance',
+        // UGI Products (3)
+        motor: 'motor-insurance',
         home: 'home-insurance',
-        business: 'multimark-policy',
-        funeral: 'funeral-assurance',
         legal: 'legal-insurance',
-        professional: 'professional-indemnity',
-        micro: 'micro-loans',
+        
+        // ULA Products (3) 
+        funeral: 'family-funeral-plan',
+        credit: 'credit-life',
+        group: 'group-life',
+        
+        // UP Products (2)
+        micro: 'micro-loan',
+        civil: 'umlamleli-loan',
     };
 
     const tabs = [
-        { id: 'life', label: 'Funeral Insurance', icon: <IoHeartOutline /> },
-        { id: 'car', label: 'Motor Insurance', icon: <IoCarSportOutline /> },
-        { id: 'home', label: 'Home Insurance', icon: <IoHomeOutline /> },
-        { id: 'business', label: 'Business Insurance', icon: <IoBriefcaseOutline /> },
-        { id: 'funeral', label: 'Funeral Cover', icon: <IoHeartCircleOutline /> },
-        { id: 'legal', label: 'Legal Insurance', icon: <IoDocumentTextOutline /> },
-        { id: 'professional', label: 'Professional', icon: <IoShieldOutline /> },
-        { id: 'micro', label: 'Micro Loans', icon: <IoCashOutline /> },
+        // United General Insurance (UGI) - 3 products
+        { id: 'motor', label: 'Motor Insurance', icon: <IoCarSportOutline />, company: 'UGI' },
+        { id: 'home', label: 'Home Insurance', icon: <IoHomeOutline />, company: 'UGI' },
+        { id: 'legal', label: 'Legal Insurance', icon: <IoDocumentTextOutline />, company: 'UGI' },
+        
+        // United Life Assurance (ULA) - 3 products
+        { id: 'funeral', label: 'Funeral Cover', icon: <IoHeartOutline />, company: 'ULA' },
+        { id: 'credit', label: 'Credit Life', icon: <IoShieldOutline />, company: 'ULA' },
+        { id: 'group', label: 'Group Life', icon: <IoBusinessOutline />, company: 'ULA' },
+        
+        // United Pay (UP) - 2 products
+        { id: 'micro', label: 'Shesha Loans', icon: <IoCashOutline />, company: 'UP' },
+        { id: 'civil', label: 'Umlamleli Loans', icon: <IoBriefcaseOutline />, company: 'UP' },
+    ];
+
+    // All products data organized by category
+    const allProductsData = [
+        {
+            category: 'Life Assurance',
+            icon: PiHeart,
+            link: '/united-life-assurance',
+            color: '#3d834d',
+            items: [
+                { name: 'Family Funeral Plan', link: '/products/family-funeral-plan', icon: PiUsers },
+                { name: 'Individual Funeral Plan', link: '/products/individual-funeral-plan', icon: PiUser },
+                { name: 'Tinkhundla Funeral Cover', link: '/products/tinkhundla-funeral-cover', icon: PiCalendar },
+                { name: 'Group Life', link: '/products/group-life', icon: PiUsers },
+                { name: 'Credit Life', link: '/products/credit-life', icon: PiMoney },
+            ]
+        },
+        {
+            category: 'General Insurance',
+            icon: PiShieldCheck,
+            link: '/united-general-insurance',
+            color: '#9b1c20',
+            items: [
+                { name: 'Motor Insurance', link: '/products/motor-insurance', icon: PiCar },
+                { name: 'Home Contents Insurance', link: '/products/home-contents-insurance', icon: PiHouse },
+                { name: 'Home Warranty Insurance', link: '/products/home-warranty-insurance', icon: PiHouse },
+                { name: 'Legal Insurance', link: '/products/legal-insurance', icon: PiScales },
+                { name: 'Personal Accident Insurance', link: '/products/personal-accident-insurance', icon: PiWarningCircle },
+            ]
+        },
+        {
+            category: 'Business Insurance',
+            icon: PiBriefcase,
+            color: '#286278',
+            items: [
+                { name: 'Multimark Policy', link: '/products/multimark-policy', icon: PiBuildingOffice },
+                { name: 'Medical Malpractice', link: '/products/medical-malpractice', icon: PiUser },
+                { name: 'Professional Indemnity', link: '/products/professional-indemnity', icon: PiFileText },
+                { name: 'Bonds and Guarantee', link: '/products/bonds-guarantee', icon: PiFileText },
+                { name: 'Engineering Policies', link: '/products/engineering-policies', icon: PiBuildingOffice },
+                { name: 'Fidelity Guarantee', link: '/products/fidelity-guarantee', icon: PiLock },
+                { name: 'Political Violence and Terrorism', link: '/products/political-violence-and-terrorism', icon: PiWarningCircle },
+            ]
+        },
+        {
+            category: 'Loans & Financing',
+            icon: PiMoney,
+            color: '#f79620',
+            items: [
+                { name: 'Micro Loans', link: '/products/micro-loan', icon: PiMoney },
+                { name: 'Umlamleli Loan (Salary Advance)', link: '/products/umlamleli-loan', icon: PiTrendUp },
+            ]
+        }
     ];
 
     const statsData = [
@@ -122,6 +204,94 @@ export default function StartQuote() {
         );
     };
 
+    // All Products Modal
+    const AllProductsModal = () => (
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+            <div className="bg-white rounded-2xl max-w-6xl w-full max-h-[90vh] overflow-y-auto overflow-hidden">
+                {/* Header */}
+                <div className="sticky top-0 bg-white border-b border-gray-200 p-6 rounded-t-2xl">
+                    <div className="flex justify-between items-center">
+                        <h2 className="text-3xl font-bold text-gray-900">All Products</h2>
+                        <button
+                            onClick={() => setShowAllProducts(false)}
+                            className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+                        >
+                            <IoCloseOutline className="text-2xl text-gray-600" />
+                        </button>
+                    </div>
+                    <p className="text-gray-600 mt-2">
+                        Explore our complete range of insurance and financial products
+                    </p>
+                </div>
+
+                {/* Products Grid */}
+                <div className="p-6 grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    {allProductsData.map((category, index) => (
+                        <div key={index} className="bg-gray-50 rounded-xl p-6">
+                            {/* Category Header */}
+                            <div className="flex items-center gap-3 mb-6">
+                                <div 
+                                    className="p-3 rounded-lg text-white"
+                                    style={{ backgroundColor: category.color }}
+                                >
+                                    <category.icon className="text-2xl" />
+                                </div>
+                                <div>
+                                    <h3 className="text-xl font-bold text-gray-900">{category.category}</h3>
+                                    {category.link && (
+                                        <Link 
+                                            href={category.link}
+                                            className="text-sm text-gray-600 hover:text-[#9b1c20] transition-colors"
+                                        >
+                                            View all {category.category} products →
+                                        </Link>
+                                    )}
+                                </div>
+                            </div>
+
+                            {/* Products List */}
+                            <div className="space-y-3">
+                                {category.items.map((product, productIndex) => (
+                                    <Link
+                                        key={productIndex}
+                                        href={product.link}
+                                        className="flex items-center gap-3 p-3 rounded-lg hover:bg-white transition-all duration-200 group border border-transparent hover:border-gray-200"
+                                    >
+                                        <div 
+                                            className="p-2 rounded-md text-white group-hover:scale-110 transition-transform"
+                                            style={{ backgroundColor: category.color }}
+                                        >
+                                            <product.icon className="text-lg" />
+                                        </div>
+                                        <span className="text-gray-700 group-hover:text-gray-900 font-medium flex-1">
+                                            {product.name}
+                                        </span>
+                                        <IoChevronForwardOutline className="text-gray-400 group-hover:text-[#9b1c20] transition-colors" />
+                                    </Link>
+                                ))}
+                            </div>
+                        </div>
+                    ))}
+                </div>
+
+                {/* Footer */}
+                <div className="border-t border-gray-200 p-6 bg-gray-50 rounded-b-2xl">
+                    <div className="text-center">
+                        <p className="text-gray-600 mb-4">
+                            Can't find what you're looking for? Contact us for personalized assistance.
+                        </p>
+                        <Link
+                            href="/contact"
+                            className="inline-flex items-center gap-2 px-6 py-3 bg-[#9b1c20] text-white rounded-lg font-semibold hover:bg-[#881a1e] transition-colors"
+                        >
+                            Contact Us
+                        </Link>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+
     return (
         <div className="w-full mx-auto text-[#9b1c20] flex flex-col">
             {/* Header */}
@@ -142,11 +312,10 @@ export default function StartQuote() {
                         <p className='text-xl lg:text-2xl max-w-lg text-white lg:text-left text-center md:text-left'>
                             Explore our wide range of offerings tailored to your insurance needs
                         </p>
-
                     </div>
 
-                    {/* Product Grid */}
-                    <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-8 gap-3 md:gap-4 w-full pt-4 pb-4 rounded-lg">
+                    {/* Product Grid - Now 8 balanced products */}
+                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-8 gap-3 md:gap-4 w-full pt-4 pb-4 rounded-lg">
                         {tabs.map((tab) => (
                             <TabButton
                                 key={tab.id}
@@ -159,18 +328,20 @@ export default function StartQuote() {
                     </div>
 
                     {/* Quick Stats Bar */}
-                    <Link
-                        href="/products"
-                        className="flex items-center gap-2 text-white hover:text-gray-200 transition-colors self-center md:self-auto"
-                    >
-                        <span className="text-lg underline">View all products</span>
-                        <IoChevronForwardOutline className="text-xl" />
-                    </Link>
+                    <div className="flex justify-center mt-6">
+                        <button
+                            onClick={() => setShowAllProducts(true)}
+                            className="flex items-center gap-2 text-white hover:text-gray-200 transition-colors"
+                        >
+                            <span className="text-lg underline">View all products</span>
+                            <IoChevronForwardOutline className="text-xl" />
+                        </button>
+                    </div>
                 </div>
             </main>
 
-            {/* CTA Section */}
-          
+            {/* All Products Modal */}
+            {showAllProducts && <AllProductsModal />}
         </div>
     );
 }
