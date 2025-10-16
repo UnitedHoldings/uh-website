@@ -261,7 +261,7 @@ export default function Team() {
       {/* Hero Image */}
       <div className='relative'>
         <Image
-          src={'/team-hero.jpg'}
+          src={'/group-life.jpg'}
           alt="Our Team"
           width={1920}
           height={360}

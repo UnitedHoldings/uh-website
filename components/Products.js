@@ -240,6 +240,15 @@ function Products() {
     // Shuffle products on component mount
     const [shuffledProducts] = useState(() => shuffleArray(productData));
 
+    // Calculate how many cards to show based on screen size
+    const getCardsToShow = () => {
+        if (typeof window === 'undefined') return 1;
+        const width = window.innerWidth;
+        if (width >= 1024) return 3.2; // Show 3.5 cards on desktop
+        if (width >= 768) return 2.2;  // Show 2.2 cards on tablet
+        return 1.2; // Show 1.2 cards on mobile
+    };
+
     // Initialize carousel dimensions and controls
     useEffect(() => {
         if (!carouselTrackRef.current || !carouselRef.current) return;
@@ -247,17 +256,26 @@ function Products() {
         const updateDimensions = () => {
             const cards = carouselTrackRef.current.querySelectorAll('.product-card');
             if (cards.length > 0) {
-                const newCardWidth = cards[0].offsetWidth + 24; // width + gap
+                const containerWidth = carouselRef.current.offsetWidth;
+                const cardsToShow = getCardsToShow();
+                const gap = 24; // 24px from gap-6
+                
+                // Calculate card width based on container and number of cards to show
+                const newCardWidth = (containerWidth - (gap * (cardsToShow - 1))) / cardsToShow;
                 setCardWidth(newCardWidth);
 
+                // Update all card widths
+                cards.forEach(card => {
+                    card.style.width = `${newCardWidth}px`;
+                });
+
                 const trackWidth = carouselTrackRef.current.scrollWidth;
-                const containerWidth = carouselRef.current.offsetWidth;
                 const newMaxScroll = trackWidth - containerWidth;
                 setMaxScroll(newMaxScroll);
 
                 // Update button states
                 setIsBeginning(currentPosition === 0);
-                setIsEnd(currentPosition >= newMaxScroll - 10); // Small tolerance
+                setIsEnd(currentPosition >= newMaxScroll - 10);
             }
         };
 
@@ -270,28 +288,32 @@ function Products() {
         return () => {
             window.removeEventListener('resize', updateDimensions);
         };
-    }, [currentPosition]);
+    }, [currentPosition, shuffledProducts.length]);
 
     // Navigation functions
     const scrollNext = () => {
         if (carouselTrackRef.current && cardWidth > 0) {
-            const newPosition = Math.min(currentPosition + cardWidth, maxScroll);
+            const cardsToShow = getCardsToShow();
+            const scrollAmount = Math.floor(cardsToShow) * cardWidth;
+            const newPosition = Math.min(currentPosition + scrollAmount, maxScroll);
             carouselTrackRef.current.style.transform = `translateX(-${newPosition}px)`;
             setCurrentPosition(newPosition);
             setIsBeginning(newPosition === 0);
             setIsEnd(newPosition >= maxScroll - 10);
-            setActiveIndex(Math.min(activeIndex + 1, shuffledProducts.length - 1));
+            setActiveIndex(Math.min(activeIndex + Math.floor(cardsToShow), shuffledProducts.length - 1));
         }
     };
 
     const scrollPrev = () => {
         if (carouselTrackRef.current && cardWidth > 0) {
-            const newPosition = Math.max(currentPosition - cardWidth, 0);
+            const cardsToShow = getCardsToShow();
+            const scrollAmount = Math.floor(cardsToShow) * cardWidth;
+            const newPosition = Math.max(currentPosition - scrollAmount, 0);
             carouselTrackRef.current.style.transform = `translateX(-${newPosition}px)`;
             setCurrentPosition(newPosition);
             setIsBeginning(newPosition === 0);
             setIsEnd(newPosition >= maxScroll - 10);
-            setActiveIndex(Math.max(activeIndex - 1, 0));
+            setActiveIndex(Math.max(activeIndex - Math.floor(cardsToShow), 0));
         }
     };
 
@@ -391,7 +413,9 @@ function Products() {
                                     <button
                                         key={idx}
                                         onClick={() => {
-                                            const newPosition = idx * cardWidth;
+                                            const cardsToShow = getCardsToShow();
+                                            const scrollAmount = Math.floor(cardsToShow) * cardWidth;
+                                            const newPosition = Math.min(idx * scrollAmount, maxScroll);
                                             carouselTrackRef.current.style.transform = `translateX(-${newPosition}px)`;
                                             setCurrentPosition(newPosition);
                                             setActiveIndex(idx);
@@ -399,7 +423,7 @@ function Products() {
                                             setIsEnd(newPosition >= maxScroll - 10);
                                         }}
                                         className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                                            activeIndex === idx 
+                                            Math.floor(activeIndex / Math.floor(getCardsToShow())) === idx 
                                                 ? 'bg-[#9b1c20] w-8' 
                                                 : 'bg-gray-300 hover:bg-gray-400'
                                         }`}
@@ -447,7 +471,8 @@ function Products() {
                             {shuffledProducts.map((product, idx) => (
                                 <div 
                                     key={idx} 
-                                    className="product-card w-[320px] md:w-[380px] h-[520px] flex-shrink-0"
+                                    className="product-card h-[520px] flex-shrink-0"
+                                    // Width will be set dynamically in useEffect
                                 >
                                     <ProductCard {...product} />
                                 </div>
@@ -462,7 +487,9 @@ function Products() {
                                 <div
                                     key={idx}
                                     className={`w-2 h-2 rounded-full transition-all ${
-                                        activeIndex === idx ? 'bg-[#9b1c20]' : 'bg-gray-300'
+                                        Math.floor(activeIndex / Math.floor(getCardsToShow())) === idx 
+                                            ? 'bg-[#9b1c20]' 
+                                            : 'bg-gray-300'
                                     }`}
                                 />
                             ))}

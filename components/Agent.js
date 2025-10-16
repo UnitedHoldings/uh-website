@@ -2,10 +2,59 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import React from 'react';
+import React, { useState } from 'react';
 import { SlDoc, SlEnvolope, SlInfo, SlLink, SlPhone, SlTarget } from 'react-icons/sl';
 
 function Agent() {
+  const [mobileNumber, setMobileNumber] = useState('');
+  const [reason, setReason] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [message, setMessage] = useState('');
+
+  const handleSendCallback = async (e) => {
+    e.preventDefault();
+    
+    if (!mobileNumber || !reason) {
+      setMessage('Please enter both mobile number and reason');
+      return;
+    }
+
+    setIsLoading(true);
+    setMessage('');
+
+    try {
+      const emailData = {
+        product_name: "Funeral Assurance",
+        product_company: "United Life Assurance",
+        product_email: "jay.rego.14@gmail.com",
+        product_contact: mobileNumber
+      };
+
+      const response = await fetch('https://uh-server.onrender.com/api/send-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(emailData),
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        setMessage('Callback request sent successfully!');
+        setMobileNumber('');
+        setReason('');
+      } else {
+        setMessage('Failed to send callback request. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error sending email:', error);
+      setMessage('Failed to send callback request. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div className="py-4 ">
       <div className="font-outfit max-w-[1400px]  px-2 mx-auto  lg:px-0 w-full space-y-6 sm:space-y-8 text-white">
@@ -27,25 +76,49 @@ function Agent() {
               <div className="flex flex-col gap-4 sm:gap-6 md:gap-8 font-semibold text-white text-xl sm:text-2xl">
                 <p>Request a Callback</p>
               </div>
-              <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 w-full">
-                <input
-                  type="text"
-                  placeholder="Enter Mobile Number"
-                  className="bg-[#9b1c20] p-2 sm:p-3 px-4 rounded-full border border-white text-sm sm:text-base w-full sm:w-auto text-white placeholder-white"
-                />
-                <select className="bg-[#9b1c20] p-2 sm:p-3 px-4 rounded-full border border-white text-sm sm:text-base w-full sm:w-auto text-white">
-                  <option value="">Select Reason</option>
-                  <option value="legal-insurance">Get A Qoute</option>
-                  <option value="funeral-assurance">File A Claim</option>
-                  <option value="motor-insurance">Ask Questions</option>
-                  <option value="dignified-family-support">Account Statement</option>
-                  <option value="micro-loans">Other</option>
-                </select>
-                <button className="bg-white space-x-2 text-[#9b1c20] px-4 sm:px-6 lg:px-16 py-2 sm:py-3 rounded-full h-12 -md flex items-center justify-center text-sm sm:text-base font-bold">
-                  <SlPhone />
-                  <p className="whitespace-nowrap">Send Callback</p>
-                </button>
-              </div>
+              
+              <form onSubmit={handleSendCallback}>
+                <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 w-full">
+                  <input
+                    type="text"
+                    placeholder="Enter Mobile Number"
+                    value={mobileNumber}
+                    onChange={(e) => setMobileNumber(e.target.value)}
+                    className="bg-[#9b1c20] p-2 sm:p-3 px-4 rounded-full border border-white text-sm sm:text-base w-full sm:w-auto text-white placeholder-white"
+                    required
+                  />
+                  <select 
+                    value={reason}
+                    onChange={(e) => setReason(e.target.value)}
+                    className="bg-[#9b1c20] p-2 sm:p-3 px-4 rounded-full border border-white text-sm sm:text-base w-full sm:w-auto text-white"
+                    required
+                  >
+                    <option value="">Select Reason</option>
+                    <option value="Get A Quote">Get A Quote</option>
+                    <option value="File A Claim">File A Claim</option>
+                    <option value="Ask Questions">Ask Questions</option>
+                    <option value="Account Statement">Account Statement</option>
+                    <option value="Other">Other</option>
+                  </select>
+                  <button 
+                    type="submit"
+                    disabled={isLoading}
+                    className="bg-white space-x-2 text-[#9b1c20] px-4 sm:px-6 lg:px-16 py-2 sm:py-3 rounded-full h-12 -md flex items-center justify-center text-sm sm:text-base font-bold disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    <SlPhone />
+                    <p className="whitespace-nowrap">
+                      {isLoading ? 'Sending...' : 'Send Callback'}
+                    </p>
+                  </button>
+                </div>
+              </form>
+
+              {message && (
+                <div className={`text-sm font-semibold ${message.includes('successfully') ? 'text-green-300' : 'text-yellow-300'}`}>
+                  {message}
+                </div>
+              )}
+
               <div className="space-y-4">
                 <p className="font-bold text-white text-sm">Quick Links</p>
                 <ul className="flex flex-wrap gap-4 sm:gap-6">
@@ -79,7 +152,6 @@ function Agent() {
                         800 1010
                       </a>
                       <span className="text-white hidden sm:inline">|</span>
-
                     </div>
                     <div className="flex items-center gap-2">
                       <SlEnvolope className="text-sm sm:text-base hover:underline transition duration-150 ease-in-out text-white" />
