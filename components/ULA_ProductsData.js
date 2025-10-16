@@ -23,7 +23,7 @@ const UnitedLifeAssuranceData = [
   {
     name: 'Family Funeral Plan',
     tagline: 'Secure Your Loved Ones\' Farewell',
-    heroImage: '/images/family-funeral.jpg',
+    heroImage: '/family-funeral.jpg',
     overview:
       'United Life Assurance (ULA) Family Funeral Plan provides comprehensive funeral cover for your entire family with quick claims processing and flexible payment terms. This life assurance product ensures your loved ones are protected during difficult times, offering up to E50,000 coverage with additional benefits like casket discounts. Backed by ULA\'s commitment to Eswatini families, this plan delivers peace of mind and financial security when it matters most.',
     stats: ['From E50/month', 'Up to E50,000 coverage', 'Family-wide protection'],
@@ -63,7 +63,7 @@ const UnitedLifeAssuranceData = [
   {
     name: 'Individual Funeral Plan',
     tagline: 'Peace of Mind for Your Final Journey',
-    heroImage: '/images/individual-funeral.jpg',
+    heroImage: '/individual-funeral.jpg',
     overview:
       'United Life Assurance (ULA) Individual Funeral Plan offers personalized funeral coverage with fast payouts and premium flexibility. Designed for Eswatini residents seeking personal protection, this life assurance product provides tailored coverage up to E25,000 with rapid claims processing. With options for annual, bi-annual, or monthly payments and additional benefits like free storage, ULA ensures your final journey is handled with dignity and care.',
     stats: ['From E30/month', 'Up to E25,000 coverage', 'Flexible payment options'],
@@ -103,7 +103,7 @@ const UnitedLifeAssuranceData = [
   {
     name: 'Tinkhundla Funeral Cover',
     tagline: 'Affordable Cover for All Communities',
-    heroImage: '/images/tinkhundla-funeral.jpg',
+    heroImage: '/tinkhundla-funeral.jpg',
     overview:
       'United Life Assurance (ULA) Tinkhundla Funeral Cover provides affordable funeral protection for communities across Eswatini at just E11 per month. This community-focused life assurance product offers E5,000 coverage with quick claims processing and philanthropic support. Designed specifically for Tinkhundla residents, this plan demonstrates ULA\'s commitment to making funeral coverage accessible to all Eswatini communities.',
     stats: ['E11/month', 'E5,000 coverage', 'Community-focused'],
@@ -143,7 +143,7 @@ const UnitedLifeAssuranceData = [
   {
     name: 'Group Life',
     tagline: 'Protect Your Team\'s Future',
-    heroImage: '/images/group-life.jpg',
+    heroImage: '/group-life.jpg',
     overview:
       'United Life Assurance (ULA) Group Life provides comprehensive life coverage for employee groups with employer-backed benefits and quick payouts. This corporate life assurance product offers death and disability benefits for teams of all sizes, with flexible group options and fast claim settlements. Designed for Eswatini businesses, ULA Group Life ensures your employees are protected, contributing to workplace security and peace of mind.',
     stats: ['From E40/month per member', 'Group coverage', 'Employer-subsidized'],
@@ -183,7 +183,7 @@ const UnitedLifeAssuranceData = [
   {
     name: 'Credit Life',
     tagline: 'Safeguard Your Loans and Family',
-    heroImage: '/images/credit-life.jpg',
+    heroImage: '/credit-life.jpg',
     overview:
       'United Life Assurance (ULA) Credit Life protects borrowers and their families by covering loan repayments in case of death or disability. This life assurance product provides peace of mind for Eswatini residents with mortgages, personal loans, or other financial obligations. With affordable premium rates and quick claim processing, ULA Credit Life ensures your loved ones are not burdened by outstanding debts during difficult times.',
     stats: ['From E25/month', 'Loan protection', 'Quick claims'],

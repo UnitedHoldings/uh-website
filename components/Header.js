@@ -101,7 +101,7 @@ export default function Header() {
                 { name: 'Multimark Policy', link: '/products/multimark-policy', icon: PiBuildingOffice },
                 { name: 'Medical Malpractice', link: '/products/medical-malpractice', icon: PiUser },
                 { name: 'Professional Indemnity', link: '/products/professional-indemnity', icon: PiFileText },
-                { name: 'Bonds and Guarantee', link: '/products/bonds-guarantee', icon: PiFileText },
+                { name: 'Bonds and Guarantee', link: '/products/bonds-and-guarantee', icon: PiFileText },
                 { name: 'Engineering Policies', link: '/products/engineering-policies', icon: PiBuildingOffice },
                 { name: 'Fidelity Guarantee', link: '/products/fidelity-guarantee', icon: PiLock },
                 { name: 'Political Violence and Terrorism', link: '/products/political-violence-and-terrorism', icon: PiWarningCircle },
@@ -111,7 +111,7 @@ export default function Header() {
             category: 'Loans & Financing',
             icon: PiMoney,
             items: [
-                { name: 'Micro Loans', link: '/products/micro-loans', icon: PiMoney },
+                { name: 'Micro Loans', link: '/products/micro-loan', icon: PiMoney },
                 { name: 'Umlamleli Loan (Salary Advance)', link: '/products/umlamleli-loan', icon: PiTrendUp },
             ]
         }

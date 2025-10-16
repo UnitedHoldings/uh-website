@@ -21,6 +21,7 @@ import {
 } from 'react-icons/pi';
 import { PiFunnel } from "react-icons/pi";
 import UnitedLifeAssuranceData from '@/components/ULA_ProductsData';
+import Image from 'next/image';
 
 // Department colors
 const DEPARTMENT_COLORS = {
@@ -57,7 +58,7 @@ export default function UnitedLifeAssurance() {
 
   // Scroll to products section
   const scrollToProducts = () => {
-    productsSectionRef.current?.scrollIntoView({ 
+    productsSectionRef.current?.scrollIntoView({
       behavior: 'smooth',
       block: 'start'
     });
@@ -67,16 +68,16 @@ export default function UnitedLifeAssurance() {
   const filteredProducts = useMemo(() => {
     return UnitedLifeAssuranceData.filter(product => {
       const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                           product.tagline.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                           product.overview.toLowerCase().includes(searchQuery.toLowerCase());
-      
+        product.tagline.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        product.overview.toLowerCase().includes(searchQuery.toLowerCase());
+
       const matchesCategory = selectedCategory === 'All' || product.name === selectedCategory;
-      
-      const matchesPrice = priceFilter === 'All' || 
-                          (priceFilter === 'Under E50' && (product.stats[0].includes('E11') || product.stats[0].includes('E25') || product.stats[0].includes('E30'))) ||
-                          (priceFilter === 'E50 - E100' && (product.stats[0].includes('E40') || product.stats[0].includes('E50'))) ||
-                          (priceFilter === 'Over E100' && product.stats[0].includes('E100'));
-      
+
+      const matchesPrice = priceFilter === 'All' ||
+        (priceFilter === 'Under E50' && (product.stats[0].includes('E11') || product.stats[0].includes('E25') || product.stats[0].includes('E30'))) ||
+        (priceFilter === 'E50 - E100' && (product.stats[0].includes('E40') || product.stats[0].includes('E50'))) ||
+        (priceFilter === 'Over E100' && product.stats[0].includes('E100'));
+
       return matchesSearch && matchesCategory && matchesPrice;
     });
   }, [searchQuery, selectedCategory, priceFilter]);
@@ -86,15 +87,31 @@ export default function UnitedLifeAssurance() {
     const colorClass = categoryColors[product.name];
 
     return (
-      <div className="bg-white rounded-2xl -lg hover:-xl transition-all duration-300 overflow-hidden group hover:transform hover:-translate-y-2">
+      <div className="bg-white  -lg hover:-xl transition-all duration-300 overflow-hidden group hover:transform hover:-translate-y-2">
         {/* Image Section */}
         <div className="relative h-48 bg-gradient-to-br from-gray-100 to-gray-200 overflow-hidden">
+          {/* Product Image */}
+          <Image
+            src={product.heroImage} // make sure product.image is a valid URL or imported asset
+            alt={product.name}
+            fill
+            className="object-cover"
+            priority={true}
+          />
+
+          {/* Overlay */}
           <div className="absolute inset-0 bg-black/10 group-hover:bg-black/20 transition-colors" />
+
+          {/* Top-right Icon */}
           <div className="absolute top-4 right-4">
-            <div className={`w-12 h-12 rounded-full flex items-center justify-center ${colorClass}`}>
+            <div
+              className={`w-12 h-12 rounded-full flex items-center justify-center text-white bg-[#3d834d] -lg hover:-xl transition-all duration-300`}
+            >
               <IconComponent className="text-xl" />
             </div>
           </div>
+
+          {/* Bottom-left Stat */}
           <div className="absolute bottom-4 left-4">
             <span className="text-xs font-semibold bg-white/90 backdrop-blur-sm px-2 py-1 rounded-full text-gray-700">
               {product.stats[0]}
@@ -138,7 +155,7 @@ export default function UnitedLifeAssurance() {
           {/* CTA Button */}
           <Link
             href={`/products/${product.name.toLowerCase().replace(/\s+/g, '-')}`}
-            className="w-full bg-[#3d834d] text-white py-3 px-4 rounded-lg font-semibold hover:bg-[#2f6b3d] transition-colors text-center block group/btn"
+            className="w-full bg-[#3d834d] text-white py-3 px-4 rounded-full font-semibold hover:bg-[#2f6b3d] transition-colors text-center block group/btn"
           >
             <span className="flex items-center justify-center">
               Learn More
@@ -151,12 +168,12 @@ export default function UnitedLifeAssurance() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 font-outfit">
+    <div className="min-h-screen bg-[#9b1c20] font-outfit">
       {/* Header with Background Image */}
       <div className='bg-[#2f6b3d] h-2 w-full' />
       <div className='relative bg-[#3d834d] py-16 md:py-24 min-h-[500px] flex items-center'>
         {/* Background Image with Overlay */}
-        <div 
+        <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
             backgroundImage: 'url("/life.jpg")',
@@ -164,7 +181,7 @@ export default function UnitedLifeAssurance() {
         >
           <div className="absolute inset-0 bg-black opacity-50"></div>
         </div>
-        
+
         {/* Content */}
         <div className="relative z-10 max-w-[1400px] mx-auto px-4 sm:px-6 w-full">
           <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
@@ -190,7 +207,7 @@ export default function UnitedLifeAssurance() {
                 </button>
               </div>
             </div>
-            <div className=" rounded-2xl bg-[#3d834d] p-6 min-w-[300px] ">
+            <div className=" rounded-xl bg-[#3d834d] p-6 min-w-[300px] ">
               <h3 className="text-white font-semibold text-lg mb-3">Secure Your Family&apos;s Future</h3>
               <p className="text-white/80 text-sm mb-4">
                 Trusted by thousands of Eswatini families for life protection and peace of mind
@@ -215,7 +232,7 @@ export default function UnitedLifeAssurance() {
       </div>
 
       {/* Search and Filters */}
-      <section className="py-8 bg-white border-b">
+      <section className="py-8 bg-white ">
         <div className="max-w-[1400px] mx-auto px-4 sm:px-6">
           <div className="flex flex-col lg:flex-row gap-4 items-center justify-between">
             {/* Search */}
@@ -299,48 +316,7 @@ export default function UnitedLifeAssurance() {
       </section>
 
       {/* Why Choose ULA Section */}
-      <section className="py-16 bg-[#3d834d] text-white">
-        <div className="max-w-[1400px] mx-auto px-4 sm:px-6">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl sm:text-4xl font-bold mb-4">Why Choose United Life Assurance?</h2>
-            <p className="text-xl text-white/80 max-w-3xl mx-auto">
-              Trusted by families and businesses across Eswatini for life protection and peace of mind
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="text-center p-6">
-              <div className="w-20 h-20 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <PiHeart className="text-3xl" />
-              </div>
-              <h3 className="text-xl font-semibold mb-3">Family-Focused Protection</h3>
-              <p className="text-white/80">
-                We understand the importance of family and provide comprehensive coverage to protect your loved ones&apos; future.
-              </p>
-            </div>
-
-            <div className="text-center p-6">
-              <div className="w-20 h-20 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <PiShieldCheck className="text-3xl" />
-              </div>
-              <h3 className="text-xl font-semibold mb-3">Quick Claim Payouts</h3>
-              <p className="text-white/80">
-                Fast and efficient claims processing to support your family when they need it most.
-              </p>
-            </div>
-
-            <div className="text-center p-6">
-              <div className="w-20 h-20 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <PiCurrencyCircleDollar className="text-3xl" />
-              </div>
-              <h3 className="text-xl font-semibold mb-3">Affordable Premiums</h3>
-              <p className="text-white/80">
-                Competitive pricing starting from just E11/month, making life assurance accessible to everyone.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
+    
 
       {/* CTA Section */}
       <section className="py-16 bg-white">

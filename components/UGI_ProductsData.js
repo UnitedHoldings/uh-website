@@ -37,7 +37,7 @@ const UnitedGeneralInsuranceData = [
   {
     name: 'Legal Insurance',
     tagline: 'Shield Your Family from Legal Battles',
-    heroImage: '/images/legal-insurance.jpg',
+    heroImage: '/legal-insurance.jpg',
     overview:
       'United General Insurance (UGI) Legal Insurance provides expert legal assistance to protect you and your loved ones from the financial burden of disputes and accidents. This short-term insurance product offers comprehensive coverage for civil, criminal, and labor matters, ensuring access to legal counseling and representation. With benefits like accidental death legal expense payouts and extended services such as debt counseling, our policy is designed to deliver peace of mind. Backed by UGI\'s commitment to Eswatini residents, this product ensures reliable support through a wide branch network and efficient claims processing.',
     stats: ['From E50/month', 'Eswatini-focused coverage', 'Wide branch network'],
@@ -76,7 +76,7 @@ const UnitedGeneralInsuranceData = [
   {
     name: 'Motor Insurance',
     tagline: 'Drive with Total Confidence',
-    heroImage: '/images/motor-insurance.jpg',
+    heroImage: '/car.jpg',
     overview:
       'United General Insurance (UGI) Motor Insurance offers customizable coverage to protect your vehicle against accidents, theft, natural disasters, and more. Whether you choose comprehensive or third-party options, our policy ensures peace of mind on the road. With optional add-ons like towing and coverage for modifications, plus protection against hijacking and third-party liability, UGI delivers tailored solutions for Eswatini drivers. Our efficient claims process and local expertise make us a trusted choice for vehicle owners.',
     stats: ['From E200/month', 'Eswatini-focused coverage', 'Wide branch network'],
@@ -114,7 +114,7 @@ const UnitedGeneralInsuranceData = [
   {
     name: 'Personal Accident Insurance',
     tagline: 'Secure Your Future Against the Unexpected',
-    heroImage: '/images/personal-accident.jpg',
+    heroImage: '/personal-accident.jpg',
     overview:
       'United General Insurance (UGI) Personal Accident Insurance provides lump-sum payouts for injuries, disabilities, or death caused by accidents. This short-term insurance product ensures financial security by covering loss of limbs, sight, hearing, or speech, and protects against income loss. With beneficiary payouts for family support, UGI offers affordable protection tailored to Eswatini residents, backed by a wide branch network and efficient claims processing.',
     stats: ['From E30/month', 'Eswatini-focused coverage', 'Wide branch network'],
@@ -152,7 +152,7 @@ const UnitedGeneralInsuranceData = [
   {
     name: 'Home Contents Insurance',
     tagline: 'Protect What Matters Most at Home',
-    heroImage: '/images/home-contents.jpg',
+    heroImage: '/home-contents.jpg',
     overview:
       'United General Insurance (UGI) Home Contents Insurance safeguards your household valuables against damage, theft, and natural disasters. This short-term insurance product covers electronics, furniture, and personal belongings, with additional protection for power surges, transit, and guest or employee items. Designed for Eswatini homeowners and tenants, UGI ensures peace of mind with a wide branch network and efficient claims processing.',
     stats: ['From E100/month', 'Eswatini-focused coverage', 'Wide branch network'],
@@ -191,7 +191,7 @@ const UnitedGeneralInsuranceData = [
   {
     name: 'Home Warranty Insurance',
     tagline: 'Buy or Sell Homes Worry-Free',
-    heroImage: '/images/home-warranty.jpg',
+    heroImage: '/home-warranty.jpg',
     overview:
       'United General Insurance (UGI) Home Warranty Insurance provides a two-year warranty against hidden property defects, ensuring security for Eswatini homeowners and sellers. Covering issues like faulty roofing, walls, foundations, electrics, and plumbing, this short-term insurance product boosts property marketability and protects against unexpected repair costs. Backed by professional inspections and UGI\'s trusted service, it offers peace of mind for property transactions.',
     stats: ['From E150/month', 'Eswatini-focused coverage', 'Wide branch network'],
@@ -230,7 +230,7 @@ const UnitedGeneralInsuranceData = [
   {
     name: 'Multimark Policy',
     tagline: 'All-in-One Business Protection',
-    heroImage: '/images/multimark.jpg',
+    heroImage: '/multimark.jpg',
     overview:
       'United General Insurance (UGI) Multimark Policy offers comprehensive coverage for Eswatini businesses, protecting against risks like fire, theft, business interruption, and liability. This corporate insurance product safeguards buildings, electronic equipment, and goods in transit, while covering employer and public liability. Designed for established businesses, it ensures continuity and security with UGI\'s trusted service and efficient claims processing.',
     stats: ['From E500/month', 'Eswatini-focused coverage', 'Wide branch network'],
@@ -268,7 +268,7 @@ const UnitedGeneralInsuranceData = [
   {
     name: 'Medical Malpractice',
     tagline: 'Safeguard Your Practice from Claims',
-    heroImage: '/images/medical-malpractice.jpg',
+    heroImage: '/medical-malpractice.jpg',
     overview:
       'United General Insurance (UGI) Medical Malpractice Insurance protects licensed medical professionals in Eswatini from claims due to professional errors or negligence. Covering bodily injury and negligent acts, this professional insurance product is ideal for self-employed practitioners or subcontractors. With UGI\'s trusted support and efficient claims processing, you can focus on your practice with confidence.',
     stats: ['From E300/month', 'Eswatini-focused coverage', 'Wide branch network'],
@@ -306,7 +306,7 @@ const UnitedGeneralInsuranceData = [
   {
     name: 'Professional Indemnity',
     tagline: 'Defend Your Expertise with Confidence',
-    heroImage: '/images/professional-indemnity.jpg',
+    heroImage: '/professional-indemnity.jpg',
     overview:
       'United General Insurance (UGI) Professional Indemnity Insurance protects Eswatini professionals like architects, engineers, accountants, and medical practitioners from liability due to advisory errors or service failures. This professional insurance product offers tailored coverage, including fronted risk options, ensuring peace of mind for your practice. UGI\'s reliable service and efficient claims processing make it a trusted choice for professionals.',
     stats: ['From E250/month', 'Eswatini-focused coverage', 'Wide branch network'],
@@ -344,7 +344,7 @@ const UnitedGeneralInsuranceData = [
   {
     name: 'Bonds and Guarantee',
     tagline: 'Secure Your Contracts Effortlessly',
-    heroImage: '/images/bonds-guarantee.jpg',
+    heroImage: '/bonds-guarantee.jpg',
     overview:
       'United General Insurance (UGI) Bonds and Guarantee Insurance provides Eswatini businesses with guarantees for customs, courts, bids, and performance bonds. This corporate insurance product covers advance payments and retention, boosting business credibility with tailored solutions. Backed by UGI\'s trusted service and efficient claims processing, it ensures your contracts are secure and your reputation intact.',
     stats: ['From E400/month', 'Eswatini-focused coverage', 'Wide branch network'],
@@ -382,7 +382,7 @@ const UnitedGeneralInsuranceData = [
   {
     name: 'Engineering Policies',
     tagline: 'Shield Your Projects from Risks',
-    heroImage: '/images/engineering.jpg',
+    heroImage: '/engineering.jpg',
     overview:
       'United General Insurance (UGI) Engineering Policies provide comprehensive coverage for Eswatini construction projects and machinery, protecting against unforeseen events. This corporate insurance product safeguards ongoing projects, installations, and operational equipment, ensuring economic stability. With UGI\'s trusted service and efficient claims processing, businesses can focus on project success with confidence.',
     stats: ['From E600/month', 'Eswatini-focused coverage', 'Wide branch network'],
@@ -420,7 +420,7 @@ const UnitedGeneralInsuranceData = [
   {
     name: 'Fidelity Guarantee',
     tagline: 'Guard Against Internal Theft',
-    heroImage: '/images/fidelity-guarantee.jpg',
+    heroImage: '/fidelity-guarantee.jpg',
     overview:
       'United General Insurance (UGI) Fidelity Guarantee Insurance protects Eswatini businesses from employee dishonesty and fraud, covering theft of money or property. This corporate insurance product, also known as first-party fraud cover, safeguards firms from risks posed by employees, partners, or volunteers. With UGI\'s trusted service and efficient claims processing, businesses can operate with confidence.',
     stats: ['From E350/month', 'Eswatini-focused coverage', 'Wide branch network'],
@@ -458,7 +458,7 @@ const UnitedGeneralInsuranceData = [
   {
     name: 'Political Violence and Terrorism',
     tagline: 'Insure Against Geopolitical Unrest',
-    heroImage: '/images/political-violence.jpg',
+    heroImage: '/political-violence.jpg',
     overview:
       'United General Insurance (UGI) Political Violence and Terrorism Insurance protects Eswatini businesses from losses due to riots, political violence, or terrorism. This corporate insurance product is ideal for businesses in high-risk locations, offering coverage for non-obvious targets. Requiring royal or political declarations and location details, UGI ensures tailored protection with efficient claims processing and trusted service.',
     stats: ['From E450/month', 'Eswatini-focused coverage', 'Wide branch network'],

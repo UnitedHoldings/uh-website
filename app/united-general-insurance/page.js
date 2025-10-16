@@ -26,6 +26,7 @@ import {
 } from 'react-icons/pi';
 import UnitedGeneralInsuranceData from '@/components/UGI_ProductsData';
 import { PiFunnel } from "react-icons/pi";
+import Image from 'next/image';
 
 // Icon mapping for product categories
 const categoryIcons = {
@@ -98,15 +99,31 @@ export default function UnitedGeneralInsurance() {
         const colorClass = categoryColors[product.name];
 
         return (
-            <div className="bg-white rounded-2xl -lg hover:-xl transition-all duration-300 overflow-hidden group hover:transform hover:-translate-y-2">
+            <div className="bg-white  -lg hover:-xl transition-all duration-300 overflow-hidden group hover:transform hover:-translate-y-2">
                 {/* Image Section */}
                 <div className="relative h-48 bg-gradient-to-br from-gray-100 to-gray-200 overflow-hidden">
+                    {/* Product Image */}
+                    <Image
+                        src={product.heroImage} // make sure product.image is a valid URL or imported asset
+                        alt={product.name}
+                        fill
+                        className="object-cover"
+                        priority={true}
+                    />
+
+                    {/* Overlay */}
                     <div className="absolute inset-0 bg-black/10 group-hover:bg-black/20 transition-colors" />
+
+                    {/* Top-right Icon */}
                     <div className="absolute top-4 right-4">
-                        <div className={`w-12 h-12 rounded-full flex items-center justify-center ${colorClass}`}>
+                        <div
+                            className={`w-12 h-12 rounded-full flex items-center justify-center text-white bg-[#286278] -lg hover:-xl transition-all duration-300`}
+                        >
                             <IconComponent className="text-xl" />
                         </div>
                     </div>
+
+                    {/* Bottom-left Stat */}
                     <div className="absolute bottom-4 left-4">
                         <span className="text-xs font-semibold bg-white/90 backdrop-blur-sm px-2 py-1 rounded-full text-gray-700">
                             {product.stats[0]}
@@ -116,7 +133,7 @@ export default function UnitedGeneralInsurance() {
 
                 {/* Content Section */}
                 <div className="p-6">
-                    <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-[#9b1c20] transition-colors">
+                    <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-[#286278] transition-colors">
                         {product.name}
                     </h3>
                     <p className="text-gray-600 text-sm mb-4 line-clamp-2">
@@ -150,7 +167,7 @@ export default function UnitedGeneralInsurance() {
                     {/* CTA Button */}
                     <Link
                         href={`/products/${product.name.toLowerCase().replace(/\s+/g, '-')}`}
-                        className="w-full bg-[#286278] text-white py-3 px-4 rounded-lg font-semibold hover:bg-[#881a1e] transition-colors text-center block group/btn"
+                        className="w-full bg-[#286278] text-white py-3 px-4 rounded-full font-semibold hover:bg-[#24576b] transition-colors text-center block group/btn"
                     >
                         <span className="flex items-center justify-center">
                             Learn More
@@ -163,7 +180,7 @@ export default function UnitedGeneralInsurance() {
     };
 
     return (
-        <div className="min-h-screen bg-gray-50 font-outfit">
+        <div className="min-h-screen bg-gray-100 font-outfit">
             {/* Header with Background Image */}
             <div className='bg-[#204f61] h-2 w-full' />
             <div className='relative bg-[#286278] py-16 md:py-24 min-h-[500px] flex items-center'>
@@ -301,62 +318,13 @@ export default function UnitedGeneralInsurance() {
                                 ))}
                             </div>
 
-                            {/* Load More (if needed in future) */}
-                            {filteredProducts.length > 8 && (
-                                <div className="text-center mt-12">
-                                    <button className="border-2 border-[#9b1c20] text-[#9b1c20] py-3 px-8 rounded-full font-semibold hover:bg-[#9b1c20] hover:text-white transition-colors">
-                                        Load More Products
-                                    </button>
-                                </div>
-                            )}
+                            
                         </div>
                     )}
                 </div>
             </section>
 
-            {/* Why Choose UGI Section */}
-            <section className="py-16 bg-[#286278] text-white">
-                <div className="max-w-[1400px] mx-auto px-4 sm:px-6">
-                    <div className="text-center mb-12">
-                        <h2 className="text-3xl sm:text-4xl font-bold mb-4">Why Choose United General Insurance?</h2>
-                        <p className="text-xl text-white/80 max-w-3xl mx-auto">
-                            Trusted by individuals and businesses across Eswatini for comprehensive protection
-                        </p>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        <div className="text-center p-6">
-                            <div className="w-20 h-20 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                                <PiShield className="text-3xl" />
-                            </div>
-                            <h3 className="text-xl font-semibold mb-3">100% Eswatini Owned</h3>
-                            <p className="text-white/80">
-                                We understand local needs and are committed to serving our community with tailored insurance solutions.
-                            </p>
-                        </div>
-
-                        <div className="text-center p-6">
-                            <div className="w-20 h-20 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                                <PiGlobe className="text-3xl" />
-                            </div>
-                            <h3 className="text-xl font-semibold mb-3">Nationwide Coverage</h3>
-                            <p className="text-white/80">
-                                12 branches across Eswatini ensuring you get support wherever you are in the kingdom.
-                            </p>
-                        </div>
-
-                        <div className="text-center p-6">
-                            <div className="w-20 h-20 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                                <PiCurrencyCircleDollar className="text-3xl" />
-                            </div>
-                            <h3 className="text-xl font-semibold mb-3">Affordable Premiums</h3>
-                            <p className="text-white/80">
-                                Competitive pricing starting from just E50/month, making quality insurance accessible to everyone.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </section>
+     
 
             {/* CTA Section */}
             <section className="py-16 bg-white">

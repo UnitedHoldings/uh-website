@@ -26,7 +26,7 @@ const AllProductsData = [
 
 // Company color mapping
 const COMPANY_COLORS = {
-  'UGI': '#9b1c20', // Red for United General Insurance
+  'UGI': '#286278', // Red for United General Insurance
   'ULA': '#3d834d', // Green for United Life Assurance
   'UP': '#f79620',  // Orange for United Pay
 };

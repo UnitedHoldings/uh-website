@@ -192,32 +192,6 @@ export default function Contact() {
           priority
         />
         
-        <div className="absolute lg:right-[10%] lg:top-[10%] top-[5%] left-0 lg:left-auto right-0 flex items-center">
-          <div className="max-w-[1100px] mx-auto px-4 w-full">
-            <div className="bg-[#9b1c20] px-8 flex flex-col mx-auto text-white py-8">
-              <div className='left-[13%] space-y-4 top-[30%] text-white'>
-                <p className='text-4xl max-w-96 font-semibold'>We&apos;re here to help</p>
-                <p className='text-sm font-light'>Reach out to us for any questions or concerns.</p>
-              </div>
-            
-              <div className="mt-4 flex flex-col sm:flex-row gap-3 sm:items-center">
-                <input 
-                  type="text" 
-                  placeholder="Your Name" 
-                  className="rounded-full px-4 py-2 min-w-[300px] bg-white border text-gray-800"
-                />
-                <input 
-                  type="email" 
-                  placeholder="Your Email" 
-                  className="rounded-full px-4 py-2 min-w-[300px] bg-white border text-gray-800"
-                />
-                <button className="rounded-full px-6 py-2 bg-white text-[#9b1c20] font-semibold">
-                  Send Message
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
 
       <div className='max-w-[1400px] px-4 mt-8 lg:mb-16 mb-12 space-y-6 mx-auto'>
@@ -468,56 +442,7 @@ export default function Contact() {
         </div>
       </div>
 
-      {/* Quick Contact Section */}
-      <div className="bg-gray-50 py-16">
-        <div className="max-w-[1400px] mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-semibold text-gray-800 mb-4">Other Ways to Connect</h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">We&apos;re available through multiple channels to serve you better</p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="text-center p-6">
-              <div className="bg-[#9b1c20] w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-semibold mb-2">Live Chat</h3>
-              <p className="text-gray-600 mb-4">Chat with our support team in real-time</p>
-              <button className="bg-[#9b1c20] text-white py-2 px-6 rounded-full font-semibold">
-                Start Chat
-              </button>
-            </div>
-
-            <div className="text-center p-6">
-              <div className="bg-[#9b1c20] w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-semibold mb-2">Phone Support</h3>
-              <p className="text-gray-600 mb-4">Call us directly for immediate assistance</p>
-              <a href="tel:8001010" className="bg-[#9b1c20] text-white py-2 px-6 rounded-full font-semibold inline-block">
-                Call 800 1010
-              </a>
-            </div>
-
-            <div className="text-center p-6">
-              <div className="bg-[#9b1c20] w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-semibold mb-2">Email Support</h3>
-              <p className="text-gray-600 mb-4">Send us an email for detailed inquiries</p>
-              <a href="mailto:info@united.co.sz" className="bg-[#9b1c20] text-white py-2 px-6 rounded-full font-semibold inline-block">
-                Email Us
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
+     
     </div>
   );
 }
