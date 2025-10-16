@@ -386,7 +386,7 @@ export default function Team() {
               </div>
               <h3 className="text-xl font-semibold text-white mb-3">Innovation</h3>
               <p className="text-white text-sm leading-relaxed">
-                We continuously seek new ways to improve and adapt to our clients' evolving needs.
+                We continuously seek new ways to improve and adapt to our clients&apos; evolving needs.
               </p>
             </div>
 
