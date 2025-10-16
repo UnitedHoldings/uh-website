@@ -137,30 +137,15 @@ export default function Header() {
             icon: PiBriefcaseMetal,
             description: "Join our growing team"
         },
-        { 
-            name: "Upcoming Events", 
-            link: "/about/events", 
-            icon: PiCalendarCheck,
-            description: "Company events and activities"
-        },
-        { 
-            name: "Know your Insurer", 
-            link: "/about/insurer", 
-            icon: PiShieldStar,
-            description: "Learn about our insurance expertise"
-        },
+        
+        
         { 
             name: "Gallery", 
             link: "/about/gallery", 
             icon: PiImages,
             description: "Photos from our events"
         },
-        { 
-            name: "In the news", 
-            link: "/news", 
-            icon: PiNewspaper,
-            description: "Latest company news"
-        }
+       
     ], []);
 
     // Resources dropdown data

@@ -10,8 +10,8 @@ function Footer() {
         { title: 'Services', path: '/services' },
         { title: 'United Pay', path: '/services#united-pay' },
         { title: 'United Life Assurance', path: '/services#life-assurance' },
-        { title: 'Client Area', path: '/client-area' },
-        { title: 'Projects', path: '/projects' },
+        { title: 'News & Blog', path: '/news' },
+        { title: 'Gallery', path: '/gallery' },
     ];
     const helpLinks = [
         { title: 'Contact Us', path: '/contact' },

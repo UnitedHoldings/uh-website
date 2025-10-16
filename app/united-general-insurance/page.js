@@ -99,7 +99,7 @@ export default function UnitedGeneralInsurance() {
         const colorClass = categoryColors[product.name];
 
         return (
-            <div className="bg-white  -lg hover:-xl transition-all duration-300 overflow-hidden group hover:transform hover:-translate-y-2">
+            <div className="bg-white  rounded-xl hover:-xl transition-all duration-300 overflow-hidden group hover:transform hover:-translate-y-2">
                 {/* Image Section */}
                 <div className="relative h-48 bg-gradient-to-br from-gray-100 to-gray-200 overflow-hidden">
                     {/* Product Image */}
@@ -133,10 +133,10 @@ export default function UnitedGeneralInsurance() {
 
                 {/* Content Section */}
                 <div className="p-6">
-                    <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-[#286278] transition-colors">
+                    <h3 className="text-2xl font-bold text-gray-900 mb-2 group-hover:text-[#286278] transition-colors">
                         {product.name}
                     </h3>
-                    <p className="text-gray-600 text-sm mb-4 line-clamp-2">
+                    <p className="text-gray-600 text-lg mb-4 line-clamp-2">
                         {product.tagline}
                     </p>
 
@@ -145,7 +145,7 @@ export default function UnitedGeneralInsurance() {
                         {product.benefits.slice(0, 2).map((benefit, index) => (
                             <div key={index} className="flex items-center text-sm text-gray-600">
                                 <div className="w-5 h-5 bg-green-100 rounded-full flex items-center justify-center mr-2 flex-shrink-0">
-                                    <PiCheckCircle className="text-green-600 text-xs" />
+                                    <PiCheckCircle className="text-green-600 " />
                                 </div>
                                 <span className="line-clamp-1">{benefit.text}</span>
                             </div>
@@ -153,7 +153,7 @@ export default function UnitedGeneralInsurance() {
                     </div>
 
                     {/* Stats */}
-                    <div className="flex items-center justify-between text-xs text-gray-500 mb-4">
+                    <div className="flex items-center space-x-8 text-xs text-gray-500 mb-4">
                         <span className="flex items-center">
                             <PiShieldCheck className="mr-1" />
                             {product.stats[1]}
@@ -180,7 +180,7 @@ export default function UnitedGeneralInsurance() {
     };
 
     return (
-        <div className="min-h-screen bg-gray-100 font-outfit">
+        <div className="min-h-screen bg-[#9b1c20] font-outfit">
             {/* Header with Background Image */}
             <div className='bg-[#204f61] h-2 w-full' />
             <div className='relative bg-[#286278] py-16 md:py-24 min-h-[500px] flex items-center'>
@@ -312,7 +312,7 @@ export default function UnitedGeneralInsurance() {
                         </div>
                     ) : (
                         <div>
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6">
                                 {filteredProducts.map((product, index) => (
                                     <ProductCard key={index} product={product} />
                                 ))}

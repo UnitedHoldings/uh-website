@@ -51,7 +51,7 @@ export default function About() {
                 </div>
             </div>
 
-            
+
 
             {/* About Us Section */}
             <div className="bg-white overflow-hidden">
@@ -61,7 +61,7 @@ export default function About() {
                         <div className="flex flex-col w-full justify-between py-4 sm:py-6"></div>
                     </div>
                     <div className='w-full lg:border-l lg:border-gray-400 lg:pl-6'>
-                        <h2 className="text-xl sm:text-2xl font-semibold text-left ">Our Journey</h2>
+                        <h2 className="text-2xl font-semibold text-left ">Our Journey</h2>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 py-4 sm:py-6">
                             <p className="text-gray-700 leading-relaxed text-lg">
                                 United Holdings Ltd – Live With Purpose.
@@ -84,12 +84,18 @@ export default function About() {
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                         {/* United Life Assurance */}
                         <div className="bg-white shadow-sm overflow-hidden rounded-lg hover:shadow-lg transition-shadow duration-300">
-                            <div className="h-48 sm:h-60 w-full rounded-t-lg relative bg-gradient-to-br from-[#3d834d] to-[#2a6b3a] flex items-center justify-center p-4">
-                                <div className="text-center">
-                                    <div className="bg-white/20 backdrop-blur-sm rounded-full px-4 py-2 inline-block mb-4">
-                                        <span className="text-white font-semibold text-sm">ULA</span>
-                                    </div>
-                                    <h3 className="text-white font-semibold text-2xl">United Life Assurance</h3>
+                            <div className="h-48 flex-col sm:h-60 w-full rounded-t-lg relative bg-gradient-to-br flex items-center justify-center p-4">
+
+                                <Image
+                                    src={'/life2.jpg'}
+                                    alt="UGI Logo"
+                                    width={400}
+                                    height={400}
+                                    className="w-full h-auto my-8"
+                                />
+                                <div className="text-start w-full">
+
+                                    <h3 className="text-[#3d834d] font-semibold text-2xl">United Life Assurance</h3>
                                 </div>
                             </div>
                             <div className="p-4 sm:p-6">
@@ -104,12 +110,17 @@ export default function About() {
 
                         {/* United General Insurance */}
                         <div className="bg-white shadow-sm overflow-hidden rounded-lg hover:shadow-lg transition-shadow duration-300">
-                            <div className="h-48 sm:h-60 w-full rounded-t-lg relative bg-gradient-to-br from-[#9b1c20] to-[#881a1e] flex items-center justify-center p-4">
-                                <div className="text-center">
-                                    <div className="bg-white/20 backdrop-blur-sm rounded-full px-4 py-2 inline-block mb-4">
-                                        <span className="text-white font-semibold text-sm">UGI</span>
-                                    </div>
-                                    <h3 className="text-white font-semibold text-2xl">United General Insurance</h3>
+                            <div className="h-48 flex-col sm:h-60 w-full rounded-t-lg relative bg-gradient-to-br flex items-center justify-center p-4">
+
+                                <Image
+                                    src={'/general.jpg'}
+                                    alt="UGI Logo"
+                                    width={400}
+                                    height={400}
+                                    className="w-full h-auto my-8"
+                                />
+                                <div className="text-start w-full">
+                                    <h3 className="text-[#9b1c20] font-semibold text-2xl">United General Insurance</h3>
                                 </div>
                             </div>
                             <div className="p-4 sm:p-6">
@@ -124,12 +135,16 @@ export default function About() {
 
                         {/* United Pay */}
                         <div className="bg-white shadow-sm overflow-hidden rounded-lg hover:shadow-lg transition-shadow duration-300">
-                            <div className="h-48 sm:h-60 w-full rounded-t-lg relative bg-gradient-to-br from-[#f79620] to-[#e08515] flex items-center justify-center p-4">
-                                <div className="text-center">
-                                    <div className="bg-white/20 backdrop-blur-sm rounded-full px-4 py-2 inline-block mb-4">
-                                        <span className="text-white font-semibold text-sm">UP</span>
-                                    </div>
-                                    <h3 className="text-white font-semibold text-lg sm:text-xl">United Pay</h3>
+                            <div className="h-48 flex-col sm:h-60 w-full rounded-t-lg relative bg-gradient-to-br flex items-center justify-center p-4">
+                                <Image
+                                    src={'/pay.jpg'}
+                                    alt="UGI Logo"
+                                    width={400}
+                                    height={400}
+                                    className="w-full h-auto  my-8"
+                                />
+                                <div className="text-start w-full">
+                                    <h3 className="text-[#f79620] font-semibold text-lg sm:text-xl">United Pay</h3>
                                 </div>
                             </div>
                             <div className="p-4 sm:p-6">
@@ -182,7 +197,7 @@ export default function About() {
                 </div>
             </div>
 
-           
+
 
             {/* Final CTA */}
             <div className="bg-[#9b1c20] py-8 sm:py-12">
@@ -204,7 +219,7 @@ export default function About() {
                 </div>
             </div>
 
-          
+
         </div>
     );
 }

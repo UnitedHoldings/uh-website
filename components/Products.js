@@ -164,12 +164,10 @@ const CompanyBadge = ({ company, color }) => (
 const ProductCard = ({ title, desc, img, company, icon, stats, link, color, bgColor }) => (
     <Link href={link} className="block group h-full">
         <div 
-            className="rounded-xl hover:-2xl relative flex flex-col h-full cursor-pointer transition-all duration-500 overflow-hidden"
-            style={{ backgroundColor: bgColor }}
-        >
-            {/* Company Badge */}
-            <CompanyBadge company={company} color={color} />
+            className="rounded-xl hover:-2xl relative bg-[#9b1c20] flex flex-col h-full cursor-pointer transition-all duration-500 overflow-hidden"
             
+        >
+          
             {/* Image Container with Overlay */}
             <div className="h-48 relative overflow-hidden">
                 <Image
@@ -178,12 +176,12 @@ const ProductCard = ({ title, desc, img, company, icon, stats, link, color, bgCo
                     fill
                     className="object-cover transition-transform duration-700 group-hover:scale-110"
                 />
-                <div className="absolute inset-0 bg-black/40" />
+                <div className="absolute inset-0 " />
                 
                 {/* Icon Overlay */}
                 <div className="absolute bottom-4 left-4 text-white">
                     <div className="flex items-center gap-2">
-                        <div className="p-2 rounded-lg bg-white/20 backdrop-blur-sm">
+                        <div className="p-2 rounded-lg bg-[#9b1c20] backdrop-blur-sm">
                             {icon}
                         </div>
                     </div>
@@ -196,7 +194,7 @@ const ProductCard = ({ title, desc, img, company, icon, stats, link, color, bgCo
                     {title}
                 </h3>
                 
-                <p className="text-white/90 text-sm leading-relaxed mb-4 flex-grow">
+                <p className="text-white/90 text-lg line-clamp-4 h-10 leading-relaxed mb-4 flex-grow">
                     {desc}
                 </p>
 
@@ -369,32 +367,17 @@ function Products() {
 
     return (
         <div className='py-16'>
-            <div className="font-outfit max-w-[1400px] mx-auto px-4 lg:px-8 w-full space-y-12 overflow-hidden">
-                {/* Header Section */}
-                <div className="text-center space-y-6">
-                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#9b1c20]/10 text-[#9b1c20] text-sm font-semibold">
-                        <BsShieldCheck className="text-lg" />
-                        Trusted Financial Solutions
-                    </div>
-                    
-                    <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 max-w-4xl mx-auto leading-tight">
-                        Comprehensive <span className="text-[#9b1c20]">Protection</span> for Every Aspect of Your Life
-                    </h2>
-                    
-                    <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
-                        United Holding offers tailored insurance and financial products designed to secure your future, 
-                        protect your assets, and empower your financial growth across Eswatini.
-                    </p>
-                </div>
+            <div className="font-outfit max-w-[1400px] mx-auto px-4 lg:p-0  w-full space-y-12 overflow-hidden">
+               
 
                 {/* Carousel Section */}
                 <div className="flex flex-col gap-8">
                     <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
                         <div className="flex flex-col gap-4">
-                            <h3 className="text-2xl md:text-3xl font-bold text-gray-900">
+                            <h3 className="text-2xl md:text-3xl font-bold text-[#9b1c20] mb-2 font-outfit">
                                 Featured Products
                             </h3>
-                            <p className="text-gray-600 max-w-2xl">
+                            <p className="text-gray-600 max-w-2xl text-lg lg:text-xl">
                                 Explore our range of innovative solutions from United General Insurance, 
                                 United Life Assurance, and United Pay.
                             </p>

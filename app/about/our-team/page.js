@@ -198,13 +198,13 @@ export default function Team() {
       </div>
       <div className="p-6  flex flex-col justify-between">
         <div className="mb-4">
-          <h3 className="text-xl font-semibold text-gray-100">{member.name}</h3>
+          <h3 className="text-2xl font-semibold text-gray-100">{member.name}</h3>
           <div className='flex-wrap flex'>
             <p className=" text-sm mt-1 px-4 rounded-full bg-white text-[#9b1c20] py-1">{member.title}</p>
 
           </div>
         </div>
-        <p className="text-gray-100 text-sm leading-relaxed mb-4 line-clamp-4">
+        <p className="text-gray-100 text-base leading-relaxed mb-4 line-clamp-4">
           {member.bio}
         </p>
 

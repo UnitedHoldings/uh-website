@@ -20,7 +20,7 @@ const UnitedPayData = [
   {
     name: 'Micro Loan',
     tagline: 'Quick Cash for Life\'s Unexpected Moments',
-    heroImage: '/images/micro-loan.jpg',
+    heroImage: '/micro-loan.jpg',
     overview:
       'United Pay Micro Loan provides instant access to funds up to E50,000 for emergencies or personal needs, with flexible repayment through convenient salary deductions. Designed for employed Eswatini residents, this financial solution offers competitive rates and fast approval within 48 hours. Whether you need funds for medical expenses, education, or unexpected costs, United Pay ensures you get the financial support you need with repayment terms tailored to your income.',
     stats: ['From E100/month', 'Up to E50,000', '48-hour approval'],
@@ -60,14 +60,14 @@ const UnitedPayData = [
   {
     name: 'Umlamleli Loan',
     tagline: 'Secure Funding Tailored for Public Servants',
-    heroImage: '/images/civil-servant-loan.jpg',
+    heroImage: '/civil-servant-loan.jpg',
     overview:
       'United Pay Civil Servant Micro Loan offers specialized financial solutions for government employees in Eswatini, with loans up to E20,000 designed around the stability of public service employment. This product features easy terms, low rates, and seamless salary deduction integration, helping civil servants meet urgent financial needs while building credit. With quick processing and flexible repayment options, United Pay supports the financial well-being of Eswatini\'s dedicated public servants.',
     stats: ['From E200/month', 'Up to E20,000', 'Government employee focus'],
     benefits: [
       { text: 'Up to E20,000 limit for civil servants', icon: PiMoney },
       { text: 'Quick processing and salary-based repayments', icon: PiClock },
-      { text: 'Flexible 3-36 month terms at low rates', icon: PiCurrencyCircleDollar },
+    { text: 'Flexible 3-36 month terms at low rates', icon: PiCurrencyCircleDollar },
       { text: 'Builds credit while meeting urgent needs', icon: PiTrendUp },
       { text: 'Seamless employer deduction integration', icon: PiBank },
     ],

@@ -20,6 +20,7 @@ import {
 } from 'react-icons/pi';
 import { PiFunnel } from "react-icons/pi";
 import UnitedPayData from '@/components/UP_ProductData';
+import Image from 'next/image';
 
 // Icon mapping for product categories
 const categoryIcons = {
@@ -72,15 +73,31 @@ export default function UnitedPay() {
     const colorClass = categoryColors[product.name];
 
     return (
-      <div className="bg-white rounded-2xl -lg hover:-xl transition-all duration-300 overflow-hidden group hover:transform hover:-translate-y-2">
+        <div className="bg-white  rounded-xl hover:-xl transition-all duration-300 overflow-hidden group hover:transform hover:-translate-y-2">
         {/* Image Section */}
         <div className="relative h-48 bg-gradient-to-br from-gray-100 to-gray-200 overflow-hidden">
+          {/* Product Image */}
+          <Image
+            src={product.heroImage} // make sure product.image is a valid URL or imported asset
+            alt={product.name}
+            fill
+            className="object-cover"
+            priority={true}
+          />
+
+          {/* Overlay */}
           <div className="absolute inset-0 bg-black/10 group-hover:bg-black/20 transition-colors" />
+
+          {/* Top-right Icon */}
           <div className="absolute top-4 right-4">
-            <div className={`w-12 h-12 rounded-full flex items-center justify-center ${colorClass}`}>
+            <div
+              className={`w-12 h-12 rounded-full flex items-center justify-center text-white bg-[#f79620] -lg hover:-xl transition-all duration-300`}
+            >
               <IconComponent className="text-xl" />
             </div>
           </div>
+
+          {/* Bottom-left Stat */}
           <div className="absolute bottom-4 left-4">
             <span className="text-xs font-semibold bg-white/90 backdrop-blur-sm px-2 py-1 rounded-full text-gray-700">
               {product.stats[0]}
@@ -124,10 +141,10 @@ export default function UnitedPay() {
           {/* CTA Button */}
           <Link
             href={`/products/${product.name.toLowerCase().replace(/\s+/g, '-')}`}
-            className="w-full bg-[#f79620] text-white py-3 px-4 rounded-lg font-semibold hover:bg-[#e0861c] transition-colors text-center block group/btn"
+            className="w-full bg-[#f79620] text-white py-3 px-4 rounded-full font-semibold hover:bg-[#2f6b3d] transition-colors text-center block group/btn"
           >
             <span className="flex items-center justify-center">
-              Apply Now
+              Learn More
               <PiCurrencyCircleDollar className="ml-2 group-hover/btn:translate-x-1 transition-transform" />
             </span>
           </Link>
@@ -137,7 +154,7 @@ export default function UnitedPay() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 font-outfit">
+    <div className="min-h-screen bg-[#9b1c20] font-outfit">
       {/* Header with Background Image */}
       <div className='bg-[#e0861c] h-2 w-full' />
       <div className='relative bg-[#f79620] py-16 md:py-24 min-h-[500px] flex items-center'>
@@ -284,50 +301,7 @@ export default function UnitedPay() {
         </div>
       </section>
 
-      {/* Why Choose United Pay Section */}
-      <section className="py-16 bg-[#f79620] text-white">
-        <div className="max-w-[1400px] mx-auto px-4 sm:px-6">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl sm:text-4xl font-bold mb-4">Why Choose United Pay?</h2>
-            <p className="text-xl text-white/80 max-w-3xl mx-auto">
-              Trusted financial solutions designed specifically for Eswatini&apos;s working population
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="text-center p-6">
-              <div className="w-20 h-20 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <PiClock className="text-3xl" />
-              </div>
-              <h3 className="text-xl font-semibold mb-3">Fast Processing</h3>
-              <p className="text-white/80">
-                Quick 48-hour approval and payout so you get the funds when you need them most.
-              </p>
-            </div>
-
-            <div className="text-center p-6">
-              <div className="w-20 h-20 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <PiMoney className="text-3xl" />
-              </div>
-              <h3 className="text-xl font-semibold mb-3">Flexible Repayment</h3>
-              <p className="text-white/80">
-                Convenient salary deduction with terms from 3 to 36 months to suit your budget.
-              </p>
-            </div>
-
-            <div className="text-center p-6">
-              <div className="w-20 h-20 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <PiChartLineUp className="text-3xl" />
-              </div>
-              <h3 className="text-xl font-semibold mb-3">Credit Building</h3>
-              <p className="text-white/80">
-                Build your credit history while accessing the funds you need for life&apos;s opportunities.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
+  
       {/* CTA Section */}
       <section className="py-16 bg-white">
         <div className="max-w-[1400px] mx-auto px-4 sm:px-6 text-center">

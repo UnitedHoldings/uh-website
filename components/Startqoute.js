@@ -60,7 +60,7 @@ export default function StartQuote() {
     const tabSlugMap = {
         // UGI Products (3)
         motor: 'motor-insurance',
-        home: 'home-insurance',
+        home: 'home-contents-insurance',
         legal: 'legal-insurance',
         
         // ULA Products (3) 
@@ -125,7 +125,7 @@ export default function StartQuote() {
                 { name: 'Multimark Policy', link: '/products/multimark-policy', icon: PiBuildingOffice },
                 { name: 'Medical Malpractice', link: '/products/medical-malpractice', icon: PiUser },
                 { name: 'Professional Indemnity', link: '/products/professional-indemnity', icon: PiFileText },
-                { name: 'Bonds and Guarantee', link: '/products/bonds-guarantee', icon: PiFileText },
+                { name: 'Bonds and Guarantee', link: '/products/bonds-and-guarantee', icon: PiFileText },
                 { name: 'Engineering Policies', link: '/products/engineering-policies', icon: PiBuildingOffice },
                 { name: 'Fidelity Guarantee', link: '/products/fidelity-guarantee', icon: PiLock },
                 { name: 'Political Violence and Terrorism', link: '/products/political-violence-and-terrorism', icon: PiWarningCircle },
@@ -296,7 +296,7 @@ export default function StartQuote() {
         <div className="w-full mx-auto text-[#9b1c20] flex flex-col">
             {/* Header */}
             <header className="max-w-[1400px] w-full border-b border-gray-200 mx-auto px-4">
-                <div className="container mx-auto pb-6 md:pb-8 flex flex-col-reverse pt-8 md:flex-row lg:flex-row justify-between items-center gap-6 md:gap-0">
+                <div className="container mx-auto pb-6 lgpb-16 flex flex-col-reverse py-8 md:flex-row lg:flex-row justify-between items-center gap-6 md:gap-0">
                     <div className="text-xl md:text-3xl lg:text-4xl text-[#9b1c20] text-center lg:text-left md:text-left">
                         <p>Lets get you the <span className="text-[#9b1c20] font-semibold">Cover</span> You Deserve... <br />and<span className="text-[#9b1c20] font-semibold"> Sign you up</span> Today!</p>
                     </div>

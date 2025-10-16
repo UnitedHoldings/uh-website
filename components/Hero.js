@@ -164,7 +164,7 @@ const Hero = ({ currentSlide = 0, setCurrentSlide }) => {
                     {slide.title1} <span style={{ color: '#ffffff' }}>{slide.title11}</span> {slide.title2}.
                   </h1>
                   <div className="h-0.5 bg-white w-full" />
-                  <p className="text-xs sm:text-sm font-normal">{slide.description}</p>
+                  <p className="text-lg sm:text-sm font-normal">{slide.description}</p>
 
                   <div>
                     <button

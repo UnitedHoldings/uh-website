@@ -10,17 +10,15 @@ function Agent() {
     <div className="py-4 ">
       <div className="font-outfit max-w-[1400px]  px-2 mx-auto  lg:px-0 w-full space-y-6 sm:space-y-8 text-white">
         <div className=" mx-auto">
-          <div className="flex flex-col gap-2  mb-8 ">
+          <div className="flex flex-col gap-2  mb-16 ">
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center">
-              <div className="flex  flex-col md:flex-row md:items-center ">
-                <div className="text-xl text-[#9b1c20] sm:text-2xl min-w-xs font-semibold ">
-                  <p>Speak to an Officer</p>
-                </div>
-                <div className="text-xl sm:text-2xl md:text-3xl max-w-3xl">
-                  <p className='text-[#9b1c20]'>
-                    <span className="text-[#9b1c20] font-light">Connect</span> with one of our officers to explore tailored solutions.
-                  </p>
-                </div>
+              <div className="flex flex-col gap-4">
+                <h3 className="text-2xl md:text-3xl font-bold text-[#9b1c20] mb-2 font-outfit">
+                  Speak to an Officer
+                </h3>
+                <p className="text-gray-600 max-w-2xl text-lg lg:text-xl">
+                  Connect with one of our officers to explore tailored solutions.
+                </p>
               </div>
             </div>
           </div>
@@ -72,7 +70,7 @@ function Agent() {
                 </ul>
                 <div className="flex flex-wrap items-center gap-4 sm:gap-6">
                   <div className="flex sm:flex-col lg:flex-row  items-center gap-4">
-                    <div className="flex items-center gap-2">
+                    <div className="flex  justify-start items-center gap-2">
                       <SlPhone className="text-sm sm:text-base hover:underline transition duration-150 ease-in-out text-white" />
                       <a
                         href="tel:8001010"
@@ -81,12 +79,7 @@ function Agent() {
                         800 1010
                       </a>
                       <span className="text-white hidden sm:inline">|</span>
-                      <a
-                        href="tel:+26825086000"
-                        className="font-semibold text-sm sm:text-base text-white hover:underline transition hover:text-[#F7941D]"
-                      >
-                        (+268) 2508 6000
-                      </a>
+
                     </div>
                     <div className="flex items-center gap-2">
                       <SlEnvolope className="text-sm sm:text-base hover:underline transition duration-150 ease-in-out text-white" />

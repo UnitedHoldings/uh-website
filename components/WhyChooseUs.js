@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { FaShieldAlt, FaHandshake, FaGlobeAfrica } from 'react-icons/fa';
 import { SlStar } from 'react-icons/sl';
-import { BsChevronLeft, BsChevronRight } from 'react-icons/bs';
+import { BsChevronLeft, BsChevronRight, BsFillStarFill } from 'react-icons/bs';
 
 // Constants
 const AUTO_PLAY_INTERVAL = 5000;
@@ -80,7 +80,7 @@ const StarRating = ({ rating }) => {
   return (
     <div className="flex items-center space-x-1" aria-label={`Rating: ${rating} out of ${MAX_STARS} stars`}>
       {[...Array(fullStars)].map((_, i) => (
-        <SlStar key={`full-${i}`} className="text-[#F9AF55] fill-current" />
+        <BsFillStarFill key={`full-${i}`} className="text-[#F9AF55] fill-current" />
       ))}
       {hasHalfStar && <SlStar className="text-[#F9AF55] fill-current" />}
       {[...Array(emptyStars)].map((_, i) => (
@@ -111,12 +111,12 @@ const ReviewCard = ({ review, variant = 'center' }) => {
           {review.name.charAt(0)}
         </div>
         <div className="flex-1">
-          <h4 className="font-semibold text-gray-900 text-base sm:text-lg">{review.name}</h4>
+          <h4 className="font-semibold text-gray-900 text-lg sm:text-lg">{review.name}</h4>
           <p className="text-xs sm:text-sm text-gray-600">{review.role}</p>
           <StarRating rating={review.rating} />
         </div>
       </div>
-      <p className="text-gray-700 leading-relaxed italic text-sm sm:text-base">&quot;{review.content}&quot;</p>
+      <p className="text-gray-700 leading-relaxed italic text-lg sm:text-base">&quot;{review.content}&quot;</p>
     </div>
   );
 };
@@ -125,7 +125,7 @@ const ReasonCard = ({ title, content, icon }) => (
   <div className="bg-[#9b1c20] rounded-2xl p-4 sm:p-6 border border-gray-100 transition- duration-300 flex flex-col items-start">
     <div className='bg-white mb-8 flex items-center justify-center pt-1 rounded-full h-16 w-16'>{icon}</div>
     <h3 className="text-lg sm:text-xl font-semibold text-white  mb-4 font-outfit">{title}</h3>
-    <p className="text-white/80 font-light text-sm sm:text-base leading-relaxed">{content}</p>
+    <p className="text-white/80 font-light text-lg sm:text-base leading-relaxed">{content}</p>
   </div>
 );
 
@@ -182,7 +182,7 @@ const ReviewsCarousel = () => {
             </div>
           </div>
 
-          
+
         </div>
 
         <div className="flex justify-center items-center space-x-4 mb-4 sm:mb-6">
@@ -242,26 +242,23 @@ const WhyChooseUs = () => (
     <div className="max-w-[1400px] mx-auto px-4 lg:px-0 w-full">
       <div className="flex flex-col gap-6 sm:gap-8 md:gap-16 mb-8 sm:mb-12 md:mb-16">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center">
-          <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-8">
-            <div className="text-xl sm:text-2xl min-w-xs text-[#9b1c20] font-semibold ">
-              <p>Choose <span className="">United Holdings</span></p>
-            </div>
-            <div className="text-xl sm:text-2xl md:text-3xl max-w-3xl text-[#9b1c20]">
-              <p>
-                <span className="text-[#9b1c20] font-light">Discover why thousands of Swazis </span>
-                trust us with their insurance and financial needs.
-              </p>
-            </div>
+          <div className="flex flex-col gap-4">
+            <h3 className="text-2xl md:text-3xl font-bold text-[#9b1c20] mb-2 font-outfit">
+              Choose United Holdings
+            </h3>
+            <p className="text-gray-600 max-w-2xl text-lg lg:text-xl">
+              Discover why thousands of Swazis trust us with their insurance and financial needs.
+            </p>
           </div>
         </div>
       </div>
 
       <div className=" flex flex-col items-center">
-        <div className="space-y-2 grid grid-cols-1 lg:grid-cols-3 gap-6 mb-4">
+        <div className="space-y-2 grid grid-cols-1 lg:grid-cols-3 gap-2 lg:gap-4 mb-4">
           {reasonsData.map((reason, index) => (
             <ReasonCard key={index} title={reason.title} content={reason.content} icon={reason.icon} />
           ))}
-          
+
         </div>
         <ReviewsCarousel />
       </div>
