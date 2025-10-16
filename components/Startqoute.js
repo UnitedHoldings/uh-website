@@ -278,7 +278,7 @@ export default function StartQuote() {
                 <div className="border-t border-gray-200 p-6 bg-gray-50 rounded-b-2xl">
                     <div className="text-center">
                         <p className="text-gray-600 mb-4">
-                            Can't find what you're looking for? Contact us for personalized assistance.
+                            Can&lsquo;t find what you&lsquo;re looking for? Contact us for personalized assistance.
                         </p>
                         <Link
                             href="/contact"
