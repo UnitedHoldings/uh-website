@@ -510,15 +510,7 @@ function Products() {
                 </div>
 
                 {/* CTA Section */}
-                <div className="text-center pt-8">
-                    <Link
-                        href="/products"
-                        className="inline-flex items-center gap-3 px-8 py-4 bg-[#9b1c20] text-white rounded-xl font-semibold text-lg hover:bg-[#881a1e] transition-all duration-300 -lg hover:-xl hover:scale-105"
-                    >
-                        View All Products
-                        <BsArrowRight className="text-xl" />
-                    </Link>
-                </div>
+             
             </div>
         </div>
     );
