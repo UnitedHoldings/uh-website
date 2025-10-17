@@ -180,7 +180,7 @@ export default function UnitedGeneralInsurance() {
     };
 
     return (
-        <div className="min-h-screen bg-[#9b1c20] font-outfit">
+        <div className="min-h-screen  font-outfit">
             {/* Header with Background Image */}
             <div className='bg-[#204f61] h-2 w-full' />
             <div className='relative bg-[#286278] py-16 md:py-24 min-h-[500px] flex items-center'>

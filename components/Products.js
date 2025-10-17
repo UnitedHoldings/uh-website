@@ -1,11 +1,11 @@
 "use client"
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useRef, useEffect, useState } from 'react';
-import { 
-    BsArrowRight, 
-    BsChevronLeft, 
-    BsChevronRight, 
+import React, { useState } from 'react';
+import Carousel from 'react-multi-carousel';
+import 'react-multi-carousel/lib/styles.css';
+import {
+    BsArrowRight,
     BsShieldCheck,
     BsHeart,
     BsCash,
@@ -14,7 +14,7 @@ import {
     BsPeople,
     BsGraphUp
 } from 'react-icons/bs';
-import { 
+import {
     PiCar,
     PiGavel,
     PiUsersThree,
@@ -27,8 +27,8 @@ import {
 // Enhanced product data with balanced distribution
 const productData = [
     // ULA Products (4)
-    { 
-        title: 'Family Funeral Plan', 
+    {
+        title: 'Family Funeral Plan',
         desc: 'Comprehensive funeral coverage for your entire family with quick claims processing and flexible payment terms. Protect your loved ones during difficult times.',
         img: '/family.jpg',
         company: 'ULA',
@@ -38,8 +38,8 @@ const productData = [
         color: '#3d834d',
         bgColor: '#3d834d'
     },
-    { 
-        title: 'Individual Funeral Plan', 
+    {
+        title: 'Individual Funeral Plan',
         desc: 'Personalized funeral coverage with fast payouts and premium flexibility. Ensure your final journey is handled with dignity and care.',
         img: '/individual-funeral.jpg',
         company: 'ULA',
@@ -49,8 +49,8 @@ const productData = [
         color: '#3d834d',
         bgColor: '#3d834d'
     },
-    { 
-        title: 'Credit Life', 
+    {
+        title: 'Credit Life',
         desc: 'Protect your loans and family by covering repayments in case of death or disability. Peace of mind for borrowers across Eswatini.',
         img: '/credit-life.jpg',
         company: 'ULA',
@@ -60,8 +60,8 @@ const productData = [
         color: '#3d834d',
         bgColor: '#3d834d'
     },
-    { 
-        title: 'Group Life', 
+    {
+        title: 'Group Life',
         desc: 'Comprehensive life coverage for employee groups with employer-backed benefits and quick payouts. Protect your team\'s future.',
         img: '/group-life.jpg',
         company: 'ULA',
@@ -71,10 +71,10 @@ const productData = [
         color: '#3d834d',
         bgColor: '#3d834d'
     },
-    
+
     // UGI Products (4)
-    { 
-        title: 'Motor Insurance', 
+    {
+        title: 'Motor Insurance',
         desc: 'Comprehensive vehicle protection with options for third-party, fire & theft, or full comprehensive coverage. Drive with total confidence.',
         img: '/motor.jpg',
         company: 'UGI',
@@ -82,10 +82,10 @@ const productData = [
         stats: ['From E200/month', '3 Coverage Options', '24/7 Support'],
         link: '/products/motor-insurance',
         color: '#9b1c20',
-        bgColor: '#9b1c20'
+        bgColor: '#286278'
     },
-    { 
-        title: 'Home Insurance', 
+    {
+        title: 'Home Insurance',
         desc: 'Complete protection for your home and belongings against theft, natural disasters, and accidental damage. Protect what matters most.',
         img: '/home-contents.jpg',
         company: 'UGI',
@@ -93,10 +93,10 @@ const productData = [
         stats: ['From E100/month', 'Full Protection', 'Quick Claims'],
         link: '/products/home-contents-insurance',
         color: '#9b1c20',
-        bgColor: '#9b1c20'
+        bgColor: '#286278'
     },
-    { 
-        title: 'Legal Insurance', 
+    {
+        title: 'Legal Insurance',
         desc: 'Expert legal protection covering civil, criminal, and labor disputes. Access to professional legal counsel and representation.',
         img: '/legal.jpg',
         company: 'UGI',
@@ -104,10 +104,10 @@ const productData = [
         stats: ['From E50/month', 'Legal Representation', 'Nationwide'],
         link: '/products/legal-insurance',
         color: '#9b1c20',
-        bgColor: '#9b1c20'
+        bgColor: '#286278'
     },
-    { 
-        title: 'Personal Accident', 
+    {
+        title: 'Personal Accident',
         desc: 'Financial security against unexpected accidents with lump-sum payouts for injuries, disabilities, or death. Secure your future.',
         img: '/personal-accident.jpg',
         company: 'UGI',
@@ -115,12 +115,12 @@ const productData = [
         stats: ['From E30/month', 'Accident Cover', 'Income Protection'],
         link: '/products/personal-accident-insurance',
         color: '#9b1c20',
-        bgColor: '#9b1c20'
+        bgColor: '#286278'
     },
-    
+
     // UP Products (2)
-    { 
-        title: 'Micro Loans', 
+    {
+        title: 'Micro Loans',
         desc: 'Fast, accessible financial solutions up to E50,000 with flexible repayment terms. Quick cash for life\'s unexpected moments.',
         img: '/loan.jpg',
         company: 'UP',
@@ -130,8 +130,8 @@ const productData = [
         color: '#f79620',
         bgColor: '#f79620'
     },
-    { 
-        title: 'Govt Employee Loans', 
+    {
+        title: 'Govt Employee Loans',
         desc: 'Specialized financial solutions for government employees with higher limits and favorable terms. Secure funding tailored for public servants.',
         img: '/civil-servant-loan.jpg',
         company: 'UP',
@@ -153,35 +153,28 @@ const shuffleArray = (array) => {
     return shuffled;
 };
 
-const CompanyBadge = ({ company, color }) => (
-    <div 
-        className="absolute top-4 left-4 z-10 px-3 py-1 rounded-full bg-white/20 backdrop-blur-sm text-white text-xs font-semibold -lg border border-white/30"
-    >
-        {company}
-    </div>
-);
-
 const ProductCard = ({ title, desc, img, company, icon, stats, link, color, bgColor }) => (
-    <Link href={link} className="block group h-full">
-        <div 
-            className="rounded-xl hover:-2xl relative bg-[#9b1c20] flex flex-col h-full cursor-pointer transition-all duration-500 overflow-hidden"
-            
+    <Link href={link} className="block group h-full px-2">
+        <div
+            className="rounded-t-xl rounded-b-[18rem] hover:-2xl relative flex flex-col h-full cursor-pointer transition-all duration-500 overflow-hidden"
+            style={{ backgroundColor: bgColor }}
         >
-          
             {/* Image Container with Overlay */}
             <div className="h-48 relative overflow-hidden">
                 <Image
                     src={img}
                     alt={title}
                     fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-110"
+                    className="object-cover rounded-t-xl transition-transform duration-700 group-hover:scale-110"
                 />
-                <div className="absolute inset-0 " />
-                
+
                 {/* Icon Overlay */}
                 <div className="absolute bottom-4 left-4 text-white">
                     <div className="flex items-center gap-2">
-                        <div className="p-2 rounded-lg bg-[#9b1c20] backdrop-blur-sm">
+                        <div 
+                            className="p-2 rounded-lg backdrop-blur-sm"
+                            style={{ backgroundColor: bgColor }}
+                        >
                             {icon}
                         </div>
                     </div>
@@ -189,34 +182,41 @@ const ProductCard = ({ title, desc, img, company, icon, stats, link, color, bgCo
             </div>
 
             {/* Content */}
-            <div className="flex flex-col p-6 flex-grow text-white">
-                <h3 className="text-xl font-bold mb-3 font-outfit group-hover:text-white transition-colors">
-                    {title}
-                </h3>
-                
-                <p className="text-white/90 text-lg line-clamp-4 h-10 leading-relaxed mb-4 flex-grow">
-                    {desc}
-                </p>
+            <div className="flex flex-col p-6 pb-0 flex-grow justify-between text-white" style={{ backgroundColor: bgColor }}>
+                <div className='space-y-6 mb-6'>
+                    <h3 className="text-xl text-center font-bold mb-3 font-outfit group-hover:text-white transition-colors">
+                        {title}
+                    </h3>
 
-                {/* Stats */}
-                <div className="flex flex-wrap gap-2 mb-4">
-                    {stats.map((stat, index) => (
-                        <span 
-                            key={index}
-                            className="px-3 py-1 rounded-full text-xs font-medium bg-white/20 backdrop-blur-sm text-white border border-white/30"
-                        >
-                            {stat}
-                        </span>
-                    ))}
+                    <p className="text-white/90 text-center text-lg line-clamp-4 h-20 leading-relaxed flex-grow">
+                        {desc}
+                    </p>
+
+                    {/* Stats */}
+                    <div className="flex flex-wrap gap-2 items-center justify-center">
+                        {stats.map((stat, index) => (
+                            <span
+                                key={index}
+                                className="px-3 py-1 rounded-full text-xs font-medium backdrop-blur-sm text-white border border-white/30"
+                            >
+                                {stat}
+                            </span>
+                        ))}
+                    </div>
                 </div>
 
                 {/* CTA */}
-                <div className="flex items-center justify-between pt-4 border-t border-white/30">
-                    <span className="text-sm font-semibold text-white">
+                <div 
+                    className="flex items-center justify-center hover:bg-white py-6 space-x-2 text-white hover:text-current border-t border-white/30 transition-all duration-300 group-hover:border-transparent"
+                    style={{ 
+                        '--hover-text-color': bgColor 
+                    }}
+                >
+                    <span className="text-sm font-semibold group-hover:text-[var(--hover-text-color)]">
                         Learn More
                     </span>
-                    <BsArrowRight 
-                        className="transition-transform duration-300 group-hover:translate-x-1 text-white" 
+                    <BsArrowRight
+                        className="transition-transform duration-300 group-hover:translate-x-1 group-hover:text-[var(--hover-text-color)]"
                     />
                 </div>
             </div>
@@ -227,171 +227,94 @@ const ProductCard = ({ title, desc, img, company, icon, stats, link, color, bgCo
     </Link>
 );
 
-function Products() {
-    const carouselRef = useRef(null);
-    const carouselTrackRef = useRef(null);
-    const [isBeginning, setIsBeginning] = useState(true);
-    const [isEnd, setIsEnd] = useState(false);
-    const [cardWidth, setCardWidth] = useState(0);
-    const [maxScroll, setMaxScroll] = useState(0);
-    const [currentPosition, setCurrentPosition] = useState(0);
-    const [activeIndex, setActiveIndex] = useState(0);
+// Custom arrow components
+const CustomLeftArrow = ({ onClick, ...rest }) => {
+    const {
+        onMove,
+        carouselState: { currentSlide, deviceType }
+    } = rest;
     
-    // Shuffle products on component mount
+    return (
+        <button
+            onClick={() => onClick()}
+            className="absolute left-0 z-10 p-3 rounded-xl border-2 border-[#9b1c20] text-[#9b1c20] hover:bg-[#9b1c20] hover:text-white transition-all duration-300 -lg hover:-xl bg-white"
+            aria-label="Previous products"
+        >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
+        </button>
+    );
+};
+
+const CustomRightArrow = ({ onClick, ...rest }) => {
+    const {
+        onMove,
+        carouselState: { currentSlide, deviceType }
+    } = rest;
+    
+    return (
+        <button
+            onClick={() => onClick()}
+            className="absolute right-0 z-10 p-3 rounded-xl border-2 border-[#9b1c20] text-[#9b1c20] hover:bg-[#9b1c20] hover:text-white transition-all duration-300 -lg hover:-xl bg-white"
+            aria-label="Next products"
+        >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+        </button>
+    );
+};
+
+function Products() {
     const [shuffledProducts] = useState(() => shuffleArray(productData));
 
-    // Calculate how many cards to show based on screen size
-    const getCardsToShow = () => {
-        if (typeof window === 'undefined') return 1;
-        const width = window.innerWidth;
-        if (width >= 1024) return 3.2; // Show 3.5 cards on desktop
-        if (width >= 768) return 2.2;  // Show 2.2 cards on tablet
-        return 1.2; // Show 1.2 cards on mobile
-    };
-
-    // Initialize carousel dimensions and controls
-    useEffect(() => {
-        if (!carouselTrackRef.current || !carouselRef.current) return;
-
-        const updateDimensions = () => {
-            const cards = carouselTrackRef.current.querySelectorAll('.product-card');
-            if (cards.length > 0) {
-                const containerWidth = carouselRef.current.offsetWidth;
-                const cardsToShow = getCardsToShow();
-                const gap = 24; // 24px from gap-6
-                
-                // Calculate card width based on container and number of cards to show
-                const newCardWidth = (containerWidth - (gap * (cardsToShow - 1))) / cardsToShow;
-                setCardWidth(newCardWidth);
-
-                // Update all card widths
-                cards.forEach(card => {
-                    card.style.width = `${newCardWidth}px`;
-                });
-
-                const trackWidth = carouselTrackRef.current.scrollWidth;
-                const newMaxScroll = trackWidth - containerWidth;
-                setMaxScroll(newMaxScroll);
-
-                // Update button states
-                setIsBeginning(currentPosition === 0);
-                setIsEnd(currentPosition >= newMaxScroll - 10);
-            }
-        };
-
-        // Initial update
-        updateDimensions();
-
-        // Update on window resize
-        window.addEventListener('resize', updateDimensions);
-
-        return () => {
-            window.removeEventListener('resize', updateDimensions);
-        };
-    }, [currentPosition, shuffledProducts.length]);
-
-    // Navigation functions
-    const scrollNext = () => {
-        if (carouselTrackRef.current && cardWidth > 0) {
-            const cardsToShow = getCardsToShow();
-            const scrollAmount = Math.floor(cardsToShow) * cardWidth;
-            const newPosition = Math.min(currentPosition + scrollAmount, maxScroll);
-            carouselTrackRef.current.style.transform = `translateX(-${newPosition}px)`;
-            setCurrentPosition(newPosition);
-            setIsBeginning(newPosition === 0);
-            setIsEnd(newPosition >= maxScroll - 10);
-            setActiveIndex(Math.min(activeIndex + Math.floor(cardsToShow), shuffledProducts.length - 1));
+    // Responsive configuration for react-multi-carousel
+    const responsive = {
+        superLargeDesktop: {
+            breakpoint: { max: 4000, min: 1400 },
+            items: 3,
+            partialVisibilityGutter: 0
+        },
+        desktop: {
+            breakpoint: { max: 1400, min: 1024 },
+            items: 3,
+            partialVisibilityGutter: 0
+        },
+        tablet: {
+            breakpoint: { max: 1024, min: 768 },
+            items: 2,
+            partialVisibilityGutter: 0
+        },
+        mobile: {
+            breakpoint: { max: 768, min: 0 },
+            items: 1,
+            partialVisibilityGutter: 30
         }
     };
 
-    const scrollPrev = () => {
-        if (carouselTrackRef.current && cardWidth > 0) {
-            const cardsToShow = getCardsToShow();
-            const scrollAmount = Math.floor(cardsToShow) * cardWidth;
-            const newPosition = Math.max(currentPosition - scrollAmount, 0);
-            carouselTrackRef.current.style.transform = `translateX(-${newPosition}px)`;
-            setCurrentPosition(newPosition);
-            setIsBeginning(newPosition === 0);
-            setIsEnd(newPosition >= maxScroll - 10);
-            setActiveIndex(Math.max(activeIndex - Math.floor(cardsToShow), 0));
-        }
+    // Custom dot component
+    const CustomDot = ({ onClick, ...rest }) => {
+        const {
+            onMove,
+            index,
+            active,
+            carouselState: { currentSlide, deviceType }
+        } = rest;
+        
+        return (
+            <button
+                className={`mx-1 w-3 h-3 rounded-full transition-all duration-300 ${
+                    active ? 'bg-[#9b1c20] w-8' : 'bg-gray-300 hover:bg-gray-400'
+                }`}
+                onClick={() => onClick()}
+            />
+        );
     };
-
-    // Auto-advance carousel
-    useEffect(() => {
-        const interval = setInterval(() => {
-            if (!isEnd) {
-                scrollNext();
-            } else {
-                // Reset to beginning
-                carouselTrackRef.current.style.transform = `translateX(0px)`;
-                setCurrentPosition(0);
-                setIsBeginning(true);
-                setIsEnd(false);
-                setActiveIndex(0);
-            }
-        }, 5000);
-
-        return () => clearInterval(interval);
-    }, [isEnd, currentPosition]);
-
-    // Touch handling for mobile
-    useEffect(() => {
-        if (!carouselTrackRef.current) return;
-
-        let startX = 0;
-        let scrollLeft = 0;
-        let isDown = false;
-
-        const carouselTrack = carouselTrackRef.current;
-
-        const handleTouchStart = (e) => {
-            isDown = true;
-            startX = e.type.includes('mouse') ? e.pageX : e.touches[0].pageX;
-            scrollLeft = currentPosition;
-        };
-
-        const handleTouchMove = (e) => {
-            if (!isDown) return;
-            e.preventDefault();
-            const x = e.type.includes('mouse') ? e.pageX : e.touches[0].pageX;
-            const walk = (x - startX) * 2;
-            const newPosition = Math.max(0, Math.min(maxScroll, scrollLeft - walk));
-
-            carouselTrack.style.transform = `translateX(-${newPosition}px)`;
-            setCurrentPosition(newPosition);
-            setIsBeginning(newPosition === 0);
-            setIsEnd(newPosition >= maxScroll - 10);
-        };
-
-        const handleTouchEnd = () => {
-            isDown = false;
-        };
-
-        carouselTrack.addEventListener('mousedown', handleTouchStart);
-        carouselTrack.addEventListener('touchstart', handleTouchStart);
-        carouselTrack.addEventListener('mousemove', handleTouchMove);
-        carouselTrack.addEventListener('touchmove', handleTouchMove);
-        carouselTrack.addEventListener('mouseup', handleTouchEnd);
-        carouselTrack.addEventListener('touchend', handleTouchEnd);
-        carouselTrack.addEventListener('mouseleave', handleTouchEnd);
-
-        return () => {
-            carouselTrack.removeEventListener('mousedown', handleTouchStart);
-            carouselTrack.removeEventListener('touchstart', handleTouchStart);
-            carouselTrack.removeEventListener('mousemove', handleTouchMove);
-            carouselTrack.removeEventListener('touchmove', handleTouchMove);
-            carouselTrack.removeEventListener('mouseup', handleTouchEnd);
-            carouselTrack.removeEventListener('touchend', handleTouchEnd);
-            carouselTrack.removeEventListener('mouseleave', handleTouchEnd);
-        };
-    }, [currentPosition, maxScroll]);
 
     return (
-        <div className='py-16'>
-            <div className="font-outfit max-w-[1400px] mx-auto px-4 lg:p-0  w-full space-y-12 overflow-hidden">
-               
-
+        <div className=''>
+            <div className="font-outfit max-w-[1400px] mx-auto px-4 lg:p-0 w-full space-y-12 ">
                 {/* Carousel Section */}
                 <div className="flex flex-col gap-8">
                     <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
@@ -400,127 +323,48 @@ function Products() {
                                 Featured Products
                             </h3>
                             <p className="text-gray-600 max-w-2xl text-lg lg:text-xl">
-                                Explore our range of innovative solutions from United General Insurance, 
+                                Explore our range of innovative solutions from United General Insurance,
                                 United Life Assurance, and United Pay.
                             </p>
                         </div>
-
-                        {/* Navigation and Indicators */}
-                        <div className="flex items-center gap-6">
-                            {/* Progress Indicators */}
-                            <div className="hidden md:flex items-center gap-2">
-                                {shuffledProducts.map((_, idx) => (
-                                    <button
-                                        key={idx}
-                                        onClick={() => {
-                                            const cardsToShow = getCardsToShow();
-                                            const scrollAmount = Math.floor(cardsToShow) * cardWidth;
-                                            const newPosition = Math.min(idx * scrollAmount, maxScroll);
-                                            carouselTrackRef.current.style.transform = `translateX(-${newPosition}px)`;
-                                            setCurrentPosition(newPosition);
-                                            setActiveIndex(idx);
-                                            setIsBeginning(newPosition === 0);
-                                            setIsEnd(newPosition >= maxScroll - 10);
-                                        }}
-                                        className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                                            Math.floor(activeIndex / Math.floor(getCardsToShow())) === idx 
-                                                ? 'bg-[#9b1c20] w-8' 
-                                                : 'bg-gray-300 hover:bg-gray-400'
-                                        }`}
-                                    />
-                                ))}
-                            </div>
-
-                            {/* Navigation buttons */}
-                            <div className="flex gap-3">
-                                <button
-                                    onClick={scrollPrev}
-                                    disabled={isBeginning}
-                                    className={`p-3 rounded-xl border-2 transition-all duration-300 ${
-                                        isBeginning 
-                                            ? 'text-gray-300 border-gray-200 cursor-not-allowed' 
-                                            : 'text-[#9b1c20] border-[#9b1c20] hover:bg-[#9b1c20] hover:text-white -lg hover:-xl'
-                                    }`}
-                                    aria-label="Previous products"
-                                >
-                                    <BsChevronLeft className="text-lg" />
-                                </button>
-                                <button
-                                    onClick={scrollNext}
-                                    disabled={isEnd}
-                                    className={`p-3 rounded-xl border-2 transition-all duration-300 ${
-                                        isEnd 
-                                            ? 'text-gray-300 border-gray-200 cursor-not-allowed' 
-                                            : 'text-[#9b1c20] border-[#9b1c20] hover:bg-[#9b1c20] hover:text-white -lg hover:-xl'
-                                    }`}
-                                    aria-label="Next products"
-                                >
-                                    <BsChevronRight className="text-lg" />
-                                </button>
-                            </div>
-                        </div>
                     </div>
 
-                    {/* Carousel Container */}
-                    <div ref={carouselRef} className="relative overflow-hidden py-2">
-                        <div
-                            ref={carouselTrackRef}
-                            className="flex gap-6 w-max touch-pan-x transition-transform duration-500 ease-out"
-                            style={{ transform: `translateX(-${currentPosition}px)` }}
+                    {/* React Multi Carousel */}
+                    <div className="relative py-2 gap-4">
+                        <Carousel
+                            responsive={responsive}
+                            infinite={true}
+                            autoPlaySpeed={5000}
+                            keyBoardControl={true}
+                            customTransition="transform 500ms ease-in-out"
+                            transitionDuration={500}
+                            containerClass="carousel-container"
+                            itemClass="carousel-item-padding-60-px"
+                            arrows={true}
+                            customLeftArrow={<CustomLeftArrow />}
+                            customRightArrow={<CustomRightArrow />}
+                            showDots={true}
+                            autoPlay={true}
+                            customDot={<CustomDot />}
+                            dotListClass="custom-dot-list"
+                            partialVisible={true}
+                            removeArrowOnDeviceType={['mobile']}
+                            rewind={false}
+                            rewindWithAnimation={false}
+                            rtl={false}
+                            shouldResetAutoplay={true}
+                            slidesToSlide={1}
+                            swipeable={true}
+                            draggable={true}
                         >
                             {shuffledProducts.map((product, idx) => (
-                                <div 
-                                    key={idx} 
-                                    className="product-card h-[520px] flex-shrink-0"
-                                    // Width will be set dynamically in useEffect
-                                >
+                                <div key={idx} className="h-[520px]">
                                     <ProductCard {...product} />
                                 </div>
                             ))}
-                        </div>
-                    </div>
-
-                    {/* Mobile Navigation */}
-                    <div className="flex md:hidden justify-center items-center gap-4">
-                        <div className="flex items-center gap-2 mr-4">
-                            {shuffledProducts.map((_, idx) => (
-                                <div
-                                    key={idx}
-                                    className={`w-2 h-2 rounded-full transition-all ${
-                                        Math.floor(activeIndex / Math.floor(getCardsToShow())) === idx 
-                                            ? 'bg-[#9b1c20]' 
-                                            : 'bg-gray-300'
-                                    }`}
-                                />
-                            ))}
-                        </div>
-                        <button
-                            onClick={scrollPrev}
-                            disabled={isBeginning}
-                            className={`p-3 rounded-xl border-2 ${
-                                isBeginning 
-                                    ? 'text-gray-300 border-gray-200' 
-                                    : 'text-[#9b1c20] border-[#9b1c20]'
-                            }`}
-                        >
-                            <BsChevronLeft />
-                        </button>
-                        <button
-                            onClick={scrollNext}
-                            disabled={isEnd}
-                            className={`p-3 rounded-xl border-2 ${
-                                isEnd 
-                                    ? 'text-gray-300 border-gray-200' 
-                                    : 'text-[#9b1c20] border-[#9b1c20]'
-                            }`}
-                        >
-                            <BsChevronRight />
-                        </button>
+                        </Carousel>
                     </div>
                 </div>
-
-                {/* CTA Section */}
-             
             </div>
         </div>
     );

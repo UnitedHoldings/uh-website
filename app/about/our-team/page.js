@@ -9,8 +9,6 @@ export default function Team() {
       title: "Executive Chairman",
       bio: "MR. De Sousa is the Executive Chairman of United Holdings Ltd. He is also the founding Chairman of the Group's Think-tank and Special Projects Committees. He took over the running of the Dups business in 1996 and was the Founding Managing Director and Executive Chairman of Dups Insurance.",
       image: "/philip-de-sousa.jpeg",
-      email: "philip.desousa@unitedholdings.co.sz",
-      phone: "+268 7600 0001",
       linkedin: "https://linkedin.com/in/philip-de-sousa"
     },
     {
@@ -19,8 +17,6 @@ export default function Team() {
       title: "Group Chief Executive Officer",
       bio: "Group Chief Executive Officer Mrs. De Sousa is a University of Eswatini Alumnus holding a BSc. Bio/Geo, Post Graduate Certificate, CoP Short Term Insurance, and various other qualifications. She started as an administrator at Dups Insurance in 2001 and progressed to CEO in 2011.",
       image: "/Nelisiwe De Sousa.jpeg",
-      email: "nelisiwe.desousa@unitedholdings.co.sz",
-      phone: "+268 7600 0002",
       linkedin: "https://linkedin.com/in/nelisiwe-de-sousa"
     },
     {
@@ -29,8 +25,6 @@ export default function Team() {
       title: "Technical Advisor",
       bio: "Mr Magagula is the Technical Advisor at United Holdings Ltd focusing on the policies and legislature framework of the companies in the subsidy. He offers oversight in the Risk, Legal and Compliance division as well as the necessary network in the industry.",
       image: "/Zombodze Magagula.jpeg",
-      email: "zombodze.magagula@unitedholdings.co.sz",
-      phone: "+268 7600 0003",
       linkedin: "https://linkedin.com/in/zombodze-magagula"
     },
     {
@@ -39,8 +33,6 @@ export default function Team() {
       title: "Group General Manager Finance",
       bio: "Mr Magagula is the Group General Manager Finance. He previously oversaw the financial function of the group and held the role of an Audit Manager at PKF Chartered Accountant Swaziland before joining the Group.",
       image: "/Mlamuli Magagula.jpeg",
-      email: "mlamuli.magagula@unitedholdings.co.sz",
-      phone: "+268 7600 0004",
       linkedin: "https://linkedin.com/in/mlamuli-magagula"
     },
     {
@@ -49,8 +41,6 @@ export default function Team() {
       title: "General Manager Operations",
       bio: "Mr. Msibi is the General Manager Operations at United Holdings, with over 19 years of extensive experience in the insurance industry. He began his journey as a retail broker after earning a Bachelor's Degree in Accounting from the University of Eswatini.",
       image: "/Witness Msibi (GM Ops).jpg",
-      email: "witness.msibi@unitedholdings.co.sz",
-      phone: "+268 7600 0005",
       linkedin: "https://linkedin.com/in/witness-msibi"
     },
     {
@@ -59,8 +49,6 @@ export default function Team() {
       title: "Group Company Secretary & Legal",
       bio: "Mrs. W. Sibandze is an experienced legal and compliance professional with expertise in corporate governance, regulatory compliance, and risk management. She currently serves as Company Secretary & Legal at United Holdings.",
       image: "/Winile Sibandze (Group Secretary & Legal).jpg",
-      email: "winile.sibandze@unitedholdings.co.sz",
-      phone: "+268 7600 0006",
       linkedin: "https://linkedin.com/in/winile-sibandze"
     }
   ];
@@ -72,8 +60,6 @@ export default function Team() {
       title: "United Life Assurance Operations Manager",
       bio: "Sihle Dlamini is the Operations Manager at United Life Assurance, responsible for overseeing daily operations and ensuring high-quality service delivery. Since joining the company in 2018 as a Branch Controller, he has progressed through various leadership roles.",
       image: "/Sihle Dlamini (ULA Ops).jpg",
-      email: "sihle.dlamini@unitedholdings.co.sz",
-      phone: "+268 7600 0007",
       linkedin: "https://linkedin.com/in/sihle-dlamini"
     },
     {
@@ -82,8 +68,6 @@ export default function Team() {
       title: "United Pay Operations Manager",
       bio: "Sebenele M. Zwane is an experienced Operations Manager with a strong background in financial services, spanning insurance, credit, lending, and investment advisory. Currently leading operations at United Pay Ltd.",
       image: "/Sebenele Zwane.jpeg",
-      email: "sebenele.zwane@unitedholdings.co.sz",
-      phone: "+268 7600 0008",
       linkedin: "https://linkedin.com/in/sebenele-zwane"
     },
     {
@@ -92,8 +76,6 @@ export default function Team() {
       title: "United General Insurance Operations Manager",
       bio: "Mr. Gundani is a seasoned insurance professional with a Master's in Business Administration and a Bachelor of Commerce Honours Degree in Insurance and Risk Management from Midlands State University.",
       image: "/Lovemore Gundani (UGI Ops Man).jpeg",
-      email: "lovemore.gundani@unitedholdings.co.sz",
-      phone: "+268 7600 0009",
       linkedin: "https://linkedin.com/in/lovemore-gundani"
     }
   ];
@@ -105,8 +87,6 @@ export default function Team() {
       title: "Group Corporate Affairs Manager",
       bio: "Roison Daniel Pave is a seasoned executive with over 12 years of expertise in Human Capital Management, Corporate Governance, and organizational leadership across diverse sectors.",
       image: "/Roison Pave (GM Corporate Affairs).jpg",
-      email: "roison.pave@unitedholdings.co.sz",
-      phone: "+268 7600 0017",
       linkedin: "https://linkedin.com/in/roison-pave"
     },
     {
@@ -115,8 +95,6 @@ export default function Team() {
       title: "Corporate Sales Manager",
       bio: "Corporate Sales & Retention Manager Ms. Ngwenya is a Regent Business school Alumnus from South Africa, holding a Degree in Business Management, Certificate of Proficiency (COP) in insurance and AAT 11.",
       image: "/Lungile Ngwenya (Corporate Sales Manager).jpeg",
-      email: "lungile.ngwenya@unitedholdings.co.sz",
-      phone: "+268 7600 0010",
       linkedin: "https://linkedin.com/in/lungile-ngwenya"
     },
     {
@@ -125,8 +103,6 @@ export default function Team() {
       title: "Group ICT Manager",
       bio: "Mr. Justice Dlamini serves as the Group ICT Manager. He holds a Bachelor's Degree in Information Technology from the University of Eswatini, as well as an Associate Degree in Business Information Technology from Limkokwing University.",
       image: "/Justice Dlamini (IT Manager).jpg",
-      email: "justice.dlamini@unitedholdings.co.sz",
-      phone: "+268 7600 0011",
       linkedin: "https://linkedin.com/in/justice-dlamini"
     },
     {
@@ -135,8 +111,6 @@ export default function Team() {
       title: "Group Internal Audit Manager",
       bio: "Mr. S. Simelane is a Certified Internal Auditor and risk management professional with over 20 years of experience in internal auditing, banking, insurance, compliance, and enterprise risk management.",
       image: "/Simeon Simelane (GIAM).jpeg",
-      email: "simeon.simelane@unitedholdings.co.sz",
-      phone: "+268 7600 0012",
       linkedin: "https://linkedin.com/in/simeon-simelane"
     },
     {
@@ -145,8 +119,6 @@ export default function Team() {
       title: "Group Marketing Manager",
       bio: "Ms. T. Dlamini is a seasoned marketing professional with academic qualifications in marketing and management from Monash University and the University of the Witwatersrand.",
       image: "/Temahlubi Dlamini (Group Marketing Manager) (1).jpg",
-      email: "temahlubi.dlamini@unitedholdings.co.sz",
-      phone: "+268 7600 0013",
       linkedin: "https://linkedin.com/in/temahlubi-dlamini"
     },
     {
@@ -155,8 +127,6 @@ export default function Team() {
       title: "Group Risk & Compliance Manager",
       bio: "Ms. S. Dlamini is a legal and risk management professional with experience spanning compliance oversight, enterprise risk assessment, and legal advisory services.",
       image: "/team/siphesihle-dlamini.jpg",
-      email: "siphesihle.dlamini@unitedholdings.co.sz",
-      phone: "+268 7600 0014",
       linkedin: "https://linkedin.com/in/siphesihle-dlamini"
     },
     {
@@ -165,8 +135,6 @@ export default function Team() {
       title: "Finance Manager",
       bio: "Mr. P. Maseko serves as the Finance Manager at United Holdings, bringing over 15 years of experience in financial management, auditing, and strategic operations.",
       image: "/Peter Maseko (Finance Manager).jpg",
-      email: "peter.maseko@unitedholdings.co.sz",
-      phone: "+268 7600 0015",
       linkedin: "https://linkedin.com/in/peter-maseko"
     },
     {
@@ -175,69 +143,59 @@ export default function Team() {
       title: "Retail Sales Manager",
       bio: "Ms. Nxumalo is an Institute of Marketing Management Graduate School (IMM GS) alumnus holding a BBA in Marketing Management, Diploma in Law from University of Eswatini.",
       image: "/Nozwelethu Nxumalo (Retail Sales Manager).jpg",
-      email: "nozwelethu.nxumalo@unitedholdings.co.sz",
-      phone: "+268 7600 0016",
       linkedin: "https://linkedin.com/in/nozwelethu-nxumalo"
     },
-
   ];
 
-  // Team Card Component for consistent styling
+  // New Oval Team Card Component
   const TeamCard = ({ member }) => (
-    <div className="bg-[#9b1c20] rounded-xl flex flex-col md:flex-row lg:flex-row hover:-xl transition-all duration-300 overflow-hidden group border border-gray-100 h-full">
-      <div className="relative min-h-[350px] h-full  min-w-[40%]   bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
-        <Image
-          src={member.image}
-          alt={member.name}
-          width={300}
-          height={300}
-          quality={100}
-          className="w-full h-full object-cover"
-          priority
-        />
-      </div>
-      <div className="p-6  flex flex-col justify-between">
-        <div className="mb-4">
-          <h3 className="text-2xl font-semibold text-gray-100">{member.name}</h3>
-          <div className='flex-wrap flex'>
-            <p className=" text-sm mt-1 px-4 rounded-full bg-white text-[#9b1c20] py-1">{member.title}</p>
-
-          </div>
+    <div className="bg-white rounded-3xl rounded-b-[9999px] hover:border-2  transition-all duration-100 group cursor-pointer overflow-hidden relative h-full flex flex-col">
+      {/* Image Container with Oval Shape */}
+      <div className="relative h-[500px] overflow-hidden">
+        <div className="absolute inset-0 rounded-b-[9999px] rounded-t-3xl overflow-hidden">
+          <Image
+            src={member.image}
+            alt={member.name}
+            width={1080}
+            height={1080}
+            quality={100}
+        
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+            priority
+          />
+          {/* Gradient Overlay for Name & Title */}
+          <div className="absolute  bg-gradient-to-t h-40 w-full -bottom-1 z-30 transition-all duration-500 ease-in-out group-hover:hidden text-white group-hover:via-white group-hover:to-white from-[#9b1c20] via-[#9b1c20] 80 to-transparent rounded-b-[9999px] rounded-t-3xl" />
         </div>
-        <p className="text-gray-100 text-base leading-relaxed mb-4 line-clamp-4">
-          {member.bio}
-        </p>
+        
+        {/* Name and Title Overlay */}
+        <div className="absolute z-50 bottom-[15%] left-0 right-0 text-center px-4">
+          <h3 className="text-2xl font-semibold text-white mb-1">{member.name}</h3>
+          <p className="text-lg text-gray-200 group-hover:text-white">{member.title}</p>
+        </div>
+      </div>
 
-        <div className="border-t border-gray-200/20 pt-4 mt-auto">
-          <div className="flex flex-col space-y-3">
-            <div className="flex items-center space-x-3">
-              <svg className="w-4 h-4 text-gray-100 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
-                <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
-              </svg>
-              <a href={`mailto:${member.email}`} className="text-sm text-gray-100 hover:text-gray-300 transition-colors truncate">
-                {member.email}
-              </a>
-            </div>
-
-            <div className="flex items-center space-x-3">
-              <svg className="w-4 h-4 text-gray-100 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
-              </svg>
-              <a href={`tel:${member.phone}`} className="text-sm text-gray-100 hover:text-gray-300 transition-colors">
-                {member.phone}
-              </a>
-            </div>
-
-            <div className="flex items-center space-x-3">
-              <svg className="w-4 h-4 text-gray-100 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M16.338 16.338H13.67V12.16c0-.995-.017-2.277-1.387-2.277-1.39 0-1.601 1.086-1.601 2.207v4.248H8.014v-8.59h2.559v1.174h.037c.356-.675 1.227-1.387 2.526-1.387 2.703 0 3.203 1.778 3.203 4.092v4.711zM5.005 6.575a1.548 1.548 0 11-.003-3.096 1.548 1.548 0 01.003 3.096zm-1.337 9.763H6.34v-8.59H3.667v8.59zM17.668 1H2.328C1.595 1 1 1.581 1 2.298v15.403C1 18.418 1.595 19 2.328 19h15.34c.734 0 1.332-.582 1.332-1.299V2.298C19 1.581 18.402 1 17.668 1z" />
-              </svg>
-              <a href={member.linkedin} target="_blank" rel="noopener noreferrer" className="text-sm text-gray-100 hover:text-gray-300 transition-colors">
-                Connect on LinkedIn
-              </a>
-            </div>
-          </div>
+      {/* Hover Content - Bio and LinkedIn */}
+      <div className="absolute inset-0 bg-white rounded-3xl p-6 opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col justify-between transform translate-y-2 group-hover:translate-y-0">
+        <div>
+          <h3 className="text-3xl font-bold text-gray-900 mb-2 text-center">{member.name}</h3>
+          <p className="text-sm text-[#9b1c20] font-medium mb-4 text-center">{member.title}</p>
+          <p className="text-gray-600 text-lg leading-relaxed ">
+            {member.bio}
+          </p>
+        </div>
+        
+        {/* LinkedIn Icon */}
+        <div className="flex justify-center pt-4">
+          <a 
+            href={member.linkedin} 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="inline-flex items-center justify-center w-12 h-12 bg-[#9b1c20] text-white rounded-full hover:bg-[#7a1619] transition-colors duration-300"
+          >
+            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M16.338 16.338H13.67V12.16c0-.995-.017-2.277-1.387-2.277-1.39 0-1.601 1.086-1.601 2.207v4.248H8.014v-8.59h2.559v1.174h.037c.356-.675 1.227-1.387 2.526-1.387 2.703 0 3.203 1.778 3.203 4.092v4.711zM5.005 6.575a1.548 1.548 0 11-.003-3.096 1.548 1.548 0 01.003 3.096zm-1.337 9.763H6.34v-8.59H3.667v8.59zM17.668 1H2.328C1.595 1 1 1.581 1 2.298v15.403C1 18.418 1.595 19 2.328 19h15.34c.734 0 1.332-.582 1.332-1.299V2.298C19 1.581 18.402 1 17.668 1z" />
+            </svg>
+          </a>
         </div>
       </div>
     </div>
@@ -301,7 +259,7 @@ export default function Team() {
             </p>
           </div>
 
-          <div className='grid grid-cols-1 lg:grid-cols-2 gap-8'>
+          <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
             {directorsSeniorManagers.map((member) => (
               <TeamCard key={member.id} member={member} />
             ))}
@@ -320,7 +278,7 @@ export default function Team() {
             </p>
           </div>
 
-          <div className='grid grid-cols-1 lg:grid-cols-2 gap-8'>
+          <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
             {operationsManagement.map((member) => (
               <TeamCard key={member.id} member={member} />
             ))}
@@ -339,7 +297,7 @@ export default function Team() {
             </p>
           </div>
 
-          <div className='grid grid-cols-1 lg:grid-cols-2 gap-8'>
+          <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
             {supportServicesManagement.map((member) => (
               <TeamCard key={member.id} member={member} />
             ))}

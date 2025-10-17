@@ -202,9 +202,11 @@ export default function Home() {
           </div>
         </div>   
       </div>
+
       <StartQuote />
-      <Agent />
       <Products />
+
+      <Agent />
       <WhyChooseUs />
     </div>
   );

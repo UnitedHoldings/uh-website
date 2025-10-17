@@ -305,40 +305,7 @@ export default function StartQuote() {
             </header>
 
             {/* Main Content */}
-            <main className="w-full bg-[#9b1c20] py-16">
-                <div className="max-w-[1400px] mx-auto py-6 px-4 md:px-6 rounded-2xl">
-                    {/* Insurance Type Tabs */}
-                    <div className='flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-6'>
-                        <p className='text-xl lg:text-2xl max-w-lg text-white lg:text-left text-center md:text-left'>
-                            Explore our wide range of offerings tailored to your insurance needs
-                        </p>
-                    </div>
-
-                    {/* Product Grid - Now 8 balanced products */}
-                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-8 gap-3 md:gap-4 w-full pt-4 pb-4 rounded-lg">
-                        {tabs.map((tab) => (
-                            <TabButton
-                                key={tab.id}
-                                label={tab.label}
-                                icon={tab.icon}
-                                active={activeTab === tab.id}
-                                slug={tabSlugMap[tab.id]}
-                            />
-                        ))}
-                    </div>
-
-                    {/* Quick Stats Bar */}
-                    <div className="flex justify-center mt-6">
-                        <button
-                            onClick={() => setShowAllProducts(true)}
-                            className="flex items-center gap-2 text-white hover:text-gray-200 transition-colors"
-                        >
-                            <span className="text-lg underline">View all products</span>
-                            <IoChevronForwardOutline className="text-xl" />
-                        </button>
-                    </div>
-                </div>
-            </main>
+         
 
             {/* All Products Modal */}
             {showAllProducts && <AllProductsModal />}
