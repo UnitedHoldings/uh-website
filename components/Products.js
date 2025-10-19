@@ -156,60 +156,45 @@ const shuffleArray = (array) => {
 const ProductCard = ({ title, desc, img, company, icon, stats, link, color, bgColor }) => (
     <Link href={link} className="block group h-full px-2">
         <div
-            className="rounded-t-xl rounded-b-[18rem] hover:-2xl relative flex flex-col h-full cursor-pointer transition-all duration-500 overflow-hidden"
+            className="   hover:-2xl rounded-2xl relative flex flex-col h-full cursor-pointer transition-all duration-500 overflow-hidden"
             style={{ backgroundColor: bgColor }}
         >
             {/* Image Container with Overlay */}
-            <div className="h-48 relative overflow-hidden">
+            <div className="h-[800px] relative overflow-hidden">
                 <Image
                     src={img}
                     alt={title}
                     fill
-                    className="object-cover rounded-t-xl transition-transform duration-700 group-hover:scale-110"
+                    className="object-cover  transition-transform duration-700 group-hover:scale-110"
                 />
 
                 {/* Icon Overlay */}
-                <div className="absolute bottom-4 left-4 text-white">
+                <div style={{ backgroundColor: bgColor }} className="absolute rounded-full flex items-center justify-center px-6 top-4 -left-4 text-white ">
                     <div className="flex items-center gap-2">
-                        <div 
+                        <div
                             className="p-2 rounded-lg backdrop-blur-sm"
-                            style={{ backgroundColor: bgColor }}
+
                         >
                             {icon}
                         </div>
+                        <h3 className="text-xl text-center font-bold  font-outfit group-hover:text-white transition-colors">
+                            {title}
+                        </h3>
                     </div>
                 </div>
             </div>
 
             {/* Content */}
-            <div className="flex flex-col p-6 pb-0 flex-grow justify-between text-white" style={{ backgroundColor: bgColor }}>
-                <div className='space-y-6 mb-6'>
-                    <h3 className="text-xl text-center font-bold mb-3 font-outfit group-hover:text-white transition-colors">
-                        {title}
-                    </h3>
+            <div className="flex flex- pb-0 flex-grow items-center justify-between text-white" style={{ backgroundColor: bgColor }}>
 
-                    <p className="text-white/90 text-center text-lg line-clamp-4 h-20 leading-relaxed flex-grow">
-                        {desc}
-                    </p>
-
-                    {/* Stats */}
-                    <div className="flex flex-wrap gap-2 items-center justify-center">
-                        {stats.map((stat, index) => (
-                            <span
-                                key={index}
-                                className="px-3 py-1 rounded-full text-xs font-medium backdrop-blur-sm text-white border border-white/30"
-                            >
-                                {stat}
-                            </span>
-                        ))}
-                    </div>
+                <div className="p-2 line-clamp-2 h-12 text-sm space-y-4">
+                    <p>{desc} </p>
                 </div>
-
                 {/* CTA */}
-                <div 
-                    className="flex items-center justify-center hover:bg-white py-6 space-x-2 text-white hover:text-current border-t border-white/30 transition-all duration-300 group-hover:border-transparent"
-                    style={{ 
-                        '--hover-text-color': bgColor 
+                <div
+                    className="flex items-center min-w-[10rem] justify-center hover:bg-white py-6 space-x-2 text-white hover:text-current border-t border-white/30 transition-all duration-300 group-hover:border-transparent"
+                    style={{
+                        '--hover-text-color': bgColor
                     }}
                 >
                     <span className="text-sm font-semibold group-hover:text-[var(--hover-text-color)]">
@@ -233,11 +218,11 @@ const CustomLeftArrow = ({ onClick, ...rest }) => {
         onMove,
         carouselState: { currentSlide, deviceType }
     } = rest;
-    
+
     return (
         <button
             onClick={() => onClick()}
-            className="absolute left-0 z-10 p-3 rounded-xl border-2 border-[#9b1c20] text-[#9b1c20] hover:bg-[#9b1c20] hover:text-white transition-all duration-300 -lg hover:-xl bg-white"
+            className="absolute left-10 top z-10 p-3 rounded-xl  bg-[#9b1c20] text-white hover:bg-[#9b1c20] hover:text-white transition-all duration-300 -lg hover:-xl "
             aria-label="Previous products"
         >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -252,11 +237,11 @@ const CustomRightArrow = ({ onClick, ...rest }) => {
         onMove,
         carouselState: { currentSlide, deviceType }
     } = rest;
-    
+
     return (
         <button
             onClick={() => onClick()}
-            className="absolute right-0 z-10 p-3 rounded-xl border-2 border-[#9b1c20] text-[#9b1c20] hover:bg-[#9b1c20] hover:text-white transition-all duration-300 -lg hover:-xl bg-white"
+            className="absolute right-10 z-10 p-3 rounded-xl   bg-[#9b1c20] text-white hover:bg-[#9b1c20] hover:text-white transition-all duration-300 -lg hover:-xl "
             aria-label="Next products"
         >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -274,12 +259,12 @@ function Products() {
         superLargeDesktop: {
             breakpoint: { max: 4000, min: 1400 },
             items: 3,
-            partialVisibilityGutter: 0
+            partialVisibilityGutter: 20
         },
         desktop: {
             breakpoint: { max: 1400, min: 1024 },
             items: 3,
-            partialVisibilityGutter: 0
+            partialVisibilityGutter: 20
         },
         tablet: {
             breakpoint: { max: 1024, min: 768 },
@@ -301,12 +286,11 @@ function Products() {
             active,
             carouselState: { currentSlide, deviceType }
         } = rest;
-        
+
         return (
             <button
-                className={`mx-1 w-3 h-3 rounded-full transition-all duration-300 ${
-                    active ? 'bg-[#9b1c20] w-8' : 'bg-gray-300 hover:bg-gray-400'
-                }`}
+                className={`mx-1 w-3 h-3 rounded-full transition-all duration-300 ${active ? 'bg-[#9b1c20] w-8' : 'bg-gray-300 hover:bg-gray-400'
+                    }`}
                 onClick={() => onClick()}
             />
         );
@@ -339,11 +323,11 @@ function Products() {
                             customTransition="transform 500ms ease-in-out"
                             transitionDuration={500}
                             containerClass="carousel-container"
-                            itemClass="carousel-item-padding-60-px"
+                            itemClass="carousel-item-padding-80-px"
                             arrows={true}
                             customLeftArrow={<CustomLeftArrow />}
                             customRightArrow={<CustomRightArrow />}
-                            showDots={true}
+                       
                             autoPlay={true}
                             customDot={<CustomDot />}
                             dotListClass="custom-dot-list"

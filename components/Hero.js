@@ -1,6 +1,7 @@
 'use client'
 import React from 'react'
 import Image from 'next/image'
+import VideoPlayer from './VideoPlayer';
 
 const DEPARTMENT_COLORS = {
   'Life Assurance': '#3d834d', // Green
@@ -11,15 +12,34 @@ const DEPARTMENT_COLORS = {
 // Map slides to departments
 const SLIDE_DEPARTMENTS = {
   'life': 'Life Assurance',
-  'general': 'General Insurance', 
+  'general': 'General Insurance',
   'pay': 'United Pay'
 };
+
+// All available products across departments
+const ALL_PRODUCTS = [
+  'Funeral Plan',
+  'Family Protection',
+  'Life Insurance',
+  'Education Plan',
+  'Retirement Plan',
+  'Home Insurance',
+  'Motor Insurance',
+  'Business Insurance',
+  'Travel Insurance',
+  'Asset Insurance',
+  'Umlamleli - Salary Advance',
+  'Personal Loan',
+  'Business Loan',
+  'Not Sure - Need Advice'
+];
 
 const slidesData = [
   {
     id: 'life',
     image: '/slide1.jpg',
     imageSM: '/slide1-SM.jpg',
+    shortVideo: '/Life.mp4',
     title1: 'United',
     title11: 'Life',
     title2: 'Assurance',
@@ -31,6 +51,7 @@ const slidesData = [
     id: 'general',
     image: '/home.jpg',
     imageSM: '/homeSM.jpg',
+    shortVideo: '/General.mp4',
     title1: 'United',
     title11: 'General',
     title2: 'Insurance',
@@ -42,6 +63,7 @@ const slidesData = [
     id: 'pay',
     image: '/micro.jpg',
     imageSM: '/microSM.jpg',
+    shortVideo: '/Pay.mp4',
     title1: 'Umlamleli -',
     title11: 'Salary ',
     title2: 'Advance',
@@ -51,8 +73,169 @@ const slidesData = [
   },
 ];
 
+const CallBackForm = ({ onClose }) => {
+  const [activeTab, setActiveTab] = React.useState('personal');
+  const [formData, setFormData] = React.useState({
+    fullName: '',
+    email: '',
+    phone: '',
+    product: '',
+    date: '',
+    time: '',
+    companyName: '',
+    businessType: ''
+  });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Handle form submission here
+    console.log('Form submitted:', { ...formData, type: activeTab });
+    alert('Thank you! We will call you back soon.');
+    // Reset form
+    setFormData({
+      fullName: '',
+      email: '',
+      phone: '',
+      product: '',
+      date: '',
+      time: '',
+      companyName: '',
+      businessType: ''
+    });
+    if (onClose) onClose();
+  };
+
+  return (
+    <div className="bg-white/90 rounded-2xl  absolute top-20 z-40 right-[10%]  p-6 w-full max-w-xl mx-4">
+      {/* Header */}
+
+
+      {/* Tabs */}
+      <div className="flex mb-6   border-b pb-4 border-gray-300">
+        <button
+          className={`flex-1 py-3 font-outfit rounded-full font-semibold text-center transition-colors ${activeTab === 'personal'
+            ? ' text-gray-100'
+            : 'text-gray-500 hover:text-gray-700'
+            }`}
+          style={{ backgroundColor: activeTab === 'personal' ? '#9b1c20' : 'transparent' }}
+          onClick={() => setActiveTab('personal')}
+        >
+          Personal
+        </button>
+        <button
+          className={`flex-1 py-3 font-outfit rounded-full font-semibold text-center transition-colors ${activeTab === 'business'
+            ? ' text-gray-100'
+            : 'text-gray-500 hover:text-gray-700'
+            }`}
+          style={{ backgroundColor: activeTab === 'business' ? '#9b1c20' : 'transparent' }}
+          onClick={() => setActiveTab('business')}
+        >
+          For My Business
+        </button>
+      </div>
+      <div className=" mb-6">
+        <h3 className="text-2xl font-bold font-outfit text-[#9b1c20]">Need a Call Back?</h3>
+        <p className="text-gray-600 mt-2">We'll get back to you shortly</p>
+      </div>
+      {/* Form */}
+      <form onSubmit={handleSubmit} className="space-y-4">
+        {/* Common Fields */}
+           <div className="grid grid-cols-2 gap-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1 font-outfit">
+              Full Name *
+            </label>
+            <input
+              type="text"
+              name="fullName"
+              value={formData.fullName}
+              onChange={handleInputChange}
+              required
+              className="w-full  py-2 outline-none  bg-transparent border-gray-300 border-b   placeholder-gray-500"
+              placeholder="Enter your full name"
+            />
+          </div>
+
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1 font-outfit">
+              Phone Number *
+            </label>
+            <input
+              type="tel"
+              name="phone"
+              value={formData.phone}
+              onChange={handleInputChange}
+              required
+              className="w-full  py-2 outline-none  bg-transparent border-gray-300 border-b   placeholder-gray-500"
+              placeholder="Enter your phone number"
+            />
+          </div>
+        </div>
+
+        {/* Business-specific Fields */}
+        {activeTab === 'business' && (
+          <div>
+        
+
+        
+          </div>
+        )}
+
+        {/* Product Selection */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1 font-outfit">
+            Product Interest *
+          </label>
+          <select
+            name="product"
+            value={formData.product}
+            onChange={handleInputChange}
+            required
+            className="w-full  py-2 outline-none  bg-transparent border-gray-300 border-b   placeholder-gray-500"
+          >
+            <option value="">Select a product</option>
+            {ALL_PRODUCTS.map((product, index) => (
+              <option key={index} value={product}>
+                {product}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        {/* Date and Time */}
+        
+
+        {/* Submit Button */}
+        <button
+          type="submit"
+          className="w-full py-4 px-6 mt-4 text-lg font-semibold rounded-full hover:opacity-90 transition-opacity duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 font-outfit text-white"
+          style={{
+            backgroundColor: '#9b1c20',
+          }}
+        >
+          Request Call Back
+        </button>
+
+        <p className="text-xs text-gray-500 text-center mt-4">
+          By submitting this form, you agree to our privacy policy and terms of service.
+        </p>
+      </form>
+    </div>
+  );
+};
+
 const Hero = ({ currentSlide = 0, setCurrentSlide }) => {
   const [isTransitioning, setIsTransitioning] = React.useState(false);
+  const [showCallBackForm, setShowCallBackForm] = React.useState(false);
 
   // Get current slide department and color
   const currentSlideData = slidesData[currentSlide];
@@ -85,13 +268,21 @@ const Hero = ({ currentSlide = 0, setCurrentSlide }) => {
 
   return (
     <div className="w-screen flex flex-col max-w-none h-auto lg:h-[700px] relative overflow-hidden">
+      {/* Call Back Form Modal */}
+   
+
       {/* Carousel Container */}
       <div className="relative w-full h-[80vh] lg:h-[700px] overflow-hidden">
+        {/* Static Call Back Form - Only show on large screens */}
+        <div className={ `${showCallBackForm ? 'block' : 'hidden'}   `}>
+          <CallBackForm onClose={() => { }} />
+        </div>
+
         {/* Slides */}
         {slidesData.map((slide, index) => {
           const department = SLIDE_DEPARTMENTS[slide.id];
           const color = DEPARTMENT_COLORS[department];
-          
+
           return (
             <div
               key={slide.id}
@@ -100,54 +291,50 @@ const Hero = ({ currentSlide = 0, setCurrentSlide }) => {
             >
               {/* Image container */}
               <div className="relative w-full h-1/2 lg:h-full">
-                <Image
-                  src={slide.image}
-                  alt={`${slide.title1} ${slide.title11} ${slide.title2}`}
-                  fill
-                  className="object-cover object-center hidden lg:block"
-                  sizes="100vw"
-                  priority={index === 0}
-                  quality={100}
-                />
-                <Image
-                  src={slide.imageSM}
-                  alt={`${slide.title1} ${slide.title11} ${slide.title2}`}
-                  className="object-cover object-center h-[600px] lg:hidden"
-                  width={800}
-                  height={600}
-                  priority={index === 0}
-                  quality={100}
-                />
+                <VideoPlayer src={slide.shortVideo} />
+
                 {/* 5% Black Overlay */}
-                <div className="absolute z-10 inset-0 ] bg-black/50 bg-gradient-to-r from-black/20 bg-opacity-5 hidden lg:block" />
+                <div className="absolute z-10 inset-0 bg-black/20 bg-gradient-to-r from-black/20 bg-opacity-5 hidden lg:block" />
               </div>
 
               {/* Desktop/Large overlay */}
-              <div className="hidden lg:block z-50 absolute w-full mx-auto top-0 left-0 right-0 h-full">
-                <div className="max-w-[1400px] pt-48 mx-auto justify-center flex items-center h-full w-full">
-                  <div className='h-full space-y-6 max-w-3xl flex flex-col'>
-                    <h1 className="text-7xl font-bold font-outfit text-center text--2xs">
+              <div className="hidden lg:block z-40 absolute top-[20%] w-full mx-auto  right-[5%] h-full">
+                <div className="max-w-[1400px]  mx-auto flex items-center h-full w-full px-8">
+                  {/* Text Content */}
+                  <div className='h-full space-y-6 max-w-3xl flex flex-col items-start'>
+                    <h1 className="text-7xl font-bold font-outfit text--2xs">
                       <span style={{ color: 'white' }}>{slide.title1}</span>{' '}
                       <span style={{ color: 'white' }}>{slide.title11}</span>{' '}
                       <span style={{ color: color }}>{slide.title2}</span>
                     </h1>
-                    <div className="h-1 bg-white w-full" style={{ backgroundColor: color }} />
-                    <p className="text-xl text-center pb-6 font-normal max-w-[700px] mx-auto font-outfit text-white" >
+                    <div className="h-1 max-w-[100px] bg-white w-full" style={{ backgroundColor: color }} />
+                    <p className="text-xl pb-6 max-w-[500px] font-outfit font-light text-white">
                       {slide.description}
                     </p>
 
-                    <div className='flex items-center justify-center'>
+                    <div className='flex items-center gap-4'>
                       <button
                         className='px-16 py-4 text-lg font-semibold rounded-full hover:bg-gray-100 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 font-outfit'
-                        style={{ 
+                        style={{
                           backgroundColor: color,
                           color: '#ffffff',
-                          '--focus-ring-color': color,
                         }}
                         aria-label={slide.button}
                         onClick={() => window.open(slide.url, '_blank')}
                       >
                         {slide.button}
+                      </button>
+
+                      {/* Call Back Button */}
+                      <button
+                        onClick={() => setShowCallBackForm(true)}
+                        className='px-8 py-4 text-lg font-semibold rounded-full border-2 hover:bg-white hover:bg-opacity-10 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 font-outfit text-white'
+                        style={{
+                          borderColor: 'white',
+                          color: 'white',
+                        }}
+                      >
+                        Need a Call Back?
                       </button>
                     </div>
                   </div>
@@ -155,18 +342,18 @@ const Hero = ({ currentSlide = 0, setCurrentSlide }) => {
               </div>
 
               {/* Mobile/Tablet */}
-              <div 
-                className="lg:hidden w-full  bg-opacity-90 absolute bottom-0 pb-16 px-4 py-6"
+              <div
+                className="lg:hidden w-full bg-opacity-90 absolute bottom-0 pb-16 px-4 py-6"
                 style={{ backgroundColor: color }}
               >
-                <div className="space-y-4  flex flex-col justify-center text-white font-outfit">
+                <div className="space-y-4 flex flex-col justify-center text-white font-outfit">
                   <h1 className="text-4xl xs:text-3xl sm:text-4xl font-black">
                     {slide.title1} <span style={{ color: '#ffffff' }}>{slide.title11}</span> {slide.title2}.
                   </h1>
                   <div className="h-0.5 bg-white w-full" />
                   <p className="text-lg sm:text-sm font-normal">{slide.description}</p>
 
-                  <div>
+                  <div className="flex gap-4 flex-wrap">
                     <button
                       className='bg-white py-2 px-4 rounded-full font-semibold hover:bg-gray-100 transition-colors duration-200'
                       style={{ color: color }}
@@ -174,6 +361,14 @@ const Hero = ({ currentSlide = 0, setCurrentSlide }) => {
                       onClick={() => window.open(slide.url, '_blank')}
                     >
                       {slide.button}
+                    </button>
+
+                    {/* Mobile Call Back Button */}
+                    <button
+                      onClick={() => setShowCallBackForm(true)}
+                      className='border-2 border-white py-2 px-4 rounded-full font-semibold hover:bg-white hover:bg-opacity-10 transition-colors duration-200 text-white'
+                    >
+                      Call Back
                     </button>
                   </div>
                 </div>

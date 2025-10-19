@@ -103,20 +103,10 @@ export default function UnitedLifeAssurance() {
           <div className="absolute inset-0 bg-black/10 group-hover:bg-black/20 transition-colors" />
 
           {/* Top-right Icon */}
-          <div className="absolute top-4 right-4">
-            <div
-              className={`w-12 h-12 rounded-full flex items-center justify-center text-white bg-[#3d834d] -lg hover:-xl transition-all duration-300`}
-            >
-              <IconComponent className="text-xl" />
-            </div>
-          </div>
+         
 
           {/* Bottom-left Stat */}
-          <div className="absolute bottom-4 left-4">
-            <span className="text-xs font-semibold bg-white/90 backdrop-blur-sm px-2 py-1 rounded-full text-gray-700">
-              {product.stats[0]}
-            </span>
-          </div>
+         
         </div>
 
         {/* Content Section */}
@@ -168,7 +158,7 @@ export default function UnitedLifeAssurance() {
   };
 
   return (
-    <div className="min-h-screen bg-[#9b1c20] font-outfit">
+    <div className="min-h-screen bg-gray-100 font-outfit">
       {/* Header with Background Image */}
       <div className='bg-[#2f6b3d] h-2 w-full' />
       <div className='relative bg-[#3d834d] py-16 md:py-24 min-h-[500px] flex items-center'>
