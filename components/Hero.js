@@ -39,7 +39,7 @@ const slidesData = [
     id: 'life',
     image: '/slide1.jpg',
     imageSM: '/slide1-SM.jpg',
-    shortVideo: '/Life.mp4',
+    shortVideo: 'https://res.cloudinary.com/loooktrial/video/upload/v1760905891/Life_ij6tld.mp4',
     title1: 'United',
     title11: 'Life',
     title2: 'Assurance',
