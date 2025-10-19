@@ -2,9 +2,12 @@
 import Agent from '@/components/Agent';
 import Hero from '@/components/Hero';
 import Products from '@/components/Products';
+import SeoHead from '@/components/SEOhead';
 import StartQuote from '@/components/Startqoute';
 import WhyChooseUs from '@/components/WhyChooseUs';
 import { useEffect, useRef, useState, useMemo } from 'react';
+
+
 
 // Department colors and mappings
 const DEPARTMENT_COLORS = {
@@ -150,8 +153,19 @@ export default function Home() {
   const currentColor = getCurrentDepartmentColor();
 
   return (
+     <>
+     <SeoHead
+        title="United Holdings | Insurance & Financial Solutions"
+        description="United Holdings provides trusted insurance and financial solutions tailored for Eswatini and Southern Africa. Get quotes, manage policies, and connect with our team."
+        keywords="United Holdings, Insurance Eswatini, Financial Services, Life Cover, Car Insurance, Business Insurance, Fintech Eswatini"
+        image="/logo.png"
+        url="https://www.unitedholdings.co.sz"
+      />
+
     <div className='flex flex-col pb-16 lg:space-y-16'>
-      <div className='relative lg:px-2 mb-4 lg:mb-8 flex flex-col items-center'>
+    
+  
+    <div className='relative lg:px-2 mb-4 lg:mb-8 flex flex-col items-center'>
         <Hero 
           currentSlide={currentSlide} 
           setCurrentSlide={handleCarouselChange} 
@@ -209,5 +223,6 @@ export default function Home() {
       <Agent />
       <WhyChooseUs />
     </div>
+     </>
   );
 }

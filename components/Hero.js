@@ -114,7 +114,7 @@ const CallBackForm = ({ onClose }) => {
   };
 
   return (
-    <div className="bg-white/90 rounded-2xl  absolute top-20 z-40 right-[10%]  p-6 w-full max-w-xl mx-4">
+    <div className="lg:bg-white/90 bg-white rounded-2xl  absolute top-20 z-40 lg:right-[10%]  right-0  p-6 w-full max-w-md lg:max-w-xl mx-4">
       {/* Header */}
 
 
@@ -143,7 +143,7 @@ const CallBackForm = ({ onClose }) => {
       </div>
       <div className=" mb-6">
         <h3 className="text-2xl font-bold font-outfit text-[#9b1c20]">Need a Call Back?</h3>
-        <p className="text-gray-600 mt-2">We'll get back to you shortly</p>
+        <p className="text-gray-600 mt-2">We&apos;ll get back to you shortly</p>
       </div>
       {/* Form */}
       <form onSubmit={handleSubmit} className="space-y-4">
@@ -343,7 +343,7 @@ const Hero = ({ currentSlide = 0, setCurrentSlide }) => {
 
               {/* Mobile/Tablet */}
               <div
-                className="lg:hidden w-full bg-opacity-90 absolute bottom-0 pb-16 px-4 py-6"
+                className="lg:hidden w-full h-1/2 bg-opacity-90 absolute bottom-0 pb-16 px-4 py-6"
                 style={{ backgroundColor: color }}
               >
                 <div className="space-y-4 flex flex-col justify-center text-white font-outfit">

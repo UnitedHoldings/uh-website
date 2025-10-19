@@ -1,28 +1,39 @@
 // components/VideoPlayer.js
 export default function VideoPlayer({
   src,
-  width = "100%",
-  height = "100%",
   autoPlay = true,
   muted = true,
   loop = true,
   playsInline = true,
   preload = "none",
+  className = "",
   style = {},
 }) {
   return (
-    <video
-      width={width}
-      height={height}
-      autoPlay={autoPlay}
-      muted={muted}
-      loop={loop}
-      playsInline={playsInline}
-      preload={preload}
-      style={{ outline: "none", ...style }}
+    <div
+      className={`video-wrapper ${className}`}
+      style={{
+        position: "relative",
+        width: "100%",
+        height: "100%",
+        ...style,
+      }}
     >
-      <source src={src} type="video/mp4" />
-      Your browser does not support the video tag.
-    </video>
+      <video
+        autoPlay={autoPlay}
+        muted={muted}
+        loop={loop}
+        playsInline={playsInline}
+        preload={preload}
+        style={{
+          width: "100%",
+          height: "100%",
+          objectFit: "cover",
+        }}
+      >
+        <source src={src} type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+    </div>
   );
 }
