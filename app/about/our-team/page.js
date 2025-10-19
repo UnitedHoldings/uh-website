@@ -158,24 +158,23 @@ export default function Team() {
             alt={member.name}
             width={1080}
             height={1080}
+            priority={true}
             quality={100}
-        
             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-            priority
           />
           {/* Gradient Overlay for Name & Title */}
-          <div className="absolute  bg-gradient-to-t h-40 w-full -bottom-1 z-30 transition-all duration-500 ease-in-out group-hover:hidden text-white group-hover:via-white group-hover:to-white from-[#9b1c20] via-[#9b1c20] 80 to-transparent rounded-b-[9999px] rounded-t-3xl" />
+          <div className="absolute  bg-gradient-to-t h-60 w-full -bottom-1 z-30 transition-all duration-500 ease-in-out group-hover:hidden text-white group-hover:via-white group-hover:to-white from-[#9b1c20] via-[#9b1c20] 80 to-transparent rounded-b-[9999px] rounded-t-3xl" />
         </div>
         
         {/* Name and Title Overlay */}
-        <div className="absolute z-50 bottom-[15%] left-0 right-0 text-center px-4">
+        <div className="absolute z-50 bottom-[10%] left-0 right-0 text-center px-4">
           <h3 className="text-2xl font-semibold text-white mb-1">{member.name}</h3>
-          <p className="text-lg text-gray-200 group-hover:text-white">{member.title}</p>
+          <p className="text-lg text-white group-hover:text-white text-center max-w-[20rem] mx-auto">{member.title}</p>
         </div>
       </div>
 
       {/* Hover Content - Bio and LinkedIn */}
-      <div className="absolute inset-0 bg-white rounded-3xl p-6 opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col justify-between transform translate-y-2 group-hover:translate-y-0">
+      <div className="absolute inset-0 bg-white rounded-3xl p-6 opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col  transform translate-y-2 group-hover:translate-y-0">
         <div>
           <h3 className="text-3xl font-bold text-gray-900 mb-2 text-center">{member.name}</h3>
           <p className="text-sm text-[#9b1c20] font-medium mb-4 text-center">{member.title}</p>

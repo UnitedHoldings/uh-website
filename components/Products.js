@@ -154,62 +154,63 @@ const shuffleArray = (array) => {
 };
 
 const ProductCard = ({ title, desc, img, company, icon, stats, link, color, bgColor }) => (
-    <Link href={link} className="block group h-full px-2">
-        <div
-            className="   hover:-2xl rounded-2xl relative flex flex-col h-full cursor-pointer transition-all duration-500 overflow-hidden"
-            style={{ backgroundColor: bgColor }}
-        >
-            {/* Image Container with Overlay */}
-            <div className="h-[800px] relative overflow-hidden">
-                <Image
-                    src={img}
-                    alt={title}
-                    fill
-                    className="object-cover  transition-transform duration-700 group-hover:scale-110"
-                />
+<Link href={link} className="block group h-full px-2">
+    <div
+        className="   hover:-2xl rounded-2xl relative flex flex-col h-full cursor-pointer transition-all duration-500 overflow-hidden"
+        style={{ backgroundColor: bgColor }}
+    >
+        {/* Image Container with Overlay */}
+        <div className="h-[800px] relative overflow-hidden">
+            <Image
+                src={img}
+                alt={title}
+                fill
+                priority={true}
+                className="object-cover  transition-transform duration-700 group-hover:scale-110"
+            />
 
-                {/* Icon Overlay */}
-                <div style={{ backgroundColor: bgColor }} className="absolute rounded-full flex items-center justify-center px-6 top-4 -left-4 text-white ">
-                    <div className="flex items-center gap-2">
-                        <div
-                            className="p-2 rounded-lg backdrop-blur-sm"
+            {/* Icon Overlay */}
+            <div style={{ backgroundColor: bgColor }} className="absolute rounded-full flex items-center justify-center px-6 top-4 -left-4 text-white ">
+                <div className="flex items-center gap-2">
+                    <div
+                        className="p-2 rounded-lg backdrop-blur-sm"
 
-                        >
-                            {icon}
-                        </div>
-                        <h3 className="text-xl text-center font-bold  font-outfit group-hover:text-white transition-colors">
-                            {title}
-                        </h3>
+                    >
+                        {icon}
                     </div>
+                    <h3 className="text-xl text-center font-bold  font-outfit group-hover:text-white transition-colors">
+                        {title}
+                    </h3>
                 </div>
             </div>
-
-            {/* Content */}
-            <div className="flex flex- pb-0 flex-grow items-center justify-between text-white" style={{ backgroundColor: bgColor }}>
-
-                <div className="p-2 line-clamp-2 h-12 text-sm space-y-4">
-                    <p>{desc} </p>
-                </div>
-                {/* CTA */}
-                <div
-                    className="flex items-center min-w-[10rem] justify-center hover:bg-white py-6 space-x-2 text-white hover:text-current border-t border-white/30 transition-all duration-300 group-hover:border-transparent"
-                    style={{
-                        '--hover-text-color': bgColor
-                    }}
-                >
-                    <span className="text-sm font-semibold group-hover:text-[var(--hover-text-color)]">
-                        Learn More
-                    </span>
-                    <BsArrowRight
-                        className="transition-transform duration-300 group-hover:translate-x-1 group-hover:text-[var(--hover-text-color)]"
-                    />
-                </div>
-            </div>
-
-            {/* Hover Effect Overlay */}
-            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-300 rounded-2xl pointer-events-none" />
         </div>
-    </Link>
+
+        {/* Content */}
+        <div className="flex flex- pb-0 flex-grow items-center justify-between text-white" style={{ backgroundColor: bgColor }}>
+
+            <div className="p-2 line-clamp-2 h-12 text-sm space-y-4">
+                <p>{desc} </p>
+            </div>
+            {/* CTA */}
+            <div
+                className="flex items-center min-w-[10rem] justify-center hover:bg-white py-6 space-x-2 text-white hover:text-current border-t border-white/30 transition-all duration-300 group-hover:border-transparent"
+                style={{
+                    '--hover-text-color': bgColor
+                }}
+            >
+                <span className="text-sm font-semibold group-hover:text-[var(--hover-text-color)]">
+                    Learn More
+                </span>
+                <BsArrowRight
+                    className="transition-transform duration-300 group-hover:translate-x-1 group-hover:text-[var(--hover-text-color)]"
+                />
+            </div>
+        </div>
+
+        {/* Hover Effect Overlay */}
+        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-300 rounded-2xl pointer-events-none" />
+    </div>
+</Link>
 );
 
 // Custom arrow components
