@@ -177,18 +177,18 @@ export default function About() {
                     <div className='w-full lg:border-l lg:border-gray-400 lg:pl-6'>
                         <section className="mb-8 grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
                             <div>
-                                <h2 className="text-xl sm:text-2xl font-semibold mb-3 text-center md:text-left">
+                                <h2 className="text-xl sm:text-2xl font-semibold mb-3  md:text-left">
                                     Our Vision
                                 </h2>
-                                <p className="text-gray-700 text-sm sm:text-base leading-relaxed">
+                                <p className="text-gray-700 text-lg leading-relaxed">
                                     To be the leading customer‑centric financial services provider in Eswatini and beyond, setting the standard for trust, innovation, and inclusivity.
                                 </p>
                             </div>
                             <div>
-                                <h2 className="text-xl sm:text-2xl font-semibold mb-3 text-center md:text-left">
+                                <h2 className="text-xl sm:text-2xl font-semibold mb-3  md:text-left">
                                     Our Mission
                                 </h2>
-                                <p className="text-gray-700 text-sm sm:text-base leading-relaxed">
+                                <p className="text-gray-700 text-lg leading-relaxed">
                                     We exist to uplift lives by delivering affordable, accessible, and innovative financial services. By being an employer of choice and a partner to communities, we ensure that our growth is shared with the people and places we serve.
                                 </p>
                             </div>
