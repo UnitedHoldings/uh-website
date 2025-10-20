@@ -101,7 +101,7 @@ export default function UnitedGeneralInsurance() {
         return (
             <div className="bg-white  rounded-xl hover:-xl transition-all duration-300 overflow-hidden group hover:transform hover:-translate-y-2">
                 {/* Image Section */}
-                <div className="relative h-48 bg-gradient-to-br from-gray-100 to-gray-200 overflow-hidden">
+                <div className="relative h-48 bg-gradient-to-br overflow-hidden">
                     {/* Product Image */}
                     <Image
                         src={product.heroImage} // make sure product.image is a valid URL or imported asset
@@ -123,12 +123,6 @@ export default function UnitedGeneralInsurance() {
                         </div>
                     </div>
 
-                    {/* Bottom-left Stat */}
-                    <div className="absolute bottom-4 left-4">
-                        <span className="text-xs font-semibold bg-white/90 backdrop-blur-sm px-2 py-1 rounded-full text-gray-700">
-                            {product.stats[0]}
-                        </span>
-                    </div>
                 </div>
 
                 {/* Content Section */}
@@ -180,7 +174,7 @@ export default function UnitedGeneralInsurance() {
     };
 
     return (
-        <div className="min-h-screen  font-outfit">
+        <div className="min-h-screen bg-gray-100  font-outfit">
             {/* Header with Background Image */}
             <div className='bg-[#204f61] h-2 w-full' />
             <div className='relative bg-[#286278] py-16 md:py-24 min-h-[500px] flex items-center'>

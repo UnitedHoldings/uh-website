@@ -98,11 +98,7 @@ export default function UnitedPay() {
           </div>
 
           {/* Bottom-left Stat */}
-          <div className="absolute bottom-4 left-4">
-            <span className="text-xs font-semibold bg-white/90 backdrop-blur-sm px-2 py-1 rounded-full text-gray-700">
-              {product.stats[0]}
-            </span>
-          </div>
+          
         </div>
 
         {/* Content Section */}
@@ -154,7 +150,7 @@ export default function UnitedPay() {
   };
 
   return (
-    <div className="min-h-screen bg-[#9b1c20] font-outfit">
+    <div className="min-h-screen bg-gray-100 font-outfit">
       {/* Header with Background Image */}
       <div className='bg-[#e0861c] h-2 w-full' />
       <div className='relative bg-[#f79620] py-16 md:py-24 min-h-[500px] flex items-center'>
@@ -216,10 +212,13 @@ export default function UnitedPay() {
           </div>
         </div>
       </div>
-
+ 
       {/* Search and Filters */}
-      <section className="py-8 bg-white border-b">
+      <section className="py-8 bg-white ">
         <div className="max-w-[1400px] mx-auto px-4 sm:px-6">
+        <div className='text-xl font-semibold mb-4'>
+                        <p className='text-[#f79620] text-2xl'>What financial needs do you have?</p>
+                    </div>
           <div className="flex flex-col lg:flex-row gap-4 items-center justify-between">
             {/* Search */}
             <div className="flex-1 w-full lg:max-w-md">
@@ -282,7 +281,7 @@ export default function UnitedPay() {
             </div>
           ) : (
             <div>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6">
                 {filteredProducts.map((product, index) => (
                   <ProductCard key={index} product={product} />
                 ))}

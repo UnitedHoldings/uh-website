@@ -103,10 +103,10 @@ export default function UnitedLifeAssurance() {
           <div className="absolute inset-0 bg-black/10 group-hover:bg-black/20 transition-colors" />
 
           {/* Top-right Icon */}
-         
+
 
           {/* Bottom-left Stat */}
-         
+
         </div>
 
         {/* Content Section */}
@@ -224,6 +224,9 @@ export default function UnitedLifeAssurance() {
       {/* Search and Filters */}
       <section className="py-8 bg-white ">
         <div className="max-w-[1400px] mx-auto px-4 sm:px-6">
+          <div className='text-xl font-semibold mb-4'>
+            <p className='text-[#3d834d] text-2xl'>What financial needs do you have?</p>
+          </div>
           <div className="flex flex-col lg:flex-row gap-4 items-center justify-between">
             {/* Search */}
             <div className="flex-1 w-full lg:max-w-md">
@@ -306,7 +309,7 @@ export default function UnitedLifeAssurance() {
       </section>
 
       {/* Why Choose ULA Section */}
-    
+
 
       {/* CTA Section */}
       <section className="py-16 bg-white">

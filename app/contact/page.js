@@ -10,7 +10,7 @@ const completeBranches = [
     name: "Manzini – Head Office",
     phone: "+268 2508 6000",
     coords: [-26.4988, 31.3800],
-    hours: "Mon–Fri: 8am–5pm",
+    hours: "Mon–Fri: 8am–5pm, Sat: 8am–1pm",
     departments: ["Life Assurance", "General Insurance", "United Pay"],
     region: "Manzini",
     address: "Manzini, Eswatini"
@@ -19,7 +19,7 @@ const completeBranches = [
     name: "Manzini 1",
     phone: "+268 2508 6124",
     coords: [-26.4985, 31.3812],
-    hours: "Mon–Fri: 8am–5pm",
+    hours: "Mon–Fri: 8am–5pm, Sat: 8am–1pm",
     departments: ["Life Assurance"],
     region: "Manzini",
     address: "Manzini, Eswatini"
@@ -28,7 +28,7 @@ const completeBranches = [
     name: "Matsapha",
     phone: "+268 2508 6125",
     coords: [-26.5167, 31.3167],
-    hours: "Mon–Fri: 8am–5pm",
+    hours: "Mon–Fri: 8am–5pm, Sat: 8am–1pm",
     departments: ["Life Assurance"],
     region: "Manzini",
     address: "Matsapha, Eswatini"
@@ -37,7 +37,7 @@ const completeBranches = [
     name: "Ezulwini",
     phone: "+268 2508 6126",
     coords: [-26.4167, 31.2000],
-    hours: "Mon–Fri: 8am–5pm",
+    hours: "Mon–Fri: 8am–5pm, Sat: 8am–1pm",
     departments: ["Life Assurance"],
     region: "Hhohho",
     address: "Ezulwini, Eswatini"
@@ -46,8 +46,8 @@ const completeBranches = [
     name: "Mbabane",
     phone: "+268 2508 6120",
     coords: [-26.3054, 31.1367],
-    hours: "Mon–Fri: 8am–5pm",
-    departments: ["Life Assurance", "General Insurance", "United Pay"], // ✅ updated
+    hours: "Mon–Fri: 8am–5pm, Sat: 8am–1pm",
+    departments: ["Life Assurance", "General Insurance", "United Pay"],
     region: "Hhohho",
     address: "Mbabane, Eswatini"
   },
@@ -55,7 +55,7 @@ const completeBranches = [
     name: "Piggs Peak",
     phone: "+268 2508 6122",
     coords: [-25.9670, 31.2500],
-    hours: "Mon–Fri: 8am–5pm",
+    hours: "Mon–Fri: 8am–5pm, Sat: 8am–1pm",
     departments: ["Life Assurance"],
     region: "Hhohho",
     address: "Piggs Peak, Eswatini"
@@ -64,7 +64,7 @@ const completeBranches = [
     name: "Simunye",
     phone: "+268 2508 6127",
     coords: [-26.2020, 31.9330],
-    hours: "Mon–Fri: 8am–5pm",
+    hours: "Mon–Fri: 8am–5pm, Sat: 8am–1pm",
     departments: ["Life Assurance"],
     region: "Lubombo",
     address: "Simunye, Eswatini"
@@ -73,8 +73,8 @@ const completeBranches = [
     name: "Siteki",
     phone: "+268 2508 6123",
     coords: [-26.4500, 31.9500],
-    hours: "Mon–Fri: 8am–5pm",
-    departments: ["Life Assurance", "General Insurance", "United Pay"], // ✅ updated
+    hours: "Mon–Fri: 8am–5pm, Sat: 8am–1pm",
+    departments: ["Life Assurance", "General Insurance", "United Pay"],
     region: "Lubombo",
     address: "Siteki, Eswatini"
   },
@@ -82,7 +82,7 @@ const completeBranches = [
     name: "Matata",
     phone: "+268 2508 6128",
     coords: [-27.0000, 31.6333],
-    hours: "Mon–Fri: 8am–5pm",
+    hours: "Mon–Fri: 8am–5pm, Sat: 8am–1pm",
     departments: ["Life Assurance"],
     region: "Shiselweni",
     address: "Matata, Eswatini"
@@ -91,8 +91,8 @@ const completeBranches = [
     name: "Nhlangano",
     phone: "+268 2508 6121",
     coords: [-27.1167, 31.2000],
-    hours: "Mon–Fri: 8am–5pm",
-    departments: ["Life Assurance", "General Insurance", "United Pay"], // ✅ updated
+    hours: "Mon–Fri: 8am–5pm, Sat: 8am–1pm",
+    departments: ["Life Assurance", "General Insurance", "United Pay"],
     region: "Shiselweni",
     address: "Nhlangano, Eswatini"
   },
@@ -100,7 +100,7 @@ const completeBranches = [
     name: "Buhleni",
     phone: "+268 3460 1767",
     coords: [-26.0333, 31.3167],
-    hours: "Mon–Fri: 8am–5pm",
+    hours: "Mon–Fri: 8am–5pm, Sat: 8am–1pm",
     departments: ["Life Assurance"],
     region: "Hhohho",
     address: "Buhleni, Eswatini"
@@ -109,7 +109,7 @@ const completeBranches = [
     name: "Hlathikhulu",
     phone: "N/A",
     coords: [-27.2167, 31.2167],
-    hours: "Mon–Fri: 8am–5pm",
+    hours: "Mon–Fri: 8am–5pm, Sat: 8am–1pm",
     departments: ["Life Assurance"],
     region: "Shiselweni",
     address: "Hlathikhulu, Eswatini"
@@ -184,10 +184,11 @@ export default function Contact() {
       <div className='relative'>
         <div className='bg-gradient-to-r absolute from-[#9b1c20]/60 to-[#9b1c20]/20 h-full w-full' />
         <Image 
-          src="/claims.png" 
+          src="/44585.jpg" 
           alt="Contact" 
           width={1920} 
-          height={400} 
+          height={1080} 
+          quality={100}
           className="w-full h-[320px] object-cover"
           priority
         />
