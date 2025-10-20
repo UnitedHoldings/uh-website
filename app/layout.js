@@ -14,7 +14,7 @@ const schemaOrgSite = {
   "@type": "Organization",
   name: siteName,
   url: siteUrl,
-  logo: `${siteUrl}/logo.png`,
+  logo: `${siteUrl}/logo.svg`,
   sameAs: [
     "https://www.facebook.com/unitedholdings",
     "https://www.linkedin.com/company/unitedholdings",
@@ -73,7 +73,7 @@ export const metadata = {
     siteName: "United Holdings",
     images: [
       {
-        url: `${siteUrl}/og-image.jpg`,
+        url: `${siteUrl}/logo.svg`,
         width: 1200,
         height: 630,
         alt: "United Holdings - Insurance & Financial Solutions",
@@ -88,7 +88,7 @@ export const metadata = {
     title: "United Holdings | Insurance & Financial Solutions",
     description:
       "Trusted insurance and financial services for individuals and businesses in Eswatini.",
-    images: [`${siteUrl}/og-image.jpg`],
+    images: [`${siteUrl}/logo.svg`],
   },
   alternates: {
     canonical: siteUrl,
