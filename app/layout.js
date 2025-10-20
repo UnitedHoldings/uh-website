@@ -121,6 +121,54 @@ export default function RootLayout({ children }) {
             __html: JSON.stringify(schemaOrgSite),
           }}
         />
+
+        {/* ✅ Voiceflow Chatbot Styles - Regular style tag in head */}
+        <style>
+          {`
+            /* Voiceflow Widget Container */
+            .vf-widget-container {
+              z-index: 9998 !important;
+              position: fixed !important;
+            }
+            
+            /* Voiceflow Chat Launcher */
+            .vf-chat-launcher {
+              bottom: 100px !important;
+              right: 24px !important;
+              background-color: #9b1c20 !important;
+              border: 2px solid white !important;
+              box-shadow: 0 4px 12px rgba(155, 28, 32, 0.3) !important;
+              z-index: 9999 !important;
+            }
+            
+            .vf-chat-launcher:hover {
+              background-color: #7a1619 !important;
+              transform: scale(1.05) !important;
+            }
+            
+            /* Voiceflow Chat Window */
+            .vf-chat-window {
+              z-index: 9997 !important;
+              bottom: 160px !important;
+              right: 24px !important;
+            }
+            
+            /* Mobile adjustments */
+            @media (max-width: 768px) {
+              .vf-chat-launcher {
+                bottom: 90px !important;
+                right: 16px !important;
+              }
+              
+              .vf-chat-window {
+                bottom: 150px !important;
+                right: 16px !important;
+                left: 16px !important;
+                width: auto !important;
+              }
+            }
+          `}
+        </style>
       </head>
       <body className={`font-outfit antialiased relative bg-white text-gray-900`}>
         <Header />
@@ -225,57 +273,6 @@ export default function RootLayout({ children }) {
             `,
           }}
         />
-
-        {/* ✅ Voiceflow Chatbot Styles - Inline styles that work with dynamic content */}
-        <style jsx global>{`
-          /* Voiceflow Widget Container */
-          .vf-widget-container {
-            z-index: 9998 !important;
-            position: fixed !important;
-          }
-          
-          /* Voiceflow Chat Launcher */
-          .vf-chat-launcher {
-            bottom: 100px !important;
-            right: 24px !important;
-            background-color: #9b1c20 !important;
-            border: 2px solid white !important;
-            box-shadow: 0 4px 12px rgba(155, 28, 32, 0.3) !important;
-            z-index: 9999 !important;
-          }
-          
-          .vf-chat-launcher:hover {
-            background-color: #7a1619 !important;
-            transform: scale(1.05) !important;
-          }
-          
-          /* Voiceflow Chat Window */
-          .vf-chat-window {
-            z-index: 9997 !important;
-            bottom: 160px !important;
-            right: 24px !important;
-          }
-          
-          /* Mobile adjustments */
-          @media (max-width: 768px) {
-            .vf-chat-launcher {
-              bottom: 90px !important;
-              right: 16px !important;
-            }
-            
-            .vf-chat-window {
-              bottom: 150px !important;
-              right: 16px !important;
-              left: 16px !important;
-              width: auto !important;
-            }
-          }
-          
-          /* Ensure WhatsApp button stays above other content but below Voiceflow when needed */
-          .fixed {
-            z-index: 9990;
-          }
-        `}</style>
       </body>
     </html>
   );
