@@ -133,3 +133,13 @@
 .animate-pulse-custom {
     animation: pulse-custom 10s infinite;
 }
+
+/* In your global.css */
+@keyframes motion-marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-motion-marquee {
+  animation: motion-marquee 80s linear infinite;
+}

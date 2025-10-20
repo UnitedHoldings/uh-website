@@ -131,7 +131,7 @@ const productData = [
         bgColor: '#f79620'
     },
     {
-        title: 'Govt Employee Loans',
+        title: 'Umlamleli Civil Servant Loan',
         desc: 'Specialized financial solutions for government employees with higher limits and favorable terms. Secure funding tailored for public servants.',
         img: '/civil-servant-loan.jpg',
         company: 'UP',
@@ -178,7 +178,7 @@ const ProductCard = ({ title, desc, img, company, icon, stats, link, color, bgCo
                     >
                         {icon}
                     </div>
-                    <h3 className="text-xl text-center font-bold  font-outfit group-hover:text-white transition-colors">
+                    <h3 className="text-xl text-center font-semibold  font-outfit group-hover:text-white transition-colors">
                         {title}
                     </h3>
                 </div>
@@ -188,7 +188,7 @@ const ProductCard = ({ title, desc, img, company, icon, stats, link, color, bgCo
         {/* Content */}
         <div className="flex flex- pb-0 flex-grow items-center justify-between text-white" style={{ backgroundColor: bgColor }}>
 
-            <div className="p-2 line-clamp-2 h-12 text-sm space-y-4">
+            <div className="px-2 line-clamp-2 h-11 text-sm space-y-4">
                 <p>{desc} </p>
             </div>
             {/* CTA */}

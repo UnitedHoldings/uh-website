@@ -9,6 +9,8 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@formspree/react": "^3.0.0",
+    "framer-motion": "^12.23.24",
     "gsap": "^3.13.0",
     "leaflet": "^1.9.4",
     "next": "15.5.2",

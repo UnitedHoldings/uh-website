@@ -1,6 +1,7 @@
 'use client'
 import Agent from '@/components/Agent';
 import Hero from '@/components/Hero';
+import MotionTextStrip from '@/components/MotionTextStrip';
 import Products from '@/components/Products';
 import SeoHead from '@/components/SEOhead';
 import StartQuote from '@/components/Startqoute';
@@ -18,7 +19,7 @@ const DEPARTMENT_COLORS = {
 
 const SLIDE_DEPARTMENTS = {
   'life': 'Life Assurance',
-  'general': 'General Insurance', 
+  'general': 'General Insurance',
   'loans': 'Loans'
 };
 
@@ -69,14 +70,14 @@ export default function Home() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const intervalRef = useRef(null);
   const tabCount = TAB_CONFIG.length;
-  
+
   // Use useMemo to prevent recreation of arrays on every render
-  const slideMap = useMemo(() => 
+  const slideMap = useMemo(() =>
     TAB_CONFIG.map(tab => slidesData.findIndex(slide => slide.id === tab.slideId)),
     [] // Empty dependency array since TAB_CONFIG and slidesData are static
   );
-  
-  const tabMap = useMemo(() => 
+
+  const tabMap = useMemo(() =>
     slidesData.map(slide => TAB_CONFIG.findIndex(tab => tab.slideId === slide.id)),
     [] // Empty dependency array since TAB_CONFIG and slidesData are static
   );
@@ -98,7 +99,7 @@ export default function Home() {
   // Start the interval when component mounts
   useEffect(() => {
     startInterval();
-    
+
     // Clean up interval on unmount
     return () => {
       if (intervalRef.current) {
@@ -111,7 +112,7 @@ export default function Home() {
     if (intervalRef.current) {
       clearInterval(intervalRef.current);
     }
-    
+
     intervalRef.current = setInterval(() => {
       setActiveTab((prev) => {
         const nextTab = (prev + 1) % tabCount;
@@ -153,8 +154,8 @@ export default function Home() {
   const currentColor = getCurrentDepartmentColor();
 
   return (
-     <>
-     <SeoHead
+    <>
+      <SeoHead
         title="United Holdings | Insurance & Financial Solutions"
         description="United Holdings provides trusted insurance and financial solutions tailored for Eswatini and Southern Africa. Get quotes, manage policies, and connect with our team."
         keywords="United Holdings, Insurance Eswatini, Financial Services, Life Cover, Car Insurance, Business Insurance, Fintech Eswatini"
@@ -162,67 +163,65 @@ export default function Home() {
         url="https://www.unitedholdings.co.sz"
       />
 
-    <div className='flex flex-col pb-16 lg:space-y-16'>
-    
-  
-    <div className='relative lg:px-2 mb-4 lg:mb-8 flex flex-col items-center'>
-        <Hero 
-          currentSlide={currentSlide} 
-          setCurrentSlide={handleCarouselChange} 
-        />
-        
-        {/* Tab Navigation */}
-        <div className='w-full  '>
-          <div className='absolute z-40 lg:bottom-[-4%] bottom-[-5%] w-full flex'>
-            <div className="mx-auto">
-              <ul 
-                className="bg-gray-100 p-2 flex h-14 drop--lg rounded-full relative border-2"
-                style={{ borderColor: currentColor }}
-              >
-                {/* Animated highlight bar */}
-                <div
-                  className="absolute h-9 rounded-full transition-all duration-500 ease-in-out top-2"
-                  style={{
-                    width: `calc(${100 / tabCount}% - 8px)`,
-                    transform: `translateX(calc(${activeTab * 100}% + 4px))`,
-                    backgroundColor: currentColor
-                  }}
-                />
+      <div className='flex flex-col pb-16 lg:space-y-16'>
 
-                {/* Tabs */}
-                {TAB_CONFIG.map((tab, index) => (
-                  <li
-                    key={index}
-                    className={`cursor-pointer relative z-10 flex-1 flex items-center justify-center py-1 font-bold lg:text-lg px-4 rounded-full transition-all duration-300 ease-in-out ${
-                      index === activeTab
-                        ? 'text-white'
-                        : 'hover:bg-opacity-10'
-                    }`}
+
+        <div className='relative lg:px-2  mb-4 lg:mb-8 flex flex-col items-center'>
+          <Hero
+            currentSlide={currentSlide}
+            setCurrentSlide={handleCarouselChange}
+          />
+
+          {/* Tab Navigation */}
+          <div className='w-full  '>
+            <div className='absolute z-40 lg:bottom-[-4%] bottom-[-5%] w-full flex'>
+              <div className="mx-auto">
+                <ul
+                  className="bg-gray-100 p-2 flex h-14 drop--lg rounded-full relative border-2"
+                  style={{ borderColor: currentColor }}
+                >
+                  {/* Animated highlight bar */}
+                  <div
+                    className="absolute h-9 rounded-full transition-all duration-500 ease-in-out top-2"
                     style={{
-                      color: index === activeTab ? 'white' : getTabColor(index),
-                      backgroundColor: index === activeTab ? 'transparent' : 'transparent',
-                      minWidth: '100px'
+                      width: `calc(${100 / tabCount}% - 8px)`,
+                      transform: `translateX(calc(${activeTab * 100}% + 4px))`,
+                      backgroundColor: currentColor
                     }}
-                    onClick={() => handleTabClick(index)}
-                  >
-                    <span className="text-center whitespace-nowrap">
-                      {/* Show full name on large screens, short name on small screens */}
-                      <span className="">{tab.shortName}</span>
-                    </span>
-                  </li>
-                ))}
-              </ul>
+                  />
+
+                  {/* Tabs */}
+                  {TAB_CONFIG.map((tab, index) => (
+                    <li
+                      key={index}
+                      className={`cursor-pointer relative z-10 flex-1 flex items-center justify-center py-1 font-bold lg:text-lg px-4 rounded-full transition-all duration-300 ease-in-out ${index === activeTab
+                          ? 'text-white'
+                          : 'hover:bg-opacity-10'
+                        }`}
+                      style={{
+                        color: index === activeTab ? 'white' : getTabColor(index),
+                        backgroundColor: index === activeTab ? 'transparent' : 'transparent',
+                        minWidth: '100px'
+                      }}
+                      onClick={() => handleTabClick(index)}
+                    >
+                      <span className="text-center whitespace-nowrap">
+                        {/* Show full name on large screens, short name on small screens */}
+                        <span className="">{tab.shortName}</span>
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
           </div>
-        </div>   
+        </div>
+        <StartQuote />
+        <Products />
+
+        <Agent />
+        <WhyChooseUs />
       </div>
-
-      <StartQuote />
-      <Products />
-
-      <Agent />
-      <WhyChooseUs />
-    </div>
-     </>
+    </>
   );
 }
