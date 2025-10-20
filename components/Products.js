@@ -24,7 +24,7 @@ import {
     PiFileText
 } from 'react-icons/pi';
 
-// Enhanced product data with balanced distribution
+// Product data ordered by company: ULA, UGI, UP
 const productData = [
     // ULA Products (4)
     {
@@ -143,16 +143,6 @@ const productData = [
     },
 ];
 
-// Function to shuffle array randomly
-const shuffleArray = (array) => {
-    const shuffled = [...array];
-    for (let i = shuffled.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-    }
-    return shuffled;
-};
-
 const ProductCard = ({ title, desc, img, company, icon, stats, link, color, bgColor }) => (
 <Link href={link} className="block group h-full px-2">
     <div
@@ -253,7 +243,8 @@ const CustomRightArrow = ({ onClick, ...rest }) => {
 };
 
 function Products() {
-    const [shuffledProducts] = useState(() => shuffleArray(productData));
+    // Use the ordered product data directly (ULA, UGI, UP)
+    const [products] = useState(productData);
 
     // Responsive configuration for react-multi-carousel
     const responsive = {
@@ -342,7 +333,7 @@ function Products() {
                             swipeable={true}
                             draggable={true}
                         >
-                            {shuffledProducts.map((product, idx) => (
+                            {products.map((product, idx) => (
                                 <div key={idx} className="h-[520px]">
                                     <ProductCard {...product} />
                                 </div>

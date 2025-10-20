@@ -28,6 +28,14 @@ export default function Team() {
       linkedin: "https://linkedin.com/in/zombodze-magagula"
     },
     {
+      id: 17,
+      name: "Roison Pave",
+      title: "Group Corporate Affairs Manager",
+      bio: "Roison Daniel Pave is a seasoned executive with over 12 years of expertise in Human Capital Management, Corporate Governance, and organizational leadership across diverse sectors.",
+      image: "/Roison Pave (GM Corporate Affairs).jpg",
+      linkedin: "https://linkedin.com/in/roison-pave"
+    },
+    {
       id: 4,
       name: "Mlamuli Magagula",
       title: "Group General Manager Finance",
@@ -50,7 +58,8 @@ export default function Team() {
       bio: "Mrs. W. Sibandze is an experienced legal and compliance professional with expertise in corporate governance, regulatory compliance, and risk management. She currently serves as Company Secretary & Legal at United Holdings.",
       image: "/Winile Sibandze (Group Secretary & Legal).jpg",
       linkedin: "https://linkedin.com/in/winile-sibandze"
-    }
+    },
+
   ];
 
   const operationsManagement = [
@@ -81,14 +90,7 @@ export default function Team() {
   ];
 
   const supportServicesManagement = [
-    {
-      id: 17,
-      name: "Roison Pave",
-      title: "Group Corporate Affairs Manager",
-      bio: "Roison Daniel Pave is a seasoned executive with over 12 years of expertise in Human Capital Management, Corporate Governance, and organizational leadership across diverse sectors.",
-      image: "/Roison Pave (GM Corporate Affairs).jpg",
-      linkedin: "https://linkedin.com/in/roison-pave"
-    },
+    
     {
       id: 10,
       name: "Lungile Ngwenya",
@@ -113,20 +115,13 @@ export default function Team() {
       image: "/Simeon Simelane (GIAM).jpeg",
       linkedin: "https://linkedin.com/in/simeon-simelane"
     },
-    {
-      id: 13,
-      name: "Temahlubi Dlamini",
-      title: "Group Marketing Manager",
-      bio: "Ms. T. Dlamini is a seasoned marketing professional with academic qualifications in marketing and management from Monash University and the University of the Witwatersrand.",
-      image: "/Temahlubi Dlamini (Group Marketing Manager) (1).jpg",
-      linkedin: "https://linkedin.com/in/temahlubi-dlamini"
-    },
+   
     {
       id: 14,
       name: "Siphesihle Dlamini",
       title: "Group Risk & Compliance Manager",
       bio: "Ms. S. Dlamini is a legal and risk management professional with experience spanning compliance oversight, enterprise risk assessment, and legal advisory services.",
-      image: "/team/siphesihle-dlamini.jpg",
+      image: "/2.jpg",
       linkedin: "https://linkedin.com/in/siphesihle-dlamini"
     },
     {
