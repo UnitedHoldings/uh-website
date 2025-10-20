@@ -72,7 +72,7 @@ const CallBackForm = ({ onClose }) => {
       <div className="lg:bg-white/90 bg-white rounded-2xl absolute top-20 z-40 lg:right-[10%] right-0 p-6 w-full max-w-md lg:max-w-xl mx-4">
         <div className="text-center py-8">
           <h3 className="text-2xl font-bold font-outfit text-[#9b1c20] mb-4">Thank You!</h3>
-          <p className="text-gray-600">We'll get back to you shortly.</p>
+          <p className="text-gray-600">We&apos;ll get back to you shortly.</p>
           <button
             onClick={onClose}
             className="w-full py-4 px-6 mt-6 text-lg font-semibold rounded-full hover:opacity-90 transition-opacity duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 font-outfit text-white"
