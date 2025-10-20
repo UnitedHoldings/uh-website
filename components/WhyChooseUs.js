@@ -188,7 +188,7 @@ const ReviewCard = ({ review, isActive = false, onClick }) => {
 const ReasonCard = ({ title, content, icon, gradient, accent, index }) => {
   return (
     <motion.div
-      className="group relative bg-white/95 backdrop-blur-sm rounded-3xl p-8  border border-white/20 overflow-hidden  transition-all duration-500"
+      className="group relative bg-white/95 backdrop-blur-sm rounded-3xl p-6  border border-black/20 overflow-hidden  transition-all duration-500"
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
@@ -201,7 +201,7 @@ const ReasonCard = ({ title, content, icon, gradient, accent, index }) => {
       {/* Accent Bar */}
       <div className={`absolute top-0 left-0 w-2 h-full ${accent} transform origin-top scale-y-0 group-hover:scale-y-100 transition-transform duration-500`} />
 
-      <div className="relative z-10">
+      <div className="relative z-10  bg-[${colors.primary}]/40 rounded-2xl p-6  duration-300">
         <div className="flex items-start justify-between mb-6">
           <div className={`p-4 rounded-2xl bg-[${colors.primary}]  transform group-hover:scale-110 transition-transform duration-300`}>
             {icon}
@@ -329,7 +329,7 @@ const EnhancedReviewsCarousel = () => {
         
 
         {/* Carousel */}
-        <div className="relative">
+        <div className="relative ">
           {/* Desktop Layout */}
           <div className="hidden lg:block">
             <div className="grid grid-cols-3 gap-8 items-center max-w-6xl mx-auto">
@@ -454,7 +454,7 @@ const WhyChooseUs = () => {
   }, []);
 
   return (
-    <section className="relative  bg-gradient-to-br from-gray-50 via-white to-gray-100 overflow-hidden">
+    <section className="relative  bg-gradient-to-br from-gray-50 via-white to-gray-100 ">
       {/* Background Decorations */}
       <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-white to-transparent" />
       <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-white to-transparent" />
@@ -462,13 +462,13 @@ const WhyChooseUs = () => {
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative">
         {/* Header Section */}
         <motion.div
-          className=" mb-20"
+          className=" mb-12"
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
         >
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-center">
+          <div className="flex flex-col   justify-between items-start md:items-center">
             <div className="flex flex-col gap-4">
               <h3 className="text-2xl md:text-3xl font-bold text-[#9b1c20]  font-outfit">
                 Why Choose <span className="text-[${colors.accent}]">United Holdings</span>?
@@ -484,7 +484,7 @@ const WhyChooseUs = () => {
     
 
         {/* Reasons Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-20">
+        <div className="grid grid-cols-1 lg:grid-cols-3 mb-8 gap-4 lg:gap-8  ">
           {reasonsData.map((reason, index) => (
             <ReasonCard key={index} {...reason} index={index} />
           ))}
