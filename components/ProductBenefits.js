@@ -4,17 +4,17 @@ export default function ProductBenefits({ benefits, company }) {
     const companyStyles = {
         'ULA': {
             color: '#ffffff',
-            bgColor: '#3d834d',
+            bgColor: '#9b1c20',
             borderColor: '#3d834d30'
         },
         'UGI': {
             color: '#ffffff', 
-            bgColor: '#286278',
+            bgColor: '#9b1c20',
             borderColor: '#ffffff'
         },
         'UP': {
             color: '#ffffff',
-            bgColor: '#f79620',
+            bgColor: '#9b1c20',
             borderColor: '#f7962030'
         }
     };
@@ -27,7 +27,7 @@ export default function ProductBenefits({ benefits, company }) {
             <div className='lg:min-w-3/12 w-full lg:w-auto'>
                 <p 
                     className='font-semibold text-2xl sm:text-3xl lg:text-4xl text-center lg:text-left'
-                    style={{ color: styles.bgColor }}
+                    
                 >
                     Benefits
                 </p>

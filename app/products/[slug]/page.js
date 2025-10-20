@@ -20,7 +20,7 @@ import UnitedPayData from '@/components/UP_ProductData';
 // Combine all product data from all companies
 const AllProductsData = [
   ...UnitedGeneralInsuranceData,
-  ...UnitedLifeAssuranceData, 
+  ...UnitedLifeAssuranceData,
   ...UnitedPayData
 ];
 
@@ -34,7 +34,7 @@ const COMPANY_COLORS = {
 // Company names mapping
 const COMPANY_NAMES = {
   'UGI': 'United General Insurance',
-  'ULA': 'United Life Assurance', 
+  'ULA': 'United Life Assurance',
   'UP': 'United Pay'
 };
 
@@ -42,26 +42,26 @@ const COMPANY_NAMES = {
 const getProductCompany = (product) => {
   // Check if product has explicit company field
   if (product.company) return product.company;
-  
+
   // Determine by product characteristics
   const productName = product.name.toLowerCase();
-  
+
   // United Life Assurance products
-  if (productName.includes('funeral') || 
-      productName.includes('life') || 
-      productName.includes('credit life') ||
-      productName.includes('group life')) {
+  if (productName.includes('funeral') ||
+    productName.includes('life') ||
+    productName.includes('credit life') ||
+    productName.includes('group life')) {
     return 'ULA';
   }
-  
+
   // United Pay products
-  if (productName.includes('loan') || 
-      productName.includes('micro') || 
-      productName.includes('salary') ||
-      productName.includes('umlamleli')) {
+  if (productName.includes('loan') ||
+    productName.includes('micro') ||
+    productName.includes('salary') ||
+    productName.includes('umlamleli')) {
     return 'UP';
   }
-  
+
   // United General Insurance products (default)
   return 'UGI';
 };
@@ -80,7 +80,7 @@ export default function ProductPage({ params }) {
   });
 
   const unwrappedParams = typeof params.then === 'function' ? React.use(params) : params;
-  
+
   // Find product across all companies
   const product = AllProductsData.find(
     p => {
@@ -101,7 +101,7 @@ export default function ProductPage({ params }) {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
-  
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setSubmitted(true);
@@ -110,7 +110,7 @@ export default function ProductPage({ params }) {
 
   // Dynamic text based on company type
   const getCompanySpecificText = () => {
-    switch(company) {
+    switch (company) {
       case 'UP':
         return {
           mainHeading: 'Get hassle-free financing for all your needs',
@@ -140,13 +140,13 @@ export default function ProductPage({ params }) {
   return (
     <div className="min-h-screen font-outfit mx-auto">
       {/* Company Header Bar */}
-      <div 
-        className='h-8 w-full' 
+      <div
+        className='h-8 w-full'
         style={{ backgroundColor: departmentColor }}
       />
-      
+
       {/* Main Header */}
-      <div 
+      <div
         className='py-4'
         style={{ backgroundColor: departmentColor }}
       >
@@ -161,21 +161,21 @@ export default function ProductPage({ params }) {
           </div>
         </header>
       </div>
-      
+
       {/* Hero Section */}
       <div className='relative'>
         <div className='absolute w-full -z-10'>
-          <div 
+          <div
             className='h-full w-full absolute opacity-20'
             style={{ backgroundColor: departmentColor }}
           />
-          <img 
-            src={product.heroImage} 
-            alt={product.name} 
+          <img
+            src={product.heroImage}
+            alt={product.name}
             className="w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px] xl:h-[720px] object-cover"
           />
         </div>
-        
+
         <div className="pt-16 sm:pt-20 md:pt-24 lg:pt-32 flex items-center">
           <div className="max-w-[1400px] mx-auto px-4 w-full gap-8 sm:gap-12 md:gap-16 lg:gap-24 flex flex-col">
             {/* Product Name */}
@@ -184,9 +184,9 @@ export default function ProductPage({ params }) {
                 {product.name}
               </h1>
             </div>
-            
+
             {/* Quote Form Section */}
-            <div 
+            <div
               className="w-full px-4 sm:px-6 md:px-8 flex flex-col rounded-xl sm:rounded-2xl -xl mx-auto text-white py-6 sm:py-8"
               style={{ backgroundColor: departmentColor }}
             >
@@ -198,10 +198,10 @@ export default function ProductPage({ params }) {
                   {product.tagline}
                 </p>
               </div>
-              
+
               <div className="mt-4 sm:mt-6 flex flex-col sm:flex-row gap-3 sm:items-center">
-                <form 
-                  onSubmit={handleSubmit} 
+                <form
+                  onSubmit={handleSubmit}
                   className="bg-white w-full rounded-lg sm:rounded-xl -lg p-4 sm:p-6 md:p-8 flex flex-col gap-3 sm:gap-4 items-center mx-auto text-black"
                 >
                   <div className='w-full flex flex-col text-center sm:text-left'>
@@ -214,16 +214,15 @@ export default function ProductPage({ params }) {
                   </div>
 
                   <RenderForm product={product} formData={formData} handleInputChange={handleInputChange} company={company} />
-                  
+
                   <div className='w-full flex flex-col sm:flex-row gap-3 sm:gap-2 justify-center sm:justify-start mt-4 sm:mt-6'>
                     {/* Request A Quote Button */}
                     <button
                       type="button"
-                      className={`px-6 sm:px-8 py-2 sm:py-3 border rounded-full font-semibold transition flex-1 sm:flex-none text-sm sm:text-base ${
-                        isLightColor 
-                          ? 'border-gray-600 text-gray-600 hover:bg-gray-600 hover:text-white' 
+                      className={`px-6 sm:px-8 py-2 sm:py-3 border rounded-full font-semibold transition flex-1 sm:flex-none text-sm sm:text-base ${isLightColor
+                          ? 'border-gray-600 text-gray-600 hover:bg-gray-600 hover:text-white'
                           : `border-[${departmentColor}] text-[${departmentColor}] hover:bg-[${departmentColor}] hover:text-white`
-                      }`}
+                        }`}
                       style={!isLightColor ? {
                         borderColor: departmentColor,
                         color: departmentColor
@@ -247,11 +246,10 @@ export default function ProductPage({ params }) {
                     {/* Action Button */}
                     <button
                       type="submit"
-                      className={`px-6 sm:px-8 py-2 sm:py-3 rounded-full font-semibold transition flex-1 sm:flex-none text-sm sm:text-base ${
-                        isLightColor 
-                          ? 'bg-gray-600 text-white hover:bg-white hover:text-gray-600 hover:border-gray-600 border' 
+                      className={`px-6 sm:px-8 py-2 sm:py-3 rounded-full font-semibold transition flex-1 sm:flex-none text-sm sm:text-base ${isLightColor
+                          ? 'bg-gray-600 text-white hover:bg-white hover:text-gray-600 hover:border-gray-600 border'
                           : `bg-[${departmentColor}] text-white hover:bg-white hover:text-[${departmentColor}] hover:border-[${departmentColor}] border`
-                      }`}
+                        }`}
                       style={!isLightColor ? {
                         backgroundColor: departmentColor
                       } : {}}
@@ -281,14 +279,14 @@ export default function ProductPage({ params }) {
                   )}
                 </form>
               </div>
-              
+
               {/* Disclaimer */}
               <div className={`text-xs mt-4 sm:mt-6 space-y-2 ${isLightColor ? 'text-gray-700' : 'text-gray-200'}`}>
                 <p className={`font-bold text-lg sm:text-xl ${isLightColor ? 'text-gray-800' : 'text-gray-100'}`}>
                   Disclaimer
                 </p>
                 <p className='text-justify'>
-                  {company === 'UP' 
+                  {company === 'UP'
                     ? `We value your privacy and are committed to safeguarding your personal information. By submitting your details, you consent to us processing them for the purpose of providing you with a personalized loan offer. Loan approval is subject to credit assessment and affordability criteria. Interest rates and terms vary based on individual circumstances. It is essential that all information provided is accurate, as discrepancies may impact the validity of your application.`
                     : `We value your privacy and are committed to safeguarding your personal information. By submitting your details, you consent to us processing them for the purpose of providing you with a personalized quote. Please note that some of our advisors operate under supervision to ensure consistently excellent service. Quoted premiums are based on your individual risk profile and are subject to annual review in line with economic conditions and underwriting criteria. Terms, conditions, and benefit limits apply. It is essential that all information provided is accurate, as discrepancies may impact the validity or outcome of any future claims.`
                   }
@@ -324,7 +322,7 @@ export default function ProductPage({ params }) {
               <div className="flex gap-3 sm:gap-4 mt-4 flex-wrap justify-center md:justify-start">
                 {product.stats && product.stats.map((stat, index) => (
                   <div key={index} className="text-center">
-                    <div 
+                    <div
                       className="text-white px-3 sm:px-4 py-2 rounded-full font-bold text-sm sm:text-base whitespace-nowrap"
                       style={{ backgroundColor: departmentColor }}
                     >
@@ -339,21 +337,22 @@ export default function ProductPage({ params }) {
       </div>
 
       {/* Additional Product Sections */}
-      <div className='max-w-[1400px] px-4 mb-8 sm:mb-12 md:mb-16 mx-auto space-y-12'>
+      <div className='max-w-[1400px]  mb-8 sm:mb-12 md:mb-16 mx-auto space-y-12'>
         {/* Benefits Section */}
         {product.benefits && <ProductBenefits benefits={product.benefits} />}
-        
-        
+
+
         {/* Eligibility Section */}
         {product.eligibility && <ProductEligibility eligibility={product.eligibility} />}
-        
-      
-        
+
+
+
         {/* Final CTA */}
         <div className="mt-12 sm:mt-16">
-          <Agent />
         </div>
       </div>
+      <Agent />
+
     </div>
   );
 }
