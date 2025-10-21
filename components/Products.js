@@ -60,17 +60,7 @@ const productData = [
         color: '#3d834d',
         bgColor: '#3d834d'
     },
-    {
-        title: 'Group Life',
-        desc: 'Comprehensive life coverage for employee groups with employer-backed benefits and quick payouts. Protect your team\'s future.',
-        img: '/group-life.jpg',
-        company: 'ULA',
-        icon: <PiUsersThree className="text-2xl" />,
-        stats: ['Group Coverage', 'Employer Benefits', 'Fast Settlements'],
-        link: '/products/group-life',
-        color: '#3d834d',
-        bgColor: '#3d834d'
-    },
+   
 
     // UGI Products (4)
     {
@@ -131,7 +121,7 @@ const productData = [
         bgColor: '#f79620'
     },
     {
-        title: 'Umlamleli Civil Servant Loan',
+        title: 'Umlamleli Loan',
         desc: 'Specialized financial solutions for government employees with higher limits and favorable terms. Secure funding tailored for public servants.',
         img: '/civil-servant-loan.jpg',
         company: 'UP',

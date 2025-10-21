@@ -1,13 +1,21 @@
+'use client'
 import Image from 'next/image';
 import Link from 'next/link';
+import { useState } from 'react';
 
 export default function Team() {
+  const [activeCard, setActiveCard] = useState(null);
+
+  const handleCardClick = (id) => {
+    setActiveCard(activeCard === id ? null : id);
+  };
+
   const directorsSeniorManagers = [
     {
       id: 1,
       name: "Philip De Sousa",
       title: "Executive Chairman",
-      bio: "MR. De Sousa is the Executive Chairman of United Holdings Ltd. He is also the founding Chairman of the Group's Think-tank and Special Projects Committees. He took over the running of the Dups business in 1996 and was the Founding Managing Director and Executive Chairman of Dups Insurance.",
+      bio: "Philip De Sousa is the Executive Chairman of United Holdings Ltd and the visionary leader behind the group's expansion. With over 28 years of industry experience, he took over the running of the Dups business in 1996 and was the Founding Managing Director and Executive Chairman of Dups Insurance. He chairs the Group's Think-tank and Special Projects Committees, driving strategic innovation across all subsidiaries.",
       image: "/philip-de-sousa.jpeg",
       linkedin: "https://linkedin.com/in/philip-de-sousa"
     },
@@ -15,7 +23,7 @@ export default function Team() {
       id: 2,
       name: "Nelisiwe De Sousa",
       title: "Group Chief Executive Officer",
-      bio: "Group Chief Executive Officer Mrs. De Sousa is a University of Eswatini Alumnus holding a BSc. Bio/Geo, Post Graduate Certificate, CoP Short Term Insurance, and various other qualifications. She started as an administrator at Dups Insurance in 2001 and progressed to CEO in 2011.",
+      bio: "Nelisiwe De Sousa is the Group Chief Executive Officer with over 22 years of experience in the insurance industry. A University of Eswatini Alumnus holding a BSc. Bio/Geo and Post Graduate Certificate in CoP Short Term Insurance, she started as an administrator at Dups Insurance in 2001 and progressed to CEO in 2011. Under her leadership, the group has seen remarkable growth and diversification into new financial services.",
       image: "/Nelisiwe De Sousa.jpeg",
       linkedin: "https://linkedin.com/in/nelisiwe-de-sousa"
     },
@@ -23,7 +31,7 @@ export default function Team() {
       id: 3,
       name: "Zombodze Magagula",
       title: "Technical Advisor",
-      bio: "Mr Magagula is the Technical Advisor at United Holdings Ltd focusing on the policies and legislature framework of the companies in the subsidy. He offers oversight in the Risk, Legal and Compliance division as well as the necessary network in the industry.",
+      bio: "Zombodze Magagula serves as the Technical Advisor at United Holdings Ltd, bringing extensive expertise in insurance policies and legislative frameworks. With a career spanning over two decades in the financial sector, he provides crucial oversight in the Risk, Legal and Compliance division. His deep industry knowledge and extensive professional network have been instrumental in navigating regulatory requirements across the group's subsidiaries.",
       image: "/Zombodze Magagula.jpeg",
       linkedin: "https://linkedin.com/in/zombodze-magagula"
     },
@@ -31,7 +39,7 @@ export default function Team() {
       id: 17,
       name: "Roison Pave",
       title: "Group Corporate Affairs Manager",
-      bio: "Roison Daniel Pave is a seasoned executive with over 12 years of expertise in Human Capital Management, Corporate Governance, and organizational leadership across diverse sectors.",
+      bio: "Roison Daniel Pave is a seasoned executive with over 12 years of expertise in Human Capital Management, Corporate Governance, and organizational leadership. His career spans diverse sectors including financial services, manufacturing, and consulting. He holds multiple certifications in corporate governance and has been instrumental in developing the group's talent management strategies and corporate communication frameworks.",
       image: "/Roison Pave (GM Corporate Affairs).jpg",
       linkedin: "https://linkedin.com/in/roison-pave"
     },
@@ -39,7 +47,7 @@ export default function Team() {
       id: 4,
       name: "Mlamuli Magagula",
       title: "Group General Manager Finance",
-      bio: "Mr Magagula is the Group General Manager Finance. He previously oversaw the financial function of the group and held the role of an Audit Manager at PKF Chartered Accountant Swaziland before joining the Group.",
+      bio: "Mlamuli Magagula is the Group General Manager Finance with comprehensive experience in financial management and auditing. Prior to joining United Holdings, he served as an Audit Manager at PKF Chartered Accountant Swaziland, where he honed his expertise in financial controls and compliance. He oversees the group's financial strategy, budgeting, and financial reporting across all subsidiaries, ensuring robust financial health and compliance.",
       image: "/Mlamuli Magagula.jpeg",
       linkedin: "https://linkedin.com/in/mlamuli-magagula"
     },
@@ -47,7 +55,7 @@ export default function Team() {
       id: 5,
       name: "Witness Msibi",
       title: "General Manager Operations",
-      bio: "Mr. Msibi is the General Manager Operations at United Holdings, with over 19 years of extensive experience in the insurance industry. He began his journey as a retail broker after earning a Bachelor's Degree in Accounting from the University of Eswatini.",
+      bio: "Witness Msibi is the General Manager Operations at United Holdings with over 19 years of extensive experience in the insurance industry. He began his career as a retail broker after earning a Bachelor's Degree in Accounting from the University of Eswatini. His operational expertise encompasses process optimization, customer service excellence, and strategic implementation across the group's diverse business units.",
       image: "/Witness Msibi (GM Ops).jpg",
       linkedin: "https://linkedin.com/in/witness-msibi"
     },
@@ -55,11 +63,10 @@ export default function Team() {
       id: 6,
       name: "Winile Sibandze",
       title: "Group Company Secretary & Legal",
-      bio: "Mrs. W. Sibandze is an experienced legal and compliance professional with expertise in corporate governance, regulatory compliance, and risk management. She currently serves as Company Secretary & Legal at United Holdings.",
+      bio: "Winile Sibandze is an experienced legal and compliance professional with expertise in corporate governance, regulatory compliance, and risk management. She currently serves as Company Secretary & Legal at United Holdings, where she ensures adherence to statutory requirements and corporate governance standards. Her legal acumen has been crucial in contract negotiations, compliance frameworks, and corporate structuring across the group.",
       image: "/Winile Sibandze (Group Secretary & Legal).jpg",
       linkedin: "https://linkedin.com/in/winile-sibandze"
     },
-
   ];
 
   const operationsManagement = [
@@ -67,7 +74,7 @@ export default function Team() {
       id: 7,
       name: "Sihle Dlamini",
       title: "United Life Assurance Operations Manager",
-      bio: "Sihle Dlamini is the Operations Manager at United Life Assurance, responsible for overseeing daily operations and ensuring high-quality service delivery. Since joining the company in 2018 as a Branch Controller, he has progressed through various leadership roles.",
+      bio: "Sihle Dlamini is the Operations Manager at United Life Assurance, responsible for overseeing daily operations and ensuring high-quality service delivery. Since joining the company in 2018 as a Branch Controller, he has progressed through various leadership roles. His expertise includes process optimization, team leadership, and implementing operational efficiencies that enhance customer experience and drive business growth.",
       image: "/Sihle Dlamini (ULA Ops).jpg",
       linkedin: "https://linkedin.com/in/sihle-dlamini"
     },
@@ -75,7 +82,7 @@ export default function Team() {
       id: 8,
       name: "Sebenele Zwane",
       title: "United Pay Operations Manager",
-      bio: "Sebenele M. Zwane is an experienced Operations Manager with a strong background in financial services, spanning insurance, credit, lending, and investment advisory. Currently leading operations at United Pay Ltd.",
+      bio: "Sebenele M. Zwane is an experienced Operations Manager with a strong background in financial services, spanning insurance, credit, lending, and investment advisory. Currently leading operations at United Pay Ltd, he has been instrumental in developing robust operational frameworks for the payment solutions platform. His expertise ensures seamless transaction processing and customer service excellence in the digital payments space.",
       image: "/Sebenele Zwane.jpeg",
       linkedin: "https://linkedin.com/in/sebenele-zwane"
     },
@@ -83,19 +90,18 @@ export default function Team() {
       id: 9,
       name: "Lovemore Gundani",
       title: "United General Insurance Operations Manager",
-      bio: "Mr. Gundani is a seasoned insurance professional with a Master's in Business Administration and a Bachelor of Commerce Honours Degree in Insurance and Risk Management from Midlands State University.",
+      bio: "Lovemore Gundani is a seasoned insurance professional with a Master's in Business Administration and a Bachelor of Commerce Honours Degree in Insurance and Risk Management from Midlands State University. With extensive experience in insurance operations, he oversees underwriting, claims management, and customer service operations, ensuring United General Insurance maintains its reputation for reliability and excellence.",
       image: "/Lovemore Gundani (UGI Ops Man).jpeg",
       linkedin: "https://linkedin.com/in/lovemore-gundani"
     }
   ];
 
   const supportServicesManagement = [
-    
     {
       id: 10,
       name: "Lungile Ngwenya",
       title: "Corporate Sales Manager",
-      bio: "Corporate Sales & Retention Manager Ms. Ngwenya is a Regent Business school Alumnus from South Africa, holding a Degree in Business Management, Certificate of Proficiency (COP) in insurance and AAT 11.",
+      bio: "Lungile Ngwenya is the Corporate Sales & Retention Manager with a strong background in business management and insurance. A Regent Business School Alumnus from South Africa, she holds a Degree in Business Management, Certificate of Proficiency (COP) in insurance, and AAT 11. Her expertise lies in developing corporate client relationships, sales strategy implementation, and client retention programs that drive sustainable business growth.",
       image: "/Lungile Ngwenya (Corporate Sales Manager).jpeg",
       linkedin: "https://linkedin.com/in/lungile-ngwenya"
     },
@@ -103,7 +109,7 @@ export default function Team() {
       id: 11,
       name: "Justice Dlamini",
       title: "Group ICT Manager",
-      bio: "Mr. Justice Dlamini serves as the Group ICT Manager. He holds a Bachelor's Degree in Information Technology from the University of Eswatini, as well as an Associate Degree in Business Information Technology from Limkokwing University.",
+      bio: "Justice Dlamini serves as the Group ICT Manager, bringing comprehensive expertise in information technology systems and digital transformation. He holds a Bachelor's Degree in Information Technology from the University of Eswatini, as well as an Associate Degree in Business Information Technology from Limkokwing University. He leads the group's technology strategy, ensuring robust IT infrastructure and digital innovation across all business units.",
       image: "/Justice Dlamini (IT Manager).jpg",
       linkedin: "https://linkedin.com/in/justice-dlamini"
     },
@@ -111,16 +117,15 @@ export default function Team() {
       id: 12,
       name: "Simeon Simelane",
       title: "Group Internal Audit Manager",
-      bio: "Mr. S. Simelane is a Certified Internal Auditor and risk management professional with over 20 years of experience in internal auditing, banking, insurance, compliance, and enterprise risk management.",
+      bio: "Simeon Simelane is a Certified Internal Auditor and risk management professional with over 20 years of experience in internal auditing, banking, insurance, compliance, and enterprise risk management. His extensive career includes developing comprehensive audit frameworks and risk management strategies that ensure organizational compliance and operational integrity across the United Holdings group.",
       image: "/Simeon Simelane (GIAM).jpeg",
       linkedin: "https://linkedin.com/in/simeon-simelane"
     },
-   
     {
       id: 14,
       name: "Siphesihle Dlamini",
       title: "Group Risk & Compliance Manager",
-      bio: "Ms. S. Dlamini is a legal and risk management professional with experience spanning compliance oversight, enterprise risk assessment, and legal advisory services.",
+      bio: "Siphesihle Dlamini is a legal and risk management professional with experience spanning compliance oversight, enterprise risk assessment, and legal advisory services. She plays a critical role in identifying, assessing, and mitigating risks across the group while ensuring compliance with regulatory requirements. Her expertise helps maintain the group's strong compliance culture and risk-aware decision-making processes.",
       image: "/2.jpg",
       linkedin: "https://linkedin.com/in/siphesihle-dlamini"
     },
@@ -128,7 +133,7 @@ export default function Team() {
       id: 15,
       name: "Peter Maseko",
       title: "Finance Manager",
-      bio: "Mr. P. Maseko serves as the Finance Manager at United Holdings, bringing over 15 years of experience in financial management, auditing, and strategic operations.",
+      bio: "Peter Maseko serves as the Finance Manager at United Holdings, bringing over 15 years of experience in financial management, auditing, and strategic operations. His expertise encompasses financial reporting, budget management, and strategic financial planning. He plays a key role in financial decision-making and ensuring the group's financial operations align with strategic objectives and regulatory requirements.",
       image: "/Peter Maseko (Finance Manager).jpg",
       linkedin: "https://linkedin.com/in/peter-maseko"
     },
@@ -136,15 +141,18 @@ export default function Team() {
       id: 16,
       name: "Nozwelethu Nxumalo",
       title: "Retail Sales Manager",
-      bio: "Ms. Nxumalo is an Institute of Marketing Management Graduate School (IMM GS) alumnus holding a BBA in Marketing Management, Diploma in Law from University of Eswatini.",
+      bio: "Nozwelethu Nxumalo is the Retail Sales Manager with a strong background in marketing and business development. An Institute of Marketing Management Graduate School (IMM GS) alumnus holding a BBA in Marketing Management and a Diploma in Law from University of Eswatini. She leads the retail sales strategy, driving customer acquisition and retention through innovative marketing approaches and excellent customer service delivery.",
       image: "/Nozwelethu Nxumalo (Retail Sales Manager).jpg",
       linkedin: "https://linkedin.com/in/nozwelethu-nxumalo"
     },
   ];
 
-  // New Oval Team Card Component
+  // Updated Team Card Component with Click Interaction
   const TeamCard = ({ member }) => (
-    <div className="bg-white rounded-3xl rounded-b-[9999px] hover:border-2  transition-all duration-100 group cursor-pointer overflow-hidden relative h-full flex flex-col">
+    <div
+      className=" rounded-3xl rounded-b-[9999px] border-2 border-transparent hover:border-[#9b1c20] transition-all duration-300 group cursor-pointer overflow-hidden relative h-full flex flex-col"
+      onClick={() => handleCardClick(member.id)}
+    >
       {/* Image Container with Oval Shape */}
       <div className="relative h-[500px] overflow-hidden">
         <div className="absolute inset-0 rounded-b-[9999px] rounded-t-3xl overflow-hidden">
@@ -155,43 +163,63 @@ export default function Team() {
             height={1080}
             priority={true}
             quality={100}
-            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
           />
           {/* Gradient Overlay for Name & Title */}
-          <div className="absolute  bg-gradient-to-t h-60 w-full -bottom-1 z-30 transition-all duration-500 ease-in-out group-hover:hidden text-white group-hover:via-white group-hover:to-white from-[#9b1c20] via-[#9b1c20] 80 to-transparent rounded-b-[9999px] rounded-t-3xl" />
+          {activeCard !== member.id && (
+            <div className="absolute bg-gradient-to-t h-40 w-full -bottom-1 z-30 from-[#9b1c20] via-[#9b1c20] 80 to-transparent rounded-b-[9999px] rounded-t-3xl" />
+          )}
         </div>
-        
+
         {/* Name and Title Overlay */}
-        <div className="absolute z-50 bottom-[10%] left-0 right-0 text-center px-4">
-          <h3 className="text-2xl font-semibold text-white mb-1">{member.name}</h3>
-          <p className="text-lg text-white group-hover:text-white text-center max-w-[20rem] mx-auto">{member.title}</p>
-        </div>
+        {activeCard !== member.id && (
+          <div className="absolute z-50 bottom-[10%] left-0 right-0 text-center px-4">
+            <h3 className="text-2xl font-semibold text-white mb-1">{member.name}</h3>
+            <p className="text-lg text-white text-center max-w-[20rem] mx-auto">{member.title}</p>
+          </div>
+        )}
       </div>
 
-      {/* Hover Content - Bio and LinkedIn */}
-      <div className="absolute inset-0 bg-white rounded-3xl p-6 opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col  transform translate-y-2 group-hover:translate-y-0">
-        <div>
-          <h3 className="text-3xl font-bold text-gray-900 mb-2 text-center">{member.name}</h3>
-          <p className="text-sm text-[#9b1c20] font-medium mb-4 text-center">{member.title}</p>
-          <p className="text-gray-600 text-lg leading-relaxed ">
-            {member.bio}
-          </p>
-        </div>
-        
-        {/* LinkedIn Icon */}
-        <div className="flex justify-center pt-4">
-          <a 
-            href={member.linkedin} 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="inline-flex items-center justify-center w-12 h-12 bg-[#9b1c20] text-white rounded-full hover:bg-[#7a1619] transition-colors duration-300"
+      {/* Click-activated Content - Bio and LinkedIn */}
+      {activeCard === member.id && (
+        <div className="absolute inset-0 bg-white rounded-3xl p-6 flex flex-col transform translate-y-0 animate-fadeIn">
+          <div className="flex-grow">
+            <h3 className="text-3xl font-bold text-gray-900 mb-2 text-center">{member.name}</h3>
+            <p className="text-sm text-[#9b1c20] font-medium mb-4 text-center">{member.title}</p>
+            <p className="text-gray-600 text-lg leading-relaxed overflow-y-auto max-h-64">
+              {member.bio}
+            </p>
+          </div>
+
+          {/* LinkedIn Icon */}
+          <div className="flex justify-center pt-4">
+            <a
+              href={member.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center w-12 h-12 bg-[#9b1c20] text-white rounded-full hover:bg-[#7a1619] transition-colors duration-300"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M16.338 16.338H13.67V12.16c0-.995-.017-2.277-1.387-2.277-1.39 0-1.601 1.086-1.601 2.207v4.248H8.014v-8.59h2.559v1.174h.037c.356-.675 1.227-1.387 2.526-1.387 2.703 0 3.203 1.778 3.203 4.092v4.711zM5.005 6.575a1.548 1.548 0 11-.003-3.096 1.548 1.548 0 01.003 3.096zm-1.337 9.763H6.34v-8.59H3.667v8.59zM17.668 1H2.328C1.595 1 1 1.581 1 2.298v15.403C1 18.418 1.595 19 2.328 19h15.34c.734 0 1.332-.582 1.332-1.299V2.298C19 1.581 18.402 1 17.668 1z" />
+              </svg>
+            </a>
+          </div>
+
+          {/* Close Button */}
+          <button
+            className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 transition-colors"
+            onClick={(e) => {
+              e.stopPropagation();
+              setActiveCard(null);
+            }}
           >
-            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-              <path d="M16.338 16.338H13.67V12.16c0-.995-.017-2.277-1.387-2.277-1.39 0-1.601 1.086-1.601 2.207v4.248H8.014v-8.59h2.559v1.174h.037c.356-.675 1.227-1.387 2.526-1.387 2.703 0 3.203 1.778 3.203 4.092v4.711zM5.005 6.575a1.548 1.548 0 11-.003-3.096 1.548 1.548 0 01.003 3.096zm-1.337 9.763H6.34v-8.59H3.667v8.59zM17.668 1H2.328C1.595 1 1 1.581 1 2.298v15.403C1 18.418 1.595 19 2.328 19h15.34c.734 0 1.332-.582 1.332-1.299V2.298C19 1.581 18.402 1 17.668 1z" />
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             </svg>
-          </a>
+          </button>
         </div>
-      </div>
+      )}
     </div>
   );
 
@@ -253,7 +281,7 @@ export default function Team() {
             </p>
           </div>
 
-          <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
+          <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-18'>
             {directorsSeniorManagers.map((member) => (
               <TeamCard key={member.id} member={member} />
             ))}
@@ -272,7 +300,7 @@ export default function Team() {
             </p>
           </div>
 
-          <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
+          <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-18 '>
             {operationsManagement.map((member) => (
               <TeamCard key={member.id} member={member} />
             ))}
@@ -291,7 +319,7 @@ export default function Team() {
             </p>
           </div>
 
-          <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
+          <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-18'>
             {supportServicesManagement.map((member) => (
               <TeamCard key={member.id} member={member} />
             ))}
@@ -356,6 +384,17 @@ export default function Team() {
           </div>
         </div>
       </div>
+
+      {/* Add custom animation for fade-in effect */}
+      <style jsx>{`
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(10px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fadeIn {
+          animation: fadeIn 0.3s ease-out;
+        }
+      `}</style>
     </div>
   );
 }

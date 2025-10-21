@@ -21,7 +21,7 @@ import {
 
 const UnitedLifeAssuranceData = [
   {
-    name: 'Family Funeral Plan',
+    name: 'Sinawe Funeral Plan',
     tagline: 'Secure Your Loved Ones\' Farewell',
     heroImage: '/family-funeral.jpg',
     overview:
@@ -60,46 +60,7 @@ const UnitedLifeAssuranceData = [
     ],
     trust: 'Trusted family protection for Eswatini households.',
   },
-  {
-    name: 'Individual Funeral Plan',
-    tagline: 'Peace of Mind for Your Final Journey',
-    heroImage: '/individual-funeral.jpg',
-    overview:
-      'United Life Assurance (ULA) Individual Funeral Plan offers personalized funeral coverage with fast payouts and premium flexibility. Designed for Eswatini residents seeking personal protection, this life assurance product provides tailored coverage up to E25,000 with rapid claims processing. With options for annual, bi-annual, or monthly payments and additional benefits like free storage, ULA ensures your final journey is handled with dignity and care.',
-    stats: ['From E30/month', 'Up to E25,000 coverage', 'Flexible payment options'],
-    benefits: [
-      { text: 'Tailored coverage up to E25,000', icon: PiUser },
-      { text: 'Rapid claims processing', icon: PiCheckCircle },
-      { text: 'Annual, bi-annual, or monthly payments', icon: PiCurrencyCircleDollar },
-      { text: '14 days free storage with Dups', icon: PiHouse },
-      { text: '100% Swati-owned reliability', icon: PiShieldCheck },
-    ],
-    coverage: [
-      { title: 'Personal Coverage', content: 'Tailored funeral coverage up to E25,000 for individuals.' },
-      { title: 'Storage Benefits', content: '14 days free storage facility access.' },
-      { title: 'Payment Flexibility', content: 'Multiple payment frequency options available.' },
-    ],
-    exclusions: [
-      { title: 'Policy Specific', content: 'Exclusions vary by plan; consult policy terms for details.' },
-      { title: 'Suicide Clause', content: 'Standard suicide clause applies as per policy terms.' },
-    ],
-    eligibility: ['Eswatini resident', 'Age 18-65', 'Valid ID required'],
-    howToApply: [
-      'Contact a ULA branch or request a quote online',
-      'Submit valid ID and personal details',
-      'Receive approval and make payment',
-    ],
-    paymentMethods: ['Debit Order', 'Bank Transfer', 'Mobile Money', 'Annual/Bi-annual'],
-    faqs: [
-      { title: 'What payment frequencies are available?', content: 'Monthly, bi-annual, and annual payment options are available.' },
-      { title: 'Is the free storage included?', content: 'Yes, 14 days free storage with Dups is included in the plan.' },
-    ],
-    related: [
-      { name: 'Family Funeral Plan', image: '/images/family-funeral.jpg', link: '/products/family-funeral-plan' },
-      { name: 'Group Life', image: '/images/group-life.jpg', link: '/products/group-life' },
-    ],
-    trust: 'Personalized funeral protection for Eswatini residents.',
-  },
+ 
   {
     name: 'Tinkhundla Funeral Cover',
     tagline: 'Affordable Cover for All Communities',
@@ -139,46 +100,6 @@ const UnitedLifeAssuranceData = [
       { name: 'Individual Funeral Plan', image: '/images/individual-funeral.jpg', link: '/products/individual-funeral-plan' },
     ],
     trust: 'Affordable community protection for Eswatini residents.',
-  },
-  {
-    name: 'Group Life',
-    tagline: 'Protect Your Team\'s Future',
-    heroImage: '/group-life.jpg',
-    overview:
-      'United Life Assurance (ULA) Group Life provides comprehensive life coverage for employee groups with employer-backed benefits and quick payouts. This corporate life assurance product offers death and disability benefits for teams of all sizes, with flexible group options and fast claim settlements. Designed for Eswatini businesses, ULA Group Life ensures your employees are protected, contributing to workplace security and peace of mind.',
-    stats: ['From E40/month per member', 'Group coverage', 'Employer-subsidized'],
-    benefits: [
-      { text: 'Covers employees under one policy', icon: PiUsers },
-      { text: 'Death and disability benefits', icon: PiShieldCheck },
-      { text: 'Employer-subsidized premiums', icon: PiBank },
-      { text: 'Flexible group size options', icon: PiChartLineUp },
-      { text: 'Fast claim settlements', icon: PiCheckCircle },
-    ],
-    coverage: [
-      { title: 'Employee Protection', content: 'Life coverage for all employees under a single policy.' },
-      { title: 'Death Benefits', content: 'Financial protection for families in case of employee death.' },
-      { title: 'Disability Coverage', content: 'Support for employees in case of permanent disability.' },
-    ],
-    exclusions: [
-      { title: 'Policy Specific', content: 'Exclusions vary by plan; consult policy terms for details.' },
-      { title: 'Employment Status', content: 'Coverage typically requires active employment status.' },
-    ],
-    eligibility: ['Eswatini resident', 'Employed in a registered group', 'Employer enrollment required'],
-    howToApply: [
-      'Employer contacts ULA for group enrollment',
-      'Submit employee details and company registration',
-      'Receive approval and arrange payment',
-    ],
-    paymentMethods: ['Debit Order', 'Bank Transfer', 'Corporate Payment'],
-    faqs: [
-      { title: 'What is the minimum group size?', content: 'Flexible options available for groups of various sizes.' },
-      { title: 'Can employers subsidize premiums?', content: 'Yes, employers can choose to subsidize employee premiums.' },
-    ],
-    related: [
-      { name: 'Credit Life', image: '/images/credit-life.jpg', link: '/products/credit-life' },
-      { name: 'Family Funeral Plan', image: '/images/family-funeral.jpg', link: '/products/family-funeral-plan' },
-    ],
-    trust: 'Comprehensive group protection for Eswatini businesses.',
   },
   {
     name: 'Credit Life',

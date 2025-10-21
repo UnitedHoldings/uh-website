@@ -187,7 +187,7 @@ export default function UnitedLifeAssurance() {
                   onClick={scrollToProducts}
                   className="bg-white text-[#3d834d] px-8 py-4 rounded-full font-semibold hover:bg-gray-100 transition-colors text-lg text-center"
                 >
-                  Get Free Quote
+                  Get Covered Today
                 </button>
                 <button
                   onClick={scrollToProducts}
@@ -197,26 +197,7 @@ export default function UnitedLifeAssurance() {
                 </button>
               </div>
             </div>
-            <div className=" rounded-xl bg-[#3d834d] p-6 min-w-[300px] ">
-              <h3 className="text-white font-semibold text-lg mb-3">Secure Your Family&apos;s Future</h3>
-              <p className="text-white/80 text-sm mb-4">
-                Trusted by thousands of Eswatini families for life protection and peace of mind
-              </p>
-              <div className="space-y-2">
-                <div className="flex items-center text-white/90 text-sm">
-                  <PiCheckCircle className="text-green-400 mr-2" />
-                  Quick claim payouts
-                </div>
-                <div className="flex items-center text-white/90 text-sm">
-                  <PiCheckCircle className="text-green-400 mr-2" />
-                  Affordable premiums
-                </div>
-                <div className="flex items-center text-white/90 text-sm">
-                  <PiCheckCircle className="text-green-400 mr-2" />
-                  Family-focused protection
-                </div>
-              </div>
-            </div>
+            
           </div>
         </div>
       </div>
@@ -325,7 +306,7 @@ export default function UnitedLifeAssurance() {
               onClick={scrollToProducts}
               className="bg-[#3d834d] text-white px-8 py-4 rounded-full font-semibold hover:bg-[#2f6b3d] transition-colors text-lg"
             >
-              Get Free Quote
+              Get Covered Today
             </button>
             <Link
               href="/contact"
