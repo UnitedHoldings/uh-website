@@ -112,7 +112,7 @@ export default function RootLayout({ children }) {
     <html lang="en" className={`${outfit.variable} ${geistSans.variable} ${geistMono.variable}`}>
       <head>
         {/* ✅ Preload critical resources */}
-        <link rel="preconnect" href="https://cdn.voiceflow.com" />
+       
         
         {/* ✅ Inject Schema.org JSON-LD */}
         <script
@@ -122,53 +122,8 @@ export default function RootLayout({ children }) {
           }}
         />
 
-        {/* ✅ Voiceflow Chatbot Styles - Regular style tag in head */}
-        <style>
-          {`
-            /* Voiceflow Widget Container */
-            .vf-widget-container {
-              z-index: 9998 !important;
-              position: fixed !important;
-            }
-            
-            /* Voiceflow Chat Launcher */
-            .vf-chat-launcher {
-              bottom: 100px !important;
-              right: 24px !important;
-              background-color: #9b1c20 !important;
-              border: 2px solid white !important;
-              box-shadow: 0 4px 12px rgba(155, 28, 32, 0.3) !important;
-              z-index: 9999 !important;
-            }
-            
-            .vf-chat-launcher:hover {
-              background-color: #7a1619 !important;
-              transform: scale(1.05) !important;
-            }
-            
-            /* Voiceflow Chat Window */
-            .vf-chat-window {
-              z-index: 9997 !important;
-              bottom: 160px !important;
-              right: 24px !important;
-            }
-            
-            /* Mobile adjustments */
-            @media (max-width: 768px) {
-              .vf-chat-launcher {
-                bottom: 90px !important;
-                right: 16px !important;
-              }
-              
-              .vf-chat-window {
-                bottom: 150px !important;
-                right: 16px !important;
-                left: 16px !important;
-                width: auto !important;
-              }
-            }
-          `}
-        </style>
+        
+       
       </head>
       <body className={`font-outfit antialiased relative bg-white text-gray-900`}>
         <Header />
@@ -207,72 +162,7 @@ export default function RootLayout({ children }) {
           </span>
         </a>
 
-        {/* ✅ Voiceflow Chatbot - Improved implementation */}
-        <Script
-          id="voiceflow-chatbot"
-          strategy="afterInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `
-              (function(d, t) {
-                var v = d.createElement(t), s = d.getElementsByTagName(t)[0];
-                v.onload = function() {
-                  console.log('Voiceflow widget loaded successfully');
-                  if (window.voiceflow && window.voiceflow.chat) {
-                    window.voiceflow.chat.load({
-                      verify: { projectID: "68dea042360ab353c0717f93" },
-                      url: "https://general-runtime.voiceflow.com",
-                      versionID: "production",
-                      assistant: {
-                        title: "United Holdings Assistant",
-                        description: "How can we help you today?",
-                        image: "${siteUrl}/logo.png",
-                        launcher: "icon",
-                        color: "#9b1c20",
-                      },
-                      voice: {
-                        url: "https://runtime-api.voiceflow.com",
-                      },
-                      styles: {
-                        button: { 
-                          icon: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/></svg>',
-                          size: 'medium'
-                        }
-                      }
-                    }).then(function() {
-                      console.log('Voiceflow chat initialized');
-                      // Apply custom styles after widget is loaded
-                      setTimeout(function() {
-                        var launcher = document.querySelector('.vf-chat-launcher');
-                        if (launcher) {
-                          launcher.style.backgroundColor = '#9b1c20';
-                          launcher.style.border = '2px solid white';
-                          launcher.style.boxShadow = '0 4px 12px rgba(155, 28, 32, 0.3)';
-                          launcher.style.zIndex = '9999';
-                        }
-                        
-                        var widgetContainer = document.querySelector('.vf-widget-container');
-                        if (widgetContainer) {
-                          widgetContainer.style.zIndex = '9999';
-                        }
-                      }, 1000);
-                    }).catch(function(error) {
-                      console.error('Voiceflow chat failed to load:', error);
-                    });
-                  } else {
-                    console.error('Voiceflow not found in window object');
-                  }
-                };
-                v.onerror = function() {
-                  console.error('Failed to load Voiceflow widget script');
-                };
-                v.src = "https://cdn.voiceflow.com/widget-next/bundle.mjs";
-                v.type = "text/javascript";
-                v.defer = true;
-                s.parentNode.insertBefore(v, s);
-              })(document, 'script');
-            `,
-          }}
-        />
+       
       </body>
     </html>
   );
