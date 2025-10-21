@@ -316,13 +316,7 @@ export default function CareersPage() {
 
   return (
     <>
-      <SeoHead
-        title="Careers at United Holdings | Join Our Team"
-        description="Explore exciting career opportunities at United Holdings. Build your future with a trusted leader in insurance and financial services in Eswatini."
-        keywords="United Holdings Careers, Jobs in Eswatini, Insurance Jobs, Financial Services Careers"
-        image="/images/careers-og.jpg"
-        url="https://www.unitedholdings.co.sz/about/careers"
-      /><div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-gray-50">
         {/* Hero Section */}
         <div className="bg-gradient-to-r from-[#9b1c20] to-[#3d834d] text-white py-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

@@ -1,18 +1,13 @@
 import Agent from '@/components/Agent';
 import Products from '@/components/Products';
+import SeoHead from '@/components/SEOhead';
 import Image from 'next/image';
 import Link from 'next/link';
 
 export default function About() {
     return (
         <>
-            <SeoHead
-                title="United Holdings Gallery | Our Story in Pictures"
-                description="Browse the United Holdings gallery to see our journey, events, and community impact across Eswatini and Southern Africa."
-                keywords="United Holdings Gallery, Corporate Events, Insurance Company Eswatini"
-                image="/images/gallery-og.jpg"
-                url="https://www.unitedholdings.co.sz/about/gallery"
-            />
+           
             <div className="min-h-screen font-outfit mx-auto">
                 {/* Header Section */}
                 <div className='bg-[#881a1e] h-6 sm:h-8 w-full' />
