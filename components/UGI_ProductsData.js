@@ -31,6 +31,7 @@ import {
   PiShieldWarning,
   PiBuildings,
   PiFileText,
+  PiGlobe,
 } from 'react-icons/pi';
 
 const UnitedGeneralInsuranceData = [
@@ -45,8 +46,6 @@ const UnitedGeneralInsuranceData = [
       { text: 'Legal counseling and representation', icon: PiGavel },
       { text: 'Coverage for civil, criminal, and labor matters', icon: PiScales },
       { text: 'Face-to-face or telephonic advice', icon: PiPhone },
-      { text: 'Accidental death legal expenses cash benefit', icon: PiCurrencyCircleDollar },
-      { text: 'Extended services like debt counseling', icon: PiHandCoins },
     ],
     coverage: [
       { title: 'Legal Disputes', content: 'Support for civil, criminal, and labor-related legal matters.' },
@@ -85,6 +84,7 @@ const UnitedGeneralInsuranceData = [
       { text: 'Protection from natural causes and hijacking', icon: PiShieldCheck },
       { text: 'Third-party liability coverage', icon: PiUsers },
       { text: 'Optional add-ons like towing and modifications', icon: PiWrench },
+      { text: 'Covers both import and local cars', icon: PiGlobe },
     ],
     coverage: [
       { title: 'Vehicle Protection', content: 'Covers accidents, theft, and natural disasters.' },
@@ -189,7 +189,7 @@ const UnitedGeneralInsuranceData = [
     trust: 'Comprehensive home protection for Eswatini residents.',
   },
   {
-    name: 'Home Warranty Insurance',
+    name: 'Home Insurance',
     tagline: 'Buy or Sell Homes Worry-Free',
     heroImage: '/home-warranty.jpg',
     overview:
@@ -342,7 +342,7 @@ const UnitedGeneralInsuranceData = [
     trust: 'Trusted indemnity for Eswatini professionals.',
   },
   {
-    name: 'Bonds and Guarantee',
+    name: 'Bonds and Guarantees',
     tagline: 'Secure Your Contracts Effortlessly',
     heroImage: '/bonds-guarantee.jpg',
     overview:

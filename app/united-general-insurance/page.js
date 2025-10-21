@@ -34,11 +34,11 @@ const categoryIcons = {
     'Motor Insurance': PiCar,
     'Personal Accident Insurance': PiFirstAidKit,
     'Home Contents Insurance': PiHouse,
-    'Home Warranty Insurance': PiCheckCircle,
+    'Home Insurance': PiCheckCircle,
     'Multimark Policy': PiBuildings,
     'Medical Malpractice': PiStethoscope,
     'Professional Indemnity': PiBriefcase,
-    'Bonds and Guarantee': PiHandshake,
+    'Bonds and Guarantees': PiHandshake,
     'Engineering Policies': PiGear,
     'Fidelity Guarantee': PiLock,
     'Political Violence and Terrorism': PiShieldWarning
@@ -49,11 +49,11 @@ const categoryColors = {
     'Motor Insurance': 'bg-green-100 text-green-600',
     'Personal Accident Insurance': 'bg-red-100 text-red-600',
     'Home Contents Insurance': 'bg-purple-100 text-purple-600',
-    'Home Warranty Insurance': 'bg-orange-100 text-orange-600',
+    'Home Insurance': 'bg-orange-100 text-orange-600',
     'Multimark Policy': 'bg-indigo-100 text-indigo-600',
     'Medical Malpractice': 'bg-pink-100 text-pink-600',
     'Professional Indemnity': 'bg-teal-100 text-teal-600',
-    'Bonds and Guarantee': 'bg-amber-100 text-amber-600',
+    'Bonds and Guarantees': 'bg-amber-100 text-amber-600',
     'Engineering Policies': 'bg-cyan-100 text-cyan-600',
     'Fidelity Guarantee': 'bg-lime-100 text-lime-600',
     'Political Violence and Terrorism': 'bg-rose-100 text-rose-600'
@@ -268,23 +268,14 @@ export default function UnitedGeneralInsurance() {
                                     onChange={(e) => setSelectedCategory(e.target.value)}
                                     className="pl-10 pr-8 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9b1c20] focus:border-transparent appearance-none bg-white"
                                 >
-                                    <option value="All">All Categories</option>
+                                    <option value="All">All Products</option>
                                     {categories.filter(cat => cat !== 'All').map(category => (
                                         <option key={category} value={category}>{category}</option>
                                     ))}
                                 </select>
                             </div>
 
-                            <select
-                                value={priceFilter}
-                                onChange={(e) => setPriceFilter(e.target.value)}
-                                className="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9b1c20] focus:border-transparent bg-white"
-                            >
-                                <option value="All">All Prices</option>
-                                <option value="Under E100">Under E100/month</option>
-                                <option value="E100 - E300">E100 - E300/month</option>
-                                <option value="Over E300">Over E300/month</option>
-                            </select>
+                          
                         </div>
                     </div>
 

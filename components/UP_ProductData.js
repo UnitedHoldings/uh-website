@@ -25,8 +25,8 @@ const UnitedPayData = [
       'United Pay Micro Loan provides instant access to funds up to E50,000 for emergencies or personal needs, with flexible repayment through convenient salary deductions. Designed for employed Eswatini residents, this financial solution offers competitive rates and fast approval within 48 hours. Whether you need funds for medical expenses, education, or unexpected costs, United Pay ensures you get the financial support you need with repayment terms tailored to your income.',
     stats: ['From E100/month', 'Up to E50,000', '48-hour approval'],
     benefits: [
-      { text: 'Fast 48-hour approval and payout', icon: PiClock },
-      { text: 'Competitive rates, repay over 3-36 months', icon: PiCurrencyCircleDollar },
+      { text: 'Fast 24-hour approval and payout', icon: PiClock },
+      { text: 'Affordable rates, repay over 3-36 months', icon: PiCurrencyCircleDollar },
       { text: 'No hassle—deducted from your salary', icon: PiMoney },
       { text: 'Available to employed private/public sector workers', icon: PiUser },
       { text: 'Tailored amounts from E1,000 based on income', icon: PiChartLineUp },
@@ -59,20 +59,20 @@ const UnitedPayData = [
   },
   {
     name: 'Umlamleli Loan',
-    tagline: 'Secure Funding Tailored for Public Servants',
+    tagline: 'The boost you need for those unexpected moments.',
     heroImage: '/civil-servant-loan.jpg',
     overview:
-      'United Pay Civil Servant Micro Loan offers specialized financial solutions for government employees in Eswatini, with loans up to E20,000 designed around the stability of public service employment. This product features easy terms, low rates, and seamless salary deduction integration, helping civil servants meet urgent financial needs while building credit. With quick processing and flexible repayment options, United Pay supports the financial well-being of Eswatini\'s dedicated public servants.',
-    stats: ['From E200/month', 'Up to E20,000', 'Government employee focus'],
+      'We know mid-month crisis is not easy to get over, Umlamleli is there boost you need to get through the month. Umlamleli provides loans from E1, 000.00 – E5,000.00 payable within 3 months.',
+    stats: ['From E200/month', 'Up to E5,000', 'Employee focus'],
     benefits: [
-      { text: 'Up to E20,000 limit for civil servants', icon: PiMoney },
+      { text: 'Up to E5,000 ', icon: PiMoney },
       { text: 'Quick processing and salary-based repayments', icon: PiClock },
-    { text: 'Flexible 3-36 month terms at low rates', icon: PiCurrencyCircleDollar },
+    { text: 'Flexible 3-month terms at low rates', icon: PiCurrencyCircleDollar },
       { text: 'Builds credit while meeting urgent needs', icon: PiTrendUp },
       { text: 'Seamless employer deduction integration', icon: PiBank },
     ],
     coverage: [
-      { title: 'Government Employee Focus', content: 'Specialized loans designed specifically for civil servants.' },
+      { title: 'Employed Personel Focus', content: 'Specialized loans designed specifically for civil servants.' },
       { title: 'Higher Limits', content: 'Access to loans up to E20,000 with favorable terms.' },
       { title: 'Credit Building', content: 'Opportunity to build and improve credit history.' },
     ],
@@ -87,7 +87,7 @@ const UnitedPayData = [
       'Complete application and credit assessment',
       'Receive approval and access funds',
     ],
-    paymentMethods: ['Salary Deduction', 'Government Payroll'],
+    paymentMethods: ['Salary Deduction', 'Payroll'],
     faqs: [
       { title: 'Is this only for government employees?', content: 'Yes, this product is specifically designed for civil servants.' },
       { title: 'What documents are required?', content: 'Valid ID and government employment verification letter.' },

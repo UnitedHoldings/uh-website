@@ -44,7 +44,7 @@ export default function UnitedPay() {
 
   // Scroll to products section
   const scrollToProducts = () => {
-    productsSectionRef.current?.scrollIntoView({ 
+    productsSectionRef.current?.scrollIntoView({
       behavior: 'smooth',
       block: 'start'
     });
@@ -54,16 +54,16 @@ export default function UnitedPay() {
   const filteredProducts = useMemo(() => {
     return UnitedPayData.filter(product => {
       const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                           product.tagline.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                           product.overview.toLowerCase().includes(searchQuery.toLowerCase());
-      
+        product.tagline.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        product.overview.toLowerCase().includes(searchQuery.toLowerCase());
+
       const matchesCategory = selectedCategory === 'All' || product.name === selectedCategory;
-      
-      const matchesPrice = priceFilter === 'All' || 
-                          (priceFilter === 'Under E150' && product.stats[0].includes('E100')) ||
-                          (priceFilter === 'E150 - E300' && product.stats[0].includes('E200')) ||
-                          (priceFilter === 'Over E300' && product.stats[0].includes('E300'));
-      
+
+      const matchesPrice = priceFilter === 'All' ||
+        (priceFilter === 'Under E150' && product.stats[0].includes('E100')) ||
+        (priceFilter === 'E150 - E300' && product.stats[0].includes('E200')) ||
+        (priceFilter === 'Over E300' && product.stats[0].includes('E300'));
+
       return matchesSearch && matchesCategory && matchesPrice;
     });
   }, [searchQuery, selectedCategory, priceFilter]);
@@ -73,7 +73,7 @@ export default function UnitedPay() {
     const colorClass = categoryColors[product.name];
 
     return (
-        <div className="bg-white  rounded-xl hover:-xl transition-all duration-300 overflow-hidden group hover:transform hover:-translate-y-2">
+      <div className="bg-white  rounded-xl hover:-xl transition-all duration-300 overflow-hidden group hover:transform hover:-translate-y-2">
         {/* Image Section */}
         <div className="relative h-48 bg-gradient-to-br from-gray-100 to-gray-200 overflow-hidden">
           {/* Product Image */}
@@ -98,7 +98,7 @@ export default function UnitedPay() {
           </div>
 
           {/* Bottom-left Stat */}
-          
+
         </div>
 
         {/* Content Section */}
@@ -135,15 +135,17 @@ export default function UnitedPay() {
           </div>
 
           {/* CTA Button */}
-          <Link
-            href={`/products/${product.name.toLowerCase().replace(/\s+/g, '-')}`}
+          <a
+            href="https://uploans.united.co.sz/"
+            target="_blank"
+            rel="noopener noreferrer"
             className="w-full bg-[#f79620] text-white py-3 px-4 rounded-full font-semibold hover:bg-[#2f6b3d] transition-colors text-center block group/btn"
           >
             <span className="flex items-center justify-center">
-              Learn More
+              Apply Now
               <PiCurrencyCircleDollar className="ml-2 group-hover/btn:translate-x-1 transition-transform" />
             </span>
-          </Link>
+          </a>
         </div>
       </div>
     );
@@ -155,7 +157,7 @@ export default function UnitedPay() {
       <div className='bg-[#e0861c] h-2 w-full' />
       <div className='relative bg-[#f79620] py-16 md:py-24 min-h-[500px] flex items-center'>
         {/* Background Image with Overlay */}
-        <div 
+        <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
             backgroundImage: 'url("/loan.jpg")',
@@ -163,7 +165,7 @@ export default function UnitedPay() {
         >
           <div className="absolute inset-0 bg-black opacity-50"></div>
         </div>
-        
+
         {/* Content */}
         <div className="relative z-10 max-w-[1400px] mx-auto px-4 sm:px-6 w-full">
           <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
@@ -189,36 +191,17 @@ export default function UnitedPay() {
                 </button>
               </div>
             </div>
-            <div className="rounded-2xl bg-[#f79620] p-6 min-w-[300px]">
-              <h3 className="text-white font-semibold text-lg mb-3">Quick Financial Access</h3>
-              <p className="text-white/80 text-sm mb-4">
-                Fast, reliable loans designed for working individuals in Eswatini
-              </p>
-              <div className="space-y-2">
-                <div className="flex items-center text-white/90 text-sm">
-                  <PiCheckCircle className="text-green-400 mr-2" />
-                  48-hour approval
-                </div>
-                <div className="flex items-center text-white/90 text-sm">
-                  <PiCheckCircle className="text-green-400 mr-2" />
-                  Salary-based repayment
-                </div>
-                <div className="flex items-center text-white/90 text-sm">
-                  <PiCheckCircle className="text-green-400 mr-2" />
-                  Competitive rates
-                </div>
-              </div>
-            </div>
+       
           </div>
         </div>
       </div>
- 
+
       {/* Search and Filters */}
       <section className="py-8 bg-white ">
         <div className="max-w-[1400px] mx-auto px-4 sm:px-6">
-        <div className='text-xl font-semibold mb-4'>
-                        <p className='text-[#f79620] text-2xl'>What financial needs do you have?</p>
-                    </div>
+          <div className='text-xl font-semibold mb-4'>
+            <p className='text-[#f79620] text-2xl'>What financial needs do you have?</p>
+          </div>
           <div className="flex flex-col lg:flex-row gap-4 items-center justify-between">
             {/* Search */}
             <div className="flex-1 w-full lg:max-w-md">
@@ -235,32 +218,7 @@ export default function UnitedPay() {
             </div>
 
             {/* Filters */}
-            <div className="flex flex-col sm:flex-row gap-4 w-full lg:w-auto">
-              <div className="relative">
-                <PiFunnel className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 text-xl" />
-                <select
-                  value={selectedCategory}
-                  onChange={(e) => setSelectedCategory(e.target.value)}
-                  className="pl-10 pr-8 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#f79620] focus:border-transparent appearance-none bg-white"
-                >
-                  <option value="All">All Categories</option>
-                  {categories.filter(cat => cat !== 'All').map(category => (
-                    <option key={category} value={category}>{category}</option>
-                  ))}
-                </select>
-              </div>
 
-              <select
-                value={priceFilter}
-                onChange={(e) => setPriceFilter(e.target.value)}
-                className="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#f79620] focus:border-transparent bg-white"
-              >
-                <option value="All">All Payments</option>
-                <option value="Under E150">Under E150/month</option>
-                <option value="E150 - E300">E150 - E300/month</option>
-                <option value="Over E300">Over E300/month</option>
-              </select>
-            </div>
           </div>
 
           {/* Results Count */}
@@ -300,7 +258,7 @@ export default function UnitedPay() {
         </div>
       </section>
 
-  
+
       {/* CTA Section */}
       <section className="py-16 bg-white">
         <div className="max-w-[1400px] mx-auto px-4 sm:px-6 text-center">

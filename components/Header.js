@@ -95,7 +95,7 @@ export default function Header() {
             ]
         },
         {
-            category: 'Business Insurance',
+            category: 'General Insurance',
             icon: PiBriefcase,
             items: [
                 { name: 'Multimark Policy', link: '/products/multimark-policy', icon: PiBuildingOffice },

@@ -224,32 +224,7 @@ export default function UnitedLifeAssurance() {
             </div>
 
             {/* Filters */}
-            <div className="flex flex-col sm:flex-row gap-4 w-full lg:w-auto">
-              <div className="relative">
-                <PiFunnel className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 text-xl" />
-                <select
-                  value={selectedCategory}
-                  onChange={(e) => setSelectedCategory(e.target.value)}
-                  className="pl-10 pr-8 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#3d834d] focus:border-transparent appearance-none bg-white"
-                >
-                  <option value="All">All Categories</option>
-                  {categories.filter(cat => cat !== 'All').map(category => (
-                    <option key={category} value={category}>{category}</option>
-                  ))}
-                </select>
-              </div>
-
-              <select
-                value={priceFilter}
-                onChange={(e) => setPriceFilter(e.target.value)}
-                className="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#3d834d] focus:border-transparent bg-white"
-              >
-                <option value="All">All Prices</option>
-                <option value="Under E50">Under E50/month</option>
-                <option value="E50 - E100">E50 - E100/month</option>
-                <option value="Over E100">Over E100/month</option>
-              </select>
-            </div>
+           
           </div>
 
           {/* Results Count */}

@@ -339,7 +339,7 @@ export default function ProductPage({ params }) {
       {/* Additional Product Sections */}
       <div className='max-w-[1400px]  mb-8 sm:mb-12 md:mb-16 mx-auto space-y-12'>
         {/* Benefits Section */}
-        {product.benefits && <ProductBenefits benefits={product.benefits} />}
+        {product.benefits && <ProductBenefits benefits={product.benefits} company={company} />}
 
 
         {/* Eligibility Section */}

@@ -116,7 +116,7 @@ const productData = [
         company: 'UP',
         icon: <BsCash className="text-2xl" />,
         stats: ['Up to E50,000', '48hr Approval', 'Flexible Terms'],
-        link: '/products/micro-loan',
+        link: 'https://uploans.united.co.sz/',
         color: '#f79620',
         bgColor: '#f79620'
     },
@@ -127,7 +127,7 @@ const productData = [
         company: 'UP',
         icon: <BsBriefcase className="text-2xl" />,
         stats: ['Up to E20,000', 'Low Rates', 'Salary Deduction'],
-        link: '/products/civil-servant-micro-loan',
+        link: 'https://uploans.united.co.sz/',
         color: '#f79620',
         bgColor: '#f79620'
     },
