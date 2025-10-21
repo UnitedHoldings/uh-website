@@ -1,6 +1,7 @@
 'use client'
 import React from 'react'
 import { useForm, ValidationError } from '@formspree/react';
+import Link from 'next/link';
 
 // All available products across departments
 const ALL_PRODUCTS = [
@@ -31,23 +32,37 @@ const CallBackForm = ({ onClose }) => {
     date: '',
     time: '',
     companyName: '',
-    businessType: ''
+    businessType: '',
+    agreeTerms: false,
+    agreeData: false,
+    agreeEmails: false
   });
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value, type, checked } = e.target;
     setFormData(prev => ({
       ...prev,
-      [name]: value
+      [name]: type === 'checkbox' ? checked : value
     }));
   };
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    
+
+    // Check if required checkboxes are checked
+    if (!formData.agreeTerms) {
+      alert('Please agree to the terms of service and privacy policy.');
+      return;
+    }
+
+    if (!formData.agreeData) {
+      alert('Please agree to the data processing terms.');
+      return;
+    }
+
     // Handle form submission with Formspree
     handleSubmit(e);
-    
+
     // Only show alert and reset if submission is successful
     if (state.succeeded) {
       alert('Thank you! We will call you back soon.');
@@ -60,7 +75,10 @@ const CallBackForm = ({ onClose }) => {
         date: '',
         time: '',
         companyName: '',
-        businessType: ''
+        businessType: '',
+        agreeTerms: false,
+        agreeData: false,
+        agreeEmails: false
       });
       if (onClose) onClose();
     }
@@ -73,13 +91,15 @@ const CallBackForm = ({ onClose }) => {
         <div className="text-center py-8">
           <h3 className="text-2xl font-bold font-outfit text-[#9b1c20] mb-4">Thank You!</h3>
           <p className="text-gray-600">We&apos;ll get back to you shortly.</p>
-          <button
-            onClick={onClose}
-            className="w-full py-4 px-6 mt-6 text-lg font-semibold rounded-full hover:opacity-90 transition-opacity duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 font-outfit text-white"
-            style={{ backgroundColor: '#9b1c20' }}
-          >
-            Close
-          </button>
+          <Link href="/contact">
+            <button
+              onClick={onClose}
+              className="w-full py-4 px-6 mt-6 text-lg font-semibold rounded-full hover:opacity-90 transition-opacity duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 font-outfit text-white"
+              style={{ backgroundColor: '#9b1c20' }}
+            >
+              Locate Nearest Branch?
+            </button>
+          </Link>
         </div>
       </div>
     );
@@ -112,12 +132,12 @@ const CallBackForm = ({ onClose }) => {
           For My Business
         </button>
       </div>
-      
+
       <div className="mb-6">
         <h3 className="text-2xl font-bold font-outfit text-[#9b1c20]">Need a Call Back?</h3>
         <p className="text-gray-600 mt-2">We&apos;ll get back to you shortly</p>
       </div>
-      
+
       {/* Form */}
       <form onSubmit={handleFormSubmit} className="space-y-4">
         {/* Common Fields */}
@@ -136,8 +156,8 @@ const CallBackForm = ({ onClose }) => {
               className="w-full py-2 outline-none bg-transparent border-gray-300 border-b placeholder-gray-500"
               placeholder="Enter your full name"
             />
-            <ValidationError 
-              prefix="Full Name" 
+            <ValidationError
+              prefix="Full Name"
               field="fullName"
               errors={state.errors}
             />
@@ -157,39 +177,22 @@ const CallBackForm = ({ onClose }) => {
               className="w-full py-2 outline-none bg-transparent border-gray-300 border-b placeholder-gray-500"
               placeholder="Enter your phone number"
             />
-            <ValidationError 
-              prefix="Phone" 
+            <ValidationError
+              prefix="Phone"
               field="phone"
               errors={state.errors}
             />
           </div>
         </div>
 
+        {/* Email Field */}
+
+
         {/* Add hidden field for form type */}
         <input type="hidden" name="formType" value={activeTab} />
 
         {/* Business-specific Fields */}
-        {activeTab === 'business' && (
-          <div>
-            <label htmlFor="companyName" className="block text-sm font-medium text-gray-700 mb-1 font-outfit">
-              Company Name
-            </label>
-            <input
-              id="companyName"
-              type="text"
-              name="companyName"
-              value={formData.companyName}
-              onChange={handleInputChange}
-              className="w-full py-2 outline-none bg-transparent border-gray-300 border-b placeholder-gray-500"
-              placeholder="Enter your company name"
-            />
-            <ValidationError 
-              prefix="Company Name" 
-              field="companyName"
-              errors={state.errors}
-            />
-          </div>
-        )}
+    
 
         {/* Product Selection */}
         <div>
@@ -211,11 +214,49 @@ const CallBackForm = ({ onClose }) => {
               </option>
             ))}
           </select>
-          <ValidationError 
-            prefix="Product" 
+          <ValidationError
+            prefix="Product"
             field="product"
             errors={state.errors}
           />
+        </div>
+
+        {/* Checkboxes */}
+        <div className="space-y-3 pt-2">
+          {/* Terms of Service Checkbox */}
+          <div className="flex items-start">
+            <input
+              id="agreeTerms"
+              name="agreeTerms"
+              type="checkbox"
+              checked={formData.agreeTerms}
+              onChange={handleInputChange}
+              className="mt-1 mr-3"
+              required
+            />
+            <label htmlFor="agreeTerms" className="text-sm text-gray-700">
+              I agree to the <a href="/terms-of-service" className="text-[#9b1c20] hover:underline">Terms of Service</a> and <a href="/privacy-policy" className="text-[#9b1c20] hover:underline">Privacy Policy</a> *
+            </label>
+          </div>
+
+          {/* Data Processing Checkbox */}
+          <div className="flex items-start">
+            <input
+              id="agreeData"
+              name="agreeData"
+              type="checkbox"
+              checked={formData.agreeData}
+              onChange={handleInputChange}
+              className="mt-1 mr-3"
+              required
+            />
+            <label htmlFor="agreeData" className="text-sm text-gray-700">
+              I agree to the processing of my personal data for the purpose of receiving a callback and related services *
+            </label>
+          </div>
+
+          {/* Marketing Emails Checkbox */}
+
         </div>
 
         {/* Submit Button */}
@@ -230,9 +271,7 @@ const CallBackForm = ({ onClose }) => {
           {state.submitting ? 'Submitting...' : 'Request Call Back'}
         </button>
 
-        <p className="text-xs text-gray-500 text-center mt-4">
-          By submitting this form, you agree to our privacy policy and terms of service.
-        </p>
+
       </form>
     </div>
   );
