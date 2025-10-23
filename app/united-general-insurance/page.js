@@ -247,12 +247,7 @@ export default function UnitedGeneralInsurance() {
                                 Comprehensive short-term insurance solutions for individuals and businesses across Eswatini
                             </p>
                             <div className="flex flex-col sm:flex-row gap-4">
-                                <button
-                                    onClick={scrollToProducts}
-                                    className="bg-white text-[#286278] px-8 py-4 rounded-full font-semibold hover:bg-gray-100 transition-colors text-lg text-center"
-                                >
-                                    Get Free Quote
-                                </button>
+                               
                                 <button
                                     onClick={scrollToProducts}
                                     className="border-2 border-white text-white px-8 py-4 rounded-full font-semibold hover:bg-white hover:text-[#286278] transition-colors text-lg text-center"
@@ -261,26 +256,7 @@ export default function UnitedGeneralInsurance() {
                                 </button>
                             </div>
                         </div>
-                        <div className="rounded-2xl p-6 min-w-[300px] bg-[#286278]">
-                            <h3 className="text-white font-semibold text-2xl mb-3">Get Protected Today</h3>
-                            <p className="text-white/80 text-sm mb-4">
-                                Trusted by thousands of Eswatini residents and businesses
-                            </p>
-                            <div className="space-y-2">
-                                <div className="flex items-center text-white/90 text-sm">
-                                    <PiCheckCircle className="text-green-400 mr-2" />
-                                    Comprehensive coverage
-                                </div>
-                                <div className="flex items-center text-white/90 text-sm">
-                                    <PiCheckCircle className="text-green-400 mr-2" />
-                                    Fast claims processing
-                                </div>
-                                <div className="flex items-center text-white/90 text-sm">
-                                    <PiCheckCircle className="text-green-400 mr-2" />
-                                    Local expertise
-                                </div>
-                            </div>
-                        </div>
+                        
                     </div>
                 </div>
             </div>

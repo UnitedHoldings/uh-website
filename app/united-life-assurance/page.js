@@ -226,12 +226,7 @@ export default function UnitedLifeAssurance() {
                 Comprehensive life assurance and funeral cover for families and businesses across Eswatini
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <button
-                  onClick={scrollToProducts}
-                  className="bg-white text-[#3d834d] px-8 py-4 rounded-full font-semibold hover:bg-gray-100 transition-colors text-lg text-center"
-                >
-                  Get Covered Today
-                </button>
+                
                 <button
                   onClick={scrollToProducts}
                   className="border-2 border-white text-white px-8 py-4 rounded-full font-semibold hover:bg-white hover:text-[#3d834d] transition-colors text-lg text-center"
