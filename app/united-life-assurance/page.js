@@ -307,7 +307,7 @@ export default function UnitedLifeAssurance() {
       <section className="py-16 bg-white">
         <div className="max-w-[1400px] mx-auto px-4 sm:px-6 text-center">
           <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
-            Ready to Secure Your Family's Future?
+            Ready to Secure Your Family&apos;s Future?
           </h2>
           <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
             Join thousands of satisfied families who trust United Life Assurance for their protection needs.
