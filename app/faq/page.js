@@ -205,10 +205,10 @@ export default function FAQ() {
             </div>
             <div className="flex gap-4">
               <a
-                href="tel:24048993"
+                href="tel:8001010"
                 className="bg-[#9b1c20] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#881a1e] transition-colors"
               >
-                Call 2404 8993
+                Call 800 1010
               </a>
               <a
                 href="mailto:info@unitedholdings.co.sz"

@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useMemo, useRef } from 'react';
+import React, { useState, useMemo, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import {
   PiHeart,
@@ -20,7 +20,7 @@ import {
   PiFileText,
 } from 'react-icons/pi';
 import { PiFunnel } from "react-icons/pi";
-import UnitedLifeAssuranceData from '@/components/ULA_ProductsData';
+import { fetchUnitedLifeAssuranceData } from '@/components/ULA_ProductsData';
 import Image from 'next/image';
 
 // Department colors
@@ -32,7 +32,7 @@ const DEPARTMENT_COLORS = {
 
 // Icon mapping for product categories
 const categoryIcons = {
-  'Family Funeral Plan': PiUsersThree,
+  'Sinawe Funeral Plan': PiUsersThree,
   'Individual Funeral Plan': PiUser,
   'Tinkhundla Funeral Cover': PiMapPin,
   'Group Life': PiUsers,
@@ -40,7 +40,7 @@ const categoryIcons = {
 };
 
 const categoryColors = {
-  'Family Funeral Plan': 'bg-blue-100 text-blue-600',
+  'Sinawe Funeral Plan': 'bg-blue-100 text-blue-600',
   'Individual Funeral Plan': 'bg-green-100 text-green-600',
   'Tinkhundla Funeral Cover': 'bg-purple-100 text-purple-600',
   'Group Life': 'bg-orange-100 text-orange-600',
@@ -51,10 +51,30 @@ export default function UnitedLifeAssurance() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [priceFilter, setPriceFilter] = useState('All');
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const productsSectionRef = useRef(null);
 
+  // Fetch data from API
+  useEffect(() => {
+    const loadProducts = async () => {
+      try {
+        const data = await fetchUnitedLifeAssuranceData();
+        setProducts(data);
+      } catch (err) {
+        setError(err.message);
+        console.error('Failed to load products:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadProducts();
+  }, []);
+
   // Get unique categories
-  const categories = ['All', ...new Set(UnitedLifeAssuranceData.map(product => product.name))];
+  const categories = ['All', ...new Set(products.map(product => product.name))];
 
   // Scroll to products section
   const scrollToProducts = () => {
@@ -66,7 +86,7 @@ export default function UnitedLifeAssurance() {
 
   // Filter products based on search and filters
   const filteredProducts = useMemo(() => {
-    return UnitedLifeAssuranceData.filter(product => {
+    return products.filter(product => {
       const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         product.tagline.toLowerCase().includes(searchQuery.toLowerCase()) ||
         product.overview.toLowerCase().includes(searchQuery.toLowerCase());
@@ -74,25 +94,25 @@ export default function UnitedLifeAssurance() {
       const matchesCategory = selectedCategory === 'All' || product.name === selectedCategory;
 
       const matchesPrice = priceFilter === 'All' ||
-        (priceFilter === 'Under E50' && (product.stats[0].includes('E11') || product.stats[0].includes('E25') || product.stats[0].includes('E30'))) ||
-        (priceFilter === 'E50 - E100' && (product.stats[0].includes('E40') || product.stats[0].includes('E50'))) ||
-        (priceFilter === 'Over E100' && product.stats[0].includes('E100'));
+        (priceFilter === 'Under E50' && (product.stats[0]?.includes('E11') || product.stats[0]?.includes('E25') || product.stats[0]?.includes('E30'))) ||
+        (priceFilter === 'E50 - E100' && (product.stats[0]?.includes('E40') || product.stats[0]?.includes('E50'))) ||
+        (priceFilter === 'Over E100' && product.stats[0]?.includes('E100'));
 
       return matchesSearch && matchesCategory && matchesPrice;
     });
-  }, [searchQuery, selectedCategory, priceFilter]);
+  }, [searchQuery, selectedCategory, priceFilter, products]);
 
   const ProductCard = ({ product }) => {
     const IconComponent = categoryIcons[product.name];
     const colorClass = categoryColors[product.name];
 
     return (
-      <div className="bg-white  rounded-xl hover:-xl transition-all duration-300 overflow-hidden group hover:transform hover:-translate-y-2">
+      <div className="bg-white rounded-xl hover:shadow-xl transition-all duration-300 overflow-hidden group hover:transform hover:-translate-y-2">
         {/* Image Section */}
         <div className="relative h-48 bg-gradient-to-br from-gray-100 to-gray-200 overflow-hidden">
           {/* Product Image */}
           <Image
-            src={product.heroImage} // make sure product.image is a valid URL or imported asset
+            src={product.heroImage}
             alt={product.name}
             fill
             className="object-cover"
@@ -101,12 +121,6 @@ export default function UnitedLifeAssurance() {
 
           {/* Overlay */}
           <div className="absolute inset-0 bg-black/10 group-hover:bg-black/20 transition-colors" />
-
-          {/* Top-right Icon */}
-
-
-          {/* Bottom-left Stat */}
-
         </div>
 
         {/* Content Section */}
@@ -157,6 +171,35 @@ export default function UnitedLifeAssurance() {
     );
   };
 
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#3d834d] mx-auto"></div>
+          <p className="mt-4 text-gray-600">Loading life assurance products...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+        <div className="text-center">
+          <PiUserSwitch className="text-6xl text-gray-300 mx-auto mb-4" />
+          <h3 className="text-xl font-semibold text-gray-600 mb-2">Failed to load products</h3>
+          <p className="text-gray-500 mb-4">{error}</p>
+          <button 
+            onClick={() => window.location.reload()}
+            className="bg-[#3d834d] text-white px-6 py-2 rounded-full font-semibold hover:bg-[#2f6b3d] transition-colors"
+          >
+            Try Again
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gray-100 font-outfit">
       {/* Header with Background Image */}
@@ -197,13 +240,12 @@ export default function UnitedLifeAssurance() {
                 </button>
               </div>
             </div>
-            
           </div>
         </div>
       </div>
 
       {/* Search and Filters */}
-      <section className="py-8 bg-white ">
+      <section className="py-8 bg-white">
         <div className="max-w-[1400px] mx-auto px-4 sm:px-6">
           <div className='text-xl font-semibold mb-4'>
             <p className='text-[#3d834d] text-2xl'>What financial needs do you have?</p>
@@ -222,14 +264,11 @@ export default function UnitedLifeAssurance() {
                 />
               </div>
             </div>
-
-            {/* Filters */}
-           
           </div>
 
           {/* Results Count */}
           <div className="mt-4 text-sm text-gray-600">
-            Showing {filteredProducts.length} of {UnitedLifeAssuranceData.length} products
+            Showing {filteredProducts.length} of {products.length} products
           </div>
         </div>
       </section>
@@ -247,7 +286,7 @@ export default function UnitedLifeAssurance() {
             <div>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6">
                 {filteredProducts.map((product, index) => (
-                  <ProductCard key={index} product={product} />
+                  <ProductCard key={product.name + index} product={product} />
                 ))}
               </div>
 
@@ -264,14 +303,11 @@ export default function UnitedLifeAssurance() {
         </div>
       </section>
 
-      {/* Why Choose ULA Section */}
-
-
       {/* CTA Section */}
       <section className="py-16 bg-white">
         <div className="max-w-[1400px] mx-auto px-4 sm:px-6 text-center">
           <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
-            Ready to Secure Your Family&apos;s Future?
+            Ready to Secure Your Family's Future?
           </h2>
           <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
             Join thousands of satisfied families who trust United Life Assurance for their protection needs.

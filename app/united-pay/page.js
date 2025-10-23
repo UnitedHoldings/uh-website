@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useMemo, useRef } from 'react';
+import React, { useState, useMemo, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import {
   PiMoney,
@@ -19,8 +19,8 @@ import {
   PiTrendUp,
 } from 'react-icons/pi';
 import { PiFunnel } from "react-icons/pi";
-import UnitedPayData from '@/components/UP_ProductData';
 import Image from 'next/image';
+import { fetchUnitedPayData } from '@/components/UP_ProductData';
 
 // Icon mapping for product categories
 const categoryIcons = {
@@ -37,10 +37,30 @@ export default function UnitedPay() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [priceFilter, setPriceFilter] = useState('All');
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const productsSectionRef = useRef(null);
 
+  // Fetch data from API
+  useEffect(() => {
+    const loadProducts = async () => {
+      try {
+        const data = await fetchUnitedPayData();
+        setProducts(data);
+      } catch (err) {
+        setError(err.message);
+        console.error('Failed to load products:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadProducts();
+  }, []);
+
   // Get unique categories
-  const categories = ['All', ...new Set(UnitedPayData.map(product => product.name))];
+  const categories = ['All', ...new Set(products.map(product => product.name))];
 
   // Scroll to products section
   const scrollToProducts = () => {
@@ -52,7 +72,7 @@ export default function UnitedPay() {
 
   // Filter products based on search and filters
   const filteredProducts = useMemo(() => {
-    return UnitedPayData.filter(product => {
+    return products.filter(product => {
       const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         product.tagline.toLowerCase().includes(searchQuery.toLowerCase()) ||
         product.overview.toLowerCase().includes(searchQuery.toLowerCase());
@@ -60,25 +80,25 @@ export default function UnitedPay() {
       const matchesCategory = selectedCategory === 'All' || product.name === selectedCategory;
 
       const matchesPrice = priceFilter === 'All' ||
-        (priceFilter === 'Under E150' && product.stats[0].includes('E100')) ||
-        (priceFilter === 'E150 - E300' && product.stats[0].includes('E200')) ||
-        (priceFilter === 'Over E300' && product.stats[0].includes('E300'));
+        (priceFilter === 'Under E150' && product.stats[0]?.includes('E100')) ||
+        (priceFilter === 'E150 - E300' && product.stats[0]?.includes('E200')) ||
+        (priceFilter === 'Over E300' && product.stats[0]?.includes('E300'));
 
       return matchesSearch && matchesCategory && matchesPrice;
     });
-  }, [searchQuery, selectedCategory, priceFilter]);
+  }, [searchQuery, selectedCategory, priceFilter, products]);
 
   const ProductCard = ({ product }) => {
     const IconComponent = categoryIcons[product.name];
     const colorClass = categoryColors[product.name];
 
     return (
-      <div className="bg-white  rounded-xl hover:-xl transition-all duration-300 overflow-hidden group hover:transform hover:-translate-y-2">
+      <div className="bg-white rounded-xl hover:shadow-xl transition-all duration-300 overflow-hidden group hover:transform hover:-translate-y-2">
         {/* Image Section */}
         <div className="relative h-48 bg-gradient-to-br from-gray-100 to-gray-200 overflow-hidden">
           {/* Product Image */}
           <Image
-            src={product.heroImage} // make sure product.image is a valid URL or imported asset
+            src={product.heroImage}
             alt={product.name}
             fill
             className="object-cover"
@@ -91,14 +111,11 @@ export default function UnitedPay() {
           {/* Top-right Icon */}
           <div className="absolute top-4 right-4">
             <div
-              className={`w-12 h-12 rounded-full flex items-center justify-center text-white bg-[#f79620] -lg hover:-xl transition-all duration-300`}
+              className={`w-12 h-12 rounded-full flex items-center justify-center text-white bg-[#f79620] shadow-lg hover:shadow-xl transition-all duration-300`}
             >
               <IconComponent className="text-xl" />
             </div>
           </div>
-
-          {/* Bottom-left Stat */}
-
         </div>
 
         {/* Content Section */}
@@ -151,6 +168,35 @@ export default function UnitedPay() {
     );
   };
 
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#f79620] mx-auto"></div>
+          <p className="mt-4 text-gray-600">Loading loan products...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+        <div className="text-center">
+          <PiUserSwitch className="text-6xl text-gray-300 mx-auto mb-4" />
+          <h3 className="text-xl font-semibold text-gray-600 mb-2">Failed to load products</h3>
+          <p className="text-gray-500 mb-4">{error}</p>
+          <button 
+            onClick={() => window.location.reload()}
+            className="bg-[#f79620] text-white px-6 py-2 rounded-full font-semibold hover:bg-[#e0861c] transition-colors"
+          >
+            Try Again
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gray-100 font-outfit">
       {/* Header with Background Image */}
@@ -191,13 +237,12 @@ export default function UnitedPay() {
                 </button>
               </div>
             </div>
-       
           </div>
         </div>
       </div>
 
       {/* Search and Filters */}
-      <section className="py-8 bg-white ">
+      <section className="py-8 bg-white">
         <div className="max-w-[1400px] mx-auto px-4 sm:px-6">
           <div className='text-xl font-semibold mb-4'>
             <p className='text-[#f79620] text-2xl'>What financial needs do you have?</p>
@@ -216,14 +261,11 @@ export default function UnitedPay() {
                 />
               </div>
             </div>
-
-            {/* Filters */}
-
           </div>
 
           {/* Results Count */}
           <div className="mt-4 text-sm text-gray-600">
-            Showing {filteredProducts.length} of {UnitedPayData.length} loan products
+            Showing {filteredProducts.length} of {products.length} loan products
           </div>
         </div>
       </section>
@@ -241,7 +283,7 @@ export default function UnitedPay() {
             <div>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6">
                 {filteredProducts.map((product, index) => (
-                  <ProductCard key={index} product={product} />
+                  <ProductCard key={product.name + index} product={product} />
                 ))}
               </div>
 
@@ -257,7 +299,6 @@ export default function UnitedPay() {
           )}
         </div>
       </section>
-
 
       {/* CTA Section */}
       <section className="py-16 bg-white">

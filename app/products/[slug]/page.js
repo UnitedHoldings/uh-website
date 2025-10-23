@@ -10,23 +10,16 @@ import ProductHowToApply from '@/components/ProductHowToApply';
 import ProductFAQs from '@/components/ProductFAQs';
 import RelatedProducts from '@/components/RelatedProducts';
 import { notFound } from 'next/navigation';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Agent from '@/components/Agent';
-import UnitedGeneralInsuranceData from '@/components/UGI_ProductsData';
-import UnitedLifeAssuranceData from '@/components/ULA_ProductsData';
-import UnitedPayData from '@/components/UP_ProductData';
-
-// Combine all product data from all companies
-const AllProductsData = [
-  ...UnitedGeneralInsuranceData,
-  ...UnitedLifeAssuranceData,
-  ...UnitedPayData
-];
+import { fetchUnitedGeneralInsuranceData } from '@/components/UGI_ProductsData';
+import { fetchUnitedLifeAssuranceData } from '@/components/ULA_ProductsData';
+import { fetchUnitedPayData } from '@/components/UP_ProductData';
 
 // Company color mapping
 const COMPANY_COLORS = {
-  'UGI': '#286278', // Red for United General Insurance
+  'UGI': '#286278', // Blue for United General Insurance
   'ULA': '#3d834d', // Green for United Life Assurance
   'UP': '#f79620',  // Orange for United Pay
 };
@@ -69,6 +62,10 @@ const getProductCompany = (product) => {
 export default function ProductPage({ params }) {
   const [tab, setTab] = useState('file');
   const [submitted, setSubmitted] = useState(false);
+  const [allProductsData, setAllProductsData] = useState([]);
+  const [product, setProduct] = useState(null);
+  const [loading, setLoading] = useState(true);
+  
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -81,15 +78,59 @@ export default function ProductPage({ params }) {
 
   const unwrappedParams = typeof params.then === 'function' ? React.use(params) : params;
 
-  // Find product across all companies
-  const product = AllProductsData.find(
-    p => {
-      const productSlug = p.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
-      return productSlug === unwrappedParams.slug;
-    }
-  );
+  // Fetch product data on component mount
+  useEffect(() => {
+    const loadProducts = async () => {
+      try {
+        // Call the functions to get the data
+        const ugiData = await fetchUnitedGeneralInsuranceData();
+        const ulaData = await fetchUnitedLifeAssuranceData();
+        const upData = await fetchUnitedPayData();
 
-  if (!product) return notFound();
+        // Combine all product data
+        const combinedData = [
+          ...ugiData,
+          ...ulaData,
+          ...upData
+        ];
+
+        setAllProductsData(combinedData);
+
+        // Find the current product
+        const foundProduct = combinedData.find(
+          p => {
+            const productSlug = p.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+            return productSlug === unwrappedParams.slug;
+          }
+        );
+
+        setProduct(foundProduct);
+      } catch (error) {
+        console.error('Error loading products:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadProducts();
+  }, [unwrappedParams.slug]);
+
+  // Show loading state
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#9b1c20] mx-auto"></div>
+          <p className="mt-4 text-gray-600">Loading product...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Show not found if product doesn't exist
+  if (!product) {
+    return notFound();
+  }
 
   // Get company and color
   const company = getProductCompany(product);
@@ -341,18 +382,14 @@ export default function ProductPage({ params }) {
         {/* Benefits Section */}
         {product.benefits && <ProductBenefits benefits={product.benefits} company={company} />}
 
-
         {/* Eligibility Section */}
         {product.eligibility && <ProductEligibility eligibility={product.eligibility} />}
-
-
 
         {/* Final CTA */}
         <div className="mt-12 sm:mt-16">
         </div>
       </div>
       <Agent />
-
     </div>
   );
 }

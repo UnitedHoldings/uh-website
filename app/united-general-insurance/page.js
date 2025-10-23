@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useMemo, useRef } from 'react';
+import React, { useState, useMemo, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import {
     PiGavel,
@@ -24,7 +24,7 @@ import {
     PiUserSwitch,
     PiGlobe
 } from 'react-icons/pi';
-import UnitedGeneralInsuranceData from '@/components/UGI_ProductsData';
+import { fetchUnitedGeneralInsuranceData } from '@/components/UGI_ProductsData';
 import { PiFunnel } from "react-icons/pi";
 import Image from 'next/image';
 
@@ -63,10 +63,30 @@ export default function UnitedGeneralInsurance() {
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedCategory, setSelectedCategory] = useState('All');
     const [priceFilter, setPriceFilter] = useState('All');
+    const [products, setProducts] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
     const productsSectionRef = useRef(null);
 
+    // Fetch data from API
+    useEffect(() => {
+        const loadProducts = async () => {
+            try {
+                const data = await fetchUnitedGeneralInsuranceData();
+                setProducts(data);
+            } catch (err) {
+                setError(err.message);
+                console.error('Failed to load products:', err);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        loadProducts();
+    }, []);
+
     // Get unique categories
-    const categories = ['All', ...new Set(UnitedGeneralInsuranceData.map(product => product.name))];
+    const categories = ['All', ...new Set(products.map(product => product.name))];
 
     // Scroll to products section
     const scrollToProducts = () => {
@@ -78,7 +98,7 @@ export default function UnitedGeneralInsurance() {
 
     // Filter products based on search and filters
     const filteredProducts = useMemo(() => {
-        return UnitedGeneralInsuranceData.filter(product => {
+        return products.filter(product => {
             const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
                 product.tagline.toLowerCase().includes(searchQuery.toLowerCase()) ||
                 product.overview.toLowerCase().includes(searchQuery.toLowerCase());
@@ -86,25 +106,25 @@ export default function UnitedGeneralInsurance() {
             const matchesCategory = selectedCategory === 'All' || product.name === selectedCategory;
 
             const matchesPrice = priceFilter === 'All' ||
-                (priceFilter === 'Under E100' && product.stats[0].includes('E50')) ||
-                (priceFilter === 'E100 - E300' && (product.stats[0].includes('E100') || product.stats[0].includes('E200') || product.stats[0].includes('E250'))) ||
-                (priceFilter === 'Over E300' && (product.stats[0].includes('E300') || product.stats[0].includes('E350') || product.stats[0].includes('E400') || product.stats[0].includes('E450') || product.stats[0].includes('E500') || product.stats[0].includes('E600')));
+                (priceFilter === 'Under E100' && product.stats[0]?.includes('E50')) ||
+                (priceFilter === 'E100 - E300' && (product.stats[0]?.includes('E100') || product.stats[0]?.includes('E200') || product.stats[0]?.includes('E250'))) ||
+                (priceFilter === 'Over E300' && (product.stats[0]?.includes('E300') || product.stats[0]?.includes('E350') || product.stats[0]?.includes('E400') || product.stats[0]?.includes('E450') || product.stats[0]?.includes('E500') || product.stats[0]?.includes('E600')));
 
             return matchesSearch && matchesCategory && matchesPrice;
         });
-    }, [searchQuery, selectedCategory, priceFilter]);
+    }, [searchQuery, selectedCategory, priceFilter, products]);
 
     const ProductCard = ({ product }) => {
         const IconComponent = categoryIcons[product.name];
         const colorClass = categoryColors[product.name];
 
         return (
-            <div className="bg-white  rounded-xl hover:-xl transition-all duration-300 overflow-hidden group hover:transform hover:-translate-y-2">
+            <div className="bg-white rounded-xl hover:shadow-xl transition-all duration-300 overflow-hidden group hover:transform hover:-translate-y-2">
                 {/* Image Section */}
                 <div className="relative h-48 bg-gradient-to-br overflow-hidden">
                     {/* Product Image */}
                     <Image
-                        src={product.heroImage} // make sure product.image is a valid URL or imported asset
+                        src={product.heroImage}
                         alt={product.name}
                         fill
                         className="object-cover"
@@ -117,12 +137,11 @@ export default function UnitedGeneralInsurance() {
                     {/* Top-right Icon */}
                     <div className="absolute top-4 right-4">
                         <div
-                            className={`w-12 h-12 rounded-full flex items-center justify-center text-white bg-[#286278] -lg hover:-xl transition-all duration-300`}
+                            className={`w-12 h-12 rounded-full flex items-center justify-center text-white bg-[#286278] shadow-lg hover:shadow-xl transition-all duration-300`}
                         >
                             <IconComponent className="text-xl" />
                         </div>
                     </div>
-
                 </div>
 
                 {/* Content Section */}
@@ -139,7 +158,7 @@ export default function UnitedGeneralInsurance() {
                         {product.benefits.slice(0, 2).map((benefit, index) => (
                             <div key={index} className="flex items-center text-sm text-gray-600">
                                 <div className="w-5 h-5 bg-green-100 rounded-full flex items-center justify-center mr-2 flex-shrink-0">
-                                    <PiCheckCircle className="text-green-600 " />
+                                    <PiCheckCircle className="text-green-600" />
                                 </div>
                                 <span className="line-clamp-1">{benefit.text}</span>
                             </div>
@@ -173,8 +192,37 @@ export default function UnitedGeneralInsurance() {
         );
     };
 
+    if (loading) {
+        return (
+            <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+                <div className="text-center">
+                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#286278] mx-auto"></div>
+                    <p className="mt-4 text-gray-600">Loading insurance products...</p>
+                </div>
+            </div>
+        );
+    }
+
+    if (error) {
+        return (
+            <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+                <div className="text-center">
+                    <PiUserSwitch className="text-6xl text-gray-300 mx-auto mb-4" />
+                    <h3 className="text-xl font-semibold text-gray-600 mb-2">Failed to load products</h3>
+                    <p className="text-gray-500 mb-4">{error}</p>
+                    <button 
+                        onClick={() => window.location.reload()}
+                        className="bg-[#286278] text-white px-6 py-2 rounded-full font-semibold hover:bg-[#24576b] transition-colors"
+                    >
+                        Try Again
+                    </button>
+                </div>
+            </div>
+        );
+    }
+
     return (
-        <div className="min-h-screen bg-gray-100  font-outfit">
+        <div className="min-h-screen bg-gray-100 font-outfit">
             {/* Header with Background Image */}
             <div className='bg-[#204f61] h-2 w-full' />
             <div className='relative bg-[#286278] py-16 md:py-24 min-h-[500px] flex items-center'>
@@ -207,7 +255,7 @@ export default function UnitedGeneralInsurance() {
                                 </button>
                                 <button
                                     onClick={scrollToProducts}
-                                    className="border-2 border-white text-white px-8 py-4 rounded-full font-semibold hover:bg-white hover:text-[#9b1c20] transition-colors text-lg text-center"
+                                    className="border-2 border-white text-white px-8 py-4 rounded-full font-semibold hover:bg-white hover:text-[#286278] transition-colors text-lg text-center"
                                 >
                                     View Products
                                 </button>
@@ -236,9 +284,9 @@ export default function UnitedGeneralInsurance() {
                     </div>
                 </div>
             </div>
+
             {/* Search and Filters */}
             <section className="py-8 bg-white border-b border-gray-200">
-
                 <div className="max-w-[1400px] mx-auto px-4 sm:px-6">
                     <div className='text-xl font-semibold mb-4'>
                         <p className='text-[#286278] text-2xl'>What do you want to cover?</p>
@@ -254,7 +302,7 @@ export default function UnitedGeneralInsurance() {
                                     placeholder="Search insurance products..."
                                     value={searchQuery}
                                     onChange={(e) => setSearchQuery(e.target.value)}
-                                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9b1c20] focus:border-transparent"
+                                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#286278] focus:border-transparent"
                                 />
                             </div>
                         </div>
@@ -266,7 +314,7 @@ export default function UnitedGeneralInsurance() {
                                 <select
                                     value={selectedCategory}
                                     onChange={(e) => setSelectedCategory(e.target.value)}
-                                    className="pl-10 pr-8 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9b1c20] focus:border-transparent appearance-none bg-white"
+                                    className="pl-10 pr-8 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#286278] focus:border-transparent appearance-none bg-white"
                                 >
                                     <option value="All">All Products</option>
                                     {categories.filter(cat => cat !== 'All').map(category => (
@@ -274,14 +322,12 @@ export default function UnitedGeneralInsurance() {
                                     ))}
                                 </select>
                             </div>
-
-                          
                         </div>
                     </div>
 
                     {/* Results Count */}
                     <div className="mt-4 text-sm text-gray-600">
-                        Showing {filteredProducts.length} of {UnitedGeneralInsuranceData.length} products
+                        Showing {filteredProducts.length} of {products.length} products
                     </div>
                 </div>
             </section>
@@ -299,17 +345,13 @@ export default function UnitedGeneralInsurance() {
                         <div>
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6">
                                 {filteredProducts.map((product, index) => (
-                                    <ProductCard key={index} product={product} />
+                                    <ProductCard key={product.name + index} product={product} />
                                 ))}
                             </div>
-
-                            
                         </div>
                     )}
                 </div>
             </section>
-
-     
 
             {/* CTA Section */}
             <section className="py-16 bg-white">
@@ -323,13 +365,13 @@ export default function UnitedGeneralInsurance() {
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
                         <button
                             onClick={scrollToProducts}
-                            className="bg-[#286278] text-white px-8 py-4 rounded-full font-semibold hover:bg-[#881a1e] transition-colors text-lg"
+                            className="bg-[#286278] text-white px-8 py-4 rounded-full font-semibold hover:bg-[#24576b] transition-colors text-lg"
                         >
                             Get Free Quote
                         </button>
                         <Link
                             href="/contact"
-                            className="border-2 border-[#286278] text-[#286278] px-8 py-4 rounded-full font-semibold hover:bg-[#9b1c20] hover:text-white transition-colors text-lg"
+                            className="border-2 border-[#286278] text-[#286278] px-8 py-4 rounded-full font-semibold hover:bg-[#286278] hover:text-white transition-colors text-lg"
                         >
                             Find a Branch
                         </Link>

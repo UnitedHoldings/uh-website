@@ -140,7 +140,7 @@ export default function About() {
                             <div className="bg-white shadow-sm overflow-hidden rounded-lg hover:shadow-lg transition-shadow duration-300">
                                 <div className="h-48 flex-col sm:h-60 w-full rounded-t-lg relative bg-gradient-to-br flex items-center justify-center p-4">
                                     <Image
-                                        src={'/pay.jpg'}
+                                        src={'/Pay.jpg'}
                                         alt="UGI Logo"
                                         width={400}
                                         height={400}
@@ -212,9 +212,7 @@ export default function About() {
                             Join thousands of satisfied clients who trust United Holdings with their financial security.
                         </p>
                         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                            <Link href="/products" className="bg-white text-[#9b1c20] px-6 py-3 rounded-full font-semibold hover:bg-gray-100 transition-colors">
-                                Explore Products
-                            </Link>
+                          
                             <Link href="/contact" className="border-2 border-white text-white px-6 py-3 rounded-full font-semibold hover:bg-white hover:text-[#9b1c20] transition-colors">
                                 Contact Us
                             </Link>
