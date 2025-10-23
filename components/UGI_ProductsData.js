@@ -85,6 +85,9 @@ const fetchUnitedGeneralInsuranceData = async () => {
     
     // Transform API data to match our local structure
     const transformedData = data.data.map(product => {
+      // Extract heroImage URL from the asset structure
+      const heroImage = product.heroImage?.asset?.url || '/images/default-hero.jpg';
+      
       // Map benefits with icons
       const benefits = product.benefits?.map(benefit => ({
         text: benefit.text,
@@ -109,18 +112,24 @@ const fetchUnitedGeneralInsuranceData = async () => {
         content: faq.content
       })) || [];
       
-      // Map related products and add images
+      // Map related products and extract image URLs
       const related = product.related?.map(relatedItem => {
-        // Determine image based on product name
+        // Extract image from related item if available, otherwise use fallback
         let image = '/images/default-product.jpg';
-        if (relatedItem.name === 'Personal Accident Insurance') {
-          image = '/personal-accident.jpg';
-        } else if (relatedItem.name === 'Home Contents Insurance') {
-          image = '/home-contents.jpg';
-        } else if (relatedItem.name === 'Legal Insurance') {
-          image = '/legal-insurance.jpg';
-        } else if (relatedItem.name === 'Motor Insurance') {
-          image = '/car.jpg';
+        
+        if (relatedItem.heroImage?.asset?.url) {
+          image = relatedItem.heroImage.asset.url;
+        } else {
+          // Fallback to conditional images based on product name
+          if (relatedItem.name === 'Personal Accident Insurance') {
+            image = '/personal-accident.jpg';
+          } else if (relatedItem.name === 'Home Contents Insurance') {
+            image = '/home-contents.jpg';
+          } else if (relatedItem.name === 'Legal Insurance') {
+            image = '/legal-insurance.jpg';
+          } else if (relatedItem.name === 'Motor Insurance') {
+            image = '/car.jpg';
+          }
         }
         
         return {
@@ -129,14 +138,6 @@ const fetchUnitedGeneralInsuranceData = async () => {
           link: relatedItem.link
         };
       }) || [];
-      
-      // Determine hero image based on product name
-      let heroImage = '/default-hero.jpg';
-      if (product.name === 'Legal Insurance') {
-        heroImage = '/legal-insurance.jpg';
-      } else if (product.name === 'Motor Insurance') {
-        heroImage = '/car.jpg';
-      }
       
       return {
         name: product.name,
@@ -155,7 +156,7 @@ const fetchUnitedGeneralInsuranceData = async () => {
         trust: product.trust || 'Reliable insurance protection for Eswatini residents.',
       };
     });
-    
+     
     return transformedData;
     
   } catch (error) {
