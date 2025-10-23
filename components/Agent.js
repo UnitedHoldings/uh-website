@@ -14,6 +14,18 @@ function Agent() {
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState('');
 
+  // Email mapping based on reason/business unit
+  const getEmailByReason = (reason) => {
+    const emailMap = {
+      'Get A Quote': 'ugi@united.co.sz', // United General Insurance
+      'File A Claim': 'ugi@united.co.sz', // United General Insurance
+      'Ask Questions': 'callcenter@united.co.sz', // Call Center
+      'Account Statement': 'ula@united.co.sz', // ULA
+      'Other': 'callcenter@united.co.sz', // Default to Call Center
+    };
+    return emailMap[reason] || 'callcenter@united.co.sz';
+  };
+
   const handleSendCallback = async (e) => {
     e.preventDefault();
 
@@ -26,10 +38,12 @@ function Agent() {
     setMessage('');
 
     try {
+      const recipientEmail = getEmailByReason(reason);
+      
       const emailData = {
         product_name: "Callback Request - " + reason,
         product_company: "United Holdings",
-        product_email: "jay.rego.14@gmail.com",
+        product_email: recipientEmail,
         product_contact: mobileNumber,
         customer_name: `${firstName} ${lastName}`.trim(),
         reason: reason
@@ -149,6 +163,13 @@ function Agent() {
                     <option value="Other">Other</option>
                   </select>
                 </div>
+
+                {/* Email Routing Info */}
+                {reason && (
+                  <div className="text-xs text-gray-600 mb-2 p-2 bg-gray-50 rounded-lg">
+                    Your request will be sent to: <strong>{getEmailByReason(reason)}</strong>
+                  </div>
+                )}
                 
                 {/* Submit Button */}
                 <button
@@ -217,6 +238,29 @@ function Agent() {
                       >
                         info@united.co.sz
                       </a>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Business Unit Emails */}
+                <div className="pt-4 border-t border-gray-200">
+                  <p className="font-bold text-gray-600 text-sm md:text-base mb-2">Contact Specific Departments</p>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                    <div className="flex items-center gap-1">
+                      <span className="font-semibold text-[#9b1c20]">Call Center:</span>
+                      <span>callcenter@united.co.sz</span>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <span className="font-semibold text-[#9b1c20]">United Pay:</span>
+                      <span>upay@united.co.sz</span>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <span className="font-semibold text-[#9b1c20]">Insurance:</span>
+                      <span>ugi@united.co.sz</span>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <span className="font-semibold text-[#9b1c20]">ULA:</span>
+                      <span>ula@united.co.sz</span>
                     </div>
                   </div>
                 </div>

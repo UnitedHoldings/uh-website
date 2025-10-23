@@ -16,7 +16,7 @@ export default function Team() {
       name: "Philip De Sousa",
       title: "Executive Chairman",
       bio: "Philip De Sousa is the Executive Chairman of United Holdings Ltd and the visionary leader behind the group's expansion. With over 28 years of industry experience, he took over the running of the Dups business in 1996 and was the Founding Managing Director and Executive Chairman of Dups Insurance. He chairs the Group's Think-tank and Special Projects Committees, driving strategic innovation across all subsidiaries.",
-      image: "/philip-de-sousa.jpeg",
+      image: "/Mr-D.jpg",
       linkedin: "https://linkedin.com/in/philip-de-sousa"
     },
     {
