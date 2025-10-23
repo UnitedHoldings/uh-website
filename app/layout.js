@@ -6,7 +6,7 @@ import Script from "next/script";
 
 // Site constants
 const siteName = "United Holdings";
-const siteUrl = "https://www.unitedholdings.co.sz";
+const siteUrl = "https://www.ummo.united.co.sz";
 
 // Schema.org structured data
 const schemaOrgSite = {

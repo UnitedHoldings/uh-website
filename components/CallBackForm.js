@@ -1,6 +1,5 @@
 'use client'
-import React from 'react'
-import { useForm, ValidationError } from '@formspree/react';
+import React, { useState } from 'react'
 import Link from 'next/link';
 
 // All available products across departments
@@ -22,9 +21,14 @@ const ALL_PRODUCTS = [
 ];
 
 const CallBackForm = ({ onClose }) => {
-  const [activeTab, setActiveTab] = React.useState('personal');
-  const [state, handleSubmit] = useForm("xvgwylea");
-  const [formData, setFormData] = React.useState({
+  const [activeTab, setActiveTab] = useState('personal');
+  const [formState, setFormState] = useState({
+    loading: false,
+    error: null,
+    success: false
+  });
+
+  const [formData, setFormData] = useState({
     fullName: '',
     email: '',
     phone: '',
@@ -46,46 +50,90 @@ const CallBackForm = ({ onClose }) => {
     }));
   };
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
+    setFormState({ loading: true, error: null, success: false });
 
     // Check if required checkboxes are checked
     if (!formData.agreeTerms) {
       alert('Please agree to the terms of service and privacy policy.');
+      setFormState({ loading: false, error: null, success: false });
       return;
     }
 
     if (!formData.agreeData) {
       alert('Please agree to the data processing terms.');
+      setFormState({ loading: false, error: null, success: false });
       return;
     }
 
-    // Handle form submission with Formspree
-    handleSubmit(e);
+    try {
+      // Prepare email data according to your API structure
+      const emailData = {
+        product_name: "Callback Request - " + formData.product,
+        product_company: "United Holdings",
+        product_email: formData.email || "info@united.co.sz", // Use provided email or fallback
+        product_contact: formData.phone,
+        customer_name: formData.fullName.trim(),
+        reason: formData.product || "General Inquiry"
+      };
 
-    // Only show alert and reset if submission is successful
-    if (state.succeeded) {
-      alert('Thank you! We will call you back soon.');
-      // Reset form
-      setFormData({
-        fullName: '',
-        email: '',
-        phone: '',
-        product: '',
-        date: '',
-        time: '',
-        companyName: '',
-        businessType: '',
-        agreeTerms: false,
-        agreeData: false,
-        agreeEmails: false
+      // Send email using your API
+      const response = await fetch('https://uh-server.onrender.com/api/send-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(emailData),
       });
-      if (onClose) onClose();
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const result = await response.json();
+
+      if (result.success) {
+        setFormState({ loading: false, error: null, success: true });
+
+        // Reset form
+        setFormData({
+          fullName: '',
+          email: '',
+          phone: '',
+          product: '',
+          date: '',
+          time: '',
+          companyName: '',
+          businessType: '',
+          agreeTerms: false,
+          agreeData: false,
+          agreeEmails: false
+        });
+
+        alert('Thank you! We will call you back soon.');
+
+        // Close modal if provided
+        if (onClose) {
+          setTimeout(() => onClose(), 2000);
+        }
+      } else {
+        throw new Error(result.message || 'Failed to send email');
+      }
+
+    } catch (error) {
+      console.error('Error sending email:', error);
+      setFormState({
+        loading: false,
+        error: error.message || 'Failed to submit form. Please try again.',
+        success: false
+      });
+      alert('Sorry, there was an error submitting your request. Please try again.');
     }
   };
 
   // Show success message when form is successfully submitted
-  if (state.succeeded) {
+  if (formState.success) {
     return (
       <div className="lg:bg-white/90 bg-white rounded-2xl absolute top-20 z-40 lg:right-[10%] right-0 p-6 w-full max-w-md lg:max-w-xl mx-4">
         <div className="text-center py-8">
@@ -141,7 +189,7 @@ const CallBackForm = ({ onClose }) => {
       {/* Form */}
       <form onSubmit={handleFormSubmit} className="space-y-4">
         {/* Common Fields */}
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-2 gap-4">
           <div>
             <label htmlFor="fullName" className="block text-sm font-medium text-gray-700 mb-1 font-outfit">
               Full Name *
@@ -155,11 +203,6 @@ const CallBackForm = ({ onClose }) => {
               required
               className="w-full py-2 outline-none bg-transparent border-gray-300 border-b placeholder-gray-500"
               placeholder="Enter your full name"
-            />
-            <ValidationError
-              prefix="Full Name"
-              field="fullName"
-              errors={state.errors}
             />
           </div>
 
@@ -177,49 +220,52 @@ const CallBackForm = ({ onClose }) => {
               className="w-full py-2 outline-none bg-transparent border-gray-300 border-b placeholder-gray-500"
               placeholder="Enter your phone number"
             />
-            <ValidationError
-              prefix="Phone"
-              field="phone"
-              errors={state.errors}
-            />
           </div>
         </div>
 
-        {/* Email Field */}
-
-
+        <div className="grid grid-cols-2 md:grid-cols-2 gap-4">
+          {/* Email Field */}
+          <div>
+            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1 font-outfit">
+              Email Address *
+            </label>
+            <input
+              id="email"
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleInputChange}
+              required
+              className="w-full py-2 outline-none bg-transparent border-gray-300 border-b placeholder-gray-500"
+              placeholder="Enter your email address"
+            />
+          </div>
+          {/* Product Selection */}
+          <div>
+            <label htmlFor="product" className="block text-sm font-medium text-gray-700 mb-1 font-outfit">
+              Product Interest *
+            </label>
+            <select
+              id="product"
+              name="product"
+              value={formData.product}
+              onChange={handleInputChange}
+              required
+              className="w-full py-2 outline-none bg-transparent border-gray-300 border-b placeholder-gray-500"
+            >
+              <option value="">Select a product</option>
+              {ALL_PRODUCTS.map((product, index) => (
+                <option key={index} value={product}>
+                  {product}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
         {/* Add hidden field for form type */}
         <input type="hidden" name="formType" value={activeTab} />
 
-        {/* Business-specific Fields */}
-    
 
-        {/* Product Selection */}
-        <div>
-          <label htmlFor="product" className="block text-sm font-medium text-gray-700 mb-1 font-outfit">
-            Product Interest *
-          </label>
-          <select
-            id="product"
-            name="product"
-            value={formData.product}
-            onChange={handleInputChange}
-            required
-            className="w-full py-2 outline-none bg-transparent border-gray-300 border-b placeholder-gray-500"
-          >
-            <option value="">Select a product</option>
-            {ALL_PRODUCTS.map((product, index) => (
-              <option key={index} value={product}>
-                {product}
-              </option>
-            ))}
-          </select>
-          <ValidationError
-            prefix="Product"
-            field="product"
-            errors={state.errors}
-          />
-        </div>
 
         {/* Checkboxes */}
         <div className="space-y-3 pt-2">
@@ -254,24 +300,26 @@ const CallBackForm = ({ onClose }) => {
               I agree to the processing of my personal data for the purpose of receiving a callback and related services *
             </label>
           </div>
-
-          {/* Marketing Emails Checkbox */}
-
         </div>
+
+        {/* Error Message */}
+        {formState.error && (
+          <div className="text-red-600 text-sm mt-2">
+            {formState.error}
+          </div>
+        )}
 
         {/* Submit Button */}
         <button
           type="submit"
-          disabled={state.submitting}
+          disabled={formState.loading}
           className="w-full py-4 px-6 mt-4 text-lg font-semibold rounded-full hover:opacity-90 transition-opacity duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 font-outfit text-white disabled:opacity-50"
           style={{
             backgroundColor: '#9b1c20',
           }}
         >
-          {state.submitting ? 'Submitting...' : 'Request Call Back'}
+          {formState.loading ? 'Submitting...' : 'Request Call Back'}
         </button>
-
-
       </form>
     </div>
   );
