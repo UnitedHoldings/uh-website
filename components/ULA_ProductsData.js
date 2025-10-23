@@ -102,20 +102,16 @@ const fetchUnitedLifeAssuranceData = async () => {
         };
       }) || [];
       
-      // Determine hero image based on product name
-      let heroImage = '/default-hero.jpg';
-      if (product.name === 'Sinawe Funeral Plan') {
-        heroImage = '/family-funeral.jpg';
-      } else if (product.name === 'Tinkhundla Funeral Cover') {
-        heroImage = '/tinkhundla-funeral.jpg';
-      } else if (product.name === 'Credit Life') {
-        heroImage = '/credit-life.jpg';
+      // FIX: Properly extract hero image URL from the nested Sanity.io structure
+      let heroImage = '/images/default-hero.jpg';
+      if (product.heroImage && product.heroImage.asset && product.heroImage.asset.url) {
+        heroImage = product.heroImage.asset.url;
       }
       
       return {
         name: product.name,
         tagline: product.tagline,
-        heroImage: heroImage,
+        heroImage: heroImage, // Now this will be the actual URL string like "https://cdn.sanity.io/images/..."
         overview: product.overview,
         stats: product.stats || [],
         benefits: benefits,
