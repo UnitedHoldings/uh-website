@@ -285,32 +285,7 @@ export default function ProductPage({ params }) {
                     </button>
 
                     {/* Action Button */}
-                    <button
-                      type="submit"
-                      className={`px-6 sm:px-8 py-2 sm:py-3 rounded-full font-semibold transition flex-1 sm:flex-none text-sm sm:text-base ${isLightColor
-                          ? 'bg-gray-600 text-white hover:bg-white hover:text-gray-600 hover:border-gray-600 border'
-                          : `bg-[${departmentColor}] text-white hover:bg-white hover:text-[${departmentColor}] hover:border-[${departmentColor}] border`
-                        }`}
-                      style={!isLightColor ? {
-                        backgroundColor: departmentColor
-                      } : {}}
-                      onMouseOver={(e) => {
-                        if (!isLightColor) {
-                          e.target.style.backgroundColor = 'white';
-                          e.target.style.color = departmentColor;
-                          e.target.style.borderColor = departmentColor;
-                        }
-                      }}
-                      onMouseOut={(e) => {
-                        if (!isLightColor) {
-                          e.target.style.backgroundColor = departmentColor;
-                          e.target.style.color = 'white';
-                          e.target.style.borderColor = departmentColor;
-                        }
-                      }}
-                    >
-                      {companyText.actionText}
-                    </button>
+                    
                   </div>
 
                   {submitted && (
