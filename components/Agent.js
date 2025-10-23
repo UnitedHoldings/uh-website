@@ -17,11 +17,11 @@ function Agent() {
   // Email mapping based on reason/business unit
   const getEmailByReason = (reason) => {
     const emailMap = {
-      'Get A Quote': 'ugi@united.co.sz', // United General Insurance
-      'File A Claim': 'ugi@united.co.sz', // United General Insurance
-      'Ask Questions': 'callcenter@united.co.sz', // Call Center
-      'Account Statement': 'ula@united.co.sz', // ULA
-      'Other': 'callcenter@united.co.sz', // Default to Call Center
+      'Get A Quote': 'info@united.co.sz', // United General Insurance
+      'File A Claim': 'info@united.co.sz', // United General Insurance
+      'Ask Questions': 'info@united.co.sz', // Call Center
+      'Account Statement': 'info@united.co.sz', // ULA
+      'Other': 'info@united.co.sz', // Default to Call Center
     };
     return emailMap[reason] || 'callcenter@united.co.sz';
   };
