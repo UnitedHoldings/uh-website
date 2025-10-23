@@ -65,6 +65,9 @@ export default function ProductPage({ params }) {
   const [allProductsData, setAllProductsData] = useState([]);
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitMessage, setSubmitMessage] = useState('');
+  const [submitError, setSubmitError] = useState('');
   
   const [formData, setFormData] = useState({
     name: '',
@@ -115,6 +118,93 @@ export default function ProductPage({ params }) {
     loadProducts();
   }, [unwrappedParams.slug]);
 
+  // Send quote function - now passed to RenderForm
+  const sendQuote = async (formData) => {
+    if (!product) return;
+
+    setIsSubmitting(true);
+    setSubmitError('');
+    setSubmitMessage('');
+
+    try {
+      // Prepare the request body
+      const requestBody = {
+        name: formData.name,
+        surname: formData.name.split(' ').slice(1).join(' ') || formData.name,
+        email: formData.email,
+        mobileNumber: formData.phone,
+        productData: Object.entries(formData)
+          .filter(([key, value]) => value && value.toString().trim() !== '')
+          .map(([key, value]) => ({ field: key, value: value.toString().trim() }))
+          .concat([
+            { field: 'product', value: product.name },
+            { field: 'company', value: getProductCompany(product) },
+            { field: 'timestamp', value: new Date().toISOString() }
+          ])
+      };
+
+      console.log('Sending quote request:', JSON.stringify(requestBody, null, 2));
+
+      const response = await fetch('https://uh-server.onrender.com/api/get-quote', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: JSON.stringify(requestBody),
+      });
+
+      console.log('Response status:', response.status, response.statusText);
+
+      // Handle different response types
+      if (response.status === 204) {
+        // No content - that's fine
+        console.log('Request successful (204 No Content)');
+      } else if (response.ok) {
+        // Try to parse JSON, but don't fail if it's empty
+        const responseText = await response.text();
+        if (responseText.trim()) {
+          try {
+            const result = JSON.parse(responseText);
+            console.log('Response JSON:', result);
+          } catch (parseError) {
+            console.warn('Response is not valid JSON:', responseText);
+          }
+        } else {
+          console.log('Response is empty (expected)');
+        }
+      } else {
+        // Handle HTTP errors
+        const errorText = await response.text();
+        throw new Error(`Server returned ${response.status}: ${errorText || response.statusText}`);
+      }
+      
+      // If we get here, the request was successful
+      setSubmitMessage(companyText.successMessage);
+      setSubmitted(true);
+      
+      // Reset form after successful submission
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        amount: '',
+        dob: '',
+        vehicle: '',
+        address: '',
+      });
+
+    } catch (error) {
+      console.error('Error sending quote:', error);
+      const errorMessage = error.message.includes('Failed to fetch') 
+        ? 'Network error. Please check your connection and try again.'
+        : `Failed to submit your request: ${error.message}`;
+      setSubmitError(errorMessage);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   // Show loading state
   if (loading) {
     return (
@@ -141,12 +231,8 @@ export default function ProductPage({ params }) {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setSubmitted(true);
-    setTimeout(() => setSubmitted(false), 3000);
+    // Clear errors when user starts typing
+    if (submitError) setSubmitError('');
   };
 
   // Dynamic text based on company type
@@ -156,22 +242,25 @@ export default function ProductPage({ params }) {
         return {
           mainHeading: 'Get hassle-free financing for all your needs',
           actionText: 'Apply Now',
-          successMessage: 'Application submitted! We\'ll contact you soon.',
-          formTitle: 'Please complete the details for your loan application'
+          successMessage: 'Application submitted successfully! We\'ll contact you soon.',
+          formTitle: 'Please complete the details for your loan application',
+          submitButtonText: 'Request Loan Quote'
         };
       case 'ULA':
         return {
           mainHeading: 'Get peace of mind with life assurance protection',
           actionText: 'Get Covered Today',
-          successMessage: 'Quote request submitted! We\'ll contact you soon.',
-          formTitle: 'Please complete the details for your life assurance quote'
+          successMessage: 'Quote request submitted successfully! We\'ll contact you soon.',
+          formTitle: 'Please complete the details for your life assurance quote',
+          submitButtonText: 'Request Quote'
         };
       default: // UGI
         return {
           mainHeading: 'Get hassle-free cover for all your insurance needs',
           actionText: 'Sign Me Up Today',
-          successMessage: 'Quote request submitted! We\'ll contact you soon.',
-          formTitle: 'Please complete the details for your insurance quote'
+          successMessage: 'Quote request submitted successfully! We\'ll contact you soon.',
+          formTitle: 'Please complete the details for your insurance quote',
+          submitButtonText: 'Request Quote'
         };
     }
   };
@@ -241,10 +330,7 @@ export default function ProductPage({ params }) {
               </div>
 
               <div className="mt-4 sm:mt-6 flex flex-col sm:flex-row gap-3 sm:items-center">
-                <form
-                  onSubmit={handleSubmit}
-                  className="bg-white w-full rounded-lg sm:rounded-xl -lg p-4 sm:p-6 md:p-8 flex flex-col gap-3 sm:gap-4 items-center mx-auto text-black"
-                >
+                <div className="bg-white w-full rounded-lg sm:rounded-xl -lg p-4 sm:p-6 md:p-8 flex flex-col gap-3 sm:gap-4 items-center mx-auto text-black">
                   <div className='w-full flex flex-col text-center sm:text-left'>
                     <p className='text-xl sm:text-2xl md:text-3xl font-light mb-2'>
                       Let&apos;s get started
@@ -254,46 +340,19 @@ export default function ProductPage({ params }) {
                     </p>
                   </div>
 
-                  <RenderForm product={product} formData={formData} handleInputChange={handleInputChange} company={company} />
-
-                  <div className='w-full flex flex-col sm:flex-row gap-3 sm:gap-2 justify-center sm:justify-start mt-4 sm:mt-6'>
-                    {/* Request A Quote Button */}
-                    <button
-                      type="button"
-                      className={`px-6 sm:px-8 py-2 sm:py-3 border rounded-full font-semibold transition flex-1 sm:flex-none text-sm sm:text-base ${isLightColor
-                          ? 'border-gray-600 text-gray-600 hover:bg-gray-600 hover:text-white'
-                          : `border-[${departmentColor}] text-[${departmentColor}] hover:bg-[${departmentColor}] hover:text-white`
-                        }`}
-                      style={!isLightColor ? {
-                        borderColor: departmentColor,
-                        color: departmentColor
-                      } : {}}
-                      onMouseOver={(e) => {
-                        if (!isLightColor) {
-                          e.target.style.backgroundColor = departmentColor;
-                          e.target.style.color = 'white';
-                        }
-                      }}
-                      onMouseOut={(e) => {
-                        if (!isLightColor) {
-                          e.target.style.backgroundColor = 'white';
-                          e.target.style.color = departmentColor;
-                        }
-                      }}
-                    >
-                      Request A Quote
-                    </button>
-
-                    {/* Action Button */}
-                    
-                  </div>
-
-                  {submitted && (
-                    <div className="text-green-700 text-sm mt-2 text-center sm:text-left">
-                      {companyText.successMessage}
-                    </div>
-                  )}
-                </form>
+                  {/* RenderForm now handles the form and submission */}
+                  <RenderForm 
+                    product={product} 
+                    formData={formData} 
+                    handleInputChange={handleInputChange} 
+                    company={company}
+                    sendQuote={sendQuote}
+                    isSubmitting={isSubmitting}
+                    submitMessage={submitMessage}
+                    submitError={submitError}
+                    companyText={companyText}
+                  />
+                </div>
               </div>
 
               {/* Disclaimer */}
@@ -313,6 +372,7 @@ export default function ProductPage({ params }) {
         </div>
       </div>
 
+      {/* Rest of the component remains the same */}
       {/* Product Details Sections */}
       <div className='max-w-[1400px] px-4 my-8 sm:my-12 md:my-16 space-y-6 mx-auto flex flex-col lg:flex-row'>
         {/* Left Column - Product Title */}
@@ -353,7 +413,7 @@ export default function ProductPage({ params }) {
       </div>
 
       {/* Additional Product Sections */}
-      <div className='max-w-[1400px]  mb-8 sm:mb-12 md:mb-16 mx-auto space-y-12'>
+      <div className='max-w-[1400px] mb-8 sm:mb-12 md:mb-16 mx-auto space-y-12'>
         {/* Benefits Section */}
         {product.benefits && <ProductBenefits benefits={product.benefits} company={company} />}
 

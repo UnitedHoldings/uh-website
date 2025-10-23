@@ -7,7 +7,7 @@ import Link from 'next/link';
 export default function About() {
     return (
         <>
-           
+
             <div className="min-h-screen font-outfit mx-auto">
                 {/* Header Section */}
                 <div className='bg-[#881a1e] h-6 sm:h-8 w-full' />
@@ -74,6 +74,39 @@ export default function About() {
                                     Our story is one of resilience, innovation, and deep commitment to the people of Eswatini. We were founded on the belief that financial services should not be a privilege for the few, but a right for all. Today, we stand as a diversified group under the Dups Group of Companies, offering a wide range of products that address both short‑term and long‑term financial needs.
                                 </p>
                             </div>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Vision & Mission Section */}
+                <div className="bg-white overflow-hidden">
+                    <div className='max-w-[1400px] px-4 sm:px-6 mb-12 sm:mb-16 space-y-6 py-12 mx-auto flex flex-col lg:flex-row'>
+                        <div className='lg:min-w-[300px] lg:pr-8'>
+                            <p className='font-semibold text-4xl'>
+                                Our Vision & Mission
+                            </p>
+                            <div className="flex flex-col w-full justify-between py-4 sm:py-6"></div>
+                        </div>
+
+                        <div className='w-full lg:border-l lg:border-gray-400 lg:pl-6'>
+                            <section className="mb-8 grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+                                <div>
+                                    <h2 className="text-xl sm:text-2xl font-semibold mb-3  md:text-left">
+                                        Our Vision
+                                    </h2>
+                                    <p className="text-gray-700 text-lg leading-relaxed">
+                                        To be the leading customer‑centric financial services provider in Eswatini and beyond, setting the standard for trust, innovation, and inclusivity.
+                                    </p>
+                                </div>
+                                <div>
+                                    <h2 className="text-xl sm:text-2xl font-semibold mb-3  md:text-left">
+                                        Our Mission
+                                    </h2>
+                                    <p className="text-gray-700 text-lg leading-relaxed">
+                                        We exist to uplift lives by delivering affordable, accessible, and innovative financial services. By being an employer of choice and a partner to communities, we ensure that our growth is shared with the people and places we serve.
+                                    </p>
+                                </div>
+                            </section>
                         </div>
                     </div>
                 </div>
@@ -167,38 +200,7 @@ export default function About() {
                     </section>
                 </main>
 
-                {/* Vision & Mission Section */}
-                <div className="bg-white overflow-hidden">
-                    <div className='max-w-[1400px] px-4 sm:px-6 mb-12 sm:mb-16 space-y-6 py-12 mx-auto flex flex-col lg:flex-row'>
-                        <div className='lg:min-w-[300px] lg:pr-8'>
-                            <p className='font-semibold text-4xl'>
-                                Our Vision & Mission
-                            </p>
-                            <div className="flex flex-col w-full justify-between py-4 sm:py-6"></div>
-                        </div>
 
-                        <div className='w-full lg:border-l lg:border-gray-400 lg:pl-6'>
-                            <section className="mb-8 grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
-                                <div>
-                                    <h2 className="text-xl sm:text-2xl font-semibold mb-3  md:text-left">
-                                        Our Vision
-                                    </h2>
-                                    <p className="text-gray-700 text-lg leading-relaxed">
-                                        To be the leading customer‑centric financial services provider in Eswatini and beyond, setting the standard for trust, innovation, and inclusivity.
-                                    </p>
-                                </div>
-                                <div>
-                                    <h2 className="text-xl sm:text-2xl font-semibold mb-3  md:text-left">
-                                        Our Mission
-                                    </h2>
-                                    <p className="text-gray-700 text-lg leading-relaxed">
-                                        We exist to uplift lives by delivering affordable, accessible, and innovative financial services. By being an employer of choice and a partner to communities, we ensure that our growth is shared with the people and places we serve.
-                                    </p>
-                                </div>
-                            </section>
-                        </div>
-                    </div>
-                </div>
 
 
 
@@ -212,7 +214,7 @@ export default function About() {
                             Join thousands of satisfied clients who trust United Holdings with their financial security.
                         </p>
                         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                          
+
                             <Link href="/contact" className="border-2 border-white text-white px-6 py-3 rounded-full font-semibold hover:bg-white hover:text-[#9b1c20] transition-colors">
                                 Contact Us
                             </Link>

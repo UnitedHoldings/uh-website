@@ -38,7 +38,17 @@ const SelectField = ({ label, name, value, onChange, options, required = false, 
     </div>
 );
 
-export default function RenderForm({ product, formData, handleInputChange }) {
+export default function RenderForm({ 
+    product, 
+    formData, 
+    handleInputChange, 
+    company,
+    sendQuote,
+    isSubmitting,
+    submitMessage,
+    submitError,
+    companyText 
+}) {
     const productName = product.name.toLowerCase();
     
     // Function to determine product category
@@ -70,7 +80,7 @@ export default function RenderForm({ product, formData, handleInputChange }) {
         case 'life':
             productFields = (
                 <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-full'>
-                    <InputField label="Date of Birth" name="dob" type="date" value={formData.dob || ''} onChange={handleInputChange} required />
+                    <InputField label="Date of Birth" name="dob" type="date" value={formData.dob || ''} onChange={handleInputChange} />
                     <SelectField
                         label="Gender"
                         name="gender"
@@ -80,20 +90,18 @@ export default function RenderForm({ product, formData, handleInputChange }) {
                             { value: 'male', label: 'Male' },
                             { value: 'female', label: 'Female' }
                         ]}
-                        required
                     />
-                    <InputField label="Coverage Amount (SZL)" name="coverageAmount" type="number" value={formData.coverageAmount || ''} onChange={handleInputChange} required />
+                    <InputField label="Coverage Amount (SZL)" name="coverageAmount" type="number" value={formData.coverageAmount || ''} onChange={handleInputChange} />
                     <SelectField
                         label="Coverage Type"
                         name="coverageType"
-                        value={formData.coverageType || 'individual'}
+                        value={formData.coverageType || ''}
                         onChange={handleInputChange}
                         options={[
                             { value: 'individual', label: 'Individual' },
                             { value: 'family', label: 'Family' },
                             { value: 'group', label: 'Group' }
                         ]}
-                        required
                     />
                     <InputField label="Number of Dependents" name="dependents" type="number" value={formData.dependents || ''} onChange={handleInputChange} />
                 </div>
@@ -107,7 +115,7 @@ export default function RenderForm({ product, formData, handleInputChange }) {
                     <SelectField
                         label="Vehicle Type"
                         name="vehicleType"
-                        value={formData.vehicleType || 'car'}
+                        value={formData.vehicleType || ''}
                         onChange={handleInputChange}
                         options={[
                             { value: 'car', label: 'Car' },
@@ -116,13 +124,12 @@ export default function RenderForm({ product, formData, handleInputChange }) {
                             { value: 'motorcycle', label: 'Motorcycle' },
                             { value: 'bus', label: 'Bus' }
                         ]}
-                        required
                     />
-                    <InputField label="Vehicle Make" name="vehicleMake" value={formData.vehicleMake || ''} onChange={handleInputChange} required />
-                    <InputField label="Vehicle Model" name="vehicleModel" value={formData.vehicleModel || ''} onChange={handleInputChange} required />
-                    <InputField label="Year" name="vehicleYear" type="number" value={formData.vehicleYear || ''} onChange={handleInputChange} required />
-                    <InputField label="Registration Number" name="registrationNumber" value={formData.registrationNumber || ''} onChange={handleInputChange} required />
-                    <InputField label="Estimated Vehicle Value (SZL)" name="vehicleValue" type="number" value={formData.vehicleValue || ''} onChange={handleInputChange} required />
+                    <InputField label="Vehicle Make" name="vehicleMake" value={formData.vehicleMake || ''} onChange={handleInputChange} />
+                    <InputField label="Vehicle Model" name="vehicleModel" value={formData.vehicleModel || ''} onChange={handleInputChange} />
+                    <InputField label="Year" name="vehicleYear" type="number" value={formData.vehicleYear || ''} onChange={handleInputChange} />
+                    <InputField label="Registration Number" name="registrationNumber" value={formData.registrationNumber || ''} onChange={handleInputChange} />
+                    <InputField label="Estimated Vehicle Value (SZL)" name="vehicleValue" type="number" value={formData.vehicleValue || ''} onChange={handleInputChange} />
                 </div>
             );
             break;
@@ -131,32 +138,30 @@ export default function RenderForm({ product, formData, handleInputChange }) {
         case 'home':
             productFields = (
                 <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-full'>
-                    <InputField label="Property Address" name="propertyAddress" value={formData.propertyAddress || ''} onChange={handleInputChange} required className="md:col-span-2" />
+                    <InputField label="Property Address" name="propertyAddress" value={formData.propertyAddress || ''} onChange={handleInputChange} className="md:col-span-2" />
                     <SelectField
                         label="Ownership Status"
                         name="ownershipStatus"
-                        value={formData.ownershipStatus || 'owned'}
+                        value={formData.ownershipStatus || ''}
                         onChange={handleInputChange}
                         options={[
                             { value: 'owned', label: 'Owned' },
                             { value: 'mortgaged', label: 'Mortgaged' },
                             { value: 'rented', label: 'Rented' }
                         ]}
-                        required
                     />
-                    <InputField label="Property Type" name="propertyType" value={formData.propertyType || ''} onChange={handleInputChange} required />
-                    <InputField label="Estimated Property Value (SZL)" name="propertyValue" type="number" value={formData.propertyValue || ''} onChange={handleInputChange} required />
+                    <InputField label="Property Type" name="propertyType" value={formData.propertyType || ''} onChange={handleInputChange} />
+                    <InputField label="Estimated Property Value (SZL)" name="propertyValue" type="number" value={formData.propertyValue || ''} onChange={handleInputChange} />
                     <SelectField
                         label="Coverage Type"
                         name="coverageType"
-                        value={formData.coverageType || 'both'}
+                        value={formData.coverageType || ''}
                         onChange={handleInputChange}
                         options={[
                             { value: 'building', label: 'Building Only' },
                             { value: 'contents', label: 'Contents Only' },
                             { value: 'both', label: 'Both' }
                         ]}
-                        required
                     />
                 </div>
             );
@@ -178,13 +183,12 @@ export default function RenderForm({ product, formData, handleInputChange }) {
                             { value: 'family', label: 'Family Law' },
                             { value: 'contract', label: 'Contract Dispute' }
                         ]}
-                        required
                     />
-                    <InputField label="Estimated Legal Costs (SZL)" name="estimatedCosts" type="number" value={formData.estimatedCosts || ''} onChange={handleInputChange} required />
+                    <InputField label="Estimated Legal Costs (SZL)" name="estimatedCosts" type="number" value={formData.estimatedCosts || ''} onChange={handleInputChange} />
                     <SelectField
                         label="Urgency Level"
                         name="urgency"
-                        value={formData.urgency || 'medium'}
+                        value={formData.urgency || ''}
                         onChange={handleInputChange}
                         options={[
                             { value: 'low', label: 'Low' },
@@ -192,7 +196,6 @@ export default function RenderForm({ product, formData, handleInputChange }) {
                             { value: 'high', label: 'High' },
                             { value: 'urgent', label: 'Urgent' }
                         ]}
-                        required
                     />
                     <InputField label="Case Description" name="caseDescription" value={formData.caseDescription || ''} onChange={handleInputChange} className="md:col-span-2" />
                 </div>
@@ -203,7 +206,7 @@ export default function RenderForm({ product, formData, handleInputChange }) {
         case 'personal-accident':
             productFields = (
                 <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-full'>
-                    <InputField label="Date of Birth" name="dob" type="date" value={formData.dob || ''} onChange={handleInputChange} required />
+                    <InputField label="Date of Birth" name="dob" type="date" value={formData.dob || ''} onChange={handleInputChange} />
                     <SelectField
                         label="Occupation"
                         name="occupation"
@@ -216,19 +219,17 @@ export default function RenderForm({ product, formData, handleInputChange }) {
                             { value: 'self-employed', label: 'Self-Employed' },
                             { value: 'other', label: 'Other' }
                         ]}
-                        required
                     />
-                    <InputField label="Coverage Amount (SZL)" name="coverageAmount" type="number" value={formData.coverageAmount || ''} onChange={handleInputChange} required />
+                    <InputField label="Coverage Amount (SZL)" name="coverageAmount" type="number" value={formData.coverageAmount || ''} onChange={handleInputChange} />
                     <SelectField
                         label="Coverage Type"
                         name="coverageType"
-                        value={formData.coverageType || 'individual'}
+                        value={formData.coverageType || ''}
                         onChange={handleInputChange}
                         options={[
                             { value: 'individual', label: 'Individual' },
                             { value: 'family', label: 'Family' }
                         ]}
-                        required
                     />
                 </div>
             );
@@ -238,12 +239,12 @@ export default function RenderForm({ product, formData, handleInputChange }) {
         case 'business':
             productFields = (
                 <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-full'>
-                    <InputField label="Business Name" name="businessName" value={formData.businessName || ''} onChange={handleInputChange} required />
-                    <InputField label="Business Registration Number" name="registrationNumber" value={formData.registrationNumber || ''} onChange={handleInputChange} required />
+                    <InputField label="Business Name" name="businessName" value={formData.businessName || ''} onChange={handleInputChange} />
+                    <InputField label="Business Registration Number" name="registrationNumber" value={formData.registrationNumber || ''} onChange={handleInputChange} />
                     <SelectField
                         label="Business Type"
                         name="businessType"
-                        value={formData.businessType || 'retail'}
+                        value={formData.businessType || ''}
                         onChange={handleInputChange}
                         options={[
                             { value: 'retail', label: 'Retail' },
@@ -253,10 +254,9 @@ export default function RenderForm({ product, formData, handleInputChange }) {
                             { value: 'professional', label: 'Professional Services' },
                             { value: 'other', label: 'Other' }
                         ]}
-                        required
                     />
-                    <InputField label="Number of Employees" name="employeeCount" type="number" value={formData.employeeCount || ''} onChange={handleInputChange} required />
-                    <InputField label="Annual Revenue (SZL)" name="annualRevenue" type="number" value={formData.annualRevenue || ''} onChange={handleInputChange} required />
+                    <InputField label="Number of Employees" name="employeeCount" type="number" value={formData.employeeCount || ''} onChange={handleInputChange} />
+                    <InputField label="Annual Revenue (SZL)" name="annualRevenue" type="number" value={formData.annualRevenue || ''} onChange={handleInputChange} />
                     <InputField label="Business Address" name="businessAddress" value={formData.businessAddress || ''} onChange={handleInputChange} className="md:col-span-2" />
                 </div>
             );
@@ -266,7 +266,7 @@ export default function RenderForm({ product, formData, handleInputChange }) {
         case 'loan':
             productFields = (
                 <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-full'>
-                    <InputField label="Desired Loan Amount (SZL)" name="loanAmount" type="number" value={formData.loanAmount || ''} onChange={handleInputChange} required />
+                    <InputField label="Desired Loan Amount (SZL)" name="loanAmount" type="number" value={formData.loanAmount || ''} onChange={handleInputChange} />
                     <SelectField
                         label="Loan Purpose"
                         name="loanPurpose"
@@ -281,7 +281,6 @@ export default function RenderForm({ product, formData, handleInputChange }) {
                             { value: 'vehicle', label: 'Vehicle' },
                             { value: 'other', label: 'Other' }
                         ]}
-                        required
                     />
                     <SelectField
                         label="Employment Status"
@@ -294,12 +293,11 @@ export default function RenderForm({ product, formData, handleInputChange }) {
                             { value: 'government', label: 'Government Employee' },
                             { value: 'unemployed', label: 'Unemployed' }
                         ]}
-                        required
                     />
-                    <InputField label="Monthly Income (SZL)" name="monthlyIncome" type="number" value={formData.monthlyIncome || ''} onChange={handleInputChange} required />
+                    <InputField label="Monthly Income (SZL)" name="monthlyIncome" type="number" value={formData.monthlyIncome || ''} onChange={handleInputChange} />
                     <InputField label="Employer Name" name="employerName" value={formData.employerName || ''} onChange={handleInputChange} />
                     {productName.includes('umlamleli') && (
-                        <InputField label="Government Department" name="governmentDept" value={formData.governmentDept || ''} onChange={handleInputChange} required />
+                        <InputField label="Government Department" name="governmentDept" value={formData.governmentDept || ''} onChange={handleInputChange} />
                     )}
                 </div>
             );
@@ -308,38 +306,93 @@ export default function RenderForm({ product, formData, handleInputChange }) {
         default:
             productFields = (
                 <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-full'>
-                    <InputField label="Coverage Amount (SZL)" name="coverageAmount" type="number" value={formData.coverageAmount || ''} onChange={handleInputChange} required />
+                    <InputField label="Coverage Amount (SZL)" name="coverageAmount" type="number" value={formData.coverageAmount || ''} onChange={handleInputChange} />
                     <SelectField
                         label="Coverage Type"
                         name="coverageType"
-                        value={formData.coverageType || 'standard'}
+                        value={formData.coverageType || ''}
                         onChange={handleInputChange}
                         options={[
                             { value: 'standard', label: 'Standard' },
                             { value: 'premium', label: 'Premium' },
                             { value: 'comprehensive', label: 'Comprehensive' }
                         ]}
-                        required
                     />
                     <InputField label="Additional Information" name="additionalInfo" value={formData.additionalInfo || ''} onChange={handleInputChange} className="md:col-span-2" />
                 </div>
             );
     }
 
+    const handleFormSubmit = (e) => {
+        e.preventDefault();
+        
+        // Basic validation
+        if (!formData.name || !formData.email || !formData.phone) {
+            // You can set error state here or use the one from parent
+            return;
+        }
+
+        // Email validation
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(formData.email)) {
+            return;
+        }
+
+        // Call the sendQuote function from parent
+        sendQuote(formData);
+    };
+
     return (
-        <div className='gap-6 flex flex-col w-full'>
+        <form onSubmit={handleFormSubmit} className='gap-6 flex flex-col w-full'>
             {/* General Information Section */}
             <div className='flex w-full justify-center items-center gap-4'>
                 <p className='font-semibold text-[#9b1c20] whitespace-nowrap '>General Information</p>
                 <div className='h-[0.5px] w-full bg-gray-200 mt-1' />
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-full">
-                <InputField label="Name" name="name" value={formData.name || ''} onChange={handleInputChange} required />
-                <InputField label="Surname" name="surname" value={formData.surname || ''} onChange={handleInputChange} required />
-                <InputField label="ID/Passport Number" name="idPassport" value={formData.idPassport || ''} onChange={handleInputChange} required />
-                <InputField label="Email" name="email" type="email" value={formData.email || ''} onChange={handleInputChange} required />
-                <InputField label="Phone Number" name="phone" type="tel" value={formData.phone || ''} onChange={handleInputChange} required />
-                <InputField label="Physical Address" name="address" value={formData.address || ''} onChange={handleInputChange} required />
+                <InputField 
+                    label="Full Name" 
+                    name="name" 
+                    value={formData.name || ''} 
+                    onChange={handleInputChange} 
+                    required 
+                />
+                <InputField 
+                    label="Email" 
+                    name="email" 
+                    type="email" 
+                    value={formData.email || ''} 
+                    onChange={handleInputChange} 
+                    required 
+                />
+                <InputField 
+                    label="Phone Number" 
+                    name="phone" 
+                    type="tel" 
+                    value={formData.phone || ''} 
+                    onChange={handleInputChange} 
+                    required 
+                />
+                <InputField 
+                    label="Coverage/Loan Amount (SZL)" 
+                    name="amount" 
+                    type="number" 
+                    value={formData.amount || ''} 
+                    onChange={handleInputChange} 
+                />
+                <InputField 
+                    label="Date of Birth" 
+                    name="dob" 
+                    type="date" 
+                    value={formData.dob || ''} 
+                    onChange={handleInputChange} 
+                />
+                <InputField 
+                    label="Physical Address" 
+                    name="address" 
+                    value={formData.address || ''} 
+                    onChange={handleInputChange} 
+                />
             </div>
 
             {/* Product-Specific Information Section */}
@@ -348,6 +401,33 @@ export default function RenderForm({ product, formData, handleInputChange }) {
                 <div className='h-[0.5px] w-full bg-gray-200 mt-1' />
             </div>
             {productFields}
-        </div>
+
+            {/* Submit Button and Messages */}
+            <div className='w-full flex justify-center sm:justify-start mt-4 sm:mt-6'>
+                <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className={`px-8 sm:px-12 py-3 sm:py-4 rounded-full font-semibold transition text-sm sm:text-base w-full sm:w-auto ${
+                        isSubmitting
+                            ? 'bg-gray-400 cursor-not-allowed text-white'
+                            : 'bg-[#9b1c20] text-white hover:opacity-90'
+                    }`}
+                >
+                    {isSubmitting ? 'Submitting...' : companyText.submitButtonText}
+                </button>
+            </div>
+
+            {/* Success and Error Messages */}
+            {submitMessage && (
+                <div className="text-green-700 text-sm mt-2 text-center sm:text-left w-full">
+                    {submitMessage}
+                </div>
+            )}
+            {submitError && (
+                <div className="text-red-700 text-sm mt-2 text-center sm:text-left w-full">
+                    {submitError}
+                </div>
+            )}
+        </form>
     );
 }
