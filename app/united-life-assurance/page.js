@@ -209,7 +209,7 @@ export default function UnitedLifeAssurance() {
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
-            backgroundImage: 'url("/life.jpg")',
+            backgroundImage: 'url("/Life.jpg")',
           }}
         >
           <div className="absolute inset-0 bg-black opacity-50"></div>

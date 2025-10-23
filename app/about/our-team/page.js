@@ -30,7 +30,7 @@ export default function Team() {
     {
       id: 3,
       name: "Zombodze Magagula",
-      title: "Technical Advisor",
+      title: "Group Technical Advisor",
       bio: "Zombodze Magagula serves as the Technical Advisor at United Holdings Ltd, bringing extensive expertise in insurance policies and legislative frameworks. With a career spanning over two decades in the financial sector, he provides crucial oversight in the Risk, Legal and Compliance division. His deep industry knowledge and extensive professional network have been instrumental in navigating regulatory requirements across the group's subsidiaries.",
       image: "/Zombodze Magagula.jpeg",
       linkedin: "https://linkedin.com/in/zombodze-magagula"
@@ -54,26 +54,19 @@ export default function Team() {
     {
       id: 5,
       name: "Witness Msibi",
-      title: "General Manager Operations",
+      title: "Group General Manager Operations",
       bio: "Witness Msibi is the General Manager Operations at United Holdings with over 19 years of extensive experience in the insurance industry. He began his career as a retail broker after earning a Bachelor's Degree in Accounting from the University of Eswatini. His operational expertise encompasses process optimization, customer service excellence, and strategic implementation across the group's diverse business units.",
       image: "/Witness Msibi (GM Ops).jpg",
       linkedin: "https://linkedin.com/in/witness-msibi"
     },
-    {
-      id: 6,
-      name: "Winile Sibandze",
-      title: "Group Company Secretary & Legal",
-      bio: "Winile Sibandze is an experienced legal and compliance professional with expertise in corporate governance, regulatory compliance, and risk management. She currently serves as Company Secretary & Legal at United Holdings, where she ensures adherence to statutory requirements and corporate governance standards. Her legal acumen has been crucial in contract negotiations, compliance frameworks, and corporate structuring across the group.",
-      image: "/Winile Sibandze (Group Secretary & Legal).jpg",
-      linkedin: "https://linkedin.com/in/winile-sibandze"
-    },
+    
   ];
 
   const operationsManagement = [
     {
       id: 7,
       name: "Sihle Dlamini",
-      title: "United Life Assurance Operations Manager",
+      title: "Group United Life Assurance Operations Manager",
       bio: "Sihle Dlamini is the Operations Manager at United Life Assurance, responsible for overseeing daily operations and ensuring high-quality service delivery. Since joining the company in 2018 as a Branch Controller, he has progressed through various leadership roles. His expertise includes process optimization, team leadership, and implementing operational efficiencies that enhance customer experience and drive business growth.",
       image: "/Sihle Dlamini (ULA Ops).jpg",
       linkedin: "https://linkedin.com/in/sihle-dlamini"
@@ -81,7 +74,7 @@ export default function Team() {
     {
       id: 8,
       name: "Sebenele Zwane",
-      title: "United Pay Operations Manager",
+      title: "Group United Pay Operations Manager",
       bio: "Sebenele M. Zwane is an experienced Operations Manager with a strong background in financial services, spanning insurance, credit, lending, and investment advisory. Currently leading operations at United Pay Ltd, he has been instrumental in developing robust operational frameworks for the payment solutions platform. His expertise ensures seamless transaction processing and customer service excellence in the digital payments space.",
       image: "/Sebenele Zwane.jpeg",
       linkedin: "https://linkedin.com/in/sebenele-zwane"
@@ -89,7 +82,7 @@ export default function Team() {
     {
       id: 9,
       name: "Lovemore Gundani",
-      title: "United General Insurance Operations Manager",
+      title: "Group United General Insurance Operations Manager",
       bio: "Lovemore Gundani is a seasoned insurance professional with a Master's in Business Administration and a Bachelor of Commerce Honours Degree in Insurance and Risk Management from Midlands State University. With extensive experience in insurance operations, he oversees underwriting, claims management, and customer service operations, ensuring United General Insurance maintains its reputation for reliability and excellence.",
       image: "/Lovemore Gundani (UGI Ops Man).jpeg",
       linkedin: "https://linkedin.com/in/lovemore-gundani"
@@ -98,9 +91,17 @@ export default function Team() {
 
   const supportServicesManagement = [
     {
+      id: 6,
+      name: "Winile Sibandze",
+      title: "Group Company Secretary & Legal",
+      bio: "Winile Sibandze is an experienced legal and compliance professional with expertise in corporate governance, regulatory compliance, and risk management. She currently serves as Company Secretary & Legal at United Holdings, where she ensures adherence to statutory requirements and corporate governance standards. Her legal acumen has been crucial in contract negotiations, compliance frameworks, and corporate structuring across the group.",
+      image: "/Winile Sibandze (Group Secretary & Legal).jpg",
+      linkedin: "https://linkedin.com/in/winile-sibandze"
+    },
+    {
       id: 10,
       name: "Lungile Ngwenya",
-      title: "Corporate Sales Manager",
+      title: "Group Corporate Sales Manager",
       bio: "Lungile Ngwenya is the Corporate Sales & Retention Manager with a strong background in business management and insurance. A Regent Business School Alumnus from South Africa, she holds a Degree in Business Management, Certificate of Proficiency (COP) in insurance, and AAT 11. Her expertise lies in developing corporate client relationships, sales strategy implementation, and client retention programs that drive sustainable business growth.",
       image: "/Lungile Ngwenya (Corporate Sales Manager).jpeg",
       linkedin: "https://linkedin.com/in/lungile-ngwenya"
@@ -132,7 +133,7 @@ export default function Team() {
     {
       id: 15,
       name: "Peter Maseko",
-      title: "Finance Manager",
+      title: "Group Finance Manager",
       bio: "Peter Maseko serves as the Finance Manager at United Holdings, bringing over 15 years of experience in financial management, auditing, and strategic operations. His expertise encompasses financial reporting, budget management, and strategic financial planning. He plays a key role in financial decision-making and ensuring the group's financial operations align with strategic objectives and regulatory requirements.",
       image: "/Peter Maseko (Finance Manager).jpg",
       linkedin: "https://linkedin.com/in/peter-maseko"
@@ -140,7 +141,7 @@ export default function Team() {
     {
       id: 16,
       name: "Nozwelethu Nxumalo",
-      title: "Retail Sales Manager",
+      title: "Group Retail Sales Manager",
       bio: "Nozwelethu Nxumalo is the Retail Sales Manager with a strong background in marketing and business development. An Institute of Marketing Management Graduate School (IMM GS) alumnus holding a BBA in Marketing Management and a Diploma in Law from University of Eswatini. She leads the retail sales strategy, driving customer acquisition and retention through innovative marketing approaches and excellent customer service delivery.",
       image: "/Nozwelethu Nxumalo (Retail Sales Manager).jpg",
       linkedin: "https://linkedin.com/in/nozwelethu-nxumalo"
