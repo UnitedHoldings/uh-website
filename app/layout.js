@@ -112,7 +112,6 @@ export default function RootLayout({ children }) {
     <html lang="en" className={`${outfit.variable} ${geistSans.variable} ${geistMono.variable}`}>
       <head>
         {/* ✅ Preload critical resources */}
-       
         
         {/* ✅ Inject Schema.org JSON-LD */}
         <script
@@ -121,9 +120,6 @@ export default function RootLayout({ children }) {
             __html: JSON.stringify(schemaOrgSite),
           }}
         />
-
-        
-       
       </head>
       <body className={`font-outfit antialiased relative bg-white text-gray-900`}>
         <Header />
@@ -161,8 +157,6 @@ export default function RootLayout({ children }) {
             Chat with us
           </span>
         </a>
-
-       
       </body>
     </html>
   );

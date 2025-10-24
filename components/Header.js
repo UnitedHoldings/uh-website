@@ -361,7 +361,7 @@ export default function Header() {
                             <Image 
                                 src="/logo.svg" 
                                 alt="United Holdings Logo" 
-                                width={110} 
+                                width={150} 
                                 height={100} 
                                 priority 
                                 className="hover:opacity-90 transition-opacity"
@@ -474,7 +474,7 @@ export default function Header() {
                             </div>
                             <div className="flex items-center space-x-4">
                                 <a href="tel:8001010" className="hover:underline transition duration-150 ease-in-out">
-                                    800 1010
+                                   Toll Free: 800 1010
                                 </a>
                                 <span>|</span>
                                 <a href="tel:+26825086000" className="hover:underline transition duration-150 ease-in-out">
@@ -499,7 +499,7 @@ export default function Header() {
                             <Image
                                 src="/logo.svg"
                                 alt="United Holdings Logo"
-                                width={110}
+                                width={150}
                                 height={100}
                                 priority
                                 className="hover:opacity-90 transition-opacity"

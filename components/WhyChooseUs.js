@@ -44,56 +44,8 @@ const reasonsData = [
   },
 ];
 
-const reviewsData = [
-  {
-    id: 1,
-    name: "Thabo M.",
-    role: "Business Owner",
-    content: "United Holdings has been our insurance partner for over a decade. Their claims process is incredibly efficient and their customer service is exceptional.",
-    rating: 5,
-    image: "/customer1.jpg",
-    company: "Maseko Enterprises"
-  },
-  {
-    id: 2,
-    name: "Nomsa D.",
-    role: "Family Provider",
-    content: "The peace of mind that comes with knowing my family is protected is priceless. United Life Assurance made the process so simple and affordable.",
-    rating: 4.5,
-    image: "/customer2.jpg",
-    company: "Family First Initiative"
-  },
-  {
-    id: 3,
-    name: "James K.",
-    role: "Entrepreneur",
-    content: "As a small business owner, United's micro-loans helped me expand my operations when traditional banks turned me down. Quick, professional service.",
-    rating: 5,
-    image: "/customer3.jpg",
-    company: "Kunene Crafts"
-  },
-  {
-    id: 4,
-    name: "Lindiwe S.",
-    role: "Homeowner",
-    content: "Their motor insurance saved me during an accident last year. The support I received was beyond expectations - truly a company that cares.",
-    rating: 4.5,
-    image: "/customer4.jpg",
-    company: "Swazi Heritage Trust"
-  },
-  {
-    id: 5,
-    name: "David M.",
-    role: "Corporate Client",
-    content: "Comprehensive coverage and outstanding support. United Holdings understands the unique needs of businesses in Eswatini.",
-    rating: 5,
-    image: "/customer5.jpg",
-    company: "Mbabane Manufacturing"
-  }
-];
-
 const statsData = [
-  { value: "70+", label: "Years of Excellence", color: "text-white", sublabel: "Trusted Service" },
+  { value: "80+", label: "Years of Excellence", color: "text-white", sublabel: "Trusted Service" },
   { value: "50K+", label: "Happy Clients", color: "text-white", sublabel: "Satisfied Customers" },
   { value: "24/7", label: "Support", color: "text-white", sublabel: "Always Available" },
   { value: "98%", label: "Satisfaction", color: "text-white", sublabel: "Claim Approval Rate" }
@@ -275,41 +227,50 @@ const StatCard = ({ value, label, sublabel, color, index }) => {
   );
 };
 
-const EnhancedReviewsCarousel = () => {
+const EnhancedReviewsCarousel = ({ reviews }) => {
   const [currentReview, setCurrentReview] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
-  const [direction, setDirection] = useState(0);
   const autoPlayRef = useRef(null);
 
+  // Sort reviews by id to maintain consistent order
+  const sortedReviews = [...reviews].sort((a, b) => a.id - b.id);
+
   const nextReview = () => {
-    setDirection(1);
-    setCurrentReview((prev) => (prev + 1) % reviewsData.length);
+    setCurrentReview((prev) => (prev + 1) % sortedReviews.length);
   };
 
   const prevReview = () => {
-    setDirection(-1);
-    setCurrentReview((prev) => (prev - 1 + reviewsData.length) % reviewsData.length);
+    setCurrentReview((prev) => (prev - 1 + sortedReviews.length) % sortedReviews.length);
   };
 
   const goToReview = (index) => {
-    setDirection(index > currentReview ? 1 : -1);
     setCurrentReview(index);
     setIsAutoPlaying(false);
   };
 
   useEffect(() => {
-    if (isAutoPlaying) {
+    if (isAutoPlaying && sortedReviews.length > 0) {
       autoPlayRef.current = setInterval(nextReview, AUTO_PLAY_INTERVAL);
     }
     return () => {
       if (autoPlayRef.current) clearInterval(autoPlayRef.current);
     };
-  }, [isAutoPlaying]);
+  }, [isAutoPlaying, sortedReviews.length]);
 
   const visibleReviews = [];
   for (let i = -1; i <= 1; i++) {
-    const index = (currentReview + i + reviewsData.length) % reviewsData.length;
+    const index = (currentReview + i + sortedReviews.length) % sortedReviews.length;
     visibleReviews.push(index);
+  }
+
+  if (sortedReviews.length === 0) {
+    return (
+      <div className={`relative bg-[${colors.primary}] rounded-4xl p-8 sm:p-12 lg:p-16 overflow-hidden`}>
+        <div className="text-center text-white text-xl">
+          No reviews available
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -326,17 +287,15 @@ const EnhancedReviewsCarousel = () => {
       <div className="absolute bottom-32 left-24 w-4 h-4 bg-white rounded-full opacity-30 animate-bounce delay-300" />
 
       <div className="relative z-10">
-        
-
         {/* Carousel */}
-        <div className="relative ">
+        <div className="relative">
           {/* Desktop Layout */}
           <div className="hidden lg:block">
             <div className="grid grid-cols-3 gap-8 items-center max-w-6xl mx-auto">
               {visibleReviews.map((reviewIndex, position) => (
-                <div key={reviewIndex} className={position === 1 ? 'row-start-1' : 'row-start-1'}>
+                <div key={sortedReviews[reviewIndex]._id} className={position === 1 ? 'row-start-1' : 'row-start-1'}>
                   <ReviewCard
-                    review={reviewsData[reviewIndex]}
+                    review={sortedReviews[reviewIndex]}
                     isActive={position === 1}
                     onClick={() => goToReview(reviewIndex)}
                   />
@@ -349,7 +308,7 @@ const EnhancedReviewsCarousel = () => {
           <div className="lg:hidden">
             <div className="flex justify-center">
               <ReviewCard
-                review={reviewsData[currentReview]}
+                review={sortedReviews[currentReview]}
                 isActive={true}
                 onClick={() => { }}
               />
@@ -381,9 +340,9 @@ const EnhancedReviewsCarousel = () => {
               </button>
 
               <div className="flex space-x-3">
-                {reviewsData.map((_, index) => (
+                {sortedReviews.map((_, index) => (
                   <button
-                    key={index}
+                    key={sortedReviews[index]._id}
                     onClick={() => goToReview(index)}
                     className={`w-3 h-3 rounded-full transition-all duration-300 ${index === currentReview
                         ? `bg-[${colors.accent}] scale-125`
@@ -421,7 +380,7 @@ const EnhancedReviewsCarousel = () => {
           <button
             onMouseEnter={() => setIsAutoPlaying(false)}
             onMouseLeave={() => setIsAutoPlaying(true)}
-            className={`group relative inline-flex items-center px-8 py-4 text-[${colors.primary}]  bg-white rounded-2xl font-bold text-lg  transition-all duration-300 hover:scale-105 overflow-hidden`}
+            className={`group relative inline-flex items-center px-8 py-4 text-[${colors.primary}] bg-white rounded-2xl font-bold text-lg transition-all duration-300 hover:scale-105 overflow-hidden`}
           >
             <span className="relative z-10">Share Your Experience</span>
             <div className={`absolute inset-0 bg-gradient-to-r from-[${colors.accent}] to-[${colors.primary}] opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
@@ -435,6 +394,37 @@ const EnhancedReviewsCarousel = () => {
 const WhyChooseUs = () => {
   const statsRef = useRef(null);
   const [isStatsVisible, setIsStatsVisible] = useState(false);
+  const [reviews, setReviews] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // Fetch reviews from external API
+  useEffect(() => {
+    const fetchReviews = async () => {
+      try {
+        const response = await fetch('https://uh-server.onrender.com/api/home');
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        
+        if (data.success && data.data && data.data.reviews) {
+          setReviews(data.data.reviews);
+        } else {
+          throw new Error(data.message || 'Failed to fetch reviews from API');
+        }
+      } catch (err) {
+        setError(err.message);
+        console.error('Error fetching reviews from API:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchReviews();
+  }, []);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -453,8 +443,19 @@ const WhyChooseUs = () => {
     return () => observer.disconnect();
   }, []);
 
+  if (error) {
+    return (
+      <section className="relative bg-gradient-to-br from-gray-50 via-white to-gray-100 py-16">
+        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="text-red-600 text-lg">Error loading reviews: {error}</div>
+          <p className="text-gray-600 mt-2">Please check if the API server is running.</p>
+        </div>
+      </section>
+    );
+  }
+
   return (
-    <section className="relative  bg-gradient-to-br from-gray-50 via-white to-gray-100 ">
+    <section className="relative bg-gradient-to-br from-gray-50 via-white to-gray-100">
       {/* Background Decorations */}
       <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-white to-transparent" />
       <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-white to-transparent" />
@@ -462,15 +463,15 @@ const WhyChooseUs = () => {
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative">
         {/* Header Section */}
         <motion.div
-          className=" mb-12"
+          className="mb-12"
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
         >
-          <div className="flex flex-col   justify-between items-start md:items-center">
+          <div className="flex flex-col justify-between items-start md:items-center">
             <div className="flex flex-col gap-4">
-              <h3 className="text-2xl md:text-3xl font-bold text-[#9b1c20]  font-outfit">
+              <h3 className="text-2xl md:text-3xl font-bold text-[#9b1c20] font-outfit">
                 Why Choose <span className="text-[${colors.accent}]">United Holdings</span>?
               </h3>
               <p className="text-gray-600 max-w-5xl text-lg lg:text-xl">
@@ -481,30 +482,26 @@ const WhyChooseUs = () => {
         </motion.div>
 
         {/* Stats Section */}
-    
 
         {/* Reasons Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 mb-8 gap-4 lg:gap-8  ">
+        <div className="grid grid-cols-1 lg:grid-cols-3 mb-8 gap-4 lg:gap-8">
           {reasonsData.map((reason, index) => (
             <ReasonCard key={index} {...reason} index={index} />
           ))}
         </div>
 
         {/* Enhanced Reviews Carousel */}
-        <EnhancedReviewsCarousel />
+        {!loading && reviews.length > 0 && <EnhancedReviewsCarousel reviews={reviews} />}
+        
+        {/* Loading state */}
+        {loading && (
+          <div className={`relative bg-[${colors.primary}] rounded-4xl p-8 sm:p-12 lg:p-16 overflow-hidden`}>
+            <div className="text-center text-white text-xl">
+              Loading reviews from API...
+            </div>
+          </div>
+        )}
       </div>
-
-      {/* Floating Action Button */}
-      <motion.button
-        className={`fixed bottom-8 right-8 w-16 h-16 bg-gradient-to-br from-[${colors.primary}] to-[${colors.accent}] rounded-2xl  text-white flex items-center justify-center z-50 hover:scale-110 transition-transform duration-300`}
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.9 }}
-        aria-label="Get in touch"
-      >
-        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-        </svg>
-      </motion.button>
     </section>
   );
 };
