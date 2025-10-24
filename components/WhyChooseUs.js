@@ -22,7 +22,7 @@ const colors = {
 // Enhanced Data
 const reasonsData = [
   {
-    title: "70+ Years of Trusted Service",
+    title: "80+ Years of Trusted Service",
     content: "We're the right partner you can choose with over 70 years of doing business in the Kingdom of Eswatini. We're your trusted brand here to provide not just products and services, but rather the peace of mind to get on with the things in life that really matter to you.",
     icon: <FaShieldAlt className="text-white text-3xl" aria-label="Trusted Service" />,
     gradient: `from-[${colors.primary}] to-[${colors.primaryLight}]`,
@@ -37,7 +37,7 @@ const reasonsData = [
   },
   {
     title: "Swazi Insurance for the International Market",
-    content: "With over 70 years of doing business in Eswatini, United Holdings is best suited and experienced to provide uniquely tailored solutions that understand both local needs and global standards.",
+    content: "With over 80 years of doing business in Eswatini, United Holdings is best suited and experienced to provide uniquely tailored solutions that understand both local needs and global standards.",
     icon: <FaGlobeAfrica className="text-white text-3xl" aria-label="International Market" />,
     gradient: `from-[${colors.primary}] to-[${colors.accent}]`,
     accent: `bg-[${colors.primary}]`
