@@ -19,6 +19,64 @@ const validateTeamData = (data) => {
   };
 };
 
+// Define the exact order for each category
+const EXECUTIVE_LEADERSHIP_ORDER = [
+  'Executive Chairman',
+  'GCEO',
+  'Group Technical Advisor',
+  'GM Corporate Affairs',
+  'GM Finance',
+  'GM Operations'
+];
+
+const OPERATIONS_MANAGEMENT_ORDER = [
+  'Group Operations Manager - United Life Assurance',
+  'Group Operations Manager - United General Insurance',
+  'Group Operations Manager - United Pay'
+];
+
+const SUPPORT_SERVICES_ORDER = [
+  'Group Company Secretary & legal',
+  'Group Internal Audit Manager',
+  'Group Risk & Compliance Manager',
+  'Group HRM',
+  'Group Marketing Manager',
+  'Group ICT Manager',
+  'Finance Manager',
+  'Group Corporate Sales Manager',
+  'Retail Retail Sales Manager'
+];
+
+// Sort function by predefined sequence
+const sortTeamDataBySequence = (teamData) => {
+  const sortBySequence = (array, sequence) => {
+    return [...array].sort((a, b) => {
+      const indexA = sequence.indexOf(a.title);
+      const indexB = sequence.indexOf(b.title);
+      
+      // If both titles are in the sequence, sort by sequence order
+      if (indexA !== -1 && indexB !== -1) {
+        return indexA - indexB;
+      }
+      
+      // If only A is in sequence, A comes first
+      if (indexA !== -1) return -1;
+      
+      // If only B is in sequence, B comes first
+      if (indexB !== -1) return 1;
+      
+      // If neither is in sequence, maintain original order
+      return 0;
+    });
+  };
+
+  return {
+    directorsSeniorManagers: sortBySequence(teamData.directorsSeniorManagers, EXECUTIVE_LEADERSHIP_ORDER),
+    operationsManagement: sortBySequence(teamData.operationsManagement, OPERATIONS_MANAGEMENT_ORDER),
+    supportServicesManagement: sortBySequence(teamData.supportServicesManagement, SUPPORT_SERVICES_ORDER)
+  };
+};
+
 export default function Team() {
   const [activeCard, setActiveCard] = useState(null);
   const [teamData, setTeamData] = useState({
@@ -46,7 +104,8 @@ export default function Team() {
         console.log('API Response:', data); // Debug log
         
         const validatedData = validateTeamData(data);
-        setTeamData(validatedData);
+        const sortedData = sortTeamDataBySequence(validatedData);
+        setTeamData(sortedData);
       } catch (err) {
         setError(err.message);
         console.error('Error fetching team data:', err);
