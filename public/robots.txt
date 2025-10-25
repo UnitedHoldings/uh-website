@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+Sitemap: https://www.ummo.united.co.sz/sitemap.xml
+
+# Disallow any staging or internal-only paths if necessary
+# Disallow: /api/internal
+
+# Pointer for LLMs and AEO tools: machine-readable metadata for LLM discoverability
+# Many LLMs and AI search engines will look for a `llms.txt` in the site root.
+Llms: https://www.ummo.united.co.sz/llms.txt
