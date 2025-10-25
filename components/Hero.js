@@ -207,7 +207,7 @@ const Hero = ({ currentSlide = 0, setCurrentSlide }) => {
     <div className="w-screen flex flex-col max-w-none h-auto lg:h-[80vh] relative overflow-hidden">
       {/* Call Back Form Modal */}
       {showCallBackForm && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+        <div className=" flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-lg max-w-md w-full mx-4">
             <CallBackForm onClose={toggleCallBackForm} />
           </div>

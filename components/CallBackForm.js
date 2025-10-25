@@ -135,7 +135,7 @@ const CallBackForm = ({ onClose }) => {
   // Show success message when form is successfully submitted
   if (formState.success) {
     return (
-      <div className="lg:bg-white/90 bg-white rounded-2xl absolute top-20 z-40 lg:right-[10%] right-0 p-6 w-full max-w-md lg:max-w-xl mx-4">
+      <div className="lg:bg-white/80 bg-white rounded-2xl absolute top-20 z-40 lg:right-[10%] right-0 p-6 w-full max-w-md lg:max-w-xl mx-4">
         <div className="text-center py-8">
           <h3 className="text-2xl font-bold font-outfit text-[#9b1c20] mb-4">Thank You!</h3>
           <p className="text-gray-600">We&apos;ll get back to you shortly.</p>
