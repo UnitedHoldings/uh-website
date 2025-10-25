@@ -283,15 +283,7 @@ function Footer() {
                             © {new Date().getFullYear()} United Holdings Eswatini. All rights reserved.
                         </p>
                         <p className="text-sm text-gray-200 text-center lg:text-right">
-                            Developed by{' '}
-                            <a
-                                href="https://ummoinc.com"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-[#F7941D] hover:underline transition-colors"
-                            >
-                                Ummo Inc.
-                            </a>
+                           
                         </p>
                     </div>
                 </div>
