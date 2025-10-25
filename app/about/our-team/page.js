@@ -22,7 +22,7 @@ const validateTeamData = (data) => {
 // Define the exact order for each category
 const EXECUTIVE_LEADERSHIP_ORDER = [
   'Executive Chairman',
-  'GCEO',
+  'Group Chief Executive Officer',
   'Group Technical Advisor',
   'GM Corporate Affairs',
   'GM Finance',
