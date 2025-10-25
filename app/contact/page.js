@@ -1,120 +1,8 @@
 "use client";
 
-import React, { useState, useMemo, Suspense } from 'react';
+import React, { useState, useMemo, Suspense, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
-
-// Complete branch data with departments and regions
-const completeBranches = [
-  {
-    name: "Manzini – Head Office",
-    phone: "+268 2508 6000",
-    coords: [-26.4988, 31.3800],
-    hours: "Mon–Fri: 8am–5pm, Sat: 8am–1pm",
-    departments: ["Life Assurance", "General Insurance", "United Pay"],
-    region: "Manzini",
-    address: "Manzini, Eswatini"
-  },
-  {
-    name: "Manzini 1",
-    phone: "+268 2508 6124",
-    coords: [-26.4985, 31.3812],
-    hours: "Mon–Fri: 8am–5pm, Sat: 8am–1pm",
-    departments: ["Life Assurance"],
-    region: "Manzini",
-    address: "Manzini, Eswatini"
-  },
-  {
-    name: "Matsapha",
-    phone: "+268 2508 6125",
-    coords: [-26.5167, 31.3167],
-    hours: "Mon–Fri: 8am–5pm, Sat: 8am–1pm",
-    departments: ["Life Assurance"],
-    region: "Manzini",
-    address: "Matsapha, Eswatini"
-  },
-  {
-    name: "Ezulwini",
-    phone: "+268 2508 6126",
-    coords: [-26.4167, 31.2000],
-    hours: "Mon–Fri: 8am–5pm, Sat: 8am–1pm",
-    departments: ["Life Assurance"],
-    region: "Hhohho",
-    address: "Ezulwini, Eswatini"
-  },
-  {
-    name: "Mbabane",
-    phone: "+268 2508 6120",
-    coords: [-26.3054, 31.1367],
-    hours: "Mon–Fri: 8am–5pm, Sat: 8am–1pm",
-    departments: ["Life Assurance", "General Insurance", "United Pay"],
-    region: "Hhohho",
-    address: "Mbabane, Eswatini"
-  },
-  {
-    name: "Piggs Peak",
-    phone: "+268 2508 6122",
-    coords: [-25.9670, 31.2500],
-    hours: "Mon–Fri: 8am–5pm, Sat: 8am–1pm",
-    departments: ["Life Assurance"],
-    region: "Hhohho",
-    address: "Piggs Peak, Eswatini"
-  },
-  {
-    name: "Simunye",
-    phone: "+268 2508 6127",
-    coords: [-26.2020, 31.9330],
-    hours: "Mon–Fri: 8am–5pm, Sat: 8am–1pm",
-    departments: ["Life Assurance"],
-    region: "Lubombo",
-    address: "Simunye, Eswatini"
-  },
-  {
-    name: "Siteki",
-    phone: "+268 2508 6123",
-    coords: [-26.4500, 31.9500],
-    hours: "Mon–Fri: 8am–5pm, Sat: 8am–1pm",
-    departments: ["Life Assurance", "General Insurance", "United Pay"],
-    region: "Lubombo",
-    address: "Siteki, Eswatini"
-  },
-  {
-    name: "Matata",
-    phone: "+268 2508 6128",
-    coords: [-27.0000, 31.6333],
-    hours: "Mon–Fri: 8am–5pm, Sat: 8am–1pm",
-    departments: ["Life Assurance"],
-    region: "Shiselweni",
-    address: "Matata, Eswatini"
-  },
-  {
-    name: "Nhlangano",
-    phone: "+268 2508 6121",
-    coords: [-27.1167, 31.2000],
-    hours: "Mon–Fri: 8am–5pm, Sat: 8am–1pm",
-    departments: ["Life Assurance", "General Insurance", "United Pay"],
-    region: "Shiselweni",
-    address: "Nhlangano, Eswatini"
-  },
-  {
-    name: "Buhleni",
-    phone: "+268 3460 1767",
-    coords: [-26.0333, 31.3167],
-    hours: "Mon–Fri: 8am–5pm, Sat: 8am–1pm",
-    departments: ["Life Assurance"],
-    region: "Hhohho",
-    address: "Buhleni, Eswatini"
-  },
-  {
-    name: "Hlathikhulu",
-    phone: "N/A",
-    coords: [-27.2167, 31.2167],
-    hours: "Mon–Fri: 8am–5pm, Sat: 8am–1pm",
-    departments: ["Life Assurance"],
-    region: "Shiselweni",
-    address: "Hlathikhulu, Eswatini"
-  },
-];
 
 // Browser-safe function to open Google Maps
 const openGoogleMaps = (coords, branchName) => {
@@ -130,6 +18,82 @@ const BranchMap = dynamic(() => import('@/components/BranchMap'), {
   loading: () => <div className="h-[500px] bg-gray-200 rounded-lg flex items-center justify-center">Loading map...</div>
 });
 
+// Skeleton Loader Components
+const MapSkeleton = () => (
+  <div className="h-[800px] bg-gray-200 rounded-lg flex items-center justify-center animate-pulse">
+    <div className="text-center">
+      <div className="w-16 h-16 bg-gray-300 rounded-full mx-auto mb-4"></div>
+      <p className="text-gray-500">Loading map data...</p>
+    </div>
+  </div>
+);
+
+const BranchCardSkeleton = () => (
+  <div className="p-6 border bg-gray-200 rounded-lg animate-pulse">
+    <div className="h-6 bg-gray-300 rounded w-3/4 mb-3"></div>
+    <div className="flex gap-2 mb-3">
+      <div className="h-5 bg-gray-300 rounded w-16"></div>
+      <div className="h-5 bg-gray-300 rounded w-20"></div>
+    </div>
+    <div className="h-5 bg-gray-300 rounded w-32 mb-2"></div>
+    <div className="h-4 bg-gray-300 rounded w-40 mb-4"></div>
+    <div className="h-4 bg-gray-300 rounded w-28"></div>
+  </div>
+);
+
+const SearchFiltersSkeleton = () => (
+  <div className="space-y-4 animate-pulse">
+    <div className="flex flex-col md:flex-row gap-4">
+      <div className="flex-1">
+        <div className="h-12 bg-gray-200 rounded-lg"></div>
+      </div>
+      <div className="flex gap-2">
+        <div className="h-12 bg-gray-200 rounded-lg w-32"></div>
+        <div className="h-12 bg-gray-200 rounded-lg w-40"></div>
+      </div>
+    </div>
+    <div className="h-4 bg-gray-200 rounded w-32"></div>
+  </div>
+);
+
+const ContactInfoSkeleton = () => (
+  <div className="space-y-6 mt-8">
+    {[...Array(4)].map((_, index) => (
+      <div key={index} className="flex items-start gap-4 animate-pulse">
+        <div className="bg-gray-300 p-3 rounded-full w-12 h-12"></div>
+        <div className="space-y-2 flex-1">
+          <div className="h-5 bg-gray-300 rounded w-24"></div>
+          <div className="h-4 bg-gray-300 rounded w-32"></div>
+          <div className="h-4 bg-gray-300 rounded w-40"></div>
+        </div>
+      </div>
+    ))}
+  </div>
+);
+
+const HeaderSkeleton = () => (
+  <div className="min-h-screen font-outfit mx-auto">
+    <div className='bg-gray-300 h-8 w-full animate-pulse' />
+    <div className='bg-gray-200 py-4 animate-pulse'>
+      <header className="max-w-[1400px] mx-auto px-4">
+        <div className="h-8 bg-gray-300 rounded w-48 mb-2"></div>
+        <div className="h-4 bg-gray-300 rounded w-64"></div>
+      </header>
+    </div>
+
+    <div className='relative'>
+      <div className='bg-gray-300 absolute inset-0'></div>
+      <div className="w-full h-[320px] bg-gray-200 object-cover"></div>
+    </div>
+
+    <div className='max-w-[1400px] px-4 mt-8 lg:mb-16 mb-12 space-y-6 mx-auto'>
+      <div className="flex justify-between items-center md:flex-row md:items-center gap-4 md:gap-8">
+        <div className="h-6 bg-gray-200 rounded w-3/4 animate-pulse"></div>
+      </div>
+    </div>
+  </div>
+);
+
 export default function Contact() {
   const [form, setForm] = useState({ name: '', email: '', message: '' });
   const [status, setStatus] = useState(null);
@@ -138,8 +102,37 @@ export default function Contact() {
   const [regionFilter, setRegionFilter] = useState('All');
   const [departmentFilter, setDepartmentFilter] = useState('All');
   const [showAllBranches, setShowAllBranches] = useState(false);
+  const [completeBranches, setCompleteBranches] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
+
+  useEffect(() => {
+    const fetchBranches = async () => {
+      try {
+        const response = await fetch('https://uh-server.onrender.com/api/branches');
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        if (data.success && data.data) {
+          setCompleteBranches(data.data);
+        } else {
+          throw new Error(data.message || 'Failed to fetch branches from API');
+        }
+      } catch (err) {
+        setError(err.message);
+        console.error('Error fetching branches from API:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchBranches();
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -156,20 +149,72 @@ export default function Contact() {
   const filteredBranches = useMemo(() => {
     return completeBranches.filter(branch => {
       const matchesSearch = branch.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                           branch.phone.includes(searchQuery);
+        branch.phone.includes(searchQuery);
       const matchesRegion = regionFilter === 'All' || branch.region === regionFilter;
-      const matchesDepartment = departmentFilter === 'All' || 
-                               branch.departments.includes(departmentFilter);
-      
+      const matchesDepartment = departmentFilter === 'All' ||
+        branch.departments.includes(departmentFilter);
+
       return matchesSearch && matchesRegion && matchesDepartment;
     });
-  }, [searchQuery, regionFilter, departmentFilter]);
+  }, [searchQuery, regionFilter, departmentFilter, completeBranches]);
 
   const displayedBranches = showAllBranches ? filteredBranches : filteredBranches.slice(0, 4);
 
   // Get unique regions and departments for filters
   const regions = ['All', ...new Set(completeBranches.map(branch => branch.region))];
   const departments = ['All', 'Life Assurance', 'General Insurance', 'United Pay'];
+
+  if (loading) {
+    return (
+      <HeaderSkeleton>
+        <div className="bg-white overflow-hidden">
+          <div className='max-w-[1400px] px-4 lg:mt-8 mb-16 space-y-6 mx-auto flex flex-col lg:flex-row'>
+            <div className='lg:min-w-[400px] lg:pr-8'>
+              <div className="h-7 bg-gray-300 rounded w-32 mb-6 animate-pulse"></div>
+              <div className="flex flex-col w-full justify-between py-6">
+                <div className="flex gap-2 mb-3">
+                  <div className="h-10 bg-gray-200 rounded-full w-32 animate-pulse"></div>
+                  <div className="h-10 bg-gray-200 rounded-full w-32 animate-pulse"></div>
+                </div>
+                <div className="h-4 bg-gray-200 rounded w-64 animate-pulse"></div>
+              </div>
+              <ContactInfoSkeleton />
+            </div>
+
+            <div className='w-full lg:border-l lg:border-gray-400 lg:pl-6 mt-8 lg:mt-0'>
+              <div className="space-y-6">
+                <MapSkeleton />
+                <SearchFiltersSkeleton />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {[...Array(4)].map((_, index) => (
+                    <BranchCardSkeleton key={index} />
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </HeaderSkeleton>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+        <div className="text-center">
+          <div className="text-6xl text-gray-300 mx-auto mb-4">📍</div>
+          <h3 className="text-xl font-semibold text-gray-600 mb-2">Failed to load branches</h3>
+          <p className="text-gray-500 mb-4">{error}</p>
+          <button 
+            onClick={() => window.location.reload()}
+            className="bg-[#9b1c20] text-white px-6 py-2 rounded-full font-semibold hover:bg-[#881a1e] transition-colors"
+          >
+            Try Again
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen font-outfit mx-auto">
@@ -180,19 +225,19 @@ export default function Contact() {
           <p className="text-sm text-white">Get in touch with us for any inquiries or support.</p>
         </header>
       </div>
-      
+
       <div className='relative'>
         <div className='bg-gradient-to-r absolute from-[#9b1c20]/60 to-[#9b1c20]/20 h-full w-full' />
-        <Image 
-          src="/44585.jpg" 
-          alt="Contact" 
-          width={1920} 
-          height={1080} 
+        <Image
+          src="/44585.jpg"
+          alt="Contact"
+          width={1920}
+          height={1080}
           quality={100}
           className="w-full h-[320px] object-cover"
           priority
         />
-        
+
       </div>
 
       <div className='max-w-[1400px] px-4 mt-8 lg:mb-16 mb-12 space-y-6 mx-auto'>
@@ -287,11 +332,11 @@ export default function Contact() {
             {activeTab === 'branches' ? (
               <div className="space-y-6">
                 <div className="h-[800px] rounded-lg overflow-hidden">
-                  <Suspense fallback={<div className="h-full bg-gray-200 flex items-center justify-center">Loading map...</div>}>
+                  <Suspense fallback={<MapSkeleton />}>
                     <BranchMap branches={completeBranches} />
                   </Suspense>
                 </div>
-                
+
                 {/* Search and Filters */}
                 <div className="space-y-4">
                   <div className="flex flex-col md:flex-row gap-4">
@@ -329,7 +374,7 @@ export default function Contact() {
                       </select>
                     </div>
                   </div>
-                  
+
                   <div className="text-sm text-gray-600">
                     Showing {filteredBranches.length} of {completeBranches.length} branches
                   </div>
@@ -352,7 +397,7 @@ export default function Contact() {
                       </div>
                       <p className="text-lg text-gray-100 mb-2">{branch.phone}</p>
                       <p className="text-md text-gray-300 mb-4">{branch.hours}</p>
-                      <button 
+                      <button
                         onClick={() => openGoogleMaps(branch.coords, branch.name)}
                         className="text-gray-300 font-semibold underline hover:text-white transition-colors"
                       >
@@ -364,7 +409,7 @@ export default function Contact() {
 
                 {filteredBranches.length > 4 && (
                   <div className="text-center">
-                    <button 
+                    <button
                       onClick={() => setShowAllBranches(!showAllBranches)}
                       className="border border-[#9b1c20] text-[#9b1c20] py-2 px-6 rounded-full font-semibold hover:bg-[#9b1c20] hover:text-white transition-colors"
                     >
@@ -391,7 +436,7 @@ export default function Contact() {
                       required
                     />
                   </div>
-                  
+
                   <div>
                     <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
                       Email Address
@@ -406,7 +451,7 @@ export default function Contact() {
                       required
                     />
                   </div>
-                  
+
                   <div>
                     <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
                       Message
@@ -423,9 +468,8 @@ export default function Contact() {
                   </div>
 
                   {status && (
-                    <div className={`p-3 rounded-lg ${
-                      status.type === 'error' ? 'bg-red-100 text-red-700' : 'bg-green-100 text-green-700'
-                    }`}>
+                    <div className={`p-3 rounded-lg ${status.type === 'error' ? 'bg-red-100 text-red-700' : 'bg-green-100 text-green-700'
+                      }`}>
                       {status.message}
                     </div>
                   )}
@@ -442,8 +486,6 @@ export default function Contact() {
           </div>
         </div>
       </div>
-
-     
     </div>
   );
 }

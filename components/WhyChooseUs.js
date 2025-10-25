@@ -51,6 +51,97 @@ const statsData = [
   { value: "98%", label: "Satisfaction", color: "text-white", sublabel: "Claim Approval Rate" }
 ];
 
+// Skeleton Loader Components
+const ReviewCardSkeleton = ({ isActive = false }) => {
+  return (
+    <div className={`relative transition-all duration-500 ${isActive ? 'scale-105 z-20' : 'scale-95 opacity-70 z-10'}`}>
+      <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-6 sm:p-8 border border-white/20 relative overflow-hidden">
+        {/* Background Pattern */}
+        <div className="absolute top-0 right-0 w-32 h-32 bg-gray-200/50 rounded-full -translate-y-16 translate-x-16" />
+
+        {/* Quote Icon Skeleton */}
+        <div className="absolute top-6 right-6 text-gray-200">
+          <FaQuoteLeft className="text-4xl" />
+        </div>
+
+        <div className="relative z-10">
+          <div className="flex items-start space-x-4 mb-6">
+            <div className="w-14 h-14 bg-gray-300 rounded-2xl flex items-center justify-center animate-pulse" />
+            <div className="flex-1">
+              <div className="flex items-center justify-between mb-2">
+                <div className="h-6 bg-gray-300 rounded w-32 animate-pulse" />
+                <div className="flex space-x-1">
+                  {[...Array(5)].map((_, i) => (
+                    <div key={i} className="w-3 h-3 bg-gray-300 rounded-full animate-pulse" />
+                  ))}
+                </div>
+              </div>
+              <div className="h-4 bg-gray-300 rounded w-24 mb-2 animate-pulse" />
+              <div className="h-3 bg-gray-300 rounded w-20 animate-pulse" />
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <div className="h-4 bg-gray-300 rounded animate-pulse" />
+            <div className="h-4 bg-gray-300 rounded w-5/6 animate-pulse" />
+            <div className="h-4 bg-gray-300 rounded w-4/6 animate-pulse" />
+          </div>
+        </div>
+
+        {/* Active Indicator Skeleton */}
+        {isActive && (
+          <div className="absolute bottom-0 left-1/2 w-24 h-1 bg-gray-300 rounded-t-full -translate-x-1/2 animate-pulse" />
+        )}
+      </div>
+    </div>
+  );
+};
+
+const ReasonCardSkeleton = ({ index }) => {
+  return (
+    <div className="group relative bg-white/95 backdrop-blur-sm rounded-3xl p-6 border border-black/20 overflow-hidden">
+      {/* Skeleton Background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-gray-200 to-gray-300 opacity-5" />
+
+      {/* Skeleton Accent Bar */}
+      <div className="absolute top-0 left-0 w-2 h-full bg-gray-300" />
+
+      <div className="relative z-10 bg-gray-200/40 rounded-2xl p-6 animate-pulse">
+        <div className="flex items-start justify-between mb-6">
+          <div className="h-12 w-12 bg-gray-300 rounded-xl animate-pulse" />
+        </div>
+
+        <div className="h-7 bg-gray-300 rounded mb-4 w-3/4 animate-pulse" />
+        <div className="space-y-2">
+          <div className="h-4 bg-gray-300 rounded animate-pulse" />
+          <div className="h-4 bg-gray-300 rounded w-5/6 animate-pulse" />
+          <div className="h-4 bg-gray-300 rounded w-4/6 animate-pulse" />
+        </div>
+
+        {/* Skeleton Hover Effect Line */}
+        <div className="absolute bottom-0 left-8 w-24 h-1 bg-gray-300 rounded-full" />
+      </div>
+    </div>
+  );
+};
+
+const StatsSkeleton = () => {
+  return (
+    <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+      {[...Array(4)].map((_, index) => (
+        <div key={index} className="text-center group">
+          <div className="relative inline-block">
+            <div className="w-20 h-16 bg-gray-300 rounded-lg mb-3 mx-auto animate-pulse" />
+            <div className="absolute inset-0 bg-gray-200/20 blur-xl rounded-full transform scale-150" />
+          </div>
+          <div className="h-5 bg-gray-300 rounded w-24 mx-auto mb-2 animate-pulse" />
+          <div className="h-3 bg-gray-300 rounded w-20 mx-auto animate-pulse" />
+        </div>
+      ))}
+    </div>
+  );
+};
+
 // Enhanced Components
 const StarRating = ({ rating, size = "sm" }) => {
   const fullStars = Math.floor(rating);
@@ -155,9 +246,7 @@ const ReasonCard = ({ title, content, icon, gradient, accent, index }) => {
 
       <div className="relative z-10  bg-[${colors.primary}]/40 rounded-2xl p-6  duration-300">
         <div className="flex items-start justify-between mb-6">
-          <div className={`p-4 rounded-2xl bg-[${colors.primary}]  transform group-hover:scale-110 transition-transform duration-300`}>
-            {icon}
-          </div>
+        
           <motion.div
             className="text-5xl font-bold text-gray-100"
             initial={{ opacity: 0 }}
@@ -227,7 +316,7 @@ const StatCard = ({ value, label, sublabel, color, index }) => {
   );
 };
 
-const EnhancedReviewsCarousel = ({ reviews }) => {
+const EnhancedReviewsCarousel = ({ reviews, loading = false }) => {
   const [currentReview, setCurrentReview] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const autoPlayRef = useRef(null);
@@ -249,18 +338,81 @@ const EnhancedReviewsCarousel = ({ reviews }) => {
   };
 
   useEffect(() => {
-    if (isAutoPlaying && sortedReviews.length > 0) {
+    if (isAutoPlaying && sortedReviews.length > 0 && !loading) {
       autoPlayRef.current = setInterval(nextReview, AUTO_PLAY_INTERVAL);
     }
     return () => {
       if (autoPlayRef.current) clearInterval(autoPlayRef.current);
     };
-  }, [isAutoPlaying, sortedReviews.length]);
+  }, [isAutoPlaying, sortedReviews.length, loading]);
 
   const visibleReviews = [];
   for (let i = -1; i <= 1; i++) {
     const index = (currentReview + i + sortedReviews.length) % sortedReviews.length;
     visibleReviews.push(index);
+  }
+
+  if (loading) {
+    return (
+      <div className={`relative bg-[${colors.primary}] rounded-4xl p-8 sm:p-12 lg:p-16 overflow-hidden`}>
+        {/* Animated Background Elements */}
+        <div className="absolute inset-0">
+          <div className={`absolute top-10 left-10 w-72 h-72 bg-[${colors.accent}]/5 rounded-full blur-3xl animate-pulse`} />
+          <div className={`absolute bottom-10 right-10 w-96 h-96 bg-[${colors.primary}]/10 rounded-full blur-3xl animate-pulse delay-1000`} />
+          <div className="absolute top-1/2 left-1/2 w-64 h-64 bg-white/5 rounded-full blur-2xl animate-pulse delay-500" />
+        </div>
+
+        <div className="relative z-10">
+          {/* Skeleton Carousel */}
+          <div className="relative">
+            {/* Desktop Layout Skeleton */}
+            <div className="hidden lg:block">
+              <div className="grid grid-cols-3 gap-8 items-center max-w-6xl mx-auto">
+                {[...Array(3)].map((_, position) => (
+                  <div key={position} className={position === 1 ? 'row-start-1' : 'row-start-1'}>
+                    <ReviewCardSkeleton isActive={position === 1} />
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Mobile Layout Skeleton */}
+            <div className="lg:hidden">
+              <div className="flex justify-center">
+                <ReviewCardSkeleton isActive={true} />
+              </div>
+            </div>
+
+            {/* Skeleton Controls */}
+            <div className="flex justify-center items-center space-x-6 mt-12">
+              <div className="p-4 rounded-2xl bg-white/10 backdrop-blur-sm border border-white/20 animate-pulse" />
+              
+              <div className="flex items-center space-x-4">
+                <div className="p-3 rounded-2xl bg-white/10 backdrop-blur-sm border border-white/20 animate-pulse" />
+                
+                <div className="flex space-x-3">
+                  {[...Array(3)].map((_, index) => (
+                    <div
+                      key={index}
+                      className="w-3 h-3 rounded-full bg-white/40 animate-pulse"
+                    />
+                  ))}
+                </div>
+              </div>
+
+              <div className="p-4 rounded-2xl bg-white/10 backdrop-blur-sm border border-white/20 animate-pulse" />
+            </div>
+          </div>
+
+          {/* Skeleton CTA */}
+          <div className="text-center mt-12">
+            <div className="inline-flex items-center px-8 py-4 bg-white/20 rounded-2xl animate-pulse">
+              <div className="h-6 w-40 bg-white/30 rounded"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   if (sortedReviews.length === 0) {
@@ -395,6 +547,7 @@ const WhyChooseUs = () => {
   const statsRef = useRef(null);
   const [isStatsVisible, setIsStatsVisible] = useState(false);
   const [reviews, setReviews] = useState([]);
+  const [reasonsData, setReasonsData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -412,6 +565,7 @@ const WhyChooseUs = () => {
         
         if (data.success && data.data && data.data.reviews) {
           setReviews(data.data.reviews);
+          setReasonsData(data.data.reasons);
         } else {
           throw new Error(data.message || 'Failed to fetch reviews from API');
         }
@@ -481,26 +635,26 @@ const WhyChooseUs = () => {
           </div>
         </motion.div>
 
-        {/* Stats Section */}
+        {/* Stats Section Skeleton */}
+        {loading && <StatsSkeleton />}
 
-        {/* Reasons Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 mb-8 gap-4 lg:gap-8">
-          {reasonsData.map((reason, index) => (
-            <ReasonCard key={index} {...reason} index={index} />
-          ))}
-        </div>
-
-        {/* Enhanced Reviews Carousel */}
-        {!loading && reviews.length > 0 && <EnhancedReviewsCarousel reviews={reviews} />}
-        
-        {/* Loading state */}
-        {loading && (
-          <div className={`relative bg-[${colors.primary}] rounded-4xl p-8 sm:p-12 lg:p-16 overflow-hidden`}>
-            <div className="text-center text-white text-xl">
-              Loading reviews from API...
-            </div>
+        {/* Reasons Grid Skeleton */}
+        {loading ? (
+          <div className="grid grid-cols-1 lg:grid-cols-3 mb-8 gap-4 lg:gap-8">
+            {[...Array(3)].map((_, index) => (
+              <ReasonCardSkeleton key={index} index={index} />
+            ))}
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 lg:grid-cols-3 mb-8 gap-4 lg:gap-8">
+            {reasonsData.map((reason, index) => (
+              <ReasonCard key={index} {...reason} index={index} />
+            ))}
           </div>
         )}
+
+        {/* Enhanced Reviews Carousel */}
+        <EnhancedReviewsCarousel reviews={reviews} loading={loading} />
       </div>
     </section>
   );

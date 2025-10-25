@@ -15,6 +15,87 @@ const SLIDE_DEPARTMENTS = {
   'pay': 'United Pay'
 };
 
+// Skeleton Loader Components
+const HeroSkeleton = () => {
+  return (
+    <div className="w-screen flex flex-col max-w-none h-auto lg:h-[80vh] relative overflow-hidden">
+      <div className="relative w-full h-[80vh] lg:h-[90vh] overflow-hidden bg-gray-200">
+        {/* Video Skeleton */}
+        <div className="relative w-full h-1/2 lg:h-full bg-gray-300 animate-pulse flex items-center justify-center">
+          <div className="text-gray-500">
+            <svg className="w-16 h-16" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M8 5v14l11-7z"/>
+            </svg>
+          </div>
+        </div>
+
+        {/* Desktop Skeleton Content */}
+        <div className="hidden lg:block absolute inset-0 z-40">
+          <div className="max-w-[1200px] xxl:max-w-[1400px] mx-auto flex items-center h-full w-full px-8">
+            <div className='h-full space-y-6 max-w-3xl flex flex-col items-start justify-center'>
+              {/* Title Skeleton */}
+              <div className="space-y-4">
+                <div className="h-16 bg-gray-300 rounded w-3/4 animate-pulse"></div>
+                <div className="h-16 bg-gray-400 rounded w-2/3 animate-pulse"></div>
+              </div>
+              
+              {/* Divider Skeleton */}
+              <div className="h-1 w-24 bg-gray-300 rounded animate-pulse"></div>
+              
+              {/* Description Skeleton */}
+              <div className="space-y-2 w-full max-w-[500px]">
+                <div className="h-4 bg-gray-300 rounded animate-pulse"></div>
+                <div className="h-4 bg-gray-300 rounded w-5/6 animate-pulse"></div>
+                <div className="h-4 bg-gray-300 rounded w-4/6 animate-pulse"></div>
+              </div>
+
+              {/* Buttons Skeleton */}
+              <div className='flex items-center gap-4 pt-4'>
+                <div className="w-40 h-12 bg-gray-300 rounded-full animate-pulse"></div>
+                <div className="w-48 h-12 bg-gray-300 rounded-full animate-pulse"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Mobile Skeleton Content */}
+        <div className="lg:hidden absolute bottom-0 w-full h-1/2 bg-gray-400 animate-pulse">
+          <div className="p-4 space-y-4">
+            {/* Title Skeleton */}
+            <div className="space-y-3">
+              <div className="h-8 bg-gray-300 rounded w-4/5 animate-pulse"></div>
+              <div className="h-8 bg-gray-300 rounded w-3/5 animate-pulse"></div>
+            </div>
+            
+            {/* Divider Skeleton */}
+            <div className="h-0.5 bg-gray-300 rounded w-full animate-pulse"></div>
+            
+            {/* Description Skeleton */}
+            <div className="space-y-2">
+              <div className="h-3 bg-gray-300 rounded animate-pulse"></div>
+              <div className="h-3 bg-gray-300 rounded w-5/6 animate-pulse"></div>
+              <div className="h-3 bg-gray-300 rounded w-4/6 animate-pulse"></div>
+            </div>
+
+            {/* Buttons Skeleton */}
+            <div className="flex gap-4 pt-4">
+              <div className="w-24 h-8 bg-gray-300 rounded-full animate-pulse"></div>
+              <div className="w-20 h-8 bg-gray-300 rounded-full animate-pulse"></div>
+            </div>
+          </div>
+        </div>
+
+        {/* Navigation Dots Skeleton */}
+        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2 z-20">
+          {[...Array(3)].map((_, index) => (
+            <div key={index} className="w-3 h-3 bg-gray-400 rounded-full animate-pulse"></div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const Hero = ({ currentSlide = 0, setCurrentSlide }) => {
   const [isTransitioning, setIsTransitioning] = React.useState(false);
   const [showCallBackForm, setShowCallBackForm] = React.useState(false);
@@ -87,16 +168,7 @@ const Hero = ({ currentSlide = 0, setCurrentSlide }) => {
 
   // Loading state
   if (loading) {
-    return (
-      <div className="w-screen flex flex-col max-w-none h-auto lg:h-[80vh] relative overflow-hidden">
-        <div className="relative w-full h-[80vh] lg:h-[90vh] overflow-hidden bg-gray-200 flex items-center justify-center">
-          <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto"></div>
-            <p className="mt-4 text-gray-600">Loading slides...</p>
-          </div>
-        </div>
-      </div>
-    );
+    return <HeroSkeleton />;
   }
 
   // Error state
@@ -135,9 +207,11 @@ const Hero = ({ currentSlide = 0, setCurrentSlide }) => {
     <div className="w-screen flex flex-col max-w-none h-auto lg:h-[80vh] relative overflow-hidden">
       {/* Call Back Form Modal */}
       {showCallBackForm && (
-          <div className="bg-white rounded-lg  max-w-md w-full mx-4">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-lg max-w-md w-full mx-4">
             <CallBackForm onClose={toggleCallBackForm} />
           </div>
+        </div>
       )}
 
       {/* Carousel Container */}

@@ -47,6 +47,106 @@ const categoryColors = {
   'Credit Life': 'bg-teal-100 text-teal-600',
 };
 
+// Skeleton Loader Components
+const HeroSkeleton = () => {
+  return (
+    <div className="min-h-screen bg-gray-100 font-outfit">
+      {/* Header Skeleton */}
+      <div className='bg-gray-300 h-2 w-full animate-pulse' />
+      <div className='relative bg-gray-200 py-16 md:py-24 min-h-[500px] flex items-center'>
+        <div className="absolute inset-0 bg-gray-300 animate-pulse" />
+        <div className="relative z-10 max-w-[1400px] mx-auto px-4 sm:px-6 w-full">
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
+            <div className="text-center lg:text-left flex-1 space-y-6">
+              <div className="h-12 bg-gray-400 rounded w-64 mx-auto lg:mx-0 animate-pulse"></div>
+              <div className="space-y-3">
+                <div className="h-8 bg-gray-400 rounded w-3/4 mx-auto lg:mx-0 animate-pulse"></div>
+                <div className="h-8 bg-gray-400 rounded w-2/3 mx-auto lg:mx-0 animate-pulse"></div>
+              </div>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                <div className="h-12 bg-gray-400 rounded-full w-32 animate-pulse"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Search Section Skeleton */}
+      <section className="py-8 bg-white">
+        <div className="max-w-[1400px] mx-auto px-4 sm:px-6">
+          <div className="h-6 bg-gray-300 rounded w-64 mb-4 animate-pulse"></div>
+          <div className="flex flex-col lg:flex-row gap-4 items-center justify-between">
+            <div className="flex-1 w-full lg:max-w-md">
+              <div className="h-12 bg-gray-200 rounded-lg animate-pulse"></div>
+            </div>
+          </div>
+          <div className="h-4 bg-gray-200 rounded w-32 mt-4 animate-pulse"></div>
+        </div>
+      </section>
+
+      {/* Products Grid Skeleton */}
+      <section className="py-12">
+        <div className="max-w-[1400px] mx-auto px-4 sm:px-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6">
+            {[...Array(6)].map((_, index) => (
+              <ProductCardSkeleton key={index} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section Skeleton */}
+      <section className="py-16 bg-white">
+        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 text-center space-y-4">
+          <div className="h-8 bg-gray-300 rounded w-80 mx-auto animate-pulse"></div>
+          <div className="h-6 bg-gray-200 rounded w-96 mx-auto animate-pulse"></div>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <div className="h-12 bg-gray-300 rounded-full w-40 animate-pulse"></div>
+            <div className="h-12 bg-gray-300 rounded-full w-36 animate-pulse"></div>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+};
+
+const ProductCardSkeleton = () => {
+  return (
+    <div className="bg-white rounded-xl shadow-sm overflow-hidden animate-pulse">
+      {/* Image Section Skeleton */}
+      <div className="relative h-48 bg-gray-300 overflow-hidden"></div>
+
+      {/* Content Section Skeleton */}
+      <div className="p-6 space-y-4">
+        <div className="h-7 bg-gray-300 rounded w-3/4"></div>
+        <div className="space-y-2">
+          <div className="h-4 bg-gray-200 rounded"></div>
+          <div className="h-4 bg-gray-200 rounded w-5/6"></div>
+        </div>
+
+        {/* Benefits Skeleton */}
+        <div className="space-y-2">
+          {[...Array(2)].map((_, index) => (
+            <div key={index} className="flex items-center">
+              <div className="w-5 h-5 bg-gray-200 rounded-full mr-2"></div>
+              <div className="h-3 bg-gray-200 rounded w-4/5"></div>
+            </div>
+          ))}
+        </div>
+
+        {/* Stats Skeleton */}
+        <div className="flex items-center space-x-8">
+          <div className="h-3 bg-gray-200 rounded w-20"></div>
+          <div className="h-3 bg-gray-200 rounded w-16"></div>
+        </div>
+
+        {/* Button Skeleton */}
+        <div className="h-12 bg-gray-300 rounded-full"></div>
+      </div>
+    </div>
+  );
+};
+
 export default function UnitedLifeAssurance() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
@@ -172,14 +272,7 @@ export default function UnitedLifeAssurance() {
   };
 
   if (loading) {
-    return (
-      <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#3d834d] mx-auto"></div>
-          <p className="mt-4 text-gray-600">Loading life assurance products...</p>
-        </div>
-      </div>
-    );
+    return <HeroSkeleton />;
   }
 
   if (error) {
