@@ -2,8 +2,8 @@ import { Geist, Geist_Mono, Outfit } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import Script from "next/script";
 import PostHogProvider from "@/lib/PHProvider";
+import { Suspense } from "react";
 
 // Site constants
 const siteName = "United Holdings";
@@ -131,7 +131,9 @@ export default function RootLayout({ children }) {
         <Header />
         <main className="min-h-screen">
           {children}
-          <PostHogProvider />
+          <Suspense fallback={null}>
+            <PostHogProvider />
+          </Suspense>
         </main>
         <Footer />
 
