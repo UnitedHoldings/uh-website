@@ -3,6 +3,7 @@ import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Script from "next/script";
+import PostHogProvider from "@/lib/PHProvider";
 
 // Site constants
 const siteName = "United Holdings";
@@ -100,19 +101,22 @@ export const metadata = {
     googleBot: {
       index: true,
       follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
     },
   },
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${outfit.variable} ${geistSans.variable} ${geistMono.variable}`}>
+    <html
+      lang="en"
+      className={`${outfit.variable} ${geistSans.variable} ${geistMono.variable}`}
+    >
       <head>
         {/* ✅ Preload critical resources */}
-        
+
         {/* ✅ Inject Schema.org JSON-LD */}
         <script
           type="application/ld+json"
@@ -121,10 +125,13 @@ export default function RootLayout({ children }) {
           }}
         />
       </head>
-      <body className={`font-outfit antialiased relative bg-white text-gray-900`}>
+      <body
+        className={`font-outfit antialiased relative bg-white text-gray-900`}
+      >
         <Header />
         <main className="min-h-screen">
           {children}
+          <PostHogProvider />
         </main>
         <Footer />
 
