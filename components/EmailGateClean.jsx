@@ -11,7 +11,7 @@ const ALLOWED_EMPLOYEES = [
   { name: "SIMEON SIMELANE", email: "lamanager@united.co.sz", position: "GROUP INTERNAL AUDIT MANAGER" },
   { name: "NOZWELETHUI NKUMALO", email: "retailsalesmanager@united.co.sz", position: "RETAIL SALES MANAGER" },
   { name: "PETER MASECO", email: "fm@united.co.sz", position: "FINANCE MANAGER" },
-  { name: "JUSTICE DIAMINI", email: "limanager@united.co.sz", position: "ICT MANAGER" },
+  { name: "JUSTICE DIAMINI", email: "itmanager@united.co.sz", position: "ICT MANAGER" },
   { name: "MHLONIPHENI MASIELLA", email: "gr.asistantMM@united.co.sz", position: "ACTING MARKETING MANAGER" },
   { name: "NCAMILE MKIRATSHWA", email: "legalandadminofficer@united.co.sz", position: "ACTING GROUP RISK & COMPLIANCE MANAGER" },
   { name: "COLANI NGVKENYA", email: "assistantgroupHRM@united.co.sz", position: "ACTING GROUP HUMAN RESOURCES MANAGER" },
@@ -196,7 +196,7 @@ export default function BetaAuthGate() {
               <p className="text-xs text-gray-500">
                 Having trouble? Contact ICT Manager at{' '}
                 <a href="mailto:limanager@united.co.sz" className="text-[#9b1c20] hover:underline">
-                  limanager@united.co.sz
+                  itmanager@united.co.sz
                 </a>
               </p>
             </div>
@@ -330,7 +330,7 @@ function OnboardingFlow({ user, currentStep, onStepChange, onComplete, onLogout 
                 Welcome to the UH Website Beta Program
               </h2>
               <p className="text-xl text-gray-600 mb-2">
-                Exclusive Onboarding • October 25, 2025
+                Exclusive Onboarding • October 27, 2025
               </p>
               <div className="bg-gradient-to-r from-[#9b1c20] to-[#7a1619] inline-block px-4 py-1 rounded-full">
                 <p className="text-white font-semibold text-sm">Live With Purpose</p>
