@@ -178,6 +178,19 @@ export default function FAQ() {
 
   return (
     <div className="min-h-screen bg-gray-100 font-outfit">
+     <Head>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-31DS0EN7P0"></script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-31DS0EN7P0');
+            `,
+          }}
+        />
+      </Head>
       {/* Header */}
       <div className="bg-[#9b1c20] text-white">
         <div className="max-w-6xl mx-auto px-4 py-12">

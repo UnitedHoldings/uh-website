@@ -334,6 +334,19 @@ export default function NewsPage() {
   if (selectedArticle) {
     return (
       <div className="min-h-screen bg-gray-50">
+       <Head>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-31DS0EN7P0"></script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-31DS0EN7P0');
+            `,
+          }}
+        />
+      </Head>
         {/* Article Detail View */}
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           {/* Back Button */}

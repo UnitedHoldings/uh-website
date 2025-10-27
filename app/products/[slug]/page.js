@@ -118,9 +118,9 @@ export default function ProductPage({ params }) {
     loadProducts();
   }, [unwrappedParams.slug]);
 
-  // Send quote function - now passed to RenderForm
-  const sendQuote = async (formData) => {
-    if (!product) return;
+  // Send quote function
+  const sendQuote = async (formDataToSubmit) => {
+    if (!product) return false;
 
     setIsSubmitting(true);
     setSubmitError('');
@@ -129,11 +129,11 @@ export default function ProductPage({ params }) {
     try {
       // Prepare the request body
       const requestBody = {
-        name: formData.name,
-        surname: formData.name.split(' ').slice(1).join(' ') || formData.name,
-        email: formData.email,
-        mobileNumber: formData.phone,
-        productData: Object.entries(formData)
+        name: formDataToSubmit.name,
+        surname: formDataToSubmit.name.split(' ').slice(1).join(' ') || formDataToSubmit.name,
+        email: formDataToSubmit.email,
+        mobileNumber: formDataToSubmit.phone,
+        productData: Object.entries(formDataToSubmit)
           .filter(([key, value]) => value && value.toString().trim() !== '')
           .map(([key, value]) => ({ field: key, value: value.toString().trim() }))
           .concat([
@@ -194,15 +194,42 @@ export default function ProductPage({ params }) {
         address: '',
       });
 
+      return true;
+
     } catch (error) {
       console.error('Error sending quote:', error);
       const errorMessage = error.message.includes('Failed to fetch') 
         ? 'Network error. Please check your connection and try again.'
         : `Failed to submit your request: ${error.message}`;
       setSubmitError(errorMessage);
+      return false;
     } finally {
       setIsSubmitting(false);
     }
+  };
+
+  // Handle form submission from RenderForm
+  const handleFormSubmit = async (submittedFormData) => {
+    console.log('Form submitted with data:', submittedFormData);
+    
+    // Basic validation
+    if (!submittedFormData.name || !submittedFormData.email || !submittedFormData.phone) {
+      setSubmitError('Please fill in all required fields (name, email, and phone)');
+      return false;
+    }
+
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(submittedFormData.email)) {
+      setSubmitError('Please enter a valid email address');
+      return false;
+    }
+
+    // Update the form data state
+    setFormData(submittedFormData);
+    
+    // Send the quote
+    return await sendQuote(submittedFormData);
   };
 
   // Show loading state
@@ -340,13 +367,13 @@ export default function ProductPage({ params }) {
                     </p>
                   </div>
 
-                  {/* RenderForm now handles the form and submission */}
+                  {/* RenderForm with proper event handling */}
                   <RenderForm 
                     product={product} 
                     formData={formData} 
                     handleInputChange={handleInputChange} 
                     company={company}
-                    sendQuote={sendQuote}
+                    onFormSubmit={handleFormSubmit}
                     isSubmitting={isSubmitting}
                     submitMessage={submitMessage}
                     submitError={submitError}
@@ -354,6 +381,15 @@ export default function ProductPage({ params }) {
                   />
                 </div>
               </div>
+
+              {/* Success and Error Messages */}
+              {(submitMessage || submitError) && (
+                <div className={`mt-4 p-4 rounded-lg ${
+                  submitMessage ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                }`}>
+                  {submitMessage || submitError}
+                </div>
+              )}
 
               {/* Disclaimer */}
               <div className={`text-xs mt-4 sm:mt-6 space-y-2 ${isLightColor ? 'text-gray-700' : 'text-gray-200'}`}>
@@ -373,9 +409,7 @@ export default function ProductPage({ params }) {
       </div>
 
       {/* Rest of the component remains the same */}
-      {/* Product Details Sections */}
       <div className='max-w-[1400px] px-4 my-8 sm:my-12 md:my-16 space-y-6 mx-auto flex flex-col lg:flex-row'>
-        {/* Left Column - Product Title */}
         <div className='lg:min-w-3/12 w-full lg:w-auto'>
           <h2 className='font-semibold text-2xl sm:text-3xl lg:text-4xl text-center lg:text-left'>
             {product.name}
@@ -386,7 +420,6 @@ export default function ProductPage({ params }) {
           <div className="flex flex-col w-full justify-between py-4 lg:py-6"></div>
         </div>
 
-        {/* Right Column - Content */}
         <div className='w-full lg:border-l lg:border-gray-400 lg:pl-6'>
           <section className="mb-8 grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
             <div>
@@ -412,17 +445,9 @@ export default function ProductPage({ params }) {
         </div>
       </div>
 
-      {/* Additional Product Sections */}
       <div className='max-w-[1400px] mb-8 sm:mb-12 md:mb-16 mx-auto space-y-12'>
-        {/* Benefits Section */}
         {product.benefits && <ProductBenefits benefits={product.benefits} company={company} />}
-
-        {/* Eligibility Section */}
         {product.eligibility && <ProductEligibility eligibility={product.eligibility} />}
-
-        {/* Final CTA */}
-        <div className="mt-12 sm:mt-16">
-        </div>
       </div>
       <Agent />
     </div>

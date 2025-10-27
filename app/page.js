@@ -6,7 +6,9 @@ import Products from '@/components/Products';
 import SeoHead from '@/components/SEOhead';
 import StartQuote from '@/components/Startqoute';
 import WhyChooseUs from '@/components/WhyChooseUs';
+import Head from 'next/head';
 import { useEffect, useRef, useState, useMemo } from 'react';
+import EmailGateClean from '@/components/EmailGateClean';
 
 
 
@@ -155,6 +157,19 @@ export default function Home() {
 
   return (
     <>
+     <Head>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-31DS0EN7P0"></script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-31DS0EN7P0');
+            `,
+          }}
+        />
+      </Head>
       <SeoHead
         title="United Holdings | Insurance & Financial Solutions"
         description="United Holdings provides trusted insurance and financial solutions tailored for Eswatini and Southern Africa. Get quotes, manage policies, and connect with our team."
@@ -164,6 +179,9 @@ export default function Home() {
       />
 
       <div className='flex flex-col pb-16 lg:space-y-16'>
+
+  {/* Email-gated experience (shows modal on first visit) */}
+  <EmailGateClean />
 
 
         <div className='relative lg:px-2  mb-4 lg:mb-8 flex flex-col items-center'>

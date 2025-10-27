@@ -13,6 +13,7 @@ import {
   IoFilterOutline,
   IoChevronDownOutline
 } from "react-icons/io5";
+import Head from 'next/head';
 
 // Mock data for job vacancies
 const initialJobVacancies = [
@@ -316,6 +317,20 @@ export default function CareersPage() {
 
   return (
     <>
+      <Head>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-31DS0EN7P0"></script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-31DS0EN7P0');
+            `,
+          }}
+        />
+      </Head>
+
       <div className="min-h-screen bg-gray-50">
         {/* Hero Section */}
         <div className="bg-gradient-to-r from-[#9b1c20] to-[#3d834d] text-white py-16">
@@ -662,6 +677,8 @@ export default function CareersPage() {
 
 
       </div>
+
+
     </>
 
   );

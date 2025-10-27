@@ -235,6 +235,19 @@ export default function Team() {
 
   return (
     <div className="min-h-screen font-outfit mx-auto">
+     <Head>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-31DS0EN7P0"></script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-31DS0EN7P0');
+            `,
+          }}
+        />
+      </Head>
       {/* Header Section */}
       <div className='bg-[#881a1e] h-6 sm:h-8 w-full' />
       <div className='bg-[#9b1c20] py-4 sm:py-6'>
