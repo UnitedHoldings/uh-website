@@ -3,6 +3,7 @@
 import React, { useState, useMemo, Suspense, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
+import Head from 'next/head';
 
 // Browser-safe function to open Google Maps
 const openGoogleMaps = (coords, branchName) => {

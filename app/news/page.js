@@ -16,6 +16,7 @@ import {
   IoPlayOutline,
   IoImageOutline
 } from "react-icons/io5";
+import Head from 'next/head';
 
 // Mock news data
 const newsData = [

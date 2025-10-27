@@ -1,4 +1,5 @@
 'use client'
+import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
@@ -150,7 +151,7 @@ export default function Team() {
 
         {/* Name and Title Overlay */}
         {activeCard !== member._id && (
-          <div className="absolute z-40 bottom-[10%] left-0 right-0 text-center px-4">
+          <div className="absolute z-30 bottom-[10%] left-0 right-0 text-center px-4">
             <h3 className="text-2xl font-semibold text-white mb-1">{member.name}</h3>
             <p className="text-lg text-white text-center max-w-[20rem] mx-auto">{member.title}</p>
           </div>

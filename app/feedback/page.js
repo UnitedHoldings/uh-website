@@ -273,8 +273,8 @@ export default function FeedbackPage() {
 
                         <div className="max-w-2xl mx-auto space-y-6">
                             <p className="text-xl text-gray-600 leading-relaxed">
-                                Your insights are invaluable in helping us shape the future of United Holdings' digital experience.
-                                We truly appreciate the time and thought you've put into providing comprehensive feedback.
+                                Your insights are invaluable in helping us shape the future of United Holdings&apos; digital experience.
+                                We truly appreciate the time and thought you&apos;ve put into providing comprehensive feedback.
                             </p>
 
                             <div className="bg-gradient-to-r from-[#9b1c20] to-[#7a1619] rounded-xl p-6 text-white text-center">
@@ -364,7 +364,7 @@ export default function FeedbackPage() {
                         Beta Program Feedback
                     </h1>
                     <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                        Your insights will help shape the future of United Holdings' digital experience
+                        Your insights will help shape the future of United Holdings&apos; digital experience
                     </p>
                     {user && (
                         <div className="mt-4 inline-flex items-center gap-3 bg-white px-4 py-2 rounded-full shadow-sm border">
@@ -606,7 +606,7 @@ export default function FeedbackPage() {
                         <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-8 animate-fadeIn">
                             <div className="mb-8">
                                 <h2 className="text-2xl font-bold text-gray-900 mb-2">KPIs & Success Metrics</h2>
-                                <p className="text-gray-600">What metrics matter most for measuring the website's success?</p>
+                                <p className="text-gray-600">What metrics matter most for measuring the website&apos;s success?</p>
                             </div>
 
                             <div className="space-y-6">
