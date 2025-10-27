@@ -1,5 +1,6 @@
 'use client';
 
+import Head from 'next/head';
 import { useState } from 'react';
 import { BsChevronUp } from 'react-icons/bs';
 
