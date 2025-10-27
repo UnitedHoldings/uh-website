@@ -131,31 +131,13 @@ export default function Header() {
             icon: PiUsersThree,
             description: "Meet our dedicated team"
         },
-        { 
-            name: "Careers", 
-            link: "/about/careers", 
-            icon: PiBriefcaseMetal,
-            description: "Join our growing team"
-        },
         
-        
-        { 
-            name: "Gallery", 
-            link: "/about/gallery", 
-            icon: PiImages,
-            description: "Photos from our events"
-        },
        
     ], []);
 
     // Resources dropdown data
     const resourcesDropdown = useMemo(() => [
-        { 
-            name: "Documents", 
-            link: "/documents", 
-            icon: PiFolderOpen,
-            description: "Important forms and documents"
-        },
+        
         { 
             name: "Policies", 
             link: "/policies", 
