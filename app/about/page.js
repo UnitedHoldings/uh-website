@@ -21,11 +21,10 @@ export default function About() {
                         </p>
                     </header>
                 </div>
-
-                {/* Hero Image */}
+               {/* Hero Image */}
                 <div className='relative'>
                     <Image
-                        src={'/loan-2.png'}
+                        src={'/mall.png'}
                         alt="About hero"
                         width={1920}
                         height={360}

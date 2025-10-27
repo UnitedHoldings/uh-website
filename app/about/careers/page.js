@@ -13,7 +13,7 @@ import {
   IoFilterOutline,
   IoChevronDownOutline
 } from "react-icons/io5";
-import Head from 'next/head';
+// Head removed: Google Analytics moved to global layout
 
 // Mock data for job vacancies
 const initialJobVacancies = [
@@ -317,19 +317,6 @@ export default function CareersPage() {
 
   return (
     <>
-      <Head>
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-31DS0EN7P0"></script>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'G-31DS0EN7P0');
-            `,
-          }}
-        />
-      </Head>
 
       <div className="min-h-screen bg-gray-50">
         {/* Hero Section */}

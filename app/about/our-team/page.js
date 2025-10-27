@@ -1,5 +1,5 @@
 'use client'
-import Head from 'next/head';
+// Head removed: Google Analytics moved to global layout
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
@@ -164,7 +164,7 @@ export default function Team() {
           <div className="flex-grow">
             <h3 className="text-3xl font-bold text-gray-900 mb-2 text-center">{member.name}</h3>
             <p className="text-sm text-[#9b1c20] font-medium mb-4 text-center">{member.title}</p>
-            <p className="text-gray-600 text-lg leading-relaxed overflow-y-auto max-h-64">
+            <p className="text-gray-600 text- leading-relaxed overflow-y-auto max-h-64">
               {member.bio || 'No biography available.'}
             </p>
           </div>
@@ -236,19 +236,6 @@ export default function Team() {
 
   return (
     <div className="min-h-screen font-outfit mx-auto">
-     <Head>
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-31DS0EN7P0"></script>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'G-31DS0EN7P0');
-            `,
-          }}
-        />
-      </Head>
       {/* Header Section */}
       <div className='bg-[#881a1e] h-6 sm:h-8 w-full' />
       <div className='bg-[#9b1c20] py-4 sm:py-6'>
@@ -265,11 +252,11 @@ export default function Team() {
       {/* Hero Image */}
       <div className='relative'>
         <Image
-          src={'/group-life.jpg'}
+          src={'/team.jpg'}
           alt="Our Team"
           width={1920}
           height={360}
-          className="w-full h-[200px] sm:h-[280px] md:h-[320px] object-cover"
+          className="w-full h-[200px] sm:h-[280px] md:h-[320px] lg:h-[400px] object-cover"
           priority
         />
       </div>

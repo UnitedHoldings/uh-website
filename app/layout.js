@@ -5,6 +5,7 @@ import Footer from "@/components/Footer";
 import PostHogProvider from "@/lib/PHProvider";
 import EmailGateClean from '@/components/EmailGateClean';
 import { Suspense } from "react";
+import Script from 'next/script';
 
 // Site constants
 const siteName = "United Holdings";
@@ -125,6 +126,15 @@ export default function RootLayout({ children }) {
             __html: JSON.stringify(schemaOrgSite),
           }}
         />
+
+        {/* Google Analytics (moved to layout to avoid duplicated inline scripts) */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-31DS0EN7P0"
+          strategy="afterInteractive"
+        />
+        <Script id="gtag-init" strategy="afterInteractive">
+          {`window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-31DS0EN7P0');`}
+        </Script>
       </head>
       <body
         className={`font-outfit antialiased relative bg-white text-gray-900`}

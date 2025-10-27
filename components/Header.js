@@ -273,7 +273,7 @@ export default function Header() {
         if (item.name === "PRODUCTS") {
             return (
                 <div className="absolute left-1/2 transform -translate-x-1/2 top-full pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 w-screen max-w-4xl">
-                    <div className="bg-white rounded-lg -xl border border-gray-200 py-6">
+                    <div className="bg-white rounded-lg shadow-xl border border-gray-200 py-6">
                         <div className="grid grid-cols-4 gap-8 px-8">
                             {item.dropdown.map((category, categoryIndex) => {
                                 const CategoryIcon = category.icon;
@@ -315,7 +315,7 @@ export default function Header() {
             // Uniform dropdown for About and Resources
             return (
                 <div className="absolute left-0 top-full pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
-                    <div className="bg-white rounded-md -lg py-3 border border-gray-200 min-w-64">
+                    <div className="bg-white rounded-md shadow-lg py-3 border border-gray-200 min-w-64">
                         {item.dropdown.map((subItem, subIndex) => {
                             const SubItemIcon = subItem.icon;
                             return (
@@ -343,7 +343,7 @@ export default function Header() {
     };
 
     return (
-        <div className="w-full sticky top-0 z-40 bg-white ">
+        <div className="w-full sticky top-0 z-40 bg-white shadow-sm">
             {/* Mobile Drawer Overlay */}
             {isDrawerOpen && (
                 <div
@@ -353,7 +353,7 @@ export default function Header() {
             )}
 
             {/* Mobile Drawer */}
-            <div className={`fixed top-0 left-0 h-full w-80 bg-white  z-60 transform transition-transform duration-300 ease-in-out lg:hidden ${isDrawerOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+            <div className={`fixed top-0 left-0 h-full w-80 bg-white shadow-xl z-60 transform transition-transform duration-300 ease-in-out lg:hidden ${isDrawerOpen ? 'translate-x-0' : '-translate-x-full'}`}>
                 <div className="p-6 h-full flex flex-col">
                     {/* Header */}
                     <div className="flex justify-between items-center mb-8">
@@ -361,8 +361,8 @@ export default function Header() {
                             <Image 
                                 src="/logo.svg" 
                                 alt="United Holdings Logo" 
-                                width={150} 
-                                height={100} 
+                                width={180} 
+                                height={80} 
                                 priority 
                                 className="hover:opacity-90 transition-opacity"
                             />
@@ -422,19 +422,19 @@ export default function Header() {
                             </div>
                             <div className="flex items-center space-x-2">
                                 <PiPhone className="text-gray-500" />
-                                <a href="tel:8001010" className="font-semibold text-[#F7941D] hover:underline">
+                                <a href="tel:8001010" className="font-semibold text-[#9b1c20] hover:underline">
                                     800 1010
                                 </a>
                             </div>
                             <div className="flex items-center space-x-2">
                                 <PiPhone className="text-gray-500" />
-                                <a href="tel:+26825086000" className="font-semibold text-[#F7941D] hover:underline">
+                                <a href="tel:+26825086000" className="font-semibold text-[#9b1c20] hover:underline">
                                     (+268) 2508 6000
                                 </a>
                             </div>
                             <div className="flex items-center space-x-2">
                                 <PiEnvelope className="text-gray-500" />
-                                <a href="mailto:info@united.co.sz" className="font-semibold text-[#F7941D] hover:underline">
+                                <a href="mailto:info@united.co.sz" className="font-semibold text-[#9b1c20] hover:underline">
                                     info@united.co.sz
                                 </a>
                             </div>
@@ -443,11 +443,32 @@ export default function Header() {
                 </div>
             </div>
 
-            {/* Top Bar */}
-            <div className="bg-[#9b1c20] text-white">
+            {/* Quick Nav CTA Bar - Updated with burgundy text */}
+            <div className="bg-white text-[#9b1c20] border-b border-gray-200">
                 <div className="max-w-[1800px] mx-auto px-4 sm:px-6">
                     <div className="hidden lg:flex items-center justify-between py-2">
-                        {/* Social Icons */}
+                        {/* Contact Info - Now on left */}
+                        <div className="flex items-center space-x-6 text-sm">
+                            <div className="flex items-center space-x-2">
+                                <PiMapPin className="w-4 h-4" />
+                                <span className="font-semibold">Address</span>
+                            </div>
+                            <div className="flex items-center space-x-4">
+                                <a href="tel:8001010" className="hover:underline transition duration-150 ease-in-out font-medium">
+                                   Toll Free: 800 1010
+                                </a>
+                                <span className="text-gray-300">|</span>
+                                <a href="tel:+26825086000" className="hover:underline transition duration-150 ease-in-out font-medium">
+                                    (+268) 2508 6000
+                                </a>
+                                <span className="text-gray-300">|</span>
+                                <a href="mailto:info@united.co.sz" className="hover:underline transition duration-150 ease-in-out font-medium">
+                                    info@united.co.sz
+                                </a>
+                            </div>
+                        </div>
+
+                        {/* Social Media Icons - Moved to top right */}
                         <div className="flex items-center space-x-4">
                             {socialLinks.map((social) => {
                                 const SocialIcon = social.icon;
@@ -457,74 +478,51 @@ export default function Header() {
                                         href={social.url}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="hover:text-gray-200 transition duration-150 ease-in-out"
+                                        className="hover:text-[#7a1619] transition duration-150 ease-in-out"
                                         aria-label={social.name}
                                     >
                                         <SocialIcon className="w-5 h-5" />
                                     </a>
                                 );
                             })}
-                            {/* Experience Center: opens the email/beta gate modal */}
-                          
-                        </div>
-
-                        {/* Contact Info */}
-                        <div className="flex items-center space-x-6 text-sm">
-                            <div className="flex items-center space-x-2">
-                                <PiMapPin className="w-4 h-4" />
-                                <span className="font-semibold">Address</span>
-                            </div>
-                            <div className="flex items-center space-x-4">
-                                <a href="tel:8001010" className="hover:underline transition duration-150 ease-in-out">
-                                   Toll Free: 800 1010
-                                </a>
-                                <span>|</span>
-                                <a href="tel:+26825086000" className="hover:underline transition duration-150 ease-in-out">
-                                    (+268) 2508 6000
-                                </a>
-                                <span>|</span>
-                                <a href="mailto:info@united.co.sz" className="hover:underline transition duration-150 ease-in-out">
-                                    info@united.co.sz
-                                </a>
-                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
             {/* Main Navigation */}
-            <div className="bg-white border-b-4 border-[#9b1c20]">
+            <div className="border-b-4 border-[#9b1c20]">
                 <div className="max-w-[1800px] mx-auto px-4 sm:px-6">
-                    <div className="flex items-center justify-between py-1">
-                        {/* Logo */}
+                    <div className="flex items-center justify-between pb-2 bgb">
+                        {/* Logo - Increased size */}
                         <Link href="/" className="flex-shrink-0">
                             <Image
                                 src="/logo.svg"
                                 alt="United Holdings Logo"
-                                width={180}
-                                height={100}
+                                width={220}
+                                height={90}
                                 priority
                                 className="hover:opacity-90 transition-opacity"
                             />
                         </Link>
 
                         {/* Desktop Navigation */}
-                        <nav className="hidden lg:block">
+                        <nav className="hidden lg:flex flex-1 justify-center">
                             <ul className="flex items-center space-x-8 text-sm font-semibold">
                                 {mainNavItems.map((item, index) => (
                                     <li key={index} className="relative group">
                                         {item.dropdown ? (
                                             <div>
-                                                <button className="flex items-center space-x-1 py-2 hover:text-[#9b1c20] transition duration-150 ease-in-out">
+                                                <button className="flex items-center space-x-1 py-2 text-[#9b1c20] hover:text-[#7a1619] transition duration-150 ease-in-out">
                                                     <span>{item.name}</span>
-                                                    <PiCaretDown className="w-3 h-3 text-gray-500" />
+                                                    <PiCaretDown className="w-3 h-3" />
                                                 </button>
                                                 {renderDesktopDropdown(item)}
                                             </div>
                                         ) : (
                                             <Link
                                                 href={item.link}
-                                                className="block py-2 hover:text-[#9b1c20] transition duration-150 ease-in-out"
+                                                className="block py-2 text-[#9b1c20] hover:text-[#7a1619] transition duration-150 ease-in-out"
                                             >
                                                 {item.name}
                                             </Link>

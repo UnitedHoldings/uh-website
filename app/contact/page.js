@@ -3,7 +3,7 @@
 import React, { useState, useMemo, Suspense, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
-import Head from 'next/head';
+// Head removed: Google Analytics moved to global layout
 
 // Browser-safe function to open Google Maps
 const openGoogleMaps = (coords, branchName) => {
@@ -219,19 +219,6 @@ export default function Contact() {
 
   return (
     <div className="min-h-screen font-outfit mx-auto">
-     <Head>
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-31DS0EN7P0"></script>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'G-31DS0EN7P0');
-            `,
-          }}
-        />
-      </Head>
       <div className='bg-[#881a1e] h-8 w-full' />
       <div className='bg-[#9b1c20] py-4'>
         <header className="max-w-[1400px] mx-auto px-4">
@@ -241,7 +228,6 @@ export default function Contact() {
       </div>
 
       <div className='relative'>
-        <div className='bg-gradient-to-r absolute from-[#9b1c20]/60 to-[#9b1c20]/20 h-full w-full' />
         <Image
           src="/44585.jpg"
           alt="Contact"
