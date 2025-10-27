@@ -272,12 +272,7 @@ export default function Contact() {
                 >
                   Our Branches
                 </button>
-                <button
-                  onClick={() => setActiveTab('contact')}
-                  className={`px-4 py-2 rounded-full transition ${activeTab === 'contact' ? 'bg-[#9b1c20] text-white' : 'bg-gray-100 text-gray-700'}`}
-                >
-                  Contact Form
-                </button>
+                
               </nav>
               <div className="text-sm text-gray-600 mt-3 md:mt-0">
                 <span className="font-semibold">Need help?</span> Call 800 1010 or email <a href="mailto:info@united.co.sz" className="text-[#9b1c20] underline">info@united.co.sz</a>
@@ -343,7 +338,7 @@ export default function Contact() {
           </div>
 
           <div className='w-full lg:border-l lg:border-gray-400 lg:pl-6 mt-8 lg:mt-0'>
-            {activeTab === 'branches' ? (
+            
               <div className="space-y-6">
                 <div className="h-[800px] rounded-lg overflow-hidden">
                   <Suspense fallback={<MapSkeleton />}>
@@ -432,71 +427,7 @@ export default function Contact() {
                   </div>
                 )}
               </div>
-            ) : (
-              <div className="p-6 bg-gray-50 rounded-lg">
-                <h4 className="text-2xl font-semibold mb-4">Send us a Message</h4>
-                <form onSubmit={handleSubmit} className="space-y-4">
-                  <div>
-                    <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
-                      Full Name
-                    </label>
-                    <input
-                      type="text"
-                      id="name"
-                      name="name"
-                      value={form.name}
-                      onChange={handleChange}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9b1c20] focus:border-transparent"
-                      required
-                    />
-                  </div>
-
-                  <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-                      Email Address
-                    </label>
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      value={form.email}
-                      onChange={handleChange}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9b1c20] focus:border-transparent"
-                      required
-                    />
-                  </div>
-
-                  <div>
-                    <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
-                      Message
-                    </label>
-                    <textarea
-                      id="message"
-                      name="message"
-                      value={form.message}
-                      onChange={handleChange}
-                      rows={6}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9b1c20] focus:border-transparent"
-                      required
-                    />
-                  </div>
-
-                  {status && (
-                    <div className={`p-3 rounded-lg ${status.type === 'error' ? 'bg-red-100 text-red-700' : 'bg-green-100 text-green-700'
-                      }`}>
-                      {status.message}
-                    </div>
-                  )}
-
-                  <button
-                    type="submit"
-                    className="w-full bg-[#9b1c20] text-white py-3 px-6 rounded-lg font-semibold hover:bg-[#881a1e] transition duration-200"
-                  >
-                    Send Message
-                  </button>
-                </form>
-              </div>
-            )}
+            
           </div>
         </div>
       </div>

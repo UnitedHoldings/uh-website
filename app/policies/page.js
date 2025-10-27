@@ -65,11 +65,7 @@ export default function PolicyPage() {
                         Our policies ensure transparency and protect your rights. All policies are regularly updated in accordance with 
                         <span className="text-[#9b1c20] font-semibold"> Eswatini regulations</span>.
                     </p>
-                    <div>
-                        <button className='border-[#9b1c20] border text-[#9b1c20] py-2 px-8 rounded-full'>
-                            Download All Policies
-                        </button>
-                    </div>
+                   
                 </div>
             </div>
             

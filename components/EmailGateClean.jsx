@@ -33,7 +33,8 @@ const ALLOWED_EMPLOYEES = [
   { name: "LUNGILE MNGOMETULU", email: "ulaclamsofticer3@united.co.sz", position: "CLAIMS OFFICER" },
   { name: "CYNTHIA GUMEDZE", email: "loansofficer@united.co.sz", position: "MICRO LOANS OFFICER" },
   { name: "NOMPENDULO QWABE", email: "creditcontrolofficer@united.co.sz", position: "CREDIT CONTROLLER" },
-  { name: "JOSE REGO", email: "rego@ummo.xyz", position: "Developer" },
+  { name: "JOSE REGO", email: "rego@ummo.xyz", position: "PROJECT MANAGER" },
+  { name: "THEMBINKOSI MKHONTA", email: "dev@ummo.xyz", position: "DEVELOPER" },
 ]
 
 const STORAGE_KEYS = {
