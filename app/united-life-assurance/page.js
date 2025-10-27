@@ -22,6 +22,7 @@ import {
 import { PiFunnel } from "react-icons/pi";
 import { fetchUnitedLifeAssuranceData } from '@/components/ULA_ProductsData';
 import Image from 'next/image';
+import { trackEvent, trackPageDuration } from '@/lib/posthog';
 
 // Department colors
 const DEPARTMENT_COLORS = {
@@ -156,6 +157,12 @@ export default function UnitedLifeAssurance() {
   const [error, setError] = useState(null);
   const productsSectionRef = useRef(null);
 
+  // Track page duration
+  useEffect(() => {
+    const stopTracking = trackPageDuration('ula_page');
+    return () => stopTracking();
+  }, []);
+
   // Fetch data from API
   useEffect(() => {
     const loadProducts = async () => {
@@ -260,6 +267,11 @@ export default function UnitedLifeAssurance() {
           <Link
             href={`/products/${product.name.toLowerCase().replace(/\s+/g, '-')}`}
             className="w-full bg-[#3d834d] text-white py-3 px-4 rounded-full font-semibold hover:bg-[#2f6b3d] transition-colors text-center block group/btn"
+            onClick={() => trackEvent('ula_product_cta_clicked', {
+              product_name: product.name,
+              location: 'ula_products_grid',
+              product_page: 'ULA'
+            })}
           >
             <span className="flex items-center justify-center">
               Learn More
@@ -321,7 +333,14 @@ export default function UnitedLifeAssurance() {
               <div className="flex flex-col sm:flex-row gap-4">
                 
                 <button
-                  onClick={scrollToProducts}
+                  onClick={() => {
+                    trackEvent('ula_banner_cta_clicked', {
+                      cta_text: 'View Products',
+                      location: 'ula_hero_banner',
+                      product_page: 'ULA'
+                    });
+                    scrollToProducts();
+                  }}
                   className="border-2 border-white text-white px-8 py-4 rounded-full font-semibold hover:bg-white hover:text-[#3d834d] transition-colors text-lg text-center"
                 >
                   View Products
@@ -402,7 +421,14 @@ export default function UnitedLifeAssurance() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <button
-              onClick={scrollToProducts}
+              onClick={() => {
+                trackEvent('ula_request_callback_clicked', {
+                  product_name: 'United Life Assurance',
+                  location: 'ula_cta_section',
+                  button_text: 'Get Covered Today'
+                });
+                scrollToProducts();
+              }}
               className="bg-[#3d834d] text-white px-8 py-4 rounded-full font-semibold hover:bg-[#2f6b3d] transition-colors text-lg"
             >
               Get Covered Today
@@ -410,6 +436,11 @@ export default function UnitedLifeAssurance() {
             <Link
               href="/contact"
               className="border-2 border-[#3d834d] text-[#3d834d] px-8 py-4 rounded-full font-semibold hover:bg-[#3d834d] hover:text-white transition-colors text-lg"
+              onClick={() => trackEvent('ula_request_callback_clicked', {
+                product_name: 'United Life Assurance',
+                location: 'ula_cta_section',
+                button_text: 'Find a Branch'
+              })}
             >
               Find a Branch
             </Link>

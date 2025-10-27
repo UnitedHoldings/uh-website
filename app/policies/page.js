@@ -1,11 +1,18 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { trackEvent, trackPageDuration } from '@/lib/posthog';
 
 export default function PolicyPage() {
     const [activePolicy, setActivePolicy] = useState('consumer');
+
+    // Track page duration
+    useEffect(() => {
+        const stopTracking = trackPageDuration('our_policies');
+        return () => stopTracking();
+    }, []);
 
     return (
         <div className="min-h-screen font-outfit mx-auto">
@@ -43,7 +50,13 @@ export default function PolicyPage() {
                                 <label className="sr-only">Select Policy</label>
                                 <select
                                     value={activePolicy}
-                                    onChange={(e) => setActivePolicy(e.target.value)}
+                                    onChange={(e) => {
+                                        trackEvent('policy_chosen', {
+                                            policy_chosen: e.target.value,
+                                            location: 'our_policies_page'
+                                        });
+                                        setActivePolicy(e.target.value);
+                                    }}
                                     className="rounded-full px-4 py-2 min-w-[300px] bg-white border text-gray-800"
                                 >
                                     <option value="consumer">Consumer Protection Policy</option>
@@ -78,7 +91,13 @@ export default function PolicyPage() {
                         <div className="flex flex-col w-full justify-between py-6">
                             <nav className="flex flex-col gap-2">
                                 <button
-                                    onClick={() => setActivePolicy('consumer')}
+                                    onClick={() => {
+                                        trackEvent('policy_chosen', {
+                                            policy_chosen: 'consumer',
+                                            location: 'our_policies_page'
+                                        });
+                                        setActivePolicy('consumer');
+                                    }}
                                     className={`px-4 py-3 rounded-full transition text-left ${activePolicy === 'consumer' ? 'bg-[#9b1c20] text-white' : 'bg-gray-100 text-gray-700'}`}
                                 >
                                     Consumer Protection Policy

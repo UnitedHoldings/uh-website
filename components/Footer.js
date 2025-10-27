@@ -1,6 +1,8 @@
+"use client"
 import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { trackEvent } from '@/lib/posthog'
 import { 
     PiInstagramLogo,
     PiFacebookLogo,
@@ -198,6 +200,11 @@ function Footer() {
                                         rel="noopener noreferrer"
                                         className="p-2 bg-white/10 rounded-lg hover:bg-white/20 transition duration-150 ease-in-out"
                                         aria-label={social.name}
+                                        onClick={() => trackEvent('social_media_clicked', {
+                                            social_media_chosen: social.name,
+                                            location: 'footer',
+                                            page_section: 'footer'
+                                        })}
                                     >
                                         <SocialIcon className="w-5 h-5 text-white" />
                                     </a>
@@ -219,6 +226,12 @@ function Footer() {
                                         <Link
                                             href={item.path}
                                             className="flex items-center space-x-3 hover:text-[#F7941D] transition-colors duration-150 group"
+                                            onClick={() => trackEvent('footer_link_clicked', {
+                                                link_clicked: item.title,
+                                                link_category: 'Company',
+                                                destination_path: item.path,
+                                                page_section: 'footer'
+                                            })}
                                         >
                                             <ItemIcon className="w-4 h-4 text-gray-200 group-hover:text-[#F7941D] transition-colors" />
                                             <span>{item.title}</span>
@@ -242,6 +255,12 @@ function Footer() {
                                         <Link
                                             href={item.path}
                                             className="flex items-center space-x-3 hover:text-[#F7941D] transition-colors duration-150 group"
+                                            onClick={() => trackEvent('footer_link_clicked', {
+                                                link_clicked: item.title,
+                                                link_category: 'Products',
+                                                destination_path: item.path,
+                                                page_section: 'footer'
+                                            })}
                                         >
                                             <ItemIcon className="w-4 h-4 text-gray-200 group-hover:text-[#F7941D] transition-colors" />
                                             <span>{item.title}</span>
@@ -265,6 +284,12 @@ function Footer() {
                                         <Link
                                             href={item.path}
                                             className="flex items-center space-x-3 hover:text-[#F7941D] transition-colors duration-150 group"
+                                            onClick={() => trackEvent('footer_link_clicked', {
+                                                link_clicked: item.title,
+                                                link_category: 'Resources',
+                                                destination_path: item.path,
+                                                page_section: 'footer'
+                                            })}
                                         >
                                             <ItemIcon className="w-4 h-4 text-gray-200 group-hover:text-[#F7941D] transition-colors" />
                                             <span>{item.title}</span>

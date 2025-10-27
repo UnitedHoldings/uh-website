@@ -21,6 +21,7 @@ import {
 import { PiFunnel } from "react-icons/pi";
 import Image from 'next/image';
 import { fetchUnitedPayData } from '@/components/UP_ProductData';
+import { trackEvent, trackPageDuration } from '@/lib/posthog';
 
 // Icon mapping for product categories
 const categoryIcons = {
@@ -147,6 +148,12 @@ export default function UnitedPay() {
   const [error, setError] = useState(null);
   const productsSectionRef = useRef(null);
 
+  // Track page duration
+  useEffect(() => {
+    const stopTracking = trackPageDuration('up_page');
+    return () => stopTracking();
+  }, []);
+
   // Fetch data from API
   useEffect(() => {
     const loadProducts = async () => {
@@ -262,6 +269,12 @@ export default function UnitedPay() {
             target="_blank"
             rel="noopener noreferrer"
             className="w-full bg-[#f79620] text-white py-3 px-4 rounded-full font-semibold hover:bg-[#2f6b3d] transition-colors text-center block group/btn"
+            onClick={() => trackEvent('up_product_cta_clicked', {
+              product_name: product.name,
+              location: 'up_products_grid',
+              product_page: 'UP',
+              destination_url: 'https://uploans.united.co.sz/'
+            })}
           >
             <span className="flex items-center justify-center">
               Apply Now
@@ -322,13 +335,27 @@ export default function UnitedPay() {
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <button
-                  onClick={scrollToProducts}
+                  onClick={() => {
+                    trackEvent('up_banner_cta_clicked', {
+                      cta_text: 'Apply Now',
+                      location: 'up_hero_banner',
+                      product_page: 'UP'
+                    });
+                    scrollToProducts();
+                  }}
                   className="bg-white text-[#f79620] px-8 py-4 rounded-full font-semibold hover:bg-gray-100 transition-colors text-lg text-center"
                 >
                   Apply Now
                 </button>
                 <button
-                  onClick={scrollToProducts}
+                  onClick={() => {
+                    trackEvent('up_banner_cta_clicked', {
+                      cta_text: 'View Loan Products',
+                      location: 'up_hero_banner',
+                      product_page: 'UP'
+                    });
+                    scrollToProducts();
+                  }}
                   className="border-2 border-white text-white px-8 py-4 rounded-full font-semibold hover:bg-white hover:text-[#f79620] transition-colors text-lg text-center"
                 >
                   View Loan Products
@@ -409,7 +436,14 @@ export default function UnitedPay() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <button
-              onClick={scrollToProducts}
+              onClick={() => {
+                trackEvent('up_request_callback_clicked', {
+                  product_name: 'United Pay',
+                  location: 'up_cta_section',
+                  button_text: 'Apply Now'
+                });
+                scrollToProducts();
+              }}
               className="bg-[#f79620] text-white px-8 py-4 rounded-full font-semibold hover:bg-[#e0861c] transition-colors text-lg"
             >
               Apply Now
@@ -417,6 +451,11 @@ export default function UnitedPay() {
             <Link
               href="/contact"
               className="border-2 border-[#f79620] text-[#f79620] px-8 py-4 rounded-full font-semibold hover:bg-[#f79620] hover:text-white transition-colors text-lg"
+              onClick={() => trackEvent('up_request_callback_clicked', {
+                product_name: 'United Pay',
+                location: 'up_cta_section',
+                button_text: 'Find a Branch'
+              })}
             >
               Find a Branch
             </Link>

@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { FaShieldAlt, FaHandshake, FaGlobeAfrica, FaQuoteLeft, FaPlay, FaPause } from 'react-icons/fa';
 import { motion, AnimatePresence } from 'framer-motion';
+import { trackEvent } from '@/lib/posthog';
 
 // Constants
 const AUTO_PLAY_INTERVAL = 6000;
@@ -471,6 +472,10 @@ const EnhancedReviewsCarousel = ({ reviews, loading = false }) => {
           <div className="flex justify-center items-center space-x-6 mt-12">
             <button
               onClick={() => {
+                trackEvent('client_feedback_previous_clicked', {
+                  location: 'why_choose_us_section',
+                  current_review_index: currentReview
+                });
                 prevReview();
                 setIsAutoPlaying(false);
               }}
@@ -508,6 +513,10 @@ const EnhancedReviewsCarousel = ({ reviews, loading = false }) => {
 
             <button
               onClick={() => {
+                trackEvent('client_feedback_next_clicked', {
+                  location: 'why_choose_us_section',
+                  current_review_index: currentReview
+                });
                 nextReview();
                 setIsAutoPlaying(false);
               }}
@@ -533,6 +542,10 @@ const EnhancedReviewsCarousel = ({ reviews, loading = false }) => {
             onMouseEnter={() => setIsAutoPlaying(false)}
             onMouseLeave={() => setIsAutoPlaying(true)}
             className={`group relative inline-flex items-center px-8 py-4 text-[${colors.primary}] bg-white rounded-2xl font-bold text-lg transition-all duration-300 hover:scale-105 overflow-hidden`}
+            onClick={() => trackEvent('share_your_experience_clicked', {
+              location: 'why_choose_us_section',
+              page_section: 'client_feedback'
+            })}
           >
             <span className="relative z-10">Share Your Experience</span>
             <div className={`absolute inset-0 bg-gradient-to-r from-[${colors.accent}] to-[${colors.primary}] opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />

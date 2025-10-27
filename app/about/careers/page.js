@@ -13,6 +13,7 @@ import {
   IoFilterOutline,
   IoChevronDownOutline
 } from "react-icons/io5";
+import { trackPageDuration } from '@/lib/posthog';
 // Head removed: Google Analytics moved to global layout
 
 // Mock data for job vacancies
@@ -254,6 +255,12 @@ export default function CareersPage() {
     category: 'All',
     type: 'All'
   });
+
+  // Track page duration
+  useEffect(() => {
+    const stopTracking = trackPageDuration('about_careers');
+    return () => stopTracking();
+  }, []);
 
   // Filter jobs based on search and filters
   useEffect(() => {
