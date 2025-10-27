@@ -4,6 +4,7 @@ import Link from 'next/link';
 import React, { useState } from 'react';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
+import { trackEvent } from '@/lib/posthog';
 import {
     BsArrowRight,
     BsShieldCheck,
@@ -134,7 +135,16 @@ const productData = [
 ];
 
 const ProductCard = ({ title, desc, img, company, icon, stats, link, color, bgColor }) => (
-<Link href={link} className="block group h-full px-2">
+<Link
+    href={link}
+    className="block group h-full px-2"
+    onClick={() => trackEvent('featured_product_learn_more_clicked', {
+        product_clicked: title,
+        product_company: company,
+        destination_link: link,
+        location: 'featured_products_section'
+    })}
+>
     <div
         className="   hover:-2xl rounded-2xl relative flex flex-col h-full cursor-pointer transition-all duration-500 overflow-hidden"
         style={{ backgroundColor: bgColor }}

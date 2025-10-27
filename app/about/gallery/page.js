@@ -1,10 +1,10 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { 
-  IoImagesOutline, 
-  IoBusinessOutline, 
-  IoPeopleOutline, 
+import {
+  IoImagesOutline,
+  IoBusinessOutline,
+  IoPeopleOutline,
   IoCalendarOutline,
   IoLocationOutline,
   IoHeartOutline,
@@ -15,6 +15,7 @@ import {
   IoDownloadOutline,
   IoExpandOutline
 } from "react-icons/io5";
+import { trackPageDuration } from '@/lib/posthog';
 
 // Gallery data with categories
 const galleryData = [
@@ -292,6 +293,12 @@ export default function GalleryPage() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [favorites, setFavorites] = useState([]);
+
+  // Track page duration
+  useEffect(() => {
+    const stopTracking = trackPageDuration('about_gallery');
+    return () => stopTracking();
+  }, []);
 
   // Filter albums based on selected category and company
   const filteredAlbums = galleryData.filter(album => {

@@ -1,6 +1,7 @@
 'use client'
 import React, { useState } from 'react'
 import Link from 'next/link';
+import { trackEvent } from '@/lib/posthog';
 
 // All available products across departments
 const ALL_PRODUCTS = [
@@ -276,7 +277,14 @@ const CallBackForm = ({ onClose }) => {
               name="agreeTerms"
               type="checkbox"
               checked={formData.agreeTerms}
-              onChange={handleInputChange}
+              onChange={(e) => {
+                trackEvent('agree_terms_checkbox_clicked', {
+                  checked: e.target.checked,
+                  location: 'callback_form',
+                  form_type: activeTab
+                });
+                handleInputChange(e);
+              }}
               className="mt-1 mr-3"
               required
             />
@@ -292,7 +300,14 @@ const CallBackForm = ({ onClose }) => {
               name="agreeData"
               type="checkbox"
               checked={formData.agreeData}
-              onChange={handleInputChange}
+              onChange={(e) => {
+                trackEvent('agree_data_processing_checkbox_clicked', {
+                  checked: e.target.checked,
+                  location: 'callback_form',
+                  form_type: activeTab
+                });
+                handleInputChange(e);
+              }}
               className="mt-1 mr-3"
               required
             />
@@ -316,6 +331,15 @@ const CallBackForm = ({ onClose }) => {
           className="w-full py-4 px-6 mt-4 text-lg font-semibold rounded-full hover:opacity-90 transition-opacity duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 font-outfit text-white disabled:opacity-50"
           style={{
             backgroundColor: '#9b1c20',
+          }}
+          onClick={() => {
+            if (!formState.loading) {
+              trackEvent('request_callback_form_submitted', {
+                form_type: activeTab,
+                product_interest: formData.product,
+                location: 'callback_form'
+              });
+            }
           }}
         >
           {formState.loading ? 'Submitting...' : 'Request Call Back'}

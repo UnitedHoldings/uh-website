@@ -2,6 +2,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useState, useMemo } from 'react';
+import { trackEvent } from '@/lib/posthog';
 import {
     PiInstagramLogo,
     PiFacebookLogo,
@@ -357,13 +358,19 @@ export default function Header() {
                 <div className="p-6 h-full flex flex-col">
                     {/* Header */}
                     <div className="flex justify-between items-center mb-8">
-                        <Link href="/" onClick={closeDrawer}>
-                            <Image 
-                                src="/logo.svg" 
-                                alt="United Holdings Logo" 
-                                width={180} 
-                                height={80} 
-                                priority 
+                        <Link href="/" onClick={() => {
+                            trackEvent('uh_logo_clicked', {
+                                location: 'mobile_drawer',
+                                page_section: 'header'
+                            });
+                            closeDrawer();
+                        }}>
+                            <Image
+                                src="/logo.svg"
+                                alt="United Holdings Logo"
+                                width={180}
+                                height={80}
+                                priority
                                 className="hover:opacity-90 transition-opacity"
                             />
                         </Link>
@@ -450,7 +457,10 @@ export default function Header() {
                     <div className="flex items-stretch min-h-[120px]">
                         {/* Logo - Spans full height of both header sections */}
                         <div className="flex items-center justify-center py-4 border-r border-gray-200 pr-8">
-                            <Link href="/" className="flex items-center h-full">
+                            <Link href="/" className="flex items-center h-full" onClick={() => trackEvent('uh_logo_clicked', {
+                                location: 'desktop_header',
+                                page_section: 'header'
+                            })}>
                                 <Image
                                     src="/logo.svg"
                                     alt="United Holdings Logo"
@@ -474,15 +484,33 @@ export default function Header() {
                                         <span className="font-semibold">Address</span>
                                     </div>
                                     <div className="flex items-center space-x-4">
-                                        <a href="tel:8001010" className="hover:underline transition duration-150 ease-in-out font-medium">
+                                        <a href="tel:8001010" className="hover:underline transition duration-150 ease-in-out font-medium"
+                                           onClick={() => trackEvent('contact_info_clicked', {
+                                               contact_info_chosen: 'Toll Free: 800 1010',
+                                               location: 'top_nav',
+                                               contact_type: 'phone'
+                                           })}
+                                        >
                                            Toll Free: 800 1010
                                         </a>
                                         <span className="text-gray-300">|</span>
-                                        <a href="tel:+26825086000" className="hover:underline transition duration-150 ease-in-out font-medium">
+                                        <a href="tel:+26825086000" className="hover:underline transition duration-150 ease-in-out font-medium"
+                                           onClick={() => trackEvent('contact_info_clicked', {
+                                               contact_info_chosen: '(+268) 2508 6000',
+                                               location: 'top_nav',
+                                               contact_type: 'phone'
+                                           })}
+                                        >
                                             (+268) 2508 6000
                                         </a>
                                         <span className="text-gray-300">|</span>
-                                        <a href="mailto:info@united.co.sz" className="hover:underline transition duration-150 ease-in-out font-medium">
+                                        <a href="mailto:info@united.co.sz" className="hover:underline transition duration-150 ease-in-out font-medium"
+                                           onClick={() => trackEvent('contact_info_clicked', {
+                                               contact_info_chosen: 'info@united.co.sz',
+                                               location: 'top_nav',
+                                               contact_type: 'email'
+                                           })}
+                                        >
                                             info@united.co.sz
                                         </a>
                                     </div>
@@ -500,6 +528,11 @@ export default function Header() {
                                                 rel="noopener noreferrer"
                                                 className="text-[#9b1c20] hover:text-[#7a1619] transition duration-150 ease-in-out"
                                                 aria-label={social.name}
+                                                onClick={() => trackEvent('social_media_clicked', {
+                                                    social_media_chosen: social.name,
+                                                    location: 'top_nav',
+                                                    page_section: 'header'
+                                                })}
                                             >
                                                 <SocialIcon className="w-5 h-5" />
                                             </a>
@@ -548,10 +581,22 @@ export default function Header() {
                         <div className="flex items-center justify-between py-2">
                             {/* Contact Info */}
                             <div className="flex items-center space-x-4 text-xs">
-                                <a href="tel:8001010" className="hover:underline transition duration-150 ease-in-out font-medium">
+                                <a href="tel:8001010" className="hover:underline transition duration-150 ease-in-out font-medium"
+                                   onClick={() => trackEvent('contact_info_clicked', {
+                                       contact_info_chosen: '800 1010',
+                                       location: 'mobile_quick_nav',
+                                       contact_type: 'phone'
+                                   })}
+                                >
                                    800 1010
                                 </a>
-                                <a href="tel:+26825086000" className="hover:underline transition duration-150 ease-in-out font-medium">
+                                <a href="tel:+26825086000" className="hover:underline transition duration-150 ease-in-out font-medium"
+                                   onClick={() => trackEvent('contact_info_clicked', {
+                                       contact_info_chosen: '(+268) 2508 6000',
+                                       location: 'mobile_quick_nav',
+                                       contact_type: 'phone'
+                                   })}
+                                >
                                     (+268) 2508 6000
                                 </a>
                             </div>
@@ -564,7 +609,10 @@ export default function Header() {
                     <div className="max-w-[1800px] mx-auto px-4 sm:px-6">
                         <div className="flex items-center justify-between py-3">
                             {/* Logo */}
-                            <Link href="/" className="flex-shrink-0">
+                            <Link href="/" className="flex-shrink-0" onClick={() => trackEvent('uh_logo_clicked', {
+                                location: 'mobile_header',
+                                page_section: 'header'
+                            })}>
                                 <Image
                                     src="/logo.svg"
                                     alt="United Holdings Logo"

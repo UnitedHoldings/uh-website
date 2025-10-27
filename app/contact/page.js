@@ -3,6 +3,7 @@
 import React, { useState, useMemo, Suspense, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
+import { trackEvent, trackPageDuration } from '@/lib/posthog';
 // Head removed: Google Analytics moved to global layout
 
 // Browser-safe function to open Google Maps
@@ -106,6 +107,12 @@ export default function Contact() {
   const [completeBranches, setCompleteBranches] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  // Track page duration
+  useEffect(() => {
+    const stopTracking = trackPageDuration('contact_us');
+    return () => stopTracking();
+  }, []);
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
@@ -393,7 +400,14 @@ export default function Contact() {
                       <p className="text-lg text-gray-100 mb-2">{branch.phone}</p>
                       <p className="text-md text-gray-300 mb-4">{branch.hours}</p>
                       <button
-                        onClick={() => openGoogleMaps(branch.coords, branch.name)}
+                        onClick={() => {
+                          trackEvent('branch_get_direction_clicked', {
+                            branch_name: branch.name,
+                            branch_region: branch.region,
+                            location: 'contact_us_map_view'
+                          });
+                          openGoogleMaps(branch.coords, branch.name);
+                        }}
                         className="text-gray-300 font-semibold underline hover:text-white transition-colors"
                       >
                         Get Directions

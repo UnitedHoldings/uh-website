@@ -27,6 +27,7 @@ import {
 import { fetchUnitedGeneralInsuranceData } from '@/components/UGI_ProductsData';
 import { PiFunnel } from "react-icons/pi";
 import Image from 'next/image';
+import { trackEvent, trackPageDuration } from '@/lib/posthog';
 
 // Icon mapping for product categories
 const categoryIcons = {
@@ -175,6 +176,12 @@ export default function UnitedGeneralInsurance() {
     const [error, setError] = useState(null);
     const productsSectionRef = useRef(null);
 
+    // Track page duration
+    useEffect(() => {
+        const stopTracking = trackPageDuration('ugi_page');
+        return () => stopTracking();
+    }, []);
+
     // Fetch data from API
     useEffect(() => {
         const loadProducts = async () => {
@@ -288,6 +295,11 @@ export default function UnitedGeneralInsurance() {
                     <Link
                         href={`/products/${product.name.toLowerCase().replace(/\s+/g, '-')}`}
                         className="w-full bg-[#286278] text-white py-3 px-4 rounded-full font-semibold hover:bg-[#24576b] transition-colors text-center block group/btn"
+                        onClick={() => trackEvent('ugi_product_cta_clicked', {
+                            product_name: product.name,
+                            location: 'ugi_products_grid',
+                            product_page: 'UGI'
+                        })}
                     >
                         <span className="flex items-center justify-center">
                             Learn More
@@ -349,7 +361,14 @@ export default function UnitedGeneralInsurance() {
                             <div className="flex flex-col sm:flex-row gap-4">
                                
                                 <button
-                                    onClick={scrollToProducts}
+                                    onClick={() => {
+                                        trackEvent('ugi_banner_cta_clicked', {
+                                            cta_text: 'View Products',
+                                            location: 'ugi_hero_banner',
+                                            product_page: 'UGI'
+                                        });
+                                        scrollToProducts();
+                                    }}
                                     className="border-2 border-white text-white px-8 py-4 rounded-full font-semibold hover:bg-white hover:text-[#286278] transition-colors text-lg text-center"
                                 >
                                     View Products
@@ -440,7 +459,14 @@ export default function UnitedGeneralInsurance() {
                     </p>
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
                         <button
-                            onClick={scrollToProducts}
+                            onClick={() => {
+                                trackEvent('ugi_request_callback_clicked', {
+                                    product_name: 'United General Insurance',
+                                    location: 'ugi_cta_section',
+                                    button_text: 'Get Free Quote'
+                                });
+                                scrollToProducts();
+                            }}
                             className="bg-[#286278] text-white px-8 py-4 rounded-full font-semibold hover:bg-[#24576b] transition-colors text-lg"
                         >
                             Get Free Quote
@@ -448,6 +474,11 @@ export default function UnitedGeneralInsurance() {
                         <Link
                             href="/contact"
                             className="border-2 border-[#286278] text-[#286278] px-8 py-4 rounded-full font-semibold hover:bg-[#286278] hover:text-white transition-colors text-lg"
+                            onClick={() => trackEvent('ugi_request_callback_clicked', {
+                                product_name: 'United General Insurance',
+                                location: 'ugi_cta_section',
+                                button_text: 'Find a Branch'
+                            })}
                         >
                             Find a Branch
                         </Link>

@@ -2,6 +2,7 @@
 import React from 'react'
 import VideoPlayer from './VideoPlayer';
 import CallBackForm from './CallBackForm';
+import { trackEvent } from '@/lib/posthog';
 
 const DEPARTMENT_COLORS = {
   'Life Assurance': '#3d834d',
@@ -256,13 +257,28 @@ const Hero = ({ currentSlide = 0, setCurrentSlide }) => {
                           color: '#ffffff',
                         }}
                         aria-label={slide.button}
-                        onClick={() => window.open(slide.url, '_blank')}
+                        onClick={() => {
+                          trackEvent('hero_cta_clicked', {
+                            cta_text: slide.button,
+                            destination_url: slide.url,
+                            slide_department: currentDepartment,
+                            location: 'desktop_hero'
+                          });
+                          window.open(slide.url, '_blank');
+                        }}
                       >
                         {slide.button}
                       </button>
 
                       <button
-                        onClick={toggleCallBackForm}
+                        onClick={() => {
+                          trackEvent('request_callback_clicked', {
+                            location: 'desktop_hero',
+                            slide_department: currentDepartment,
+                            button_number: 1
+                          });
+                          toggleCallBackForm();
+                        }}
                         className='px-8 py-4 text-lg font-semibold rounded-full border-2 hover:bg-white/25 hover:bg-opacity-10 transition-colors duration-200 focus:outline-none font-outfit text-white'
                         style={{
                           borderColor: 'white',
@@ -293,13 +309,28 @@ const Hero = ({ currentSlide = 0, setCurrentSlide }) => {
                       className='bg-white py-2 px-4 rounded-full font-semibold hover:bg-gray-100 transition-colors duration-200'
                       style={{ color: color }}
                       aria-label={slide.button}
-                      onClick={() => window.open(slide.url, '_blank')}
+                      onClick={() => {
+                        trackEvent('hero_cta_clicked', {
+                          cta_text: slide.button,
+                          destination_url: slide.url,
+                          slide_department: currentDepartment,
+                          location: 'mobile_hero'
+                        });
+                        window.open(slide.url, '_blank');
+                      }}
                     >
                       {slide.button}
                     </button>
 
                     <button
-                      onClick={toggleCallBackForm}
+                      onClick={() => {
+                        trackEvent('request_callback_clicked', {
+                          location: 'mobile_hero',
+                          slide_department: currentDepartment,
+                          button_number: 1
+                        });
+                        toggleCallBackForm();
+                      }}
                       className='border-2 border-white py-2 px-4 rounded-full font-semibold hover:bg-white hover:bg-opacity-10 transition-colors duration-200 text-white'
                     >
                       Call Back

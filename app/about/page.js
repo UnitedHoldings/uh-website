@@ -1,10 +1,19 @@
+'use client'
 import Agent from '@/components/Agent';
 import Products from '@/components/Products';
 import SeoHead from '@/components/SEOhead';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useEffect } from 'react';
+import { trackEvent, trackPageDuration } from '@/lib/posthog';
 
 export default function About() {
+    // Track page duration
+    useEffect(() => {
+        const stopTracking = trackPageDuration('about_our_journey');
+        return () => stopTracking();
+    }, []);
+
     return (
         <>
 
@@ -137,7 +146,15 @@ export default function About() {
                                     <p className="text-gray-600 text-lg leading-relaxed">
                                         Offering long‑term insurance solutions such as funeral plans, credit life, and group life cover. These products provide families with dignity, security, and peace of mind during life&apos;s most challenging moments.
                                     </p>
-                                    <Link href="/united-life-assurance" className="inline-block mt-4 text-[#3d834d] font-semibold hover:underline">
+                                    <Link
+                                        href="/united-life-assurance"
+                                        className="inline-block mt-4 text-[#3d834d] font-semibold hover:underline"
+                                        onClick={() => trackEvent('group_of_companies_clicked', {
+                                            company_name: 'United Life Assurance',
+                                            location: 'about_page',
+                                            page_section: 'group_of_companies'
+                                        })}
+                                    >
                                         Learn more →
                                     </Link>
                                 </div>
@@ -162,7 +179,15 @@ export default function About() {
                                     <p className="text-gray-600 text-lg leading-relaxed">
                                         Providing short-term insurance for motor, home, legal, and business protection. We safeguard the assets and livelihoods of our clients, ensuring they can recover quickly from unexpected events.
                                     </p>
-                                    <Link href="/united-general-insurance" className="inline-block mt-4 text-[#9b1c20] font-semibold hover:underline">
+                                    <Link
+                                        href="/united-general-insurance"
+                                        className="inline-block mt-4 text-[#9b1c20] font-semibold hover:underline"
+                                        onClick={() => trackEvent('group_of_companies_clicked', {
+                                            company_name: 'United General Insurance',
+                                            location: 'about_page',
+                                            page_section: 'group_of_companies'
+                                        })}
+                                    >
                                         Learn more →
                                     </Link>
                                 </div>
@@ -186,7 +211,15 @@ export default function About() {
                                     <p className="text-gray-600 text-lg leading-relaxed">
                                         Delivering fast, reliable cash loans with flexible repayment options. This service empowers individuals and small businesses to access credit when they need it most.
                                     </p>
-                                    <Link href="/united-pay" className="inline-block mt-4 text-[#f79620] font-semibold hover:underline">
+                                    <Link
+                                        href="/united-pay"
+                                        className="inline-block mt-4 text-[#f79620] font-semibold hover:underline"
+                                        onClick={() => trackEvent('group_of_companies_clicked', {
+                                            company_name: 'United Pay',
+                                            location: 'about_page',
+                                            page_section: 'group_of_companies'
+                                        })}
+                                    >
                                         Learn more →
                                     </Link>
                                 </div>
@@ -214,7 +247,14 @@ export default function About() {
                         </p>
                         <div className="flex flex-col sm:flex-row gap-4 justify-center">
 
-                            <Link href="/contact" className="border-2 border-white text-white px-6 py-3 rounded-full font-semibold hover:bg-white hover:text-[#9b1c20] transition-colors">
+                            <Link
+                                href="/contact"
+                                className="border-2 border-white text-white px-6 py-3 rounded-full font-semibold hover:bg-white hover:text-[#9b1c20] transition-colors"
+                                onClick={() => trackEvent('contact_us_clicked', {
+                                    location: 'about_page',
+                                    page_section: 'cta_footer'
+                                })}
+                            >
                                 Contact Us
                             </Link>
                         </div>
