@@ -551,18 +551,19 @@ const WhyChooseUs = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Fetch reviews from external API
+  // Fetch reviews from local proxy API
   useEffect(() => {
     const fetchReviews = async () => {
       try {
-        const response = await fetch('https://uh-server.onrender.com/api/home');
+        // Use local proxy to avoid CORS/beta access issues
+        const response = await fetch('/api/home');
         
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
-        
+
         const data = await response.json();
-        
+
         if (data.success && data.data && data.data.reviews) {
           setReviews(data.data.reviews);
           setReasonsData(data.data.reasons);

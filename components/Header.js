@@ -343,7 +343,7 @@ export default function Header() {
     };
 
     return (
-        <div className="w-full sticky top-0 z-50 bg-white ">
+        <div className="w-full sticky top-0 z-40 bg-white ">
             {/* Mobile Drawer Overlay */}
             {isDrawerOpen && (
                 <div
@@ -464,6 +464,8 @@ export default function Header() {
                                     </a>
                                 );
                             })}
+                            {/* Experience Center: opens the email/beta gate modal */}
+                          
                         </div>
 
                         {/* Contact Info */}
@@ -493,13 +495,13 @@ export default function Header() {
             {/* Main Navigation */}
             <div className="bg-white border-b-4 border-[#9b1c20]">
                 <div className="max-w-[1800px] mx-auto px-4 sm:px-6">
-                    <div className="flex items-center justify-between py-4">
+                    <div className="flex items-center justify-between py-1">
                         {/* Logo */}
                         <Link href="/" className="flex-shrink-0">
                             <Image
                                 src="/logo.svg"
                                 alt="United Holdings Logo"
-                                width={150}
+                                width={180}
                                 height={100}
                                 priority
                                 className="hover:opacity-90 transition-opacity"

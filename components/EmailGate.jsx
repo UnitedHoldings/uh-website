@@ -1,97 +1,148 @@
 "use client"
-export default function EmailGate() {
-  // Corrupted original component replaced with a harmless stub to avoid parse errors.
-  return null
+import React, { useEffect, useState } from 'react'
+
+const STORAGE_KEY = 'emailGateAccepted_v1'
+const SERVER_URL = '/api/feedback'
+
+// Beta tester whitelist - in production, move this to environment variables or server
+const BETA_TESTERS = {
+  'rego@ummo.xyz': 'fags$3sadty',
+  'dev@ummo.xyz': 'usdf87379'
 }
 
-              <div className="flex items-center gap-3">
-                <label className="flex items-center gap-2">
-                  <span className="text-sm">Rating</span>
-                  <select value={rating} onChange={(e) => setRating(e.target.value)} className="ml-2 px-2 py-1 border rounded">
-                    <option value="5">5</option>
-                    <option value="4">4</option>
-                    <option value="3">3</option>
-                    <option value="2">2</option>
-                    <option value="1">1</option>
-                  </select>
-                </label>
-              </div>
+export default function EmailGate({ hours = 1 }) {
+  const [visible, setVisible] = useState(false)
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [loading, setLoading] = useState(false)
+  const [status, setStatus] = useState(null)
+  const [isAuth, setIsAuth] = useState(false)
 
-              {status?.error && <div className="text-red-600 text-sm">{status.error}</div>}
-              {status?.ok && <div className="text-green-700 text-sm">{status.ok}</div>}
-
-              <div className="flex gap-2">
-                <button type="submit" disabled={loading} className="bg-[#9b1c20] text-white px-4 py-2 rounded flex-1">{loading ? 'Submitting...' : 'Submit'}</button>
-                <button type="button" onClick={handleSkip} className="border px-4 py-2 rounded">Sign in</button>
-              </div>
-
-              <p className="text-xs text-gray-500">We will use your email only to reply to your feedback. No email or PII is stored in the browser.</p>
-            </form>
-          </div>
-        )
-      }
-              </label>
-
-              <label className="block">
-                <span className="text-sm font-medium">Email (required)</span>
-                <input required type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="mt-1 w-full px-3 py-2 border rounded" placeholder="you@company.com" />
-              </label>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-              <label className="block">
-                <span className="text-sm font-medium">Product (optional)</span>
-                <input type="text" value={product} onChange={(e) => setProduct(e.target.value)} className="mt-1 w-full px-3 py-2 border rounded" placeholder="e.g. Motor Insurance" />
-              </label>
-
-              <label className="block">
-                <span className="text-sm font-medium">Category</span>
-                <select value={category} onChange={(e) => setCategory(e.target.value)} className="mt-1 w-full px-3 py-2 border rounded">
-                  <option>Feedback</option>
-                  <option>Bug</option>
-                  <option>Claim</option>
-                  <option>Request a Quote</option>
-                  <option>Other</option>
-                </select>
-              </label>
-            </div>
-
-            <label className="block">
-              <span className="text-sm font-medium">Message / details</span>
-              <textarea value={message} onChange={(e) => setMessage(e.target.value)} rows={4} className="mt-1 w-full px-3 py-2 border rounded" placeholder="Tell us more (optional)" />
-            </label>
-
-            <div className="flex items-center gap-3">
-              <label className="flex items-center gap-2">
-                <input type="checkbox" required className="h-4 w-4" />
-                <span className="text-sm">I consent to be contacted regarding this feedback. I understand personal information will not be stored in local storage.</span>
-              </label>
-            </div>
-
-            <div className="flex items-center gap-3">
-              <label className="flex items-center gap-2">
-                <span className="text-sm">Rating</span>
-                <select value={rating} onChange={(e) => setRating(e.target.value)} className="ml-2 px-2 py-1 border rounded">
-                  <option value="5">5</option>
-                  <option value="4">4</option>
-                  <option value="3">3</option>
-                  <option value="2">2</option>
-                  <option value="1">1</option>
-                </select>
-              </label>
-            </div>
-
-            {status?.error && <div className="text-red-600 text-sm">{status.error}</div>}
-            {status?.ok && <div className="text-green-700 text-sm">{status.ok}</div>}
-
-            <div className="flex gap-2">
-              <button type="submit" disabled={loading} className="bg-[#9b1c20] text-white px-4 py-2 rounded flex-1">{loading ? 'Submitting...' : 'Submit'}</button>
-              <button type="button" onClick={handleSkip} className="border px-4 py-2 rounded">Sign in</button>
-            </div>
-
-            <p className="text-xs text-gray-500">We will use your email only to reply to your feedback. No email or PII is stored in the browser.</p>
-          </form>
-        </div>
-      )
+  useEffect(() => {
+    // Check beta access cookie/token
+    try {
+      const cookieAuth = typeof document !== 'undefined' && document.cookie && document.cookie.includes('uh_beta=')
+      const localAuth = typeof window !== 'undefined' && localStorage.getItem('uh_beta')
+      setIsAuth(Boolean(cookieAuth || localAuth))
+    } catch (e) {
+      setIsAuth(false)
     }
-          </div>
+
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY)
+      if (!raw) {
+        setVisible(true)
+        return
+      }
+      const obj = JSON.parse(raw)
+      if (!obj || !obj.ts) {
+        setVisible(true)
+        return
+      }
+      const expires = obj.ts + (obj.hours || hours) * 60 * 60 * 1000
+      if (Date.now() > expires) setVisible(true)
+    } catch (err) {
+      setVisible(true)
+    }
+  }, [hours])
+
+  const validEmail = (e) => BETA_TESTERS.hasOwnProperty(e.toLowerCase())
+  const validPassword = (e, p) => BETA_TESTERS[e.toLowerCase()] === p
+
+  const handleSubmit = async (ev) => {
+    ev.preventDefault()
+    setStatus(null)
+
+    // Validate email is in beta list
+    if (!validEmail(email)) {
+      setStatus({ error: 'This email is not authorized for beta access.' })
+      return
+    }
+
+    // Validate password matches
+    if (!validPassword(email, password)) {
+      setStatus({ error: 'Invalid password for beta access.' })
+      return
+    }
+
+    setLoading(true)
+    try {
+      const payload = {
+        email: email.trim(),
+        type: 'beta-access',
+        source: 'beta-gate'
+      }
+
+      const res = await fetch(SERVER_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify(payload)
+      })
+
+      if (!res.ok) {
+        const text = await res.text()
+        throw new Error(text || res.statusText)
+      }
+
+      // success: persist and close
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({ ts: Date.now(), hours }))
+      // Set beta access flag
+      localStorage.setItem('uh_beta', '1')
+      setVisible(false)
+      setStatus({ ok: 'Beta access granted. Welcome!' })
+    } catch (err) {
+      console.error('Beta gate error:', err)
+      setStatus({ error: 'Failed to verify beta access. Please try again.' })
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  if (!visible) return null
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+      <form onSubmit={handleSubmit} className="w-full max-w-lg bg-white rounded-lg p-6 space-y-4 shadow-lg">
+        <h3 className="text-lg font-semibold">Beta Access Required</h3>
+        <p className="text-sm text-gray-600">Please enter your beta tester credentials to continue.</p>
+
+        <label className="block">
+          <span className="text-sm font-medium">Email</span>
+          <input
+            required
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="mt-1 w-full px-3 py-2 border rounded"
+            placeholder="beta@company.com"
+          />
+        </label>
+
+        <label className="block">
+          <span className="text-sm font-medium">Beta Access Password</span>
+          <input
+            required
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="mt-1 w-full px-3 py-2 border rounded"
+            placeholder="••••••••"
+          />
+        </label>
+
+        {status?.error && <div className="text-red-600 text-sm">{status.error}</div>}
+        {status?.ok && <div className="text-green-700 text-sm">{status.ok}</div>}
+
+        <div className="flex gap-2">
+          <button type="submit" disabled={loading} className="bg-[#9b1c20] text-white px-4 py-2 rounded flex-1">
+            {loading ? 'Verifying...' : 'Access Beta'}
+          </button>
+        </div>
+
+        <p className="text-xs text-gray-500">
+          Beta access is invitation-only. Contact your administrator if you need access.
+        </p>
+      </form>
+    </div>
+  )
+}

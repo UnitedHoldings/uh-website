@@ -30,7 +30,7 @@ const HeroSkeleton = () => {
         </div>
 
         {/* Desktop Skeleton Content */}
-        <div className="hidden lg:block absolute inset-0 z-40">
+        <div className="hidden lg:block absolute inset-0 z-30">
           <div className="max-w-[1200px] xxl:max-w-[1400px] mx-auto flex items-center h-full w-full px-8">
             <div className='h-full space-y-6 max-w-3xl flex flex-col items-start justify-center'>
               {/* Title Skeleton */}
@@ -110,7 +110,7 @@ const Hero = ({ currentSlide = 0, setCurrentSlide }) => {
         setLoading(true);
         setError(null);
         
-        const response = await fetch('https://uh-server.onrender.com/api/home');
+        const response = await fetch('/api/home');
         
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
@@ -235,7 +235,7 @@ const Hero = ({ currentSlide = 0, setCurrentSlide }) => {
               </div>
 
               {/* Desktop/Large overlay */}
-              <div className="hidden lg:block z-40 absolute top-[20%] w-full mx-auto right-[5%] h-full">
+              <div className="hidden lg:block z-30 absolute top-[20%] w-full mx-auto right-[5%] h-full">
                 <div className="max-w-[1200px] xxl:max-w-[1400px] mx-auto flex items-center h-full w-full px-8">
                   <div className='h-full space-y-6 max-w-3xl flex flex-col items-start'>
                     <h1 className="text-7xl font-bold font-outfit text--2xs">

@@ -8,7 +8,6 @@ import StartQuote from '@/components/Startqoute';
 import WhyChooseUs from '@/components/WhyChooseUs';
 import Head from 'next/head';
 import { useEffect, useRef, useState, useMemo } from 'react';
-import EmailGateClean from '@/components/EmailGateClean';
 
 
 
@@ -179,9 +178,6 @@ export default function Home() {
       />
 
       <div className='flex flex-col pb-16 lg:space-y-16'>
-
-  {/* Email-gated experience (shows modal on first visit) */}
-  <EmailGateClean />
 
 
         <div className='relative lg:px-2  mb-4 lg:mb-8 flex flex-col items-center'>
