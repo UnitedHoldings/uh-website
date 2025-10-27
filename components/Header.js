@@ -132,13 +132,31 @@ export default function Header() {
             icon: PiUsersThree,
             description: "Meet our dedicated team"
         },
+        { 
+            name: "Careers", 
+            link: "/about/careers", 
+            icon: PiBriefcaseMetal,
+            description: "Join our growing team"
+        },
         
+        
+        { 
+            name: "Gallery", 
+            link: "/about/gallery", 
+            icon: PiImages,
+            description: "Photos from our events"
+        },
        
     ], []);
 
     // Resources dropdown data
     const resourcesDropdown = useMemo(() => [
-        
+        { 
+            name: "Documents", 
+            link: "/documents", 
+            icon: PiFolderOpen,
+            description: "Important forms and documents"
+        },
         { 
             name: "Policies", 
             link: "/policies", 
@@ -432,139 +450,188 @@ export default function Header() {
                 </div>
             </div>
 
-            {/* Quick Nav CTA Bar - Updated with burgundy text */}
-            <div className="bg-white text-[#9b1c20] border-b border-gray-200">
+            {/* Desktop Header - Merged Layout */}
+            <div className="hidden lg:block border-b-4 border-[#9b1c20]">
                 <div className="max-w-[1800px] mx-auto px-4 sm:px-6">
-                    <div className="hidden lg:flex items-center justify-between py-2">
-                        {/* Contact Info - Now on left */}
-                        <div className="flex items-center space-x-6 text-sm">
-                            <div className="flex items-center space-x-2">
-                                <PiMapPin className="w-4 h-4" />
-                                <span className="font-semibold">Address</span>
-                            </div>
-                            <div className="flex items-center space-x-4">
-                                <a
-                                    href="tel:8001010"
-                                    className="hover:underline transition duration-150 ease-in-out font-medium"
-                                    onClick={() => trackEvent('contact_info_clicked', {
-                                        contact_info_chosen: 'Toll Free: 800 1010',
-                                        location: 'top_nav',
-                                        contact_type: 'phone'
-                                    })}
-                                >
-                                   Toll Free: 800 1010
-                                </a>
-                                <span className="text-gray-300">|</span>
-                                <a
-                                    href="tel:+26825086000"
-                                    className="hover:underline transition duration-150 ease-in-out font-medium"
-                                    onClick={() => trackEvent('contact_info_clicked', {
-                                        contact_info_chosen: '(+268) 2508 6000',
-                                        location: 'top_nav',
-                                        contact_type: 'phone'
-                                    })}
-                                >
-                                    (+268) 2508 6000
-                                </a>
-                                <span className="text-gray-300">|</span>
-                                <a
-                                    href="mailto:info@united.co.sz"
-                                    className="hover:underline transition duration-150 ease-in-out font-medium"
-                                    onClick={() => trackEvent('contact_info_clicked', {
-                                        contact_info_chosen: 'info@united.co.sz',
-                                        location: 'top_nav',
-                                        contact_type: 'email'
-                                    })}
-                                >
-                                    info@united.co.sz
-                                </a>
-                            </div>
+                    {/* Single row containing logo spanning full height and right content */}
+                    <div className="flex items-stretch min-h-[120px]">
+                        {/* Logo - Spans full height of both header sections */}
+                        <div className="flex items-center justify-center py-4 border-r border-gray-200 pr-8">
+                            <Link href="/" className="flex items-center h-full" onClick={() => trackEvent('uh_logo_clicked', {
+                                location: 'desktop_header',
+                                page_section: 'header'
+                            })}>
+                                <Image
+                                    src="/logo.svg"
+                                    alt="United Holdings Logo"
+                                    width={280}
+                                    height={100}
+                                    priority
+                                    className="hover:opacity-90 transition-opacity object-contain"
+                                    style={{ height: '80px', width: 'auto' }}
+                                />
+                            </Link>
                         </div>
 
-                        {/* Social Media Icons - Moved to top right */}
-                        <div className="flex items-center space-x-4">
-                            {socialLinks.map((social) => {
-                                const SocialIcon = social.icon;
-                                return (
-                                    <a
-                                        key={social.name}
-                                        href={social.url}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="hover:text-[#7a1619] transition duration-150 ease-in-out"
-                                        aria-label={social.name}
-                                        onClick={() => trackEvent('social_media_clicked', {
-                                            social_media_chosen: social.name,
-                                            location: 'top_nav',
-                                            page_section: 'header'
-                                        })}
-                                    >
-                                        <SocialIcon className="w-5 h-5" />
-                                    </a>
-                                );
-                            })}
+                        {/* Right side content - Stacked vertically */}
+                        <div className="flex-1 flex flex-col">
+                            {/* Top section - Contact info and social icons */}
+                            <div className="flex-1 flex items-center justify-end gap-8 border-b border-gray-200 px-6">
+                                {/* Contact Info */}
+                                <div className="flex items-center space-x-6 text-sm text-[#9b1c20]">
+                                    <div className="flex items-center space-x-2">
+                                        <PiMapPin className="w-4 h-4" />
+                                        <span className="font-semibold">Address</span>
+                                    </div>
+                                    <div className="flex items-center space-x-4">
+                                        <a href="tel:8001010" className="hover:underline transition duration-150 ease-in-out font-medium"
+                                           onClick={() => trackEvent('contact_info_clicked', {
+                                               contact_info_chosen: 'Toll Free: 800 1010',
+                                               location: 'top_nav',
+                                               contact_type: 'phone'
+                                           })}
+                                        >
+                                           Toll Free: 800 1010
+                                        </a>
+                                        <span className="text-gray-300">|</span>
+                                        <a href="tel:+26825086000" className="hover:underline transition duration-150 ease-in-out font-medium"
+                                           onClick={() => trackEvent('contact_info_clicked', {
+                                               contact_info_chosen: '(+268) 2508 6000',
+                                               location: 'top_nav',
+                                               contact_type: 'phone'
+                                           })}
+                                        >
+                                            (+268) 2508 6000
+                                        </a>
+                                        <span className="text-gray-300">|</span>
+                                        <a href="mailto:info@united.co.sz" className="hover:underline transition duration-150 ease-in-out font-medium"
+                                           onClick={() => trackEvent('contact_info_clicked', {
+                                               contact_info_chosen: 'info@united.co.sz',
+                                               location: 'top_nav',
+                                               contact_type: 'email'
+                                           })}
+                                        >
+                                            info@united.co.sz
+                                        </a>
+                                    </div>
+                                </div>
+
+                                {/* Social Media Icons */}
+                                <div className="flex items-center space-x-4">
+                                    {socialLinks.map((social) => {
+                                        const SocialIcon = social.icon;
+                                        return (
+                                            <a
+                                                key={social.name}
+                                                href={social.url}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="text-[#9b1c20] hover:text-[#7a1619] transition duration-150 ease-in-out"
+                                                aria-label={social.name}
+                                                onClick={() => trackEvent('social_media_clicked', {
+                                                    social_media_chosen: social.name,
+                                                    location: 'top_nav',
+                                                    page_section: 'header'
+                                                })}
+                                            >
+                                                <SocialIcon className="w-5 h-5" />
+                                            </a>
+                                        );
+                                    })}
+                                </div>
+                            </div>
+
+                            {/* Bottom section - Main navigation */}
+                            <div className="flex-1 flex items-center justify-end px-6">
+                                <nav className="flex-1">
+                                    <ul className="flex items-center justify-end space-x-8 text-sm font-semibold">
+                                        {mainNavItems.map((item, index) => (
+                                            <li key={index} className="relative group">
+                                                {item.dropdown ? (
+                                                    <div>
+                                                        <button className="flex items-center space-x-1 py-4 text-[#9b1c20] hover:text-[#7a1619] transition duration-150 ease-in-out">
+                                                            <span>{item.name}</span>
+                                                            <PiCaretDown className="w-3 h-3" />
+                                                        </button>
+                                                        {renderDesktopDropdown(item)}
+                                                    </div>
+                                                ) : (
+                                                    <Link
+                                                        href={item.link}
+                                                        className="block py-4 text-[#9b1c20] hover:text-[#7a1619] transition duration-150 ease-in-out"
+                                                    >
+                                                        {item.name}
+                                                    </Link>
+                                                )}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </nav>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            {/* Main Navigation */}
-            <div className="border-b-4 border-[#9b1c20]">
-                <div className="max-w-[1800px] mx-auto px-4 sm:px-6">
-                    <div className="flex items-center justify-between pb-2 bgb">
-                        {/* Logo - Increased size */}
-                        <Link
-                            href="/"
-                            className="flex-shrink-0"
-                            onClick={() => trackEvent('uh_logo_clicked', {
-                                location: 'desktop_header',
+            {/* Mobile Header */}
+            <div className="lg:hidden">
+                {/* Quick Nav CTA Bar */}
+                <div className="bg-white text-[#9b1c20] border-b border-gray-200">
+                    <div className="max-w-[1800px] mx-auto px-4 sm:px-6">
+                        <div className="flex items-center justify-between py-2">
+                            {/* Contact Info */}
+                            <div className="flex items-center space-x-4 text-xs">
+                                <a href="tel:8001010" className="hover:underline transition duration-150 ease-in-out font-medium"
+                                   onClick={() => trackEvent('contact_info_clicked', {
+                                       contact_info_chosen: '800 1010',
+                                       location: 'mobile_quick_nav',
+                                       contact_type: 'phone'
+                                   })}
+                                >
+                                   800 1010
+                                </a>
+                                <a href="tel:+26825086000" className="hover:underline transition duration-150 ease-in-out font-medium"
+                                   onClick={() => trackEvent('contact_info_clicked', {
+                                       contact_info_chosen: '(+268) 2508 6000',
+                                       location: 'mobile_quick_nav',
+                                       contact_type: 'phone'
+                                   })}
+                                >
+                                    (+268) 2508 6000
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Main Navigation */}
+                <div className="border-b-4 border-[#9b1c20]">
+                    <div className="max-w-[1800px] mx-auto px-4 sm:px-6">
+                        <div className="flex items-center justify-between py-3">
+                            {/* Logo */}
+                            <Link href="/" className="flex-shrink-0" onClick={() => trackEvent('uh_logo_clicked', {
+                                location: 'mobile_header',
                                 page_section: 'header'
-                            })}
-                        >
-                            <Image
-                                src="/logo.svg"
-                                alt="United Holdings Logo"
-                                width={220}
-                                height={90}
-                                priority
-                                className="hover:opacity-90 transition-opacity"
-                            />
-                        </Link>
+                            })}>
+                                <Image
+                                    src="/logo.svg"
+                                    alt="United Holdings Logo"
+                                    width={180}
+                                    height={70}
+                                    priority
+                                    className="hover:opacity-90 transition-opacity"
+                                />
+                            </Link>
 
-                        {/* Desktop Navigation */}
-                        <nav className="hidden lg:flex flex-1 justify-center">
-                            <ul className="flex items-center space-x-8 text-sm font-semibold">
-                                {mainNavItems.map((item, index) => (
-                                    <li key={index} className="relative group">
-                                        {item.dropdown ? (
-                                            <div>
-                                                <button className="flex items-center space-x-1 py-2 text-[#9b1c20] hover:text-[#7a1619] transition duration-150 ease-in-out">
-                                                    <span>{item.name}</span>
-                                                    <PiCaretDown className="w-3 h-3" />
-                                                </button>
-                                                {renderDesktopDropdown(item)}
-                                            </div>
-                                        ) : (
-                                            <Link
-                                                href={item.link}
-                                                className="block py-2 text-[#9b1c20] hover:text-[#7a1619] transition duration-150 ease-in-out"
-                                            >
-                                                {item.name}
-                                            </Link>
-                                        )}
-                                    </li>
-                                ))}
-                            </ul>
-                        </nav>
-
-                        {/* Mobile Menu Button */}
-                        <button
-                            onClick={toggleDrawer}
-                            className="lg:hidden p-2 hover:bg-gray-100 rounded-lg transition-colors"
-                            aria-label="Open menu"
-                        >
-                            <PiList className="w-6 h-6 text-[#9b1c20]" />
-                        </button>
+                            {/* Mobile Menu Button */}
+                            <button
+                                onClick={toggleDrawer}
+                                className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                                aria-label="Open menu"
+                            >
+                                <PiList className="w-6 h-6 text-[#9b1c20]" />
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
