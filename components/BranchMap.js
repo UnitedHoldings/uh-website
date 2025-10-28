@@ -149,7 +149,7 @@ export default function BranchMap({ branches = [] }) {
         {activeTab === "United Pay" &&
           `Showing ${branchStats["United Pay"]} United Pay branches`}
         {activeTab === "All" &&
-          "Showing all United Life Assurance branches and services"}
+          "Showing all United Holdings branches and services"}
       </div>
 
       {/* Map Container */}

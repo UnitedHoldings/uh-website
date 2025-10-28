@@ -155,33 +155,7 @@ const CallBackForm = ({ onClose }) => {
   }
 
   return (
-    <div className="lg:bg-white/90 bg-white rounded-2xl absolute top-20 z-30 lg:right-[10%] right-0 p-6 w-full max-w-md lg:max-w-xl mx-4">
-      {/* Tabs */}
-      <div className="flex mb-6 border-b pb-4 border-gray-300">
-        <button
-          type="button"
-          className={`flex-1 py-3 font-outfit rounded-full font-semibold text-center transition-colors ${activeTab === 'personal'
-            ? 'text-gray-100'
-            : 'text-gray-500 hover:text-gray-700'
-            }`}
-          style={{ backgroundColor: activeTab === 'personal' ? '#9b1c20' : 'transparent' }}
-          onClick={() => setActiveTab('personal')}
-        >
-          Personal
-        </button>
-        <button
-          type="button"
-          className={`flex-1 py-3 font-outfit rounded-full font-semibold text-center transition-colors ${activeTab === 'business'
-            ? 'text-gray-100'
-            : 'text-gray-500 hover:text-gray-700'
-            }`}
-          style={{ backgroundColor: activeTab === 'business' ? '#9b1c20' : 'transparent' }}
-          onClick={() => setActiveTab('business')}
-        >
-          For My Business
-        </button>
-      </div>
-
+    <div className="lg:bg-white/90 bg-white rounded-2xl absolute top-40 z-20 lg:right-[10%] right-0 p-6 w-full max-w-md lg:max-w-xl mx-4">
       <div className="mb-6">
         <h3 className="text-2xl font-bold font-outfit text-[#9b1c20]">Need a Call Back?</h3>
         <p className="text-gray-600 mt-2">We&apos;ll get back to you shortly</p>

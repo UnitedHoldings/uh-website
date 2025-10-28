@@ -1,4 +1,5 @@
 "use client"
+import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
 
 // Employee data from the champions list
@@ -134,10 +135,8 @@ export default function BetaAuthGate() {
         <div className="w-full max-w-md bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl overflow-hidden">
           {/* Header */}
           <div className="bg-gradient-to-r from-[#9b1c20] to-[#7a1619] p-8 text-white text-center">
-            <div className="w-20 h-20 mx-auto mb-4 bg-white/20 rounded-full flex items-center justify-center">
-              <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-              </svg>
+            <div className="w-20 h-20 mx-auto  rounded-full flex items-center justify-center">
+              <Image src={'/icon.png'} alt="United Holdings Logo" width={1200} height={120} />
             </div>
             <h1 className="text-3xl font-bold mb-2">United Holdings</h1>
             <p className="text-white/80 text-lg">Website Beta Program</p>

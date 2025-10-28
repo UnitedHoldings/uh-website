@@ -65,16 +65,7 @@ function Footer() {
             path: '/about/our-team',
             icon: PiUsersThree
         },
-        { 
-            title: 'Careers', 
-            path: '/about/careers',
-            icon: PiBriefcaseMetal
-        },
-        { 
-            title: 'Gallery', 
-            path: '/about/gallery',
-            icon: PiImages
-        },
+       
     ]
 
     // Products links
@@ -114,19 +105,9 @@ function Footer() {
     // Resources links
     const resourcesLinks = [
         { 
-            title: 'Documents', 
-            path: '/documents',
-            icon: PiFolderOpen
-        },
-        { 
             title: 'Policies', 
             path: '/policies',
             icon: PiFile
-        },
-        { 
-            title: 'News & Reports', 
-            path: '/news',
-            icon: PiNewspaper
         },
     ]
 
@@ -302,13 +283,13 @@ function Footer() {
                 </div>
 
                 {/* Bottom Bar */}
-                <div className="border-t border-white/20 mt-8 pt-6">
-                    <div className="flex flex-col lg:flex-row items-center justify-between space-y-4 lg:space-y-0">
+                <div className="border-t border-white/20 my-8 pt-6">
+                    <div className="flex mb-16  flex-col lg:flex-row items-center justify-between space-y-4 lg:space-y-0">
                         <p className="text-sm text-gray-200 text-center lg:text-left">
                             © {new Date().getFullYear()} United Holdings Eswatini. All rights reserved.
                         </p>
                         <p className="text-sm text-gray-200 text-center lg:text-right">
-                           
+                            Developed with <PiHeart className="inline-block w-4 h-4 text-red-600 mx-1" /> by <a href="https://www.linkedin.com/company/ummo-inc/" target="_blank" rel="noopener noreferrer" className="hover:text-[#F7941D] underline">UMMO Inc.</a>
                         </p>
                     </div>
                 </div>

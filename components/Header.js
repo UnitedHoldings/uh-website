@@ -45,6 +45,13 @@ export default function Header() {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
     const [mobileActiveDropdown, setMobileActiveDropdown] = useState(null);
 
+    // Department Colors
+    const DEPARTMENT_COLORS = {
+        "Life Assurance": "#3d834d", // Green
+        "General & Business Insurance": "#286278", // Blue
+        "Loans & Financing": "#f79620", // Orange
+    };
+
     // Social media links
     const socialLinks = [
         { 
@@ -75,6 +82,7 @@ export default function Header() {
             category: 'Life Assurance',
             icon: PiHeart,
             link: '/united-life-assurance',
+            color: DEPARTMENT_COLORS["Life Assurance"],
             items: [
                 { name: 'Family Funeral Plan', link: '/products/family-funeral-plan', icon: PiUsers },
                 { name: 'Individual Funeral Plan', link: '/products/individual-funeral-plan', icon: PiUser },
@@ -84,9 +92,10 @@ export default function Header() {
             ]
         },
         {
-            category: 'General Insurance',
+            category: 'General Personal Insurance',
             icon: PiShieldCheck,
             link: '/united-general-insurance',
+            color: DEPARTMENT_COLORS["General & Business Insurance"],
             items: [
                 { name: 'Motor Insurance', link: '/products/motor-insurance', icon: PiCar },
                 { name: 'Home Contents Insurance', link: '/products/home-contents-insurance', icon: PiHouse },
@@ -96,8 +105,9 @@ export default function Header() {
             ]
         },
         {
-            category: 'General Insurance',
+            category: 'General Business Insurance',
             icon: PiBriefcase,
+            color: DEPARTMENT_COLORS["General & Business Insurance"],
             items: [
                 { name: 'Multimark Policy', link: '/products/multimark-policy', icon: PiBuildingOffice },
                 { name: 'Medical Malpractice', link: '/products/medical-malpractice', icon: PiUser },
@@ -111,6 +121,7 @@ export default function Header() {
         {
             category: 'Loans & Financing',
             icon: PiMoney,
+            color: DEPARTMENT_COLORS["Loans & Financing"],
             items: [
                 { name: 'Micro Loans', link: '/products/micro-loan', icon: PiMoney },
                 { name: 'Umlamleli Loan (Salary Advance)', link: '/products/umlamleli-loan', icon: PiTrendUp },
@@ -138,15 +149,12 @@ export default function Header() {
             icon: PiBriefcaseMetal,
             description: "Join our growing team"
         },
-        
-        
         { 
             name: "Gallery", 
             link: "/about/gallery", 
             icon: PiImages,
             description: "Photos from our events"
         },
-       
     ], []);
 
     // Resources dropdown data
@@ -201,38 +209,46 @@ export default function Header() {
     const renderMobileDropdown = (item) => {
         if (item.name === "PRODUCTS") {
             return (
-                <div className="space-y-6">
+                <div className="space-y-4">
                     {item.dropdown.map((category, categoryIndex) => {
                         const CategoryIcon = category.icon;
                         return (
-                            <div key={categoryIndex} className="ml-4">
-                                <div className="flex items-center gap-2 mb-3">
-                                    <CategoryIcon className="w-4 h-4 text-[#9b1c20]" />
-                                    <Link 
-                                        href={category.link || '#'}
-                                        onClick={closeDrawer}
-                                        className="font-semibold text-sm text-gray-800 hover:text-[#9b1c20]"
-                                    >
-                                        {category.category}
-                                    </Link>
+                            <div 
+                                key={categoryIndex} 
+                                className="ml-4 py-6 rounded-lg overflow-hidden shadow-sm"
+                                style={{ 
+                                    backgroundColor: category.color,
+                                }}
+                            >
+                                <div className="p-3">
+                                    <div className="flex items-center gap-2 mb-2">
+                                        <CategoryIcon className="w-4 h-4 text-white" />
+                                        <Link 
+                                            href={category.link || '#'}
+                                            onClick={closeDrawer}
+                                            className="font-bold text-sm text-white hover:text-gray-100"
+                                        >
+                                            {category.category}
+                                        </Link>
+                                    </div>
+                                    <ul className="space-y-1 ml-6">
+                                        {category.items.map((subItem, itemIndex) => {
+                                            const ItemIcon = subItem.icon;
+                                            return (
+                                                <li key={itemIndex}>
+                                                    <Link
+                                                        href={subItem.link}
+                                                        onClick={closeDrawer}
+                                                        className="flex items-center gap-2 text-sm text-white hover:text-gray-200 transition duration-150 ease-in-out py-1 group"
+                                                    >
+                                                        <ItemIcon className="w-3 h-3 text-white opacity-80 group-hover:opacity-100" />
+                                                        {subItem.name}
+                                                    </Link>
+                                                </li>
+                                            );
+                                        })}
+                                    </ul>
                                 </div>
-                                <ul className="space-y-2 mb-4 ml-6">
-                                    {category.items.map((subItem, itemIndex) => {
-                                        const ItemIcon = subItem.icon;
-                                        return (
-                                            <li key={itemIndex}>
-                                                <Link
-                                                    href={subItem.link}
-                                                    onClick={closeDrawer}
-                                                    className="flex items-center gap-2 text-sm text-gray-600 hover:text-[#9b1c20] transition duration-150 ease-in-out py-1"
-                                                >
-                                                    <ItemIcon className="w-3 h-3 text-gray-500" />
-                                                    {subItem.name}
-                                                </Link>
-                                            </li>
-                                        );
-                                    })}
-                                </ul>
                             </div>
                         );
                     })}
@@ -273,38 +289,44 @@ export default function Header() {
     const renderDesktopDropdown = (item) => {
         if (item.name === "PRODUCTS") {
             return (
-                <div className="absolute left-1/2 transform -translate-x-1/2 top-full pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 w-screen max-w-4xl">
-                    <div className="bg-white rounded-lg shadow-xl border border-gray-200 py-6">
-                        <div className="grid grid-cols-4 gap-8 px-8">
+                <div className="absolute -left-[-35%] transform -translate-x-1/2 top-[93%] pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 w-screen">
+                    <div className="">
+                        <div className="grid grid-cols-4 rounded-b-xl px-8 max-w-[1400px] mx-auto">
                             {item.dropdown.map((category, categoryIndex) => {
                                 const CategoryIcon = category.icon;
                                 return (
-                                    <div key={categoryIndex} className="space-y-3">
-                                        <div className="flex items-center space-x-2 mb-3">
-                                            <CategoryIcon className="w-5 h-5 text-[#9b1c20]" />
-                                            <Link 
-                                                href={category.link || '#'}
-                                                className="font-bold text-gray-800 hover:text-[#9b1c20] border-b pb-1"
-                                            >
-                                                {category.category}
-                                            </Link>
+                                    <div 
+                                        key={categoryIndex} 
+                                        className={` ${categoryIndex === 0 ? "rounded-bl-2xl" : ""} ${categoryIndex === 3 ? "rounded-br-2xl" : ""} overflow-hidden py-6  transition-all duration-300 hover:shadow-xl`}
+                                        style={{ 
+                                            backgroundColor: category.color,
+                                        }}
+                                    >
+                                        <div className="">
+                                            <div className="flex items-center space-x-2 mb-4">
+                                                <Link 
+                                                    href={category.link || '#'}
+                                                    className="font-bold text-white px-6 text-xl hover:text-gray-100 border-b border-white border-opacity-30 pb-1"
+                                                >
+                                                    {category.category}
+                                                </Link>
+                                            </div>
+                                            <ul className="space-y-1">
+                                                {category.items.map((subItem, itemIndex) => {
+                                                    const ItemIcon = subItem.icon;
+                                                    return (
+                                                        <li key={itemIndex}>
+                                                            <Link
+                                                                href={subItem.link}
+                                                                className="flex items-center space-x-2 text-white  transition duration-150 ease-in-out py-2 px-6  hover:bg-white/10 hover:bg-opacity-10 group"
+                                                            >
+                                                                <span className="text-sm font-light">{subItem.name}</span>
+                                                            </Link>
+                                                        </li>
+                                                    );
+                                                })}
+                                            </ul>
                                         </div>
-                                        <ul className="space-y-2">
-                                            {category.items.map((subItem, itemIndex) => {
-                                                const ItemIcon = subItem.icon;
-                                                return (
-                                                    <li key={itemIndex}>
-                                                        <Link
-                                                            href={subItem.link}
-                                                            className="flex items-center space-x-2 text-gray-600 hover:text-[#9b1c20] hover:underline transition duration-150 ease-in-out py-1 group"
-                                                        >
-                                                            <ItemIcon className="w-4 h-4 text-gray-400 group-hover:text-[#9b1c20] transition-colors" />
-                                                            <span className="text-sm">{subItem.name}</span>
-                                                        </Link>
-                                                    </li>
-                                                );
-                                            })}
-                                        </ul>
                                     </div>
                                 );
                             })}
@@ -315,8 +337,8 @@ export default function Header() {
         } else {
             // Uniform dropdown for About and Resources
             return (
-                <div className="absolute left-0 top-full pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
-                    <div className="bg-white rounded-md shadow-lg py-3 border border-gray-200 min-w-64">
+                <div className="absolute left-0 top-[94%] pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                    <div className="bg-white shadow-lg rounded-b-2xl py-3 border border-gray-200 min-w-72 ">
                         {item.dropdown.map((subItem, subIndex) => {
                             const SubItemIcon = subItem.icon;
                             return (
@@ -454,9 +476,9 @@ export default function Header() {
             <div className="hidden lg:block border-b-4 border-[#9b1c20]">
                 <div className="max-w-[1800px] mx-auto px-4 sm:px-6">
                     {/* Single row containing logo spanning full height and right content */}
-                    <div className="flex items-stretch min-h-[120px]">
+                    <div className="flex items-stretch min-h-[100px]">
                         {/* Logo - Spans full height of both header sections */}
-                        <div className="flex items-center justify-center py-4 border-r border-gray-200 pr-8">
+                        <div className="flex items-center justify-center py-1  pr-8">
                             <Link href="/" className="flex items-center h-full" onClick={() => trackEvent('uh_logo_clicked', {
                                 location: 'desktop_header',
                                 page_section: 'header'
@@ -474,14 +496,14 @@ export default function Header() {
                         </div>
 
                         {/* Right side content - Stacked vertically */}
-                        <div className="flex-1 flex flex-col">
+                        <div className="flex-1 flex flex-col gap-1">
                             {/* Top section - Contact info and social icons */}
-                            <div className="flex-1 flex items-center justify-end gap-8 border-b border-gray-200 px-6">
+                            <div className="flex-1 flex items-end justify-end gap-8  px-6">
                                 {/* Contact Info */}
                                 <div className="flex items-center space-x-6 text-sm text-[#666666]">
                                     <div className="flex items-center space-x-2">
                                         <PiMapPin className="w-4 h-4" />
-                                        <span className="font-semibold">Address</span>
+                                        <Link href={'/contact'} className="font-semibold">Address</Link>
                                     </div>
                                     <div className="flex items-center space-x-4">
                                         <a href="tel:8001010" className="hover:underline transition duration-150 ease-in-out font-medium"

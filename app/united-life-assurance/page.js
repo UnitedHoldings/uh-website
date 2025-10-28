@@ -355,7 +355,7 @@ export default function UnitedLifeAssurance() {
       <section className="py-8 bg-white">
         <div className="max-w-[1400px] mx-auto px-4 sm:px-6">
           <div className='text-xl font-semibold mb-4'>
-            <p className='text-[#3d834d] text-2xl'>What financial needs do you have?</p>
+            <p className='text-[#3d834d] text-2xl'>Get Protected Today!</p>
           </div>
           <div className="flex flex-col lg:flex-row gap-4 items-center justify-between">
             {/* Search */}

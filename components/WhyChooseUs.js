@@ -249,7 +249,7 @@ const ReasonCard = ({ title, content, icon, gradient, accent, index }) => {
         <div className="flex items-start justify-between mb-6">
         
           <motion.div
-            className="text-5xl font-bold text-gray-100"
+            className="text-5xl font-bold text-gray-300"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             transition={{ delay: index * 0.2 + 0.3 }}
@@ -267,7 +267,6 @@ const ReasonCard = ({ title, content, icon, gradient, accent, index }) => {
         </p>
 
         {/* Hover Effect Line */}
-        <div className={`absolute bottom-0 left-8 w-0 h-1 bg-gradient-to-r from-transparent via-[${colors.primary}] to-transparent group-hover:w-24 transition-all duration-500`} />
       </div>
     </motion.div>
   );

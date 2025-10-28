@@ -43,6 +43,7 @@ const getProductCompany = (product) => {
   if (productName.includes('funeral') ||
     productName.includes('life') ||
     productName.includes('credit life') ||
+    productName.includes('dignified') ||
     productName.includes('group life')) {
     return 'ULA';
   }
