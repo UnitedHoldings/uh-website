@@ -41,6 +41,7 @@ const getProductCompany = (product) => {
 
   // United Life Assurance products
   if (productName.includes('funeral') ||
+    productName.includes('family') ||
     productName.includes('life') ||
     productName.includes('credit life') ||
     productName.includes('dignified') ||
@@ -69,7 +70,7 @@ export default function ProductPage({ params }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitMessage, setSubmitMessage] = useState('');
   const [submitError, setSubmitError] = useState('');
-  
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -179,11 +180,11 @@ export default function ProductPage({ params }) {
         const errorText = await response.text();
         throw new Error(`Server returned ${response.status}: ${errorText || response.statusText}`);
       }
-      
+
       // If we get here, the request was successful
       setSubmitMessage(companyText.successMessage);
       setSubmitted(true);
-      
+
       // Reset form after successful submission
       setFormData({
         name: '',
@@ -199,7 +200,7 @@ export default function ProductPage({ params }) {
 
     } catch (error) {
       console.error('Error sending quote:', error);
-      const errorMessage = error.message.includes('Failed to fetch') 
+      const errorMessage = error.message.includes('Failed to fetch')
         ? 'Network error. Please check your connection and try again.'
         : `Failed to submit your request: ${error.message}`;
       setSubmitError(errorMessage);
@@ -212,7 +213,7 @@ export default function ProductPage({ params }) {
   // Handle form submission from RenderForm
   const handleFormSubmit = async (submittedFormData) => {
     console.log('Form submitted with data:', submittedFormData);
-    
+
     // Basic validation
     if (!submittedFormData.name || !submittedFormData.email || !submittedFormData.phone) {
       setSubmitError('Please fill in all required fields (name, email, and phone)');
@@ -228,7 +229,7 @@ export default function ProductPage({ params }) {
 
     // Update the form data state
     setFormData(submittedFormData);
-    
+
     // Send the quote
     return await sendQuote(submittedFormData);
   };
@@ -369,10 +370,10 @@ export default function ProductPage({ params }) {
                   </div>
 
                   {/* RenderForm with proper event handling */}
-                  <RenderForm 
-                    product={product} 
-                    formData={formData} 
-                    handleInputChange={handleInputChange} 
+                  <RenderForm
+                    product={product}
+                    formData={formData}
+                    handleInputChange={handleInputChange}
                     company={company}
                     onFormSubmit={handleFormSubmit}
                     isSubmitting={isSubmitting}
@@ -385,9 +386,8 @@ export default function ProductPage({ params }) {
 
               {/* Success and Error Messages */}
               {(submitMessage || submitError) && (
-                <div className={`mt-4 p-4 rounded-lg ${
-                  submitMessage ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
-                }`}>
+                <div className={`mt-4 p-4 rounded-lg ${submitMessage ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                  }`}>
                   {submitMessage || submitError}
                 </div>
               )}

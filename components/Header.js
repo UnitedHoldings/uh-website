@@ -84,11 +84,15 @@ export default function Header() {
             link: '/united-life-assurance',
             color: DEPARTMENT_COLORS["Life Assurance"],
             items: [
-                { name: 'Family Funeral Plan', link: '/products/family-funeral-plan', icon: PiUsers },
-                { name: 'Individual Funeral Plan', link: '/products/individual-funeral-plan', icon: PiUser },
-                { name: 'Tinkhundla Funeral Cover', link: '/products/tinkhundla-funeral-cover', icon: PiCalendar },
-                { name: 'Group Life', link: '/products/group-life', icon: PiUsers },
+                { name: 'Dignified Homelink Cover', link: '/products/dignified-homelink-cover', icon: PiUsers },
+                { name: 'Dignified Tribute Cover', link: '/products/dignified-tribute-cover', icon: PiUser },
+                { name: 'Dignified Family Support Cover', link: '/products/dignified-family-support-cover', icon: PiCalendar },
+                { name: 'Dignified Senior Citizen Cover', link: '/dignified-senior-citizen-cover', icon: PiUsers },
                 { name: 'Credit Life', link: '/products/credit-life', icon: PiMoney },
+                { name: 'Dignified Funeral Plan Cover', link: '/products/dignified-funeral-plan-cover', icon: PiCalendar },
+                { name: 'Tinkhundla Funeral Cover', link: '/products/tinkhundla-funeral-cover', icon: PiCalendar },
+
+
             ]
         },
         {
@@ -143,40 +147,19 @@ export default function Header() {
             icon: PiUsersThree,
             description: "Meet our dedicated team"
         },
-        { 
-            name: "Careers", 
-            link: "/about/careers", 
-            icon: PiBriefcaseMetal,
-            description: "Join our growing team"
-        },
-        { 
-            name: "Gallery", 
-            link: "/about/gallery", 
-            icon: PiImages,
-            description: "Photos from our events"
-        },
+       
     ], []);
 
     // Resources dropdown data
     const resourcesDropdown = useMemo(() => [
-        { 
-            name: "Documents", 
-            link: "/documents", 
-            icon: PiFolderOpen,
-            description: "Important forms and documents"
-        },
+     
         { 
             name: "Policies", 
             link: "/policies", 
             icon: PiFile,
             description: "Company policies and procedures"
         },
-        { 
-            name: "News & Reports", 
-            link: "/news", 
-            icon: PiNewspaper,
-            description: "Latest news and financial reports"
-        },
+    
     ], []);
 
     // Main navigation items

@@ -3,21 +3,33 @@ import React, { useState } from 'react'
 import Link from 'next/link';
 import { trackEvent } from '@/lib/posthog';
 
-// All available products across departments
+// Updated products according to your actual offerings
 const ALL_PRODUCTS = [
-  'Funeral Plan',
-  'Family Protection',
-  'Life Insurance',
-  'Education Plan',
-  'Retirement Plan',
+  // United Life Assurance Products
+  'Dignified Tribute Cover',
+  'Dignified Funeral Plan Cover',
+  'Dignified Family Support Cover',
+  'Dignified Homelink Cover',
+  'Dignified Senior Citizen Cover',
+  'Tinkhundla Funeral Cover',
+  'Credit Life Insurance',
+  
+  // United General Insurance Products
   'Home Insurance',
+  'Professional Indemnity and Fidelity Guarantee Insurance',
+  'Engineering Policies and Guarantees',
+  'Political Violence and Terrorism',
+  'Multimark Policy',
+  'Legal Insurance',
   'Motor Insurance',
-  'Business Insurance',
-  'Travel Insurance',
-  'Asset Insurance',
-  'Umlamleli - Salary Advance',
-  'Personal Loan',
-  'Business Loan',
+  'Personal Accident Insurance',
+  'Medical Malpractice Insurance',
+  
+  // United Pay Products
+  'Micro Loans',
+  'Umlamleli',
+  
+  // General option
   'Not Sure - Need Advice'
 ];
 
@@ -229,18 +241,47 @@ const CallBackForm = ({ onClose }) => {
               className="w-full py-2 outline-none bg-transparent border-gray-300 border-b placeholder-gray-500"
             >
               <option value="">Select a product</option>
-              {ALL_PRODUCTS.map((product, index) => (
-                <option key={index} value={product}>
-                  {product}
-                </option>
-              ))}
+              
+              {/* United Life Assurance Products */}
+              <optgroup label="United Life Assurance">
+                <option value="Dignified Tribute Cover">Dignified Tribute Cover</option>
+                <option value="Dignified Funeral Plan Cover">Dignified Funeral Plan Cover</option>
+                <option value="Dignified Family Support Cover">Dignified Family Support Cover</option>
+                <option value="Dignified Homelink Cover">Dignified Homelink Cover</option>
+                <option value="Dignified Senior Citizen Cover">Dignified Senior Citizen Cover</option>
+                <option value="Tinkhundla Funeral Cover">Tinkhundla Funeral Cover</option>
+                <option value="Credit Life Insurance">Credit Life Insurance</option>
+              </optgroup>
+              
+              {/* United General Insurance Products */}
+              <optgroup label="United General Insurance">
+                <option value="Home Insurance">Home Insurance</option>
+                <option value="Professional Indemnity and Fidelity Guarantee Insurance">Professional Indemnity & Fidelity Guarantee</option>
+                <option value="Engineering Policies and Guarantees">Engineering Policies & Guarantees</option>
+                <option value="Political Violence and Terrorism">Political Violence & Terrorism</option>
+                <option value="Multimark Policy">Multimark Policy</option>
+                <option value="Legal Insurance">Legal Insurance</option>
+                <option value="Motor Insurance">Motor Insurance</option>
+                <option value="Personal Accident Insurance">Personal Accident Insurance</option>
+                <option value="Medical Malpractice Insurance">Medical Malpractice Insurance</option>
+              </optgroup>
+              
+              {/* United Pay Products */}
+              <optgroup label="United Pay">
+                <option value="Micro Loans">Micro Loans</option>
+                <option value="Umlamleli">Umlamleli</option>
+              </optgroup>
+              
+              {/* General Option */}
+              <option value="Not Sure - Need Advice">Not Sure - Need Advice</option>
+              <option value="Other">Other</option>
+
             </select>
           </div>
         </div>
+        
         {/* Add hidden field for form type */}
         <input type="hidden" name="formType" value={activeTab} />
-
-
 
         {/* Checkboxes */}
         <div className="space-y-3 pt-2">

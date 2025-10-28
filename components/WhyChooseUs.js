@@ -26,22 +26,22 @@ const reasonsData = [
     title: "80+ Years of Trusted Service",
     content: "We're the right partner you can choose with over 70 years of doing business in the Kingdom of Eswatini. We're your trusted brand here to provide not just products and services, but rather the peace of mind to get on with the things in life that really matter to you.",
     icon: <FaShieldAlt className="text-white text-3xl" aria-label="Trusted Service" />,
-    gradient: `from-[${colors.primary}] to-[${colors.primaryLight}]`,
-    accent: `bg-[${colors.primary}]`
+    gradient: "from-[#9b1c20] to-[#c8232c]",
+    accentColor: "#9b1c20"
   },
   {
     title: "Serving you with Integrity",
     content: "We don't do insurance for ourselves, we do it for your peace of mind. Our commitment to ethical practices and transparent dealings ensures you always get the best service possible.",
     icon: <FaHandshake className="text-white text-3xl" aria-label="Integrity" />,
-    gradient: `from-[${colors.primaryDark}] to-[${colors.primary}]`,
-    accent: `bg-[${colors.primaryDark}]`
+    gradient: "from-[#7a1619] to-[#9b1c20]",
+    accentColor: "#7a1619"
   },
   {
     title: "Swazi Insurance for the International Market",
     content: "With over 80 years of doing business in Eswatini, United Holdings is best suited and experienced to provide uniquely tailored solutions that understand both local needs and global standards.",
     icon: <FaGlobeAfrica className="text-white text-3xl" aria-label="International Market" />,
-    gradient: `from-[${colors.primary}] to-[${colors.accent}]`,
-    accent: `bg-[${colors.primary}]`
+    gradient: "from-[#9b1c20] to-[#F9AF55]",
+    accentColor: "#9b1c20"
   },
 ];
 
@@ -157,12 +157,12 @@ const StarRating = ({ rating, size = "sm" }) => {
   return (
     <div className="flex items-center space-x-1" aria-label={`Rating: ${rating} out of ${MAX_STARS} stars`}>
       {[...Array(fullStars)].map((_, i) => (
-        <div key={`full-${i}`} className={`${sizeClasses[size]} bg-[${colors.accent}] rounded-full`} />
+        <div key={`full-${i}`} className={`${sizeClasses[size]} bg-[#F9AF55] rounded-full`} />
       ))}
       {hasHalfStar && (
         <div className="relative">
           <div className={`${sizeClasses[size]} bg-gray-300 rounded-full`} />
-          <div className={`absolute inset-0 ${sizeClasses[size]} bg-[${colors.accent}] rounded-full clip-half`} />
+          <div className={`absolute inset-0 ${sizeClasses[size]} bg-[#F9AF55] rounded-full clip-half`} />
         </div>
       )}
       {[...Array(MAX_STARS - fullStars - (hasHalfStar ? 1 : 0))].map((_, i) => (
@@ -181,18 +181,18 @@ const ReviewCard = ({ review, isActive = false, onClick }) => {
       whileHover={{ y: -5 }}
       layout
     >
-      <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-6 sm:p-8  border border-white/20 relative overflow-hidden">
+      <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-6 sm:p-8 border border-white/20 relative overflow-hidden">
         {/* Background Pattern */}
-        <div className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-[${colors.primary}]/5 to-transparent rounded-full -translate-y-16 translate-x-16`} />
+        <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-[#9b1c20]/5 to-transparent rounded-full -translate-y-16 translate-x-16" />
 
         {/* Quote Icon */}
-        <div className={`absolute top-6 right-6 text-[${colors.primary}]/10`}>
+        <div className="absolute top-6 right-6 text-[#9b1c20]/10">
           <FaQuoteLeft className="text-4xl" />
         </div>
 
         <div className="relative z-10">
           <div className="flex items-start space-x-4 mb-6">
-            <div className={`w-14 h-14 bg-[${colors.primary}]  rounded-2xl flex items-center justify-center text-white font-bold text-lg `}>
+            <div className="w-14 h-14 bg-[#9b1c20] rounded-2xl flex items-center justify-center text-white font-bold text-lg">
               {review.name.charAt(0)}
             </div>
             <div className="flex-1">
@@ -201,7 +201,7 @@ const ReviewCard = ({ review, isActive = false, onClick }) => {
                 <StarRating rating={review.rating} size="sm" />
               </div>
               <p className="text-sm text-gray-600 font-medium">{review.role}</p>
-              <p className={`text-xs text-[${colors.primary}] font-semibold`}>{review.company}</p>
+              <p className="text-xs text-[#9b1c20] font-semibold">{review.company}</p>
             </div>
           </div>
 
@@ -218,7 +218,7 @@ const ReviewCard = ({ review, isActive = false, onClick }) => {
         {/* Active Indicator */}
         {isActive && (
           <motion.div
-            className={`absolute bottom-0 left-1/2 w-24 h-1 bg-gradient-to-r from-[${colors.primary}] to-[${colors.accent}] rounded-t-full -translate-x-1/2`}
+            className="absolute bottom-0 left-1/2 w-24 h-1 bg-gradient-to-r from-[#9b1c20] to-[#F9AF55] rounded-t-full -translate-x-1/2"
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ delay: 0.3 }}
@@ -229,10 +229,10 @@ const ReviewCard = ({ review, isActive = false, onClick }) => {
   );
 };
 
-const ReasonCard = ({ title, content, icon, gradient, accent, index }) => {
+const ReasonCard = ({ title, content, icon, gradient, accentColor, index }) => {
   return (
     <motion.div
-      className="group relative bg-white/95 backdrop-blur-sm rounded-3xl p-6  border border-black/20 overflow-hidden  transition-all duration-500"
+      className="group relative bg-white/95 backdrop-blur-sm rounded-3xl p-6 border border-black/20 overflow-hidden transition-all duration-500"
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
@@ -242,12 +242,14 @@ const ReasonCard = ({ title, content, icon, gradient, accent, index }) => {
       {/* Animated Background */}
       <div className={`absolute inset-0 bg-gradient-to-br ${gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-500`} />
 
-      {/* Accent Bar */}
-      <div className={`absolute top-0 left-0 w-2 h-full ${accent} transform origin-top scale-y-0 group-hover:scale-y-100 transition-transform duration-500`} />
+      {/* Accent Bar - Fixed to use inline styles */}
+      <div 
+        className="absolute top-0 left-0 w-2 h-full transform origin-top scale-y-0 group-hover:scale-y-100 transition-transform duration-500"
+        style={{ backgroundColor: accentColor }}
+      />
 
-      <div className="relative z-10  bg-[${colors.primary}]/40 rounded-2xl p-6  duration-300">
+      <div className="relative z-10 bg-white/40 rounded-2xl p-6 duration-300">
         <div className="flex items-start justify-between mb-6">
-        
           <motion.div
             className="text-5xl font-bold text-gray-300"
             initial={{ opacity: 0 }}
@@ -267,6 +269,10 @@ const ReasonCard = ({ title, content, icon, gradient, accent, index }) => {
         </p>
 
         {/* Hover Effect Line */}
+        <div 
+          className="absolute bottom-0 left-8 w-24 h-1 rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500"
+          style={{ backgroundColor: accentColor }}
+        />
       </div>
     </motion.div>
   );
@@ -354,11 +360,11 @@ const EnhancedReviewsCarousel = ({ reviews, loading = false }) => {
 
   if (loading) {
     return (
-      <div className={`relative bg-[${colors.primary}] rounded-4xl p-8 sm:p-12 lg:p-16 overflow-hidden`}>
+      <div className="relative bg-[#9b1c20] rounded-4xl p-8 sm:p-12 lg:p-16 overflow-hidden">
         {/* Animated Background Elements */}
         <div className="absolute inset-0">
-          <div className={`absolute top-10 left-10 w-72 h-72 bg-[${colors.accent}]/5 rounded-full blur-3xl animate-pulse`} />
-          <div className={`absolute bottom-10 right-10 w-96 h-96 bg-[${colors.primary}]/10 rounded-full blur-3xl animate-pulse delay-1000`} />
+          <div className="absolute top-10 left-10 w-72 h-72 bg-[#F9AF55]/5 rounded-full blur-3xl animate-pulse" />
+          <div className="absolute bottom-10 right-10 w-96 h-96 bg-[#9b1c20]/10 rounded-full blur-3xl animate-pulse delay-1000" />
           <div className="absolute top-1/2 left-1/2 w-64 h-64 bg-white/5 rounded-full blur-2xl animate-pulse delay-500" />
         </div>
 
@@ -417,7 +423,7 @@ const EnhancedReviewsCarousel = ({ reviews, loading = false }) => {
 
   if (sortedReviews.length === 0) {
     return (
-      <div className={`relative bg-[${colors.primary}] rounded-4xl p-8 sm:p-12 lg:p-16 overflow-hidden`}>
+      <div className="relative bg-[#9b1c20] rounded-4xl p-8 sm:p-12 lg:p-16 overflow-hidden">
         <div className="text-center text-white text-xl">
           No reviews available
         </div>
@@ -426,16 +432,16 @@ const EnhancedReviewsCarousel = ({ reviews, loading = false }) => {
   }
 
   return (
-    <div className={`relative bg-[${colors.primary}] rounded-4xl p-8 sm:p-12 lg:p-16 overflow-hidden`}>
+    <div className="relative bg-[#9b1c20] rounded-4xl p-8 sm:p-12 lg:p-16 overflow-hidden">
       {/* Animated Background Elements */}
       <div className="absolute inset-0">
-        <div className={`absolute top-10 left-10 w-72 h-72 bg-[${colors.accent}]/5 rounded-full blur-3xl animate-pulse`} />
-        <div className={`absolute bottom-10 right-10 w-96 h-96 bg-[${colors.primary}]/10 rounded-full blur-3xl animate-pulse delay-1000`} />
+        <div className="absolute top-10 left-10 w-72 h-72 bg-[#F9AF55]/5 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute bottom-10 right-10 w-96 h-96 bg-[#9b1c20]/10 rounded-full blur-3xl animate-pulse delay-1000" />
         <div className="absolute top-1/2 left-1/2 w-64 h-64 bg-white/5 rounded-full blur-2xl animate-pulse delay-500" />
       </div>
 
       {/* Floating Elements */}
-      <div className={`absolute top-20 right-20 w-8 h-8 bg-[${colors.accent}] rounded-full opacity-20 animate-bounce`} />
+      <div className="absolute top-20 right-20 w-8 h-8 bg-[#F9AF55] rounded-full opacity-20 animate-bounce" />
       <div className="absolute bottom-32 left-24 w-4 h-4 bg-white rounded-full opacity-30 animate-bounce delay-300" />
 
       <div className="relative z-10">
@@ -501,7 +507,7 @@ const EnhancedReviewsCarousel = ({ reviews, loading = false }) => {
                     key={sortedReviews[index]._id}
                     onClick={() => goToReview(index)}
                     className={`w-3 h-3 rounded-full transition-all duration-300 ${index === currentReview
-                        ? `bg-[${colors.accent}] scale-125`
+                        ? 'bg-[#F9AF55] scale-125'
                         : 'bg-white/40 hover:bg-white/60'
                       }`}
                     aria-label={`Go to review ${index + 1}`}
@@ -540,14 +546,14 @@ const EnhancedReviewsCarousel = ({ reviews, loading = false }) => {
           <button
             onMouseEnter={() => setIsAutoPlaying(false)}
             onMouseLeave={() => setIsAutoPlaying(true)}
-            className={`group relative inline-flex items-center px-8 py-4 text-[${colors.primary}] bg-white rounded-2xl font-bold text-lg transition-all duration-300 hover:scale-105 overflow-hidden`}
+            className="group relative inline-flex items-center px-8 py-4 text-[#9b1c20] bg-white rounded-2xl font-bold text-lg transition-all duration-300 hover:scale-105 overflow-hidden"
             onClick={() => trackEvent('share_your_experience_clicked', {
               location: 'why_choose_us_section',
               page_section: 'client_feedback'
             })}
           >
             <span className="relative z-10">Share Your Experience</span>
-            <div className={`absolute inset-0 bg-gradient-to-r from-[${colors.accent}] to-[${colors.primary}] opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#F9AF55] to-[#9b1c20] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
           </button>
         </motion.div>
       </div>
@@ -639,7 +645,7 @@ const WhyChooseUs = () => {
           <div className="flex flex-col justify-between items-start md:items-center">
             <div className="flex flex-col gap-4">
               <h3 className="text-2xl md:text-3xl font-bold text-[#9b1c20] font-outfit">
-                Why Choose <span className="text-[${colors.accent}]">United Holdings</span>?
+                Why Choose <span className="text-[#F9AF55]">United Holdings</span>?
               </h3>
               <p className="text-gray-600 max-w-5xl text-lg lg:text-xl">
                 At United Holdings, we pride ourselves on delivering unparalleled insurance and financial services tailored to meet the unique needs of our clients. With over 70 years of trusted service in Eswatini, we combine local expertise with global standards to provide you with peace of mind and security for your future.
