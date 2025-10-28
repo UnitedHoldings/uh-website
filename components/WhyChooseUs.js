@@ -645,7 +645,7 @@ const WhyChooseUs = () => {
           <div className="flex flex-col justify-between items-start md:items-center">
             <div className="flex flex-col gap-4">
               <h3 className="text-2xl md:text-3xl font-bold text-[#9b1c20] font-outfit">
-                Why Choose <span className="text-[#F9AF55]">United Holdings</span>?
+                Why Choose <span className="">United Holdings</span>?
               </h3>
               <p className="text-gray-600 max-w-5xl text-lg lg:text-xl">
                 At United Holdings, we pride ourselves on delivering unparalleled insurance and financial services tailored to meet the unique needs of our clients. With over 70 years of trusted service in Eswatini, we combine local expertise with global standards to provide you with peace of mind and security for your future.
