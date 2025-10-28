@@ -478,7 +478,7 @@ export default function Header() {
                             {/* Top section - Contact info and social icons */}
                             <div className="flex-1 flex items-center justify-end gap-8 border-b border-gray-200 px-6">
                                 {/* Contact Info */}
-                                <div className="flex items-center space-x-6 text-sm text-[#9b1c20]">
+                                <div className="flex items-center space-x-6 text-sm text-[#666666]">
                                     <div className="flex items-center space-x-2">
                                         <PiMapPin className="w-4 h-4" />
                                         <span className="font-semibold">Address</span>
@@ -526,7 +526,7 @@ export default function Header() {
                                                 href={social.url}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
-                                                className="text-[#9b1c20] hover:text-[#7a1619] transition duration-150 ease-in-out"
+                                                className="text-[#666666] hover:text-[#7a1619] transition duration-150 ease-in-out"
                                                 aria-label={social.name}
                                                 onClick={() => trackEvent('social_media_clicked', {
                                                     social_media_chosen: social.name,
