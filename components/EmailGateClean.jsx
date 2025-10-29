@@ -115,6 +115,10 @@ const ALLOWED_EMPLOYEES = [
   { name: "JOSE REGO", email: "rego@ummo.xyz", position: "PROJECT MANAGER" },
   { name: "THEMBINKOSI MKHONTA", email: "dev@ummo.xyz", position: "DEVELOPER" }
 ];
+
+// United domain configuration - now open to any @united.co.sz email
+const UNITED_DOMAIN = '@united.co.sz';
+
 const STORAGE_KEYS = {
   AUTH: 'uh_beta_auth_v1',
   ONBOARDING: 'uh_onboarding_completed_v1',
@@ -124,6 +128,7 @@ const STORAGE_KEYS = {
 export default function BetaAuthGate() {
   const [showLogin, setShowLogin] = useState(false)
   const [showOnboarding, setShowOnboarding] = useState(false)
+  const [currentStep, setCurrentStep] = useState(1)
   const [currentOnboardingStep, setCurrentOnboardingStep] = useState(1)
   const [email, setEmail] = useState('')
   const [loading, setLoading] = useState(false)
@@ -158,35 +163,63 @@ export default function BetaAuthGate() {
     }
   }
 
+  // Check if email is from United domain
+  const isUnitedEmail = (email) => email.toLowerCase().endsWith(UNITED_DOMAIN)
+
   const handleLogin = async (e) => {
     e.preventDefault()
     setLoading(true)
     setError('')
 
     const cleanEmail = email.trim().toLowerCase()
-    const employee = ALLOWED_EMPLOYEES.find(emp => 
-      emp.email.toLowerCase() === cleanEmail
-    )
+    
+    // Check if email is from United domain OR in the allowed employees list
+    const isAuthorized = isUnitedEmail(cleanEmail) || 
+                        ALLOWED_EMPLOYEES.some(emp => emp.email.toLowerCase() === cleanEmail)
 
-    if (employee) {
-      // Simulate login process
-      setTimeout(() => {
-        const userData = {
-          name: employee.name,
-          email: employee.email,
-          position: employee.position,
-          loginTime: Date.now()
-        }
+    if (isAuthorized) {
+      // Find employee data or create generic for United emails
+      let employee = ALLOWED_EMPLOYEES.find(emp => emp.email.toLowerCase() === cleanEmail)
+      
+      // If it's a United email but not in the list, create generic employee data
+      if (!employee && isUnitedEmail(cleanEmail)) {
+        const emailUsername = cleanEmail.split('@')[0]
+        const formattedName = emailUsername.split('.')
+          .map(part => part.charAt(0).toUpperCase() + part.slice(1))
+          .join(' ')
         
-        localStorage.setItem(STORAGE_KEYS.AUTH, JSON.stringify(userData))
-        localStorage.setItem(STORAGE_KEYS.SESSION, 'active')
-        setUser(userData)
-        setShowLogin(false)
-        setShowOnboarding(true)
+        employee = {
+          name: formattedName,
+          email: cleanEmail,
+          position: 'United Holdings Employee'
+        }
+      }
+
+      if (employee) {
+        // Simulate login process
+        setTimeout(() => {
+          const currentDate = new Date();
+          const userData = {
+            name: employee.name,
+            email: employee.email,
+            position: employee.position,
+            loginTime: currentDate.toISOString(),
+            isUnitedEmployee: isUnitedEmail(cleanEmail)
+          }
+          
+          localStorage.setItem(STORAGE_KEYS.AUTH, JSON.stringify(userData))
+          localStorage.setItem(STORAGE_KEYS.SESSION, 'active')
+          setUser(userData)
+          setShowLogin(false)
+          setShowOnboarding(true)
+          setLoading(false)
+        }, 1000)
+      } else {
+        setError('Unable to process your access request. Please try again.')
         setLoading(false)
-      }, 1000)
+      }
     } else {
-      setError('Access restricted to United Holdings beta testers. Please use your company email.')
+      setError('Access restricted to United Holdings employees and authorized beta testers. Please use your company email.')
       setLoading(false)
     }
   }
@@ -212,14 +245,14 @@ export default function BetaAuthGate() {
         <div className="w-full max-w-md bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl overflow-hidden">
           {/* Header */}
           <div className="bg-gradient-to-r from-[#9b1c20] to-[#7a1619] p-8 text-white text-center">
-            <div className="w-20 h-20 mx-auto  rounded-full flex items-center justify-center">
+            <div className="w-20 h-20 mx-auto rounded-full flex items-center justify-center">
               <Image src={'/icon.png'} alt="United Holdings Logo" width={1200} height={120} />
             </div>
             <h1 className="text-3xl font-bold mb-2">United Holdings</h1>
             <p className="text-white/80 text-lg">Website Beta Program</p>
             <div className="mt-4 bg-white/10 rounded-lg p-3">
-              <p className="text-sm font-semibold">Exclusive Beta Tester Access</p>
-              <p className="text-xs text-white/70 mt-1">October 29, 2025</p>
+              <p className="text-sm font-semibold">Open Beta Access</p>
+              <p className="text-xs text-white/70 mt-1">Available to all United Holdings employees</p>
             </div>
           </div>
 
@@ -238,7 +271,7 @@ export default function BetaAuthGate() {
                 required
               />
               <p className="text-xs text-gray-500 mt-2">
-                Access is restricted to approved beta testers from the champions list
+                Now open to all employees with @united.co.sz email addresses
               </p>
             </div>
 
@@ -271,10 +304,10 @@ export default function BetaAuthGate() {
 
             <div className="text-center">
               <p className="text-xs text-gray-500">
-                Having trouble? Contact ICT Manager at{' '}
-                <a href="mailto:limanager@united.co.sz" className="text-[#9b1c20] hover:underline">
-                  itmanager@united.co.sz
-                </a>
+                Now available to all United Holdings employees with @united.co.sz email addresses
+              </p>
+              <p className="text-xs text-gray-400 mt-1">
+                Having trouble? Contact ICT Department
               </p>
             </div>
           </form>
@@ -287,8 +320,8 @@ export default function BetaAuthGate() {
   if (showOnboarding) {
     return <OnboardingFlow 
       user={user}
-      currentStep={currentOnboardingStep}
-      onStepChange={setCurrentOnboardingStep}
+      currentStep={currentStep}
+      onStepChange={setCurrentStep}
       onComplete={completeOnboarding}
       onLogout={handleLogout}
     />
@@ -296,7 +329,7 @@ export default function BetaAuthGate() {
 
   // Main application with user info
   return (
-    <div className=" bg-gradient-to-br from-gray-50 to-gray-100">
+    <div className="bg-gradient-to-br from-gray-50 to-gray-100">
       {/* User Header */}
       <div className="bg-white border-b border-gray-200">
         <div className="max-w-[1820px] mx-auto px-4 sm:px-6 lg:px-8">
@@ -314,9 +347,7 @@ export default function BetaAuthGate() {
             </div>
             
             <div className="flex items-center space-x-4">
-              <span className="text-sm text-green-600 bg-green-50 px-3 py-1 rounded-full border border-green-200">
-                ✓ Beta Tester
-              </span>
+              
               <button
                 onClick={handleLogout}
                 className="text-sm text-gray-500 hover:text-gray-700 px-3 py-1 rounded-lg hover:bg-gray-100 transition-colors"
@@ -329,12 +360,12 @@ export default function BetaAuthGate() {
       </div>
 
       {/* Main Content */}
-   
+      {/* Your main application content goes here */}
     </div>
   )
 }
 
-// Onboarding Flow Component
+// Onboarding Flow Component (unchanged)
 function OnboardingFlow({ user, currentStep, onStepChange, onComplete, onLogout }) {
   const nextStep = () => onStepChange(currentStep + 1)
   const prevStep = () => onStepChange(currentStep - 1)
@@ -407,7 +438,7 @@ function OnboardingFlow({ user, currentStep, onStepChange, onComplete, onLogout 
                 Welcome to the UH Website Beta Program
               </h2>
               <p className="text-xl text-gray-600 mb-2">
-                Exclusive Onboarding • October 29, 2025
+                Open Beta Access • All Employees Welcome
               </p>
               <div className="bg-gradient-to-r from-[#9b1c20] to-[#7a1619] inline-block px-4 py-1 rounded-full">
                 <p className="text-white font-semibold text-sm">Live With Purpose</p>
