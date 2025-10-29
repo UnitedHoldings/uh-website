@@ -417,17 +417,7 @@ export default function RenderForm({
                 </button>
             </div>
 
-            {/* Success and Error Messages */}
-            {submitMessage && (
-                <div className="text-green-700 text-sm mt-2 text-center sm:text-left w-full">
-                    {submitMessage}
-                </div>
-            )}
-            {submitError && (
-                <div className="text-red-700 text-sm mt-2 text-center sm:text-left w-full">
-                    {submitError}
-                </div>
-            )}
+            
         </form>
     );
 }

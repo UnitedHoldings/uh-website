@@ -375,7 +375,7 @@ export default function ProductPage({ params }) {
                     formData={formData}
                     handleInputChange={handleInputChange}
                     company={company}
-                    onFormSubmit={handleFormSubmit}
+                    sendQuote={handleFormSubmit}
                     isSubmitting={isSubmitting}
                     submitMessage={submitMessage}
                     submitError={submitError}
