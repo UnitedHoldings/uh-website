@@ -219,7 +219,7 @@ export default function BetaAuthGate() {
             <p className="text-white/80 text-lg">Website Beta Program</p>
             <div className="mt-4 bg-white/10 rounded-lg p-3">
               <p className="text-sm font-semibold">Exclusive Beta Tester Access</p>
-              <p className="text-xs text-white/70 mt-1">October 25, 2025</p>
+              <p className="text-xs text-white/70 mt-1">October 29, 2025</p>
             </div>
           </div>
 
@@ -407,7 +407,7 @@ function OnboardingFlow({ user, currentStep, onStepChange, onComplete, onLogout 
                 Welcome to the UH Website Beta Program
               </h2>
               <p className="text-xl text-gray-600 mb-2">
-                Exclusive Onboarding • October 27, 2025
+                Exclusive Onboarding • October 29, 2025
               </p>
               <div className="bg-gradient-to-r from-[#9b1c20] to-[#7a1619] inline-block px-4 py-1 rounded-full">
                 <p className="text-white font-semibold text-sm">Live With Purpose</p>
