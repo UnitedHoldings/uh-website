@@ -4,7 +4,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { BsLinkedin } from 'react-icons/bs';
-import { trackEvent, trackPageDuration } from '@/lib/posthog';
 
 // Validation helper function
 const validateTeamData = (data) => {
@@ -90,12 +89,6 @@ export default function Team() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Track page duration
-  useEffect(() => {
-    const stopTracking = trackPageDuration('about_our_team');
-    return () => stopTracking();
-  }, []);
-
   // Fetch data from API
   useEffect(() => {
     const fetchTeamData = async () => {
@@ -103,7 +96,7 @@ export default function Team() {
         setLoading(true);
         setError(null);
         
-        const response = await fetch('https://uh-server.onrender.com/api/profile');
+        const response = await fetch('https://website.api.united.co.sz/api/profile');
         
         if (!response.ok) {
           throw new Error(`Failed to fetch data: ${response.status}`);
@@ -126,12 +119,7 @@ export default function Team() {
     fetchTeamData();
   }, []);
 
-  const handleCardClick = (id, memberName) => {
-    trackEvent('team_member_info_clicked', {
-      profile_name: memberName,
-      location: 'our_team_page',
-      action: activeCard === id ? 'close' : 'open'
-    });
+  const handleCardClick = (id) => {
     setActiveCard(activeCard === id ? null : id);
   };
 
@@ -139,7 +127,7 @@ export default function Team() {
   const TeamCard = ({ member }) => (
     <div
       className="rounded-3xl rounded-b-[9999px] border-2 border-transparent hover:border-[#9b1c20] transition-all duration-300 group cursor-pointer overflow-hidden relative h-full flex flex-col"
-      onClick={() => handleCardClick(member._id, member.name)}
+      onClick={() => handleCardClick(member._id)}
     >
       {/* Image Container with Oval Shape */}
       <div className="relative h-[500px] overflow-hidden">
@@ -190,14 +178,7 @@ export default function Team() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center w-12 h-12 bg-[#9b1c20] text-white rounded-full hover:bg-[#7a1619] transition-colors duration-300"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  trackEvent('team_member_linkedin_clicked', {
-                    profile_name: member.name,
-                    location: 'our_team_page',
-                    linkedin_url: member.linkedin
-                  });
-                }}
+                onClick={(e) => e.stopPropagation()}
               >
                 <BsLinkedin className="w-6 h-6" />
               </a>
