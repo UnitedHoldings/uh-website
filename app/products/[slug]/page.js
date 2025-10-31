@@ -45,6 +45,7 @@ const getProductCompany = (product) => {
     productName.includes('life') ||
     productName.includes('credit life') ||
     productName.includes('dignified') ||
+    productName.includes('dignified senior citizen cover') ||
     productName.includes('group life')) {
     return 'ULA';
   }
@@ -135,6 +136,7 @@ export default function ProductPage({ params }) {
         surname: formDataToSubmit.name.split(' ').slice(1).join(' ') || formDataToSubmit.name,
         email: formDataToSubmit.email,
         mobileNumber: formDataToSubmit.phone,
+        productName: product.name,
         productData: Object.entries(formDataToSubmit)
           .filter(([key, value]) => value && value.toString().trim() !== '')
           .map(([key, value]) => ({ field: key, value: value.toString().trim() }))
@@ -147,7 +149,7 @@ export default function ProductPage({ params }) {
 
       console.log('Sending quote request:', JSON.stringify(requestBody, null, 2));
 
-      const response = await fetch('https://uh-server.onrender.com/api/get-quote', {
+      const response = await fetch('http://website.api.united.co.sz/api/get-quote', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

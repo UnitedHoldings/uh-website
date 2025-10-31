@@ -347,19 +347,7 @@ export default function UnitedPay() {
                 >
                   Apply Now
                 </button>
-                <button
-                  onClick={() => {
-                    trackEvent('up_banner_cta_clicked', {
-                      cta_text: 'View Loan Products',
-                      location: 'up_hero_banner',
-                      product_page: 'UP'
-                    });
-                    scrollToProducts();
-                  }}
-                  className="border-2 border-white text-white px-8 py-4 rounded-full font-semibold hover:bg-white hover:text-[#f79620] transition-colors text-lg text-center"
-                >
-                  View Loan Products
-                </button>
+              
               </div>
             </div>
           </div>

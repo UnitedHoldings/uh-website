@@ -49,7 +49,7 @@ function Agent() {
         reason: reason
       };
 
-      const response = await fetch('https://uh-server.onrender.com/api/send-email', {
+      const response = await fetch('http://website.api.united.co.sz/api/send-email', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

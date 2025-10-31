@@ -87,7 +87,7 @@ export default function Header() {
                 { name: 'Dignified Homelink Cover', link: '/products/dignified-homelink-cover', icon: PiUsers },
                 { name: 'Dignified Tribute Cover', link: '/products/dignified-tribute-cover', icon: PiUser },
                 { name: 'Dignified Family Support Cover', link: '/products/dignified-family-support-cover', icon: PiCalendar },
-                { name: 'Dignified Senior Citizen Cover', link: '/dignified-senior-citizen-cover', icon: PiUsers },
+                { name: 'Dignified Senior Citizen Cover', link: '/products/dignified-senior-citizen-cover', icon: PiUsers },
                 { name: 'Credit Life', link: '/products/credit-life', icon: PiMoney },
                 { name: 'Dignified Funeral Plan Cover', link: '/products/dignified-funeral-plan-cover', icon: PiCalendar },
                 { name: 'Tinkhundla Funeral Cover', link: '/products/tinkhundla-funeral-cover', icon: PiCalendar },
@@ -103,7 +103,6 @@ export default function Header() {
             items: [
                 { name: 'Motor Insurance', link: '/products/motor-insurance', icon: PiCar },
                 { name: 'Home Contents Insurance', link: '/products/home-contents-insurance', icon: PiHouse },
-                { name: 'Home Warranty Insurance', link: '/products/home-warranty-insurance', icon: PiHouse },
                 { name: 'Legal Insurance', link: '/products/legal-insurance', icon: PiScales },
                 { name: 'Personal Accident Insurance', link: '/products/personal-accident-insurance', icon: PiWarningCircle },
             ]
@@ -116,7 +115,7 @@ export default function Header() {
                 { name: 'Multimark Policy', link: '/products/multimark-policy', icon: PiBuildingOffice },
                 { name: 'Medical Malpractice', link: '/products/medical-malpractice', icon: PiUser },
                 { name: 'Professional Indemnity', link: '/products/professional-indemnity', icon: PiFileText },
-                { name: 'Bonds and Guarantee', link: '/products/bonds-and-guarantee', icon: PiFileText },
+                { name: 'Bonds and Guarantees', link: '/products/bonds-and-guarantees', icon: PiFileText },
                 { name: 'Engineering Policies', link: '/products/engineering-policies', icon: PiBuildingOffice },
                 { name: 'Fidelity Guarantee', link: '/products/fidelity-guarantee', icon: PiLock },
                 { name: 'Political Violence and Terrorism', link: '/products/political-violence-and-terrorism', icon: PiWarningCircle },
@@ -127,8 +126,8 @@ export default function Header() {
             icon: PiMoney,
             color: DEPARTMENT_COLORS["Loans & Financing"],
             items: [
-                { name: 'Micro Loans', link: '/products/micro-loan', icon: PiMoney },
-                { name: 'Umlamleli Loan (Salary Advance)', link: '/products/umlamleli-loan', icon: PiTrendUp },
+                { name: 'Micro Loans', link: 'https://uploans.united.co.sz/', icon: PiMoney },
+                { name: 'Umlamleli Loan (Salary Advance)', link: 'https://uploans.united.co.sz/', icon: PiTrendUp },
             ]
         }
     ], []);
