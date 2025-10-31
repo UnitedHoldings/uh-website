@@ -71,7 +71,7 @@ const iconMap = {
 // Function to fetch data from API
 const fetchUnitedGeneralInsuranceData = async () => {
   try {
-    const response = await fetch('http://website.api.united.co.sz/api/products?type=ugiProducts');
+    const response = await fetch('https://website.api.united.co.sz/api/products?type=ugiProducts');
     
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);

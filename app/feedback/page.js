@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react'
 
 const STORAGE_KEY = 'beta_feedback_submissions_v1'
-const SERVER_URL = 'https://uh-server.onrender.com/api/feedback'
+const SERVER_URL = 'https://website.api.united.co.sz/api/feedback'
 const STORAGE_KEYS = {
   AUTH: 'uh_beta_auth_v1',
   ONBOARDING: 'uh_onboarding_completed_v1',

@@ -1,7 +1,7 @@
 // Server-side proxy route for feedback + cookie session issuance
 import { NextResponse } from 'next/server'
 
-const FORWARD_URL = 'https://uh-server.onrender.com/api/feedback'
+const FORWARD_URL = 'https://website.api.united.co.sz/api/feedback'
 
 const BETA_TESTERS = {
   'rego@ummo.xyz': 'fags$3sadty',
