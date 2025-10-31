@@ -149,7 +149,7 @@ export default function ProductPage({ params }) {
 
       console.log('Sending quote request:', JSON.stringify(requestBody, null, 2));
 
-      const response = await fetch('https://website.api.united.co.sz/api/get-quote', {
+      const response = await fetch('https://uh-server.onrender.com/api/get-quote', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
