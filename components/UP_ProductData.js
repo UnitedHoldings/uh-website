@@ -35,7 +35,7 @@ const iconMap = {
 // Function to fetch data from API
 const fetchUnitedPayData = async () => {
   try {
-    const response = await fetch('https://uh-server.onrender.com/api/products?type=upProducts');
+    const response = await fetch('https://website.api.united.co.sz/api/products?type=upProducts');
     
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);

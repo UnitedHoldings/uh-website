@@ -92,7 +92,7 @@ const CallBackForm = ({ onClose }) => {
       };
 
       // Send email using your API
-      const response = await fetch('http://website.api.united.co.sz/api/send-email', {
+      const response = await fetch('https://website.api.united.co.sz/api/send-email', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
