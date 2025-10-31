@@ -139,7 +139,6 @@ export default function RootLayout({ children }) {
       <body
         className={`font-outfit antialiased relative bg-white text-gray-900`}
       >
-        <EmailGateClean />
         <Header />
         {/* Global email gate (beta/login modal) */}
         <main className="min-h-screen">
