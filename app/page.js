@@ -8,6 +8,7 @@ import StartQuote from "@/components/Startqoute";
 import WhyChooseUs from "@/components/WhyChooseUs";
 import { useEffect, useRef, useState, useMemo } from "react";
 import { trackEvent, trackPageDuration } from "@/lib/posthog";
+import { useRouter } from "next/navigation";
 
 // Department colors and mappings
 const DEPARTMENT_COLORS = {
@@ -23,9 +24,9 @@ const SLIDE_DEPARTMENTS = {
 };
 
 const TAB_CONFIG = [
-  { name: "Life Assurance", slideId: "life", shortName: "Life" },
-  { name: "General Insurance", slideId: "general", shortName: "General" },
-  { name: "Loans", slideId: "loans", shortName: "Loans" },
+  { name: "Life Assurance", slideId: "life", shortName: "Life", slug: "../united-life-assurance" },
+  { name: "General Insurance", slideId: "general", shortName: "General", slug: "../united-general-insurance" },
+  { name: "Loans", slideId: "loans", shortName: "Loans", slug: "../united-loans" },
 ];
 
 const slidesData = [
@@ -144,8 +145,9 @@ export default function Home() {
       setActiveTab(correspondingTab);
     }
   }, [currentSlide, activeTab, tabMap]); // Now tabMap is stable
-
-  const handleTabClick = (index) => {
+  const router = useRouter();
+  const handleTabClick = (index, tab) => {
+    router.push(tab.slug);
     const newSlide = slideMap[index];
     const companyName = TAB_CONFIG[index].name;
 
@@ -226,7 +228,7 @@ export default function Home() {
                           index === activeTab ? "transparent" : "transparent",
                         minWidth: "100px",
                       }}
-                      onClick={() => handleTabClick(index)}
+                      onClick={() => handleTabClick(index, tab)}
                     >
                       <span className="text-center whitespace-nowrap">
                         {/* Show full name on large screens, short name on small screens */}

@@ -1,29 +1,27 @@
 "use client"
 import React, { useState, useEffect } from 'react'
 
-const STORAGE_KEY = 'beta_feedback_submissions_v1'
+const STORAGE_KEY = 'public_feedback_submissions_v1'
 const SERVER_URL = 'https://website.api.united.co.sz/api/feedback'
-const STORAGE_KEYS = {
-  AUTH: 'uh_beta_auth_v1',
-  ONBOARDING: 'uh_onboarding_completed_v1',
-  SESSION: 'uh_session'
-}
+
 export default function FeedbackPage() {
     const [currentStep, setCurrentStep] = useState(1)
     const [loading, setLoading] = useState(false)
     const [status, setStatus] = useState(null)
-    const [user, setUser] = useState(null)
     const [submitted, setSubmitted] = useState(false)
 
     const [feedback, setFeedback] = useState({
         // Section 1: About You
+        name: '',
+        email: '',
+        company: '',
         role: '',
         roleOther: '',
         department: '',
         departmentOther: '',
         roleInteraction: '',
 
-        // Section 2: Feedback on Website Redesign
+        // Section 2: Feedback on Website
         usabilityRating: 5,
         usabilityComments: '',
         mobileRating: 5,
@@ -31,7 +29,7 @@ export default function FeedbackPage() {
         contentRating: 5,
         contentComments: '',
 
-        // Section 3: Fit to Your Business/Role
+        // Section 3: Business Fit
         roleObjectivesRating: 5,
         roleObjectivesThoughts: '',
         brandAlignment: '',
@@ -54,18 +52,6 @@ export default function FeedbackPage() {
         // Metadata
         submittedAt: 0,
     })
-
-    useEffect(() => {
-        // Get user data from storage
-        try {
-            const authData = localStorage.getItem('uh_beta_auth_v1')
-            if (authData) {
-                setUser(JSON.parse(authData))
-            }
-        } catch (err) {
-            console.error('Failed to load user data')
-        }
-    }, [])
 
     const handleInputChange = (field, value) => {
         setFeedback(prev => ({
@@ -98,7 +84,7 @@ export default function FeedbackPage() {
     const validateStep = (step) => {
         switch (step) {
             case 1:
-                if (!feedback.role || !feedback.department || !feedback.roleInteraction) {
+                if (!feedback.name || !feedback.email || !feedback.role || !feedback.department || !feedback.roleInteraction) {
                     setStatus({ error: 'Please complete all required fields in Section 1' })
                     return false
                 }
@@ -125,9 +111,6 @@ export default function FeedbackPage() {
             const payload = {
                 ...feedback,
                 submittedAt: Date.now(),
-                userEmail: user?.email,
-                userName: user?.name,
-                userPosition: user?.position
             }
 
             const res = await fetch(SERVER_URL, {
@@ -162,6 +145,9 @@ export default function FeedbackPage() {
 
     const handleNewFeedback = () => {
         setFeedback({
+            name: '',
+            email: '',
+            company: '',
             role: '',
             roleOther: '',
             department: '',
@@ -220,15 +206,6 @@ export default function FeedbackPage() {
         </div>
     )
 
-    const handleLogout = () => {
-    localStorage.removeItem(STORAGE_KEYS.AUTH)
-    localStorage.removeItem(STORAGE_KEYS.ONBOARDING)
-    localStorage.removeItem(STORAGE_KEYS.SESSION)
-    setUser(null)
-    setShowLogin(true)
-    setShowOnboarding(false)
-  }
-
     const RatingStars = ({ rating, onRatingChange, label }) => (
         <div className="bg-gray-50 rounded-xl p-6">
             <label className="block text-sm font-medium text-gray-700 mb-4">{label}</label>
@@ -280,8 +257,8 @@ export default function FeedbackPage() {
                             <div className="bg-gradient-to-r from-[#9b1c20] to-[#7a1619] rounded-xl p-6 text-white text-center">
                                 <h3 className="text-lg font-semibold mb-2">Your Contribution Matters</h3>
                                 <p className="text-white/90 text-sm">
-                                    As part of our exclusive beta program, your feedback directly influences our website improvements
-                                    and helps us create a better experience for all our clients and team members.
+                                    Your feedback directly influences our website improvements and helps us create 
+                                    a better experience for all our clients and stakeholders.
                                 </p>
                             </div>
 
@@ -293,9 +270,9 @@ export default function FeedbackPage() {
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                                         </svg>
                                     </div>
-                                    <h4 className="font-semibold text-blue-900 mb-2">Continue Testing</h4>
+                                    <h4 className="font-semibold text-blue-900 mb-2">Continue Exploring</h4>
                                     <p className="text-blue-700 text-sm">
-                                        Explore more features and provide additional feedback as you discover them
+                                        Feel free to explore more features and provide additional feedback as you discover them
                                     </p>
                                 </div>
 
@@ -317,9 +294,9 @@ export default function FeedbackPage() {
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                                         </svg>
                                     </div>
-                                    <h4 className="font-semibold text-purple-900 mb-2">Share with Colleagues</h4>
+                                    <h4 className="font-semibold text-purple-900 mb-2">Stay Connected</h4>
                                     <p className="text-purple-700 text-sm">
-                                        Encourage other beta testers to share their perspectives for a comprehensive view
+                                        We may follow up on your feedback to better understand your perspective
                                     </p>
                                 </div>
                             </div>
@@ -343,9 +320,9 @@ export default function FeedbackPage() {
                             {/* Confidentiality Notice */}
                             <div className="mt-8 p-4 bg-gray-50 rounded-xl border border-gray-200">
                                 <p className="text-sm text-gray-600">
-                                    <strong>Confidentiality Notice:</strong> Your feedback is stored securely and will only be used
+                                    <strong>Privacy Notice:</strong> Your feedback is stored securely and will only be used
                                     for improving the United Holdings website. All responses are treated as confidential and will
-                                    not be shared outside the beta program team.
+                                    not be shared outside the development team.
                                 </p>
                             </div>
                         </div>
@@ -361,24 +338,11 @@ export default function FeedbackPage() {
                 {/* Header */}
                 <div className="text-center mb-12">
                     <h1 className="text-4xl font-bold text-gray-900 mb-4">
-                        Beta Program Feedback
+                        Website Feedback
                     </h1>
                     <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                        Your insights will help shape the future of United Holdings&apos; digital experience
+                        Help us improve the United Holdings digital experience by sharing your insights
                     </p>
-                    {user && (
-                        <div className="mt-4 inline-flex items-center gap-3 bg-white px-4 py-2 rounded-full shadow-sm border">
-                            <div className="w-8 h-8 bg-gradient-to-r from-[#9b1c20] to-[#7a1619] rounded-full flex items-center justify-center">
-                                <span className="text-white text-sm font-semibold">
-                                    {user?.name?.split(' ').map(n => n[0]).join('')}
-                                </span>
-                            </div>
-                            <div className="text-left">
-                                <p className="text-sm font-medium text-gray-900">{user.name}</p>
-                                <p className="text-xs text-gray-500">{user.position}</p>
-                            </div>
-                        </div>
-                    )}
                 </div>
 
                 <ProgressBar />
@@ -389,10 +353,53 @@ export default function FeedbackPage() {
                         <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-8 animate-fadeIn">
                             <div className="mb-8">
                                 <h2 className="text-2xl font-bold text-gray-900 mb-2">About You</h2>
-                                <p className="text-gray-600">Tell us about your role and how you interact with clients</p>
+                                <p className="text-gray-600">Tell us about yourself and your role</p>
                             </div>
 
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                                        Full Name <span className="text-red-500">*</span>
+                                    </label>
+                                    <input
+                                        type="text"
+                                        value={feedback.name}
+                                        onChange={(e) => handleInputChange('name', e.target.value)}
+                                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#9b1c20] focus:border-transparent transition-all"
+                                        placeholder="Enter your full name"
+                                        required
+                                    />
+                                </div>
+
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                                        Email Address <span className="text-red-500">*</span>
+                                    </label>
+                                    <input
+                                        type="email"
+                                        value={feedback.email}
+                                        onChange={(e) => handleInputChange('email', e.target.value)}
+                                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#9b1c20] focus:border-transparent transition-all"
+                                        placeholder="Enter your email"
+                                        required
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                                        Company/Organization
+                                    </label>
+                                    <input
+                                        type="text"
+                                        value={feedback.company}
+                                        onChange={(e) => handleInputChange('company', e.target.value)}
+                                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#9b1c20] focus:border-transparent transition-all"
+                                        placeholder="Your company or organization"
+                                    />
+                                </div>
+
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700 mb-2">
                                         Primary Role <span className="text-red-500">*</span>
@@ -404,13 +411,12 @@ export default function FeedbackPage() {
                                         required
                                     >
                                         <option value="">Select your role</option>
-                                        <option value="Sales">Sales</option>
-                                        <option value="Marketing">Marketing</option>
-                                        <option value="Customer Service">Customer Service</option>
-                                        <option value="Management">Management</option>
-                                        <option value="IT">IT</option>
-                                        <option value="Finance">Finance</option>
-                                        <option value="Operations">Operations</option>
+                                        <option value="Client">Client</option>
+                                        <option value="Partner">Partner</option>
+                                        <option value="Stakeholder">Stakeholder</option>
+                                        <option value="Supplier">Supplier</option>
+                                        <option value="Prospective Client">Prospective Client</option>
+                                        <option value="Industry Peer">Industry Peer</option>
                                         <option value="Other">Other</option>
                                     </select>
                                     {feedback.role === 'Other' && (
@@ -423,50 +429,18 @@ export default function FeedbackPage() {
                                         />
                                     )}
                                 </div>
-
-                                <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                                        Department <span className="text-red-500">*</span>
-                                    </label>
-                                    <select
-                                        value={feedback.department}
-                                        onChange={(e) => handleInputChange('department', e.target.value)}
-                                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#9b1c20] focus:border-transparent transition-all"
-                                        required
-                                    >
-                                        <option value="">Select department</option>
-                                        <option value="Sales">Sales</option>
-                                        <option value="Marketing">Marketing</option>
-                                        <option value="Customer Service">Customer Service</option>
-                                        <option value="Finance">Finance</option>
-                                        <option value="IT">IT</option>
-                                        <option value="Operations">Operations</option>
-                                        <option value="Human Resources">Human Resources</option>
-                                        <option value="Administration">Administration</option>
-                                        <option value="Other">Other</option>
-                                    </select>
-                                    {feedback.department === 'Other' && (
-                                        <input
-                                            type="text"
-                                            value={feedback.departmentOther}
-                                            onChange={(e) => handleInputChange('departmentOther', e.target.value)}
-                                            placeholder="Please specify your department"
-                                            className="w-full mt-3 px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#9b1c20] focus:border-transparent"
-                                        />
-                                    )}
-                                </div>
                             </div>
 
-                            <div>
+                            <div className="mb-6">
                                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                                    How do you typically interact with clients? <span className="text-red-500">*</span>
+                                    How do you typically interact with United Holdings? <span className="text-red-500">*</span>
                                 </label>
                                 <textarea
                                     value={feedback.roleInteraction}
                                     onChange={(e) => handleInputChange('roleInteraction', e.target.value)}
                                     rows={4}
                                     className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#9b1c20] focus:border-transparent transition-all"
-                                    placeholder="Describe your typical client interactions, responsibilities, and how the website might support your work..."
+                                    placeholder="Describe your relationship with United Holdings and how you typically interact with our services..."
                                     required
                                 />
                             </div>
@@ -477,8 +451,8 @@ export default function FeedbackPage() {
                     {currentStep === 2 && (
                         <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-8 animate-fadeIn">
                             <div className="mb-8">
-                                <h2 className="text-2xl font-bold text-gray-900 mb-2">Website Redesign Feedback</h2>
-                                <p className="text-gray-600">Rate different aspects of the new website experience</p>
+                                <h2 className="text-2xl font-bold text-gray-900 mb-2">Website Experience Feedback</h2>
+                                <p className="text-gray-600">Rate different aspects of your website experience</p>
                             </div>
 
                             <div className="space-y-6">
@@ -526,7 +500,7 @@ export default function FeedbackPage() {
                                         onChange={(e) => handleInputChange('contentComments', e.target.value)}
                                         rows={3}
                                         className="w-full mt-3 px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#9b1c20] focus:border-transparent"
-                                        placeholder="Thoughts on the website content? Is it clear, helpful, and relevant to our clients?"
+                                        placeholder="Thoughts on the website content? Is it clear, helpful, and relevant to your needs?"
                                     />
                                 </div>
                             </div>
@@ -537,14 +511,14 @@ export default function FeedbackPage() {
                     {currentStep === 3 && (
                         <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-8 animate-fadeIn">
                             <div className="mb-8">
-                                <h2 className="text-2xl font-bold text-gray-900 mb-2">Fit to Your Business & Role</h2>
-                                <p className="text-gray-600">How well does the website support your specific business objectives?</p>
+                                <h2 className="text-2xl font-bold text-gray-900 mb-2">Business Relationship & Fit</h2>
+                                <p className="text-gray-600">How well does the website support your relationship with United Holdings?</p>
                             </div>
 
                             <div className="space-y-6">
                                 <div className="bg-gray-50 rounded-xl p-6">
                                     <label className="block text-sm font-medium text-gray-700 mb-4">
-                                        How well does the website support your role objectives? *
+                                        How well does the website support your business objectives? *
                                     </label>
                                     <div className="flex items-center gap-3 mb-4">
                                         {[1, 2, 3, 4, 5].map((rating) => (
@@ -570,7 +544,7 @@ export default function FeedbackPage() {
                                         onChange={(e) => handleInputChange('roleObjectivesThoughts', e.target.value)}
                                         rows={3}
                                         className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#9b1c20] focus:border-transparent"
-                                        placeholder="How could the website better support your specific business goals and KPIs?"
+                                        placeholder="How could the website better support your business relationship with United Holdings?"
                                     />
                                 </div>
 
@@ -587,13 +561,13 @@ export default function FeedbackPage() {
                                     </div>
 
                                     <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-2">Most Exciting Aspects</label>
+                                        <label className="block text-sm font-medium text-gray-700 mb-2">Most Valuable Aspects</label>
                                         <textarea
                                             value={feedback.excitingAspects}
                                             onChange={(e) => handleInputChange('excitingAspects', e.target.value)}
                                             rows={4}
                                             className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#9b1c20] focus:border-transparent"
-                                            placeholder="What aspects of the new website are most exciting or valuable for your role?"
+                                            placeholder="What aspects of the website are most valuable for your relationship with United Holdings?"
                                         />
                                     </div>
                                 </div>
@@ -605,27 +579,27 @@ export default function FeedbackPage() {
                     {currentStep === 4 && (
                         <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-8 animate-fadeIn">
                             <div className="mb-8">
-                                <h2 className="text-2xl font-bold text-gray-900 mb-2">KPIs & Success Metrics</h2>
-                                <p className="text-gray-600">What metrics matter most for measuring the website&apos;s success?</p>
+                                <h2 className="text-2xl font-bold text-gray-900 mb-2">Success Metrics</h2>
+                                <p className="text-gray-600">What matters most for measuring a successful website experience?</p>
                             </div>
 
                             <div className="space-y-6">
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700 mb-4">
-                                        Which KPIs are most important for your role? (Select all that apply)
+                                        Which metrics are most important for your experience? (Select all that apply)
                                     </label>
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                                         {[
-                                            'Lead generation/conversion',
-                                            'Customer acquisition cost',
-                                            'Quote completion rate',
-                                            'Customer retention',
-                                            'Customer satisfaction (NPS)',
-                                            'Website engagement metrics',
-                                            'Mobile adoption rate',
-                                            'Brand awareness',
-                                            'Time to complete tasks',
-                                            'Error rates/reduction'
+                                            'Ease of finding information',
+                                            'Speed of website',
+                                            'Mobile responsiveness',
+                                            'Quality of content',
+                                            'Professional appearance',
+                                            'Trust and credibility',
+                                            'Contact and communication ease',
+                                            'Service information clarity',
+                                            'Document access and download',
+                                            'Overall user satisfaction'
                                         ].map((kpi) => (
                                             <label key={kpi} className="flex items-center space-x-3 p-3 border border-gray-200 rounded-xl hover:bg-gray-50 transition-colors cursor-pointer">
                                                 <input
@@ -642,27 +616,27 @@ export default function FeedbackPage() {
 
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                                        How do you define success for these KPIs?
+                                        How do you define a successful website experience?
                                     </label>
                                     <textarea
                                         value={feedback.kpiSuccessDefinition}
                                         onChange={(e) => handleInputChange('kpiSuccessDefinition', e.target.value)}
                                         rows={3}
                                         className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#9b1c20] focus:border-transparent"
-                                        placeholder="What specific metrics or outcomes would indicate success for your role and department?"
+                                        placeholder="What specific outcomes or experiences would indicate website success for you?"
                                     />
                                 </div>
 
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                                        Additional Metrics to Track
+                                        Additional Success Factors
                                     </label>
                                     <textarea
                                         value={feedback.additionalMetrics}
                                         onChange={(e) => handleInputChange('additionalMetrics', e.target.value)}
                                         rows={2}
                                         className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#9b1c20] focus:border-transparent"
-                                        placeholder="Are there any other metrics or data points we should consider tracking?"
+                                        placeholder="Are there any other factors that contribute to a positive website experience?"
                                     />
                                 </div>
                             </div>
@@ -673,8 +647,8 @@ export default function FeedbackPage() {
                     {currentStep === 5 && (
                         <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-8 animate-fadeIn">
                             <div className="mb-8">
-                                <h2 className="text-2xl font-bold text-gray-900 mb-2">Final Thoughts & Sentiment</h2>
-                                <p className="text-gray-600">Share your overall impressions and recommendations</p>
+                                <h2 className="text-2xl font-bold text-gray-900 mb-2">Final Thoughts & Recommendations</h2>
+                                <p className="text-gray-600">Share your overall impressions and suggestions</p>
                             </div>
 
                             <div className="space-y-6">
@@ -686,7 +660,7 @@ export default function FeedbackPage() {
                                             onChange={(e) => handleInputChange('likeMost', e.target.value)}
                                             rows={4}
                                             className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#9b1c20] focus:border-transparent"
-                                            placeholder="What aspects of the new website do you find most valuable or impressive?"
+                                            placeholder="What aspects of the website do you find most valuable or impressive?"
                                         />
                                     </div>
 
@@ -697,7 +671,7 @@ export default function FeedbackPage() {
                                             onChange={(e) => handleInputChange('needsImprovement', e.target.value)}
                                             rows={4}
                                             className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#9b1c20] focus:border-transparent"
-                                            placeholder="What could be improved to better serve your needs and our clients' needs?"
+                                            placeholder="What could be improved to better serve your needs?"
                                         />
                                     </div>
                                 </div>
@@ -705,10 +679,10 @@ export default function FeedbackPage() {
                                 {/* Excitement Rating */}
                                 <div className="bg-gray-50 rounded-xl p-6">
                                     <label className="block text-sm font-medium text-gray-700 mb-4">
-                                        Overall excitement about the new website (1-10) *
+                                        Overall satisfaction with the website (1-10) *
                                     </label>
                                     <div className="flex items-center gap-4 mb-4">
-                                        <span className="text-sm text-gray-500 min-w-[40px]">1 - Not excited</span>
+                                        <span className="text-sm text-gray-500 min-w-[40px]">1 - Not satisfied</span>
                                         <input
                                             type="range"
                                             min="1"
@@ -717,7 +691,7 @@ export default function FeedbackPage() {
                                             onChange={(e) => handleInputChange('excitementRating', parseInt(e.target.value))}
                                             className="flex-1 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:h-6 [&::-webkit-slider-thumb]:w-6 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-[#9b1c20]"
                                         />
-                                        <span className="text-sm text-gray-500 min-w-[60px]">10 - Very excited</span>
+                                        <span className="text-sm text-gray-500 min-w-[60px]">10 - Very satisfied</span>
                                         <span className="text-xl font-bold text-[#9b1c20] min-w-[30px] text-center">
                                             {feedback.excitementRating}
                                         </span>
@@ -728,14 +702,14 @@ export default function FeedbackPage() {
                                         onChange={(e) => handleInputChange('excitementReason', e.target.value)}
                                         rows={2}
                                         className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#9b1c20] focus:border-transparent"
-                                        placeholder="What drives your excitement level? What are you most looking forward to?"
+                                        placeholder="What drives your satisfaction level? What are you most pleased with?"
                                     />
                                 </div>
 
                                 {/* NPS Score */}
                                 <div className="bg-gradient-to-r from-[#9b1c20] to-[#7a1619] rounded-xl p-6 text-white">
                                     <label className="block text-sm font-medium mb-4">
-                                        Net Promoter Score: How likely are you to recommend this website to colleagues? (0-10) *
+                                        Net Promoter Score: How likely are you to recommend United Holdings to others? (0-10) *
                                     </label>
                                     <div className="flex items-center justify-between mb-4 flex-wrap gap-2">
                                         {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((score) => (
@@ -763,12 +737,12 @@ export default function FeedbackPage() {
                                         onChange={(e) => handleInputChange('npsReason', e.target.value)}
                                         rows={2}
                                         className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl focus:ring-2 focus:ring-white focus:border-transparent placeholder-white/60"
-                                        placeholder="What's the main reason for your score? What would make you more likely to recommend it?"
+                                        placeholder="What's the main reason for your score? What would make you more likely to recommend United Holdings?"
                                     />
                                 </div>
 
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-2">Additional comments</label>
+                                    <label className="block text-sm font-medium text-gray-700 mb-2">Additional comments or suggestions</label>
                                     <textarea
                                         value={feedback.otherThoughts}
                                         onChange={(e) => handleInputChange('otherThoughts', e.target.value)}
@@ -824,7 +798,7 @@ export default function FeedbackPage() {
                         ) : (<div></div>)}
                         {currentStep === 5 && (
                             <button
-                                type="submit" // ← Only this one submits
+                                type="submit"
                                 disabled={loading}
                                 className="bg-gradient-to-r from-green-500 to-green-600 text-white px-8 py-3 rounded-xl font-semibold hover:shadow-lg transition-all duration-200 disabled:opacity-50"
                             >
@@ -837,7 +811,7 @@ export default function FeedbackPage() {
                 {/* Progress Indicator */}
                 <div className="mt-8 text-center">
                     <p className="text-sm text-gray-500">
-                        Step {currentStep} of 5 • Your feedback is anonymous and confidential
+                        Step {currentStep} of 5 • Your feedback helps us improve our services
                     </p>
                 </div>
             </div>

@@ -38,7 +38,7 @@ function Footer() {
         },
         { 
             name: 'Facebook', 
-            url: 'https://www.facebook.com/UnitedHSD/', 
+            url: 'https://www.facebook.com/UnitedHoldingsEswatini/', 
             icon: PiFacebookLogo 
         },
         { 

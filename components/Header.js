@@ -39,6 +39,7 @@ import {
     PiCalendarCheck,
     PiShieldStar,
     PiImages,
+    PiImage,
 } from 'react-icons/pi';
 
 export default function Header() {
@@ -61,7 +62,7 @@ export default function Header() {
         },
         { 
             name: 'Facebook', 
-            url: 'https://www.facebook.com/UnitedHSD/', 
+            url: 'https://www.facebook.com/UnitedHoldingsEswatini/', 
             icon: PiFacebookLogo 
         },
         { 
@@ -146,6 +147,18 @@ export default function Header() {
             icon: PiUsersThree,
             description: "Meet our dedicated team"
         },
+        {
+            name: "Careers", 
+            link: "/about/careers", 
+            icon: PiUsersThree,
+            description: "Join our team and make a difference"
+        },
+        {
+            name: "Gallery",
+            link: "/about/gallery",
+            icon: PiImage,
+            description: "Take a look at our work"
+        }
        
     ], []);
 
@@ -271,9 +284,9 @@ export default function Header() {
     const renderDesktopDropdown = (item) => {
         if (item.name === "PRODUCTS") {
             return (
-                <div className="absolute -left-[-35%] transform -translate-x-1/2 top-[93%] pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 w-screen">
+                <div className="absolute w-screen bg-black mx-auto -translate-x-[35%] xl:">
                     <div className="">
-                        <div className="grid grid-cols-4 rounded-b-xl px-8 max-w-[1400px] mx-auto">
+                        <div className="grid grid-cols-4 rounded-b-xl px-8 max-w-[1200px] mx-auto">
                             {item.dropdown.map((category, categoryIndex) => {
                                 const CategoryIcon = category.icon;
                                 return (
@@ -548,7 +561,7 @@ export default function Header() {
                             {/* Bottom section - Main navigation */}
                             <div className="flex-1 flex items-center justify-end px-6">
                                 <nav className="flex-1">
-                                    <ul className="flex items-center justify-end space-x-8 text-sm font-semibold">
+                                    <ul className="flex items-center justify-end space-x-4 xl:space-x-6 text-sm font-semibold">
                                         {mainNavItems.map((item, index) => (
                                             <li key={index} className="relative group">
                                                 {item.dropdown ? (

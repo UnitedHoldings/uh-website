@@ -373,13 +373,19 @@ export default function RenderForm({
                     onChange={handleInputChange} 
                     required 
                 />
-                <InputField 
-                    label="Coverage/Loan Amount (SZL)" 
-                    name="amount" 
-                    type="number" 
-                    value={formData.amount || ''} 
-                    onChange={handleInputChange} 
-                />
+                    <SelectField
+                        label="Cover Plan"
+                        name="coverPlan"
+                        value={formData.coverPlan || ''}
+                        onChange={handleInputChange}
+                        options={[
+                            { value: 'E10000', label: 'E10,000' },
+                            { value: 'E20000', label: 'E20,000' },
+                            { value: 'E30000', label: 'E30,000' },
+                            { value: 'E40000', label: 'E40,000' },
+                            { value: 'E50000', label: 'E50,000' }
+                        ]}
+                    />
                 <InputField 
                     label="Date of Birth" 
                     name="dob" 

@@ -303,8 +303,7 @@ export default function UnitedGeneralInsurance() {
                     >
                         <span className="flex items-center justify-center">
                             Learn More
-                            <PiCurrencyCircleDollar className="ml-2 group-hover/btn:translate-x-1 transition-transform" />
-                        </span>
+                                      </span>
                     </Link>
                 </div>
             </div>

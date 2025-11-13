@@ -275,7 +275,6 @@ export default function UnitedLifeAssurance() {
           >
             <span className="flex items-center justify-center">
               Learn More
-              <PiCurrencyCircleDollar className="ml-2 group-hover/btn:translate-x-1 transition-transform" />
             </span>
           </Link>
         </div>

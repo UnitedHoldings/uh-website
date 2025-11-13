@@ -278,7 +278,6 @@ export default function UnitedPay() {
           >
             <span className="flex items-center justify-center">
               Apply Now
-              <PiCurrencyCircleDollar className="ml-2 group-hover/btn:translate-x-1 transition-transform" />
             </span>
           </a>
         </div>
