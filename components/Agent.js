@@ -255,11 +255,11 @@ function Agent() {
                       <span>upay@united.co.sz</span>
                     </div>
                     <div className="flex items-center gap-1">
-                      <span className="font-semibold text-[#9b1c20]">Insurance:</span>
+                      <span className="font-semibold text-[#9b1c20]">United General Insurance:</span>
                       <span>ugi@united.co.sz</span>
                     </div>
                     <div className="flex items-center gap-1">
-                      <span className="font-semibold text-[#9b1c20]">ULA:</span>
+                      <span className="font-semibold text-[#9b1c20]">United Life Assurance:</span>
                       <span>ula@united.co.sz</span>
                     </div>
                   </div>

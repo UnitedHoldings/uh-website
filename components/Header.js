@@ -284,7 +284,7 @@ export default function Header() {
     const renderDesktopDropdown = (item) => {
         if (item.name === "PRODUCTS") {
             return (
-                <div className="absolute w-screen  mx-auto -translate-x-[35%] xl:">
+                <div className="absolute w-screen  mx-auto -translate-x-[35%] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
                     <div className="">
                         <div className="grid grid-cols-4 rounded-b-xl px-8 max-w-[1200px] 2xl:max-w-[1400px]">
                             {item.dropdown.map((category, categoryIndex) => {
