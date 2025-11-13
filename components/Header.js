@@ -284,9 +284,9 @@ export default function Header() {
     const renderDesktopDropdown = (item) => {
         if (item.name === "PRODUCTS") {
             return (
-                <div className="absolute w-screen bg-black mx-auto -translate-x-[35%] xl:">
+                <div className="absolute w-screen  mx-auto -translate-x-[35%] xl:">
                     <div className="">
-                        <div className="grid grid-cols-4 rounded-b-xl px-8 max-w-[1200px] mx-auto">
+                        <div className="grid grid-cols-4 rounded-b-xl px-8 max-w-[1200px] 2xl:max-w-[1400px]">
                             {item.dropdown.map((category, categoryIndex) => {
                                 const CategoryIcon = category.icon;
                                 return (
@@ -301,7 +301,7 @@ export default function Header() {
                                             <div className="flex items-center space-x-2 mb-4">
                                                 <Link 
                                                     href={category.link || '#'}
-                                                    className="font-bold text-white px-6 text-xl hover:text-gray-100 border-b border-white border-opacity-30 pb-1"
+                                                    className="font-bold text-white px-6 text-lg hover:text-gray-100 border-b border-white/20 border-opacity-30 pb-1"
                                                 >
                                                     {category.category}
                                                 </Link>
