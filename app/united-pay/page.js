@@ -144,6 +144,7 @@ export default function UnitedPay() {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [priceFilter, setPriceFilter] = useState('All');
   const [products, setProducts] = useState([]);
+  const [companyData, setCompanyData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const productsSectionRef = useRef(null);
@@ -156,19 +157,46 @@ export default function UnitedPay() {
 
   // Fetch data from API
   useEffect(() => {
-    const loadProducts = async () => {
+    const loadData = async () => {
       try {
-        const data = await fetchUnitedPayData();
-        setProducts(data);
+        // Fetch products data
+        const productsData = await fetchUnitedPayData();
+        setProducts(productsData);
+
+        // Fetch company data from our proxy API endpoint
+        const response = await fetch('/api/company-pages');
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const contentType = response.headers.get('content-type');
+        if (!contentType || !contentType.includes('application/json')) {
+          throw new Error('Response is not JSON');
+        }
+
+        const result = await response.json();
+        
+        if (result.success && result.data) {
+          const upCompany = result.data.find(company => company.companyCode === 'UP');
+          if (upCompany) {
+            setCompanyData(upCompany);
+          } else {
+            throw new Error('UP company not found in API response');
+          }
+        } else {
+          throw new Error(result.message || 'Failed to fetch company data');
+        }
+
       } catch (err) {
         setError(err.message);
-        console.error('Failed to load products:', err);
+        console.error('Failed to load data:', err);
       } finally {
         setLoading(false);
       }
     };
 
-    loadProducts();
+    loadData();
   }, []);
 
   // Get unique categories
@@ -203,6 +231,7 @@ export default function UnitedPay() {
   const ProductCard = ({ product }) => {
     const IconComponent = categoryIcons[product.name];
     const colorClass = categoryColors[product.name];
+    const brandColor = companyData?.brandColorPrimary;
 
     return (
       <div className="bg-white rounded-xl hover:shadow-xl transition-all duration-300 overflow-hidden group hover:transform hover:-translate-y-2">
@@ -223,7 +252,8 @@ export default function UnitedPay() {
           {/* Top-right Icon */}
           <div className="absolute top-4 right-4">
             <div
-              className={`w-12 h-12 rounded-full flex items-center justify-center text-white bg-[#f79620] shadow-lg hover:shadow-xl transition-all duration-300`}
+              style={{ backgroundColor: brandColor }}
+              className={`w-12 h-12 rounded-full flex items-center justify-center text-white shadow-lg hover:shadow-xl transition-all duration-300`}
             >
               <IconComponent className="text-xl" />
             </div>
@@ -232,7 +262,7 @@ export default function UnitedPay() {
 
         {/* Content Section */}
         <div className="p-6">
-          <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-[#f79620] transition-colors">
+          <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-[#15803d] transition-colors">
             {product.name}
           </h3>
           <p className="text-gray-600 text-sm mb-4 line-clamp-2">
@@ -268,7 +298,8 @@ export default function UnitedPay() {
             href="https://uploans.united.co.sz/"
             target="_blank"
             rel="noopener noreferrer"
-            className="w-full bg-[#f79620] text-white py-3 px-4 rounded-full font-semibold hover:bg-[#2f6b3d] transition-colors text-center block group/btn"
+            style={{ backgroundColor: brandColor }}
+            className="w-full text-white py-3 px-4 rounded-full font-semibold hover:bg-[#0f6b2d] transition-colors text-center block group/btn"
             onClick={() => trackEvent('up_product_cta_clicked', {
               product_name: product.name,
               location: 'up_products_grid',
@@ -298,7 +329,8 @@ export default function UnitedPay() {
           <p className="text-gray-500 mb-4">{error}</p>
           <button 
             onClick={() => window.location.reload()}
-            className="bg-[#f79620] text-white px-6 py-2 rounded-full font-semibold hover:bg-[#e0861c] transition-colors"
+            style={{ backgroundColor: companyData?.brandColorPrimary || '#15803d' }}
+            className="text-white px-6 py-2 rounded-full font-semibold hover:bg-[#0f6b2d] transition-colors"
           >
             Try Again
           </button>
@@ -307,16 +339,43 @@ export default function UnitedPay() {
     );
   }
 
+  // If no company data, don't render anything
+  if (!companyData) {
+    return null;
+  }
+
+  const brandColor = companyData.brandColorPrimary;
+  const brandColorSecondary = companyData.brandColorSecondary;
+  const darkBrandColor = '#0f6b2d';
+
+  // Safe data access with validation
+  const companyName = companyData.companyName || '';
+  const heroHeading = companyData.heroHeading || '';
+  const heroSubheading = companyData.heroSubheading || '';
+  const heroCTAText = companyData.heroCTAText || '';
+  const heroCTAAction = companyData.heroCTAAction || '';
+  const ctaPrimaryText = companyData.ctaPrimaryText || '';
+  const searchSectionLabel = companyData.searchSectionLabel || '';
+  const searchPlaceholder = companyData.searchPlaceholder || '';
+  const noProductsMessage = companyData.noProductsMessage || '';
+  const noProductsDescription = companyData.noProductsDescription || '';
+  const ctaHeading = companyData.ctaHeading || '';
+  const ctaDescription = companyData.ctaDescription || '';
+  const ctaSecondaryText = companyData.ctaSecondaryText || '';
+  const ctaSecondaryUrl = companyData.ctaSecondaryUrl || '/contact';
+
   return (
     <div className="min-h-screen bg-gray-100 font-outfit">
       {/* Header with Background Image */}
-      <div className='bg-[#e0861c] h-2 w-full' />
-      <div className='relative bg-[#f79620] py-16 md:py-24 min-h-[500px] flex items-center'>
+      <div style={{ backgroundColor: darkBrandColor }} className='h-2 w-full' />
+      <div style={{ backgroundColor: brandColor }} className='relative py-16 md:py-24 min-h-[500px] flex items-center'>
         {/* Background Image with Overlay */}
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
-            backgroundImage: 'url("/loan.jpg")',
+            backgroundImage: companyData.heroBackgroundImage?.asset?.url 
+              ? `url("${companyData.heroBackgroundImage.asset.url}")`
+              : 'none',
           }}
         >
           <div className="absolute inset-0 bg-black opacity-50"></div>
@@ -326,27 +385,43 @@ export default function UnitedPay() {
         <div className="relative z-10 max-w-[1400px] mx-auto px-4 sm:px-6 w-full">
           <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
             <div className="text-center lg:text-left text-white flex-1">
-              <h1 className="text-4xl text-[#f79620] sm:text-5xl md:text-6xl font-bold mb-6 leading-tight">
-                United Pay
+              <h1 className="text-4xl text-white sm:text-5xl md:text-6xl font-bold mb-6 leading-tight">
+                {companyName}
               </h1>
               <p className="text-xl sm:text-2xl md:text-3xl text-white/90 mb-8 max-w-2xl leading-relaxed">
-                Flexible financial solutions and micro loans for employed individuals across Eswatini
+                {heroHeading}
+              </p>
+              <p className="text-lg text-white/80 mb-8 max-w-2xl">
+                {heroSubheading}
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <button
                   onClick={() => {
                     trackEvent('up_banner_cta_clicked', {
-                      cta_text: 'Apply Now',
+                      cta_text: heroCTAText,
                       location: 'up_hero_banner',
                       product_page: 'UP'
                     });
-                    scrollToProducts();
+                    if (heroCTAAction === 'scroll') {
+                      scrollToProducts();
+                    }
                   }}
-                  className="bg-white text-[#f79620] px-8 py-4 rounded-full font-semibold hover:bg-gray-100 transition-colors text-lg text-center"
+                  className="bg-white text-[#15803d] px-8 py-4 rounded-full font-semibold hover:bg-gray-100 transition-colors text-lg text-center"
                 >
-                  Apply Now
+                  {heroCTAText}
                 </button>
-              
+                <button
+                  onClick={() => {
+                    trackEvent('up_banner_cta_clicked', {
+                      cta_text: ctaPrimaryText,
+                      location: 'up_hero_banner',
+                      product_page: 'UP'
+                    });
+                  }}
+                  className="border-2 border-white text-white px-8 py-4 rounded-full font-semibold hover:bg-white hover:text-[#15803d] transition-colors text-lg text-center"
+                >
+                  {ctaPrimaryText}
+                </button>
               </div>
             </div>
           </div>
@@ -357,7 +432,9 @@ export default function UnitedPay() {
       <section className="py-8 bg-white">
         <div className="max-w-[1400px] mx-auto px-4 sm:px-6">
           <div className='text-xl font-semibold mb-4'>
-            <p className='text-[#f79620] text-2xl'>What financial needs do you have?</p>
+            <p style={{ color: brandColor }} className='text-2xl'>
+              {searchSectionLabel}
+            </p>
           </div>
           <div className="flex flex-col lg:flex-row gap-4 items-center justify-between">
             {/* Search */}
@@ -366,10 +443,10 @@ export default function UnitedPay() {
                 <PiMagnifyingGlass className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 text-xl" />
                 <input
                   type="text"
-                  placeholder="Search loan products..."
+                  placeholder={searchPlaceholder}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#f79620] focus:border-transparent"
+                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#15803d] focus:border-transparent"
                 />
               </div>
             </div>
@@ -388,8 +465,12 @@ export default function UnitedPay() {
           {filteredProducts.length === 0 ? (
             <div className="text-center py-12">
               <PiUserSwitch className="text-6xl text-gray-300 mx-auto mb-4" />
-              <h3 className="text-xl font-semibold text-gray-600 mb-2">No loan products found</h3>
-              <p className="text-gray-500">Try adjusting your search or filters</p>
+              <h3 className="text-xl font-semibold text-gray-600 mb-2">
+                {noProductsMessage}
+              </h3>
+              <p className="text-gray-500">
+                {noProductsDescription}
+              </p>
             </div>
           ) : (
             <div>
@@ -402,7 +483,10 @@ export default function UnitedPay() {
               {/* Load More (if needed in future) */}
               {filteredProducts.length > 8 && (
                 <div className="text-center mt-12">
-                  <button className="border-2 border-[#f79620] text-[#f79620] py-3 px-8 rounded-full font-semibold hover:bg-[#f79620] hover:text-white transition-colors">
+                  <button 
+                    style={{ borderColor: brandColor, color: brandColor }}
+                    className="border-2 py-3 px-8 rounded-full font-semibold hover:bg-[#15803d] hover:text-white transition-colors"
+                  >
                     Load More Products
                   </button>
                 </div>
@@ -416,10 +500,10 @@ export default function UnitedPay() {
       <section className="py-16 bg-white">
         <div className="max-w-[1400px] mx-auto px-4 sm:px-6 text-center">
           <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
-            Ready to Access Funds?
+            {ctaHeading}
           </h2>
           <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-            Join thousands of employed individuals who trust United Pay for their financial needs.
+            {ctaDescription}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <button
@@ -427,25 +511,31 @@ export default function UnitedPay() {
                 trackEvent('up_request_callback_clicked', {
                   product_name: 'United Pay',
                   location: 'up_cta_section',
-                  button_text: 'Apply Now'
+                  button_text: ctaPrimaryText
                 });
                 scrollToProducts();
               }}
-              className="bg-[#f79620] text-white px-8 py-4 rounded-full font-semibold hover:bg-[#e0861c] transition-colors text-lg"
+              style={{ backgroundColor: brandColor }}
+              className="text-white px-8 py-4 rounded-full font-semibold hover:bg-[#0f6b2d] transition-colors text-lg"
             >
-              Apply Now
+              {ctaPrimaryText}
             </button>
-            <Link
-              href="/contact"
-              className="border-2 border-[#f79620] text-[#f79620] px-8 py-4 rounded-full font-semibold hover:bg-[#f79620] hover:text-white transition-colors text-lg"
-              onClick={() => trackEvent('up_request_callback_clicked', {
-                product_name: 'United Pay',
-                location: 'up_cta_section',
-                button_text: 'Find a Branch'
-              })}
-            >
-              Find a Branch
-            </Link>
+            
+            {/* Only render secondary CTA if both text and URL exist */}
+            {ctaSecondaryText && ctaSecondaryUrl && (
+              <Link
+                href={ctaSecondaryUrl}
+                style={{ borderColor: brandColor, color: brandColor }}
+                className="border-2 px-8 py-4 rounded-full font-semibold hover:bg-[#15803d] hover:text-white transition-colors text-lg"
+                onClick={() => trackEvent('up_request_callback_clicked', {
+                  product_name: 'United Pay',
+                  location: 'up_cta_section',
+                  button_text: ctaSecondaryText
+                })}
+              >
+                {ctaSecondaryText}
+              </Link>
+            )}
           </div>
         </div>
       </section>

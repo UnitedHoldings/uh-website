@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { SlDoc, SlEnvolope, SlInfo, SlLink, SlPhone, SlTarget } from 'react-icons/sl';
 import VideoPlayer from './VideoPlayer';
 
@@ -13,17 +13,118 @@ function Agent() {
   const [reason, setReason] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState('');
+  const [callbackReasons, setCallbackReasons] = useState([]);
+  const [loadingReasons, setLoadingReasons] = useState(true);
+  const [reasonsError, setReasonsError] = useState(null);
 
-  // Email mapping based on reason/business unit
-  const getEmailByReason = (reason) => {
-    const emailMap = {
-      'Get A Quote': 'info@united.co.sz', // United General Insurance
-      'File A Claim': 'info@united.co.sz', // United General Insurance
-      'Ask Questions': 'info@united.co.sz', // Call Center
-      'Account Statement': 'info@united.co.sz', // ULA
-      'Other': 'info@united.co.sz', // Default to Call Center
+  // Fallback callback reasons in case API fails
+  const FALLBACK_REASONS = [
+    {
+      _id: 'fallback-1',
+      label: 'Get A Quote',
+      value: 'get_quote',
+      description: 'Request a personalized insurance quote',
+      targetDepartment: 'Sales',
+      targetEmail: 'sales@unitedholdings.co.sz',
+      isActive: true,
+      displayOrder: 1
+    },
+    {
+      _id: 'fallback-2',
+      label: 'File A Claim',
+      value: 'file_claim',
+      description: 'Submit a new insurance claim',
+      targetDepartment: 'Claims',
+      targetEmail: 'claims@unitedholdings.co.sz',
+      isActive: true,
+      displayOrder: 2
+    },
+    {
+      _id: 'fallback-3',
+      label: 'Ask Questions',
+      value: 'general_inquiry',
+      description: 'General questions about our products and services',
+      targetDepartment: 'Customer Service',
+      targetEmail: 'info@unitedholdings.co.sz',
+      isActive: true,
+      displayOrder: 3
+    },
+    {
+      _id: 'fallback-4',
+      label: 'Account Statement',
+      value: 'account_statement',
+      description: 'Request account statement or policy information',
+      targetDepartment: 'Accounts',
+      targetEmail: 'accounts@unitedholdings.co.sz',
+      isActive: true,
+      displayOrder: 4
+    },
+    {
+      _id: 'fallback-5',
+      label: 'Other',
+      value: 'other',
+      description: 'Other inquiries or concerns',
+      targetDepartment: 'General',
+      targetEmail: 'info@unitedholdings.co.sz',
+      isActive: true,
+      displayOrder: 5
+    }
+  ];
+
+  // Fetch callback reasons from API
+  useEffect(() => {
+    const fetchCallbackReasons = async () => {
+      try {
+        const response = await fetch('/api/callback-reasons');
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const contentType = response.headers.get('content-type');
+        if (!contentType || !contentType.includes('application/json')) {
+          throw new Error('Response is not JSON');
+        }
+
+        const result = await response.json();
+        
+        if (result.success && result.data) {
+          // Filter only active reasons and sort by displayOrder
+          const activeReasons = result.data
+            .filter(reason => reason.isActive)
+            .sort((a, b) => a.displayOrder - b.displayOrder);
+          
+          setCallbackReasons(activeReasons);
+        } else {
+          throw new Error(result.message || 'Failed to fetch callback reasons');
+        }
+      } catch (error) {
+        console.error('Error fetching callback reasons:', error);
+        setReasonsError(error.message);
+        // Use fallback data if API fails
+        setCallbackReasons(FALLBACK_REASONS);
+      } finally {
+        setLoadingReasons(false);
+      }
     };
-    return emailMap[reason] || 'callcenter@united.co.sz';
+
+    fetchCallbackReasons();
+  }, []);
+
+  // Get email based on selected reason from API data
+  const getEmailByReason = (selectedReason) => {
+    if (!selectedReason) return 'info@unitedholdings.co.sz';
+    
+    const foundReason = callbackReasons.find(reason => reason.label === selectedReason);
+    return foundReason ? foundReason.targetEmail : 'info@unitedholdings.co.sz';
+  };
+
+  // Get description for selected reason
+  const getReasonDescription = (selectedReason) => {
+    if (!selectedReason) return '';
+    
+    const foundReason = callbackReasons.find(reason => reason.label === selectedReason);
+    return foundReason ? foundReason.description : '';
   };
 
   const handleSendCallback = async (e) => {
@@ -39,6 +140,7 @@ function Agent() {
 
     try {
       const recipientEmail = getEmailByReason(reason);
+      const reasonDescription = getReasonDescription(reason);
       
       const emailData = {
         product_name: "Callback Request - " + reason,
@@ -46,7 +148,8 @@ function Agent() {
         product_email: recipientEmail,
         product_contact: mobileNumber,
         customer_name: `${firstName} ${lastName}`.trim(),
-        reason: reason
+        reason: reason,
+        reason_description: reasonDescription
       };
 
       const response = await fetch('https://website.api.united.co.sz/api/send-email', {
@@ -109,7 +212,7 @@ function Agent() {
             {/* Form Section */}
             <div className="space-y-4 sm:space-y-6 flex flex-col py-4 sm:py-6 lg:py-8 px-2 sm:px-4 md:px-6 lg:px-8 w-full">
               {/* Title */}
-              <div className="flex flex-col gap-2  ">
+              <div className="flex flex-col gap-2">
                 <p className="font-bold text-[#9b1c20] text-xl sm:text-2xl md:text-2xl">
                   Request a Callback
                 </p>
@@ -117,6 +220,13 @@ function Agent() {
                   From Our Insurance Officers
                 </p>
               </div>
+
+              {/* API Error Warning */}
+              {reasonsError && (
+                <div className="text-xs text-yellow-600 bg-yellow-50 p-2 rounded-lg border border-yellow-200">
+                  <strong>Note:</strong> Using fallback data. {reasonsError}
+                </div>
+              )}
 
               {/* Form */}
               <form onSubmit={handleSendCallback} className="w-full">
@@ -154,27 +264,35 @@ function Agent() {
                     onChange={(e) => setReason(e.target.value)}
                     className="border-[#9b1c20]/20 p-3 sm:p-4 px-4 rounded-full border text-sm sm:text-base w-full text-[#9b1c20] focus:outline-none focus:ring-2 focus:ring-[#9b1c20]/30 bg-white"
                     required
+                    disabled={loadingReasons}
                   >
-                    <option value="">Select Reason *</option>
-                    <option value="Get A Quote">Get A Quote</option>
-                    <option value="File A Claim">File A Claim</option>
-                    <option value="Ask Questions">Ask Questions</option>
-                    <option value="Account Statement">Account Statement</option>
-                    <option value="Other">Other</option>
+                    <option value="">{loadingReasons ? 'Loading reasons...' : 'Select Reason *'}</option>
+                    {callbackReasons.map((reasonItem) => (
+                      <option key={reasonItem._id} value={reasonItem.label}>
+                        {reasonItem.label}
+                      </option>
+                    ))}
                   </select>
                 </div>
 
-                {/* Email Routing Info */}
+                {/* Reason Description */}
                 {reason && (
                   <div className="text-xs text-gray-600 mb-2 p-2 bg-gray-50 rounded-lg">
-                    Your request will be sent to: <strong>{getEmailByReason(reason)}</strong>
+                    <div className="font-semibold">{getReasonDescription(reason)}</div>
+                    <div className="mt-1">
+                      Your request will be sent to: <strong>{getEmailByReason(reason)}</strong>
+                      <br />
+                      <span className="text-gray-500">
+                        Department: {callbackReasons.find(r => r.label === reason)?.targetDepartment || 'General'}
+                      </span>
+                    </div>
                   </div>
                 )}
                 
                 {/* Submit Button */}
                 <button
                   type="submit"
-                  disabled={isLoading}
+                  disabled={isLoading || loadingReasons}
                   className="bg-[#9b1c20] space-x-2 text-white px-6 md:px-8 lg:px-16 py-3 sm:py-4 rounded-full w-full sm:w-auto flex items-center justify-center text-sm sm:text-base font-bold disabled:opacity-50 disabled:cursor-not-allowed hover:bg-[#8a191d] transition-colors duration-200 min-h-[48px]"
                 >
                   <SlPhone className="text-sm" />
@@ -192,7 +310,7 @@ function Agent() {
               )}
 
               {/* Quick Links & Contact */}
-              <div className=" space-y-2">
+              <div className="space-y-2">
                 {/* Quick Links */}
                 <div>
                   <p className="font-bold text-gray-600 text-sm md:text-base mb-3">Quick Links</p>
@@ -233,35 +351,44 @@ function Agent() {
                     <div className="flex items-center gap-2">
                       <SlEnvolope className="text-sm md:text-base text-[#9b1c20] flex-shrink-0" />
                       <a
-                        href="mailto:info@united.co.sz"
+                        href="mailto:info@unitedholdings.co.sz"
                         className="font-semibold text-sm md:text-base text-[#9b1c20] hover:underline transition hover:text-[#F7941D]"
                       >
-                        info@united.co.sz
+                        info@unitedholdings.co.sz
                       </a>
                     </div>
                   </div>
                 </div>
 
-                {/* Business Unit Emails */}
+                {/* Business Unit Emails from API */}
                 <div className="pt-4 border-t border-gray-200">
                   <p className="font-bold text-gray-600 text-sm md:text-base mb-2">Contact Specific Departments</p>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
-                    <div className="flex items-center gap-1">
-                      <span className="font-semibold text-[#9b1c20]">Call Center:</span>
-                      <span>callcenter@united.co.sz</span>
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <span className="font-semibold text-[#9b1c20]">United Pay:</span>
-                      <span>upay@united.co.sz</span>
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <span className="font-semibold text-[#9b1c20]">United General Insurance:</span>
-                      <span>ugi@united.co.sz</span>
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <span className="font-semibold text-[#9b1c20]">United Life Assurance:</span>
-                      <span>ula@united.co.sz</span>
-                    </div>
+                    {callbackReasons.length > 0 ? (
+                      <>
+                        {callbackReasons
+                          .filter(reason => reason.targetDepartment && reason.targetEmail)
+                          .reduce((unique, reason) => {
+                            const exists = unique.find(item => 
+                              item.targetDepartment === reason.targetDepartment && 
+                              item.targetEmail === reason.targetEmail
+                            );
+                            if (!exists) {
+                              unique.push(reason);
+                            }
+                            return unique;
+                          }, [])
+                          .map((reasonItem) => (
+                            <div key={reasonItem._id} className="flex items-center gap-1">
+                              <span className="font-semibold text-[#9b1c20]">{reasonItem.targetDepartment}:</span>
+                              <span>{reasonItem.targetEmail}</span>
+                            </div>
+                          ))
+                        }
+                      </>
+                    ) : (
+                      <div className="text-gray-500">Loading department contacts...</div>
+                    )}
                   </div>
                 </div>
               </div>

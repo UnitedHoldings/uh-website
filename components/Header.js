@@ -171,6 +171,12 @@ export default function Header() {
             icon: PiFile,
             description: "Company policies and procedures"
         },
+         { 
+            name: "News Blog", 
+            link: "/news", 
+            icon: PiNewspaper,
+            description: "Latest news and updates"
+        },
     
     ], []);
 

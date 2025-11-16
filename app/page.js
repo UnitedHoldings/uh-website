@@ -14,7 +14,7 @@ import { useRouter } from "next/navigation";
 const DEPARTMENT_COLORS = {
   "Life Assurance": "#3d834d", // Green
   "General Insurance": "#286278", // Blue
-  Loans: "#f79620", // Orange
+  "Loans": "#f79620", // Orange
 };
 
 const SLIDE_DEPARTMENTS = {
