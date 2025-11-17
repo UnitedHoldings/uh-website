@@ -24,7 +24,7 @@ export default function About() {
   useEffect(() => {
     const fetchAboutData = async () => {
       try {
-        const response = await fetch('http://uh-server-staging-688256516165.asia-east1.run.app/api/about-page');
+        const response = await fetch('https://uh-server-staging-688256516165.asia-east1.run.app/api/about-page');
         
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);

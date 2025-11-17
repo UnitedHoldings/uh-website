@@ -96,7 +96,7 @@ export default function Team() {
         setLoading(true);
         setError(null);
         
-        const response = await fetch('http://uh-server-staging-688256516165.asia-east1.run.app/api/profile');
+        const response = await fetch('https://uh-server-staging-688256516165.asia-east1.run.app/api/profile');
         
         if (!response.ok) {
           throw new Error(`Failed to fetch data: ${response.status}`);

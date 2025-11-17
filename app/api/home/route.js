@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 
-const SLIDES_API_URL = 'http://uh-server-staging-688256516165.asia-east1.run.app/api/home'
+const SLIDES_API_URL = 'https://uh-server-staging-688256516165.asia-east1.run.app/api/home'
 
 export async function GET() {
   try {

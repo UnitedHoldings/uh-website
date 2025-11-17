@@ -152,7 +152,7 @@ function Agent() {
         reason_description: reasonDescription
       };
 
-      const response = await fetch('http://uh-server-staging-688256516165.asia-east1.run.app/api/send-email', {
+      const response = await fetch('https://uh-server-staging-688256516165.asia-east1.run.app/api/send-email', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
