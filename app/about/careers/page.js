@@ -591,7 +591,7 @@ export default function CareersPage() {
               Build Your Future With Us
             </h1>
             <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto leading-relaxed">
-              Join Eswatini's leading financial services group and grow your career with purpose, impact, and innovation.
+              Join Eswatini&apos;s leading financial services group and grow your career with purpose, impact, and innovation.
             </p>
             
             {/* Stats Grid */}
@@ -1026,7 +1026,7 @@ export default function CareersPage() {
                 </div>
                 <h3 className="text-2xl font-bold text-gray-900 mb-3">No jobs found</h3>
                 <p className="text-gray-600 mb-6 max-w-md mx-auto">
-                  We couldn't find any jobs matching your criteria. Try adjusting your filters or search terms.
+                  We couldn&apos;t find any jobs matching your criteria. Try adjusting your filters or search terms.
                 </p>
                 <button
                   onClick={() => {

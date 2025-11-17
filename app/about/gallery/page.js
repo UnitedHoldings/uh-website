@@ -676,7 +676,7 @@ export default function GalleryPage() {
             <IoImagesOutline className="text-6xl text-gray-400 mx-auto mb-4" />
             <h3 className="text-2xl font-bold text-gray-900 mb-3">No albums found</h3>
             <p className="text-gray-600 mb-6 max-w-md mx-auto">
-              We couldn't find any albums matching your criteria. Try adjusting your filters or search terms.
+              We couldn&apos;t find any albums matching your criteria. Try adjusting your filters or search terms.
             </p>
             <button
               onClick={() => {
