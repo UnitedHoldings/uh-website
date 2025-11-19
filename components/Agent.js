@@ -310,30 +310,7 @@ function Agent() {
 
               {/* Quick Links & Contact */}
               <div className="space-y-2">
-                {/* Quick Links */}
-                <div>
-                  <p className="font-bold text-gray-600 text-sm md:text-base mb-3">Quick Links</p>
-                  <ul className="flex gap-3 flex-col lg:flex-row">
-                    <Link href="/claims">
-                      <li className="font-semibold text-[#9b1c20] cursor-pointer hover:underline flex items-center space-x-2 text-sm md:text-base py-1">
-                        <SlDoc className="flex-shrink-0" />
-                        <span>File a Claim</span>
-                      </li>
-                    </Link>
-                    <li className="font-semibold text-[#9b1c20] cursor-pointer hover:underline flex items-center space-x-2 text-sm md:text-base py-1">
-                      <SlTarget className="flex-shrink-0" />
-                      <span>Track a Claim</span>
-                    </li>
-                    <li className="font-semibold text-[#9b1c20] cursor-pointer hover:underline flex items-center space-x-2 text-sm md:text-base py-1">
-                      <SlInfo className="flex-shrink-0" />
-                      <span>Get Proof of Insurance</span>
-                    </li>
-                    <li className="font-semibold text-[#9b1c20] cursor-pointer hover:underline flex items-center space-x-2 text-sm md:text-base py-1">
-                      <SlLink className="flex-shrink-0" />
-                      <span>Make Payment</span>
-                    </li>
-                  </ul>
-                </div>
+          
 
                 {/* Contact Information */}
                 <div className="flex flex-row items-start sm:items-center gap-3 sm:gap-4 md:gap-6">
