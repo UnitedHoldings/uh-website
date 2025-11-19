@@ -11,46 +11,25 @@ export default function FeedbackPage() {
     const [submitted, setSubmitted] = useState(false)
 
     const [feedback, setFeedback] = useState({
-        // Section 1: About You
+        // Basic Information
         name: '',
         email: '',
-        company: '',
-        role: '',
-        roleOther: '',
-        department: '',
-        departmentOther: '',
-        roleInteraction: '',
-
-        // Section 2: Feedback on Website
-        usabilityRating: 5,
-        usabilityComments: '',
-        mobileRating: 5,
-        mobileComments: '',
-        contentRating: 5,
-        contentComments: '',
-
-        // Section 3: Business Fit
-        roleObjectivesRating: 5,
-        roleObjectivesThoughts: '',
-        brandAlignment: '',
-        excitingAspects: '',
-
-        // Section 4: Desired KPIs and Metrics
-        selectedKPIs: [],
-        kpiSuccessDefinition: '',
-        additionalMetrics: '',
-
-        // Section 5: Open-Ended Feedback & Sentiment
-        likeMost: '',
-        needsImprovement: '',
-        otherThoughts: '',
-        excitementRating: 8,
-        excitementReason: '',
-        npsScore: 9,
-        npsReason: '',
-
-        // Metadata
-        submittedAt: 0,
+        description: '',
+        
+        // Website Experience
+        experience: 5,
+        ease_of_navigation: '',
+        
+        // Feedback Content
+        likes: '',
+        additions: '',
+        
+        // Digital Features
+        digital_features: [],
+        
+        // Community & Final Thoughts
+        join_community: '',
+        final_thoughts: ''
     })
 
     const handleInputChange = (field, value) => {
@@ -60,18 +39,18 @@ export default function FeedbackPage() {
         }))
     }
 
-    const handleKPIChange = (kpi) => {
+    const handleFeatureChange = (feature) => {
         setFeedback(prev => ({
             ...prev,
-            selectedKPIs: prev.selectedKPIs.includes(kpi)
-                ? prev.selectedKPIs.filter(item => item !== kpi)
-                : [...prev.selectedKPIs, kpi]
+            digital_features: prev.digital_features.includes(feature)
+                ? prev.digital_features.filter(item => item !== feature)
+                : [...prev.digital_features, feature]
         }))
     }
 
     const nextStep = () => {
         if (validateStep(currentStep)) {
-            setCurrentStep(prev => Math.min(prev + 1, 5))
+            setCurrentStep(prev => Math.min(prev + 1, 4))
             window.scrollTo(0, 0)
         }
     }
@@ -84,19 +63,21 @@ export default function FeedbackPage() {
     const validateStep = (step) => {
         switch (step) {
             case 1:
-                if (!feedback.name || !feedback.email || !feedback.role || !feedback.department || !feedback.roleInteraction) {
+                if (!feedback.name || !feedback.email || !feedback.description) {
                     setStatus({ error: 'Please complete all required fields in Section 1' })
                     return false
                 }
                 return true
             case 2:
-                return true // All ratings have defaults
+                if (!feedback.ease_of_navigation) {
+                    setStatus({ error: 'Please provide ease of navigation feedback' })
+                    return false
+                }
+                return true
             case 3:
-                return true // Optional fields
+                return true // Features are optional
             case 4:
-                return true // Optional fields
-            case 5:
-                return true // Optional fields
+                return true // Final thoughts are optional
             default:
                 return true
         }
@@ -109,8 +90,16 @@ export default function FeedbackPage() {
 
         try {
             const payload = {
-                ...feedback,
-                submittedAt: Date.now(),
+                name: feedback.name,
+                email: feedback.email,
+                description: feedback.description,
+                experience: feedback.experience,
+                ease_of_navigation: feedback.ease_of_navigation,
+                likes: feedback.likes,
+                additions: feedback.additions,
+                digital_features: feedback.digital_features,
+                join_community: feedback.join_community,
+                final_thoughts: feedback.final_thoughts
             }
 
             const res = await fetch(SERVER_URL, {
@@ -147,33 +136,14 @@ export default function FeedbackPage() {
         setFeedback({
             name: '',
             email: '',
-            company: '',
-            role: '',
-            roleOther: '',
-            department: '',
-            departmentOther: '',
-            roleInteraction: '',
-            usabilityRating: 5,
-            usabilityComments: '',
-            mobileRating: 5,
-            mobileComments: '',
-            contentRating: 5,
-            contentComments: '',
-            roleObjectivesRating: 5,
-            roleObjectivesThoughts: '',
-            brandAlignment: '',
-            excitingAspects: '',
-            selectedKPIs: [],
-            kpiSuccessDefinition: '',
-            additionalMetrics: '',
-            likeMost: '',
-            needsImprovement: '',
-            otherThoughts: '',
-            excitementRating: 8,
-            excitementReason: '',
-            npsScore: 9,
-            npsReason: '',
-            submittedAt: 0,
+            description: '',
+            experience: 5,
+            ease_of_navigation: '',
+            likes: '',
+            additions: '',
+            digital_features: [],
+            join_community: '',
+            final_thoughts: ''
         })
         setCurrentStep(1)
         setSubmitted(false)
@@ -182,7 +152,7 @@ export default function FeedbackPage() {
 
     const ProgressBar = () => (
         <div className="flex items-center justify-between mb-12">
-            {[1, 2, 3, 4, 5].map((step) => (
+            {[1, 2, 3, 4].map((step) => (
                 <React.Fragment key={step}>
                     <div className="flex flex-col items-center">
                         <div className={`w-12 h-12 rounded-full flex items-center justify-center border-2 font-semibold transition-all duration-300 ${step === currentStep
@@ -194,10 +164,10 @@ export default function FeedbackPage() {
                             {step < currentStep ? '✓' : step}
                         </div>
                         <span className="text-sm mt-2 text-gray-600 font-medium text-center min-w-[80px]">
-                            {['About You', 'Website Feedback', 'Business Fit', 'KPIs', 'Final Thoughts'][step - 1]}
+                            {['About You', 'Experience', 'Features', 'Final Thoughts'][step - 1]}
                         </span>
                     </div>
-                    {step < 5 && (
+                    {step < 4 && (
                         <div className={`flex-1 h-1 mx-4 transition-all duration-300 ${step < currentStep ? 'bg-green-500' : 'bg-gray-200'
                             }`} />
                     )}
@@ -230,7 +200,7 @@ export default function FeedbackPage() {
         </div>
     )
 
-    // Submission Confirmation Page
+    // Submission Confirmation Page (unchanged)
     if (submitted) {
         return (
             <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-8">
@@ -386,370 +356,181 @@ export default function FeedbackPage() {
                                 </div>
                             </div>
 
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                                <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                                        Company/Organization
-                                    </label>
-                                    <input
-                                        type="text"
-                                        value={feedback.company}
-                                        onChange={(e) => handleInputChange('company', e.target.value)}
-                                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#9b1c20] focus:border-transparent transition-all"
-                                        placeholder="Your company or organization"
-                                    />
-                                </div>
-
-                                <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                                        Primary Role <span className="text-red-500">*</span>
-                                    </label>
-                                    <select
-                                        value={feedback.role}
-                                        onChange={(e) => handleInputChange('role', e.target.value)}
-                                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#9b1c20] focus:border-transparent transition-all"
-                                        required
-                                    >
-                                        <option value="">Select your role</option>
-                                        <option value="Client">Client</option>
-                                        <option value="Partner">Partner</option>
-                                        <option value="Stakeholder">Stakeholder</option>
-                                        <option value="Supplier">Supplier</option>
-                                        <option value="Prospective Client">Prospective Client</option>
-                                        <option value="Industry Peer">Industry Peer</option>
-                                        <option value="Other">Other</option>
-                                    </select>
-                                    {feedback.role === 'Other' && (
-                                        <input
-                                            type="text"
-                                            value={feedback.roleOther}
-                                            onChange={(e) => handleInputChange('roleOther', e.target.value)}
-                                            placeholder="Please specify your role"
-                                            className="w-full mt-3 px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#9b1c20] focus:border-transparent"
-                                        />
-                                    )}
-                                </div>
-                            </div>
-
                             <div className="mb-6">
                                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                                    How do you typically interact with United Holdings? <span className="text-red-500">*</span>
+                                    Describe your relationship with United Holdings <span className="text-red-500">*</span>
                                 </label>
                                 <textarea
-                                    value={feedback.roleInteraction}
-                                    onChange={(e) => handleInputChange('roleInteraction', e.target.value)}
+                                    value={feedback.description}
+                                    onChange={(e) => handleInputChange('description', e.target.value)}
                                     rows={4}
                                     className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#9b1c20] focus:border-transparent transition-all"
-                                    placeholder="Describe your relationship with United Holdings and how you typically interact with our services..."
+                                    placeholder="e.g., Current United Holdings client, Prospective client, Industry partner, etc."
                                     required
                                 />
                             </div>
                         </div>
                     )}
 
-                    {/* Step 2: Website Feedback */}
+                    {/* Step 2: Website Experience */}
                     {currentStep === 2 && (
                         <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-8 animate-fadeIn">
                             <div className="mb-8">
-                                <h2 className="text-2xl font-bold text-gray-900 mb-2">Website Experience Feedback</h2>
-                                <p className="text-gray-600">Rate different aspects of your website experience</p>
+                                <h2 className="text-2xl font-bold text-gray-900 mb-2">Website Experience</h2>
+                                <p className="text-gray-600">Share your experience with our website</p>
                             </div>
 
                             <div className="space-y-6">
-                                {/* Usability Rating */}
+                                {/* Experience Rating */}
+                                <RatingStars
+                                    rating={feedback.experience}
+                                    onRatingChange={(rating) => handleInputChange('experience', rating)}
+                                    label="Overall Experience Rating (1-5) *"
+                                />
+
+                                {/* Ease of Navigation */}
                                 <div>
-                                    <RatingStars
-                                        rating={feedback.usabilityRating}
-                                        onRatingChange={(rating) => handleInputChange('usabilityRating', rating)}
-                                        label="Overall Usability & Ease of Use *"
-                                    />
+                                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                                        Ease of Navigation <span className="text-red-500">*</span>
+                                    </label>
                                     <textarea
-                                        value={feedback.usabilityComments}
-                                        onChange={(e) => handleInputChange('usabilityComments', e.target.value)}
+                                        value={feedback.ease_of_navigation}
+                                        onChange={(e) => handleInputChange('ease_of_navigation', e.target.value)}
                                         rows={3}
-                                        className="w-full mt-3 px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#9b1c20] focus:border-transparent"
-                                        placeholder="Any specific comments about the website's usability? What was intuitive or confusing?"
+                                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#9b1c20] focus:border-transparent"
+                                        placeholder="How easy was it to find what you were looking for? Was the navigation intuitive?"
+                                        required
                                     />
                                 </div>
 
-                                {/* Mobile Rating */}
+                                {/* What you like */}
                                 <div>
-                                    <RatingStars
-                                        rating={feedback.mobileRating}
-                                        onRatingChange={(rating) => handleInputChange('mobileRating', rating)}
-                                        label="Mobile Experience *"
-                                    />
+                                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                                        What You Liked Most
+                                    </label>
                                     <textarea
-                                        value={feedback.mobileComments}
-                                        onChange={(e) => handleInputChange('mobileComments', e.target.value)}
+                                        value={feedback.likes}
+                                        onChange={(e) => handleInputChange('likes', e.target.value)}
                                         rows={3}
-                                        className="w-full mt-3 px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#9b1c20] focus:border-transparent"
-                                        placeholder="How was your experience using the website on mobile devices? Any issues or positive observations?"
+                                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#9b1c20] focus:border-transparent"
+                                        placeholder="What aspects of the website did you enjoy or find most useful?"
                                     />
                                 </div>
 
-                                {/* Content Rating */}
+                                {/* Suggested Additions */}
                                 <div>
-                                    <RatingStars
-                                        rating={feedback.contentRating}
-                                        onRatingChange={(rating) => handleInputChange('contentRating', rating)}
-                                        label="Content Quality & Relevance *"
-                                    />
+                                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                                        Suggested Additions or Improvements
+                                    </label>
                                     <textarea
-                                        value={feedback.contentComments}
-                                        onChange={(e) => handleInputChange('contentComments', e.target.value)}
+                                        value={feedback.additions}
+                                        onChange={(e) => handleInputChange('additions', e.target.value)}
                                         rows={3}
-                                        className="w-full mt-3 px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#9b1c20] focus:border-transparent"
-                                        placeholder="Thoughts on the website content? Is it clear, helpful, and relevant to your needs?"
+                                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#9b1c20] focus:border-transparent"
+                                        placeholder="What features or improvements would you like to see added to the website?"
                                     />
                                 </div>
                             </div>
                         </div>
                     )}
 
-                    {/* Step 3: Business Fit */}
+                    {/* Step 3: Digital Features */}
                     {currentStep === 3 && (
                         <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-8 animate-fadeIn">
                             <div className="mb-8">
-                                <h2 className="text-2xl font-bold text-gray-900 mb-2">Business Relationship & Fit</h2>
-                                <p className="text-gray-600">How well does the website support your relationship with United Holdings?</p>
+                                <h2 className="text-2xl font-bold text-gray-900 mb-2">Digital Features & Community</h2>
+                                <p className="text-gray-600">Tell us about features you use and community interest</p>
                             </div>
 
                             <div className="space-y-6">
-                                <div className="bg-gray-50 rounded-xl p-6">
-                                    <label className="block text-sm font-medium text-gray-700 mb-4">
-                                        How well does the website support your business objectives? *
-                                    </label>
-                                    <div className="flex items-center gap-3 mb-4">
-                                        {[1, 2, 3, 4, 5].map((rating) => (
-                                            <button
-                                                key={rating}
-                                                type="button"
-                                                onClick={() => handleInputChange('roleObjectivesRating', rating)}
-                                                className={`w-12 h-12 rounded-xl flex items-center justify-center transition-all ${feedback.roleObjectivesRating >= rating
-                                                        ? 'bg-[#9b1c20] text-white shadow-md'
-                                                        : 'bg-white text-gray-400 border border-gray-300 hover:border-[#9b1c20] hover:text-[#9b1c20]'
-                                                    }`}
-                                            >
-                                                <span className="font-semibold">{rating}</span>
-                                            </button>
-                                        ))}
-                                        <span className="text-lg font-semibold text-gray-700 ml-4">
-                                            {feedback.roleObjectivesRating}/5
-                                        </span>
-                                    </div>
-
-                                    <textarea
-                                        value={feedback.roleObjectivesThoughts}
-                                        onChange={(e) => handleInputChange('roleObjectivesThoughts', e.target.value)}
-                                        rows={3}
-                                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#9b1c20] focus:border-transparent"
-                                        placeholder="How could the website better support your business relationship with United Holdings?"
-                                    />
-                                </div>
-
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                    <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-2">Brand Alignment</label>
-                                        <textarea
-                                            value={feedback.brandAlignment}
-                                            onChange={(e) => handleInputChange('brandAlignment', e.target.value)}
-                                            rows={4}
-                                            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#9b1c20] focus:border-transparent"
-                                            placeholder="How well does the website represent the United Holdings brand and values?"
-                                        />
-                                    </div>
-
-                                    <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-2">Most Valuable Aspects</label>
-                                        <textarea
-                                            value={feedback.excitingAspects}
-                                            onChange={(e) => handleInputChange('excitingAspects', e.target.value)}
-                                            rows={4}
-                                            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#9b1c20] focus:border-transparent"
-                                            placeholder="What aspects of the website are most valuable for your relationship with United Holdings?"
-                                        />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    )}
-
-                    {/* Step 4: KPIs */}
-                    {currentStep === 4 && (
-                        <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-8 animate-fadeIn">
-                            <div className="mb-8">
-                                <h2 className="text-2xl font-bold text-gray-900 mb-2">Success Metrics</h2>
-                                <p className="text-gray-600">What matters most for measuring a successful website experience?</p>
-                            </div>
-
-                            <div className="space-y-6">
+                                {/* Digital Features */}
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700 mb-4">
-                                        Which metrics are most important for your experience? (Select all that apply)
+                                        Which digital features do you use or are interested in? (Select all that apply)
                                     </label>
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                                         {[
-                                            'Ease of finding information',
-                                            'Speed of website',
-                                            'Mobile responsiveness',
-                                            'Quality of content',
-                                            'Professional appearance',
-                                            'Trust and credibility',
-                                            'Contact and communication ease',
-                                            'Service information clarity',
-                                            'Document access and download',
-                                            'Overall user satisfaction'
-                                        ].map((kpi) => (
-                                            <label key={kpi} className="flex items-center space-x-3 p-3 border border-gray-200 rounded-xl hover:bg-gray-50 transition-colors cursor-pointer">
+                                            'Online Portal',
+                                            'Mobile App',
+                                            'Real-time Notifications',
+                                            'Document Management',
+                                            'Payment Processing',
+                                            'Customer Support Chat',
+                                            'Service Booking',
+                                            'Account Dashboard',
+                                            'Reporting Tools',
+                                            'API Integration'
+                                        ].map((feature) => (
+                                            <label key={feature} className="flex items-center space-x-3 p-3 border border-gray-200 rounded-xl hover:bg-gray-50 transition-colors cursor-pointer">
                                                 <input
                                                     type="checkbox"
-                                                    checked={feedback.selectedKPIs.includes(kpi)}
-                                                    onChange={() => handleKPIChange(kpi)}
+                                                    checked={feedback.digital_features.includes(feature)}
+                                                    onChange={() => handleFeatureChange(feature)}
                                                     className="w-4 h-4 text-[#9b1c20] focus:ring-[#9b1c20] border-gray-300 rounded"
                                                 />
-                                                <span className="text-sm text-gray-700">{kpi}</span>
+                                                <span className="text-sm text-gray-700">{feature}</span>
                                             </label>
                                         ))}
                                     </div>
                                 </div>
 
-                                <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                                        How do you define a successful website experience?
+                                {/* Join Community */}
+                                <div className="bg-gray-50 rounded-xl p-6">
+                                    <label className="block text-sm font-medium text-gray-700 mb-4">
+                                        Would you be interested in joining the United Holdings community for updates and exclusive content?
                                     </label>
-                                    <textarea
-                                        value={feedback.kpiSuccessDefinition}
-                                        onChange={(e) => handleInputChange('kpiSuccessDefinition', e.target.value)}
-                                        rows={3}
-                                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#9b1c20] focus:border-transparent"
-                                        placeholder="What specific outcomes or experiences would indicate website success for you?"
-                                    />
-                                </div>
-
-                                <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                                        Additional Success Factors
-                                    </label>
-                                    <textarea
-                                        value={feedback.additionalMetrics}
-                                        onChange={(e) => handleInputChange('additionalMetrics', e.target.value)}
-                                        rows={2}
-                                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#9b1c20] focus:border-transparent"
-                                        placeholder="Are there any other factors that contribute to a positive website experience?"
-                                    />
+                                    <div className="flex flex-col sm:flex-row gap-4">
+                                        {['yes', 'no'].map((option) => (
+                                            <label key={option} className="flex items-center space-x-3 p-3 border border-gray-200 rounded-xl hover:bg-gray-100 transition-colors cursor-pointer bg-white">
+                                                <input
+                                                    type="radio"
+                                                    name="join_community"
+                                                    checked={feedback.join_community === option}
+                                                    onChange={() => handleInputChange('join_community', option)}
+                                                    className="w-4 h-4 text-[#9b1c20] focus:ring-[#9b1c20] border-gray-300"
+                                                />
+                                                <span className="text-sm font-medium text-gray-700 capitalize">
+                                                    {option === 'yes' ? 'Yes, I\'m interested' : 'No, thank you'}
+                                                </span>
+                                            </label>
+                                        ))}
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     )}
 
-                    {/* Step 5: Final Thoughts */}
-                    {currentStep === 5 && (
+                    {/* Step 4: Final Thoughts */}
+                    {currentStep === 4 && (
                         <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-8 animate-fadeIn">
                             <div className="mb-8">
-                                <h2 className="text-2xl font-bold text-gray-900 mb-2">Final Thoughts & Recommendations</h2>
-                                <p className="text-gray-600">Share your overall impressions and suggestions</p>
+                                <h2 className="text-2xl font-bold text-gray-900 mb-2">Final Thoughts</h2>
+                                <p className="text-gray-600">Share any additional comments or suggestions</p>
                             </div>
 
                             <div className="space-y-6">
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                    <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-2">What you like most</label>
-                                        <textarea
-                                            value={feedback.likeMost}
-                                            onChange={(e) => handleInputChange('likeMost', e.target.value)}
-                                            rows={4}
-                                            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#9b1c20] focus:border-transparent"
-                                            placeholder="What aspects of the website do you find most valuable or impressive?"
-                                        />
-                                    </div>
-
-                                    <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-2">Areas for improvement</label>
-                                        <textarea
-                                            value={feedback.needsImprovement}
-                                            onChange={(e) => handleInputChange('needsImprovement', e.target.value)}
-                                            rows={4}
-                                            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#9b1c20] focus:border-transparent"
-                                            placeholder="What could be improved to better serve your needs?"
-                                        />
-                                    </div>
-                                </div>
-
-                                {/* Excitement Rating */}
-                                <div className="bg-gray-50 rounded-xl p-6">
-                                    <label className="block text-sm font-medium text-gray-700 mb-4">
-                                        Overall satisfaction with the website (1-10) *
-                                    </label>
-                                    <div className="flex items-center gap-4 mb-4">
-                                        <span className="text-sm text-gray-500 min-w-[40px]">1 - Not satisfied</span>
-                                        <input
-                                            type="range"
-                                            min="1"
-                                            max="10"
-                                            value={feedback.excitementRating}
-                                            onChange={(e) => handleInputChange('excitementRating', parseInt(e.target.value))}
-                                            className="flex-1 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:h-6 [&::-webkit-slider-thumb]:w-6 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-[#9b1c20]"
-                                        />
-                                        <span className="text-sm text-gray-500 min-w-[60px]">10 - Very satisfied</span>
-                                        <span className="text-xl font-bold text-[#9b1c20] min-w-[30px] text-center">
-                                            {feedback.excitementRating}
-                                        </span>
-                                    </div>
-
-                                    <textarea
-                                        value={feedback.excitementReason}
-                                        onChange={(e) => handleInputChange('excitementReason', e.target.value)}
-                                        rows={2}
-                                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#9b1c20] focus:border-transparent"
-                                        placeholder="What drives your satisfaction level? What are you most pleased with?"
-                                    />
-                                </div>
-
-                                {/* NPS Score */}
-                                <div className="bg-gradient-to-r from-[#9b1c20] to-[#7a1619] rounded-xl p-6 text-white">
-                                    <label className="block text-sm font-medium mb-4">
-                                        Net Promoter Score: How likely are you to recommend United Holdings to others? (0-10) *
-                                    </label>
-                                    <div className="flex items-center justify-between mb-4 flex-wrap gap-2">
-                                        {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((score) => (
-                                            <button
-                                                key={score}
-                                                type="button"
-                                                onClick={() => handleInputChange('npsScore', score)}
-                                                className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-semibold transition-all ${feedback.npsScore === score
-                                                        ? 'bg-white text-[#9b1c20] shadow-lg scale-110'
-                                                        : 'bg-white/20 text-white hover:bg-white/30 hover:scale-105'
-                                                    }`}
-                                            >
-                                                {score}
-                                            </button>
-                                        ))}
-                                    </div>
-
-                                    <div className="flex justify-between text-xs mb-4">
-                                        <span>0 - Not likely</span>
-                                        <span>10 - Extremely likely</span>
-                                    </div>
-
-                                    <textarea
-                                        value={feedback.npsReason}
-                                        onChange={(e) => handleInputChange('npsReason', e.target.value)}
-                                        rows={2}
-                                        className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl focus:ring-2 focus:ring-white focus:border-transparent placeholder-white/60"
-                                        placeholder="What's the main reason for your score? What would make you more likely to recommend United Holdings?"
-                                    />
-                                </div>
-
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-2">Additional comments or suggestions</label>
+                                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                                        Additional Comments or Suggestions
+                                    </label>
                                     <textarea
-                                        value={feedback.otherThoughts}
-                                        onChange={(e) => handleInputChange('otherThoughts', e.target.value)}
-                                        rows={3}
+                                        value={feedback.final_thoughts}
+                                        onChange={(e) => handleInputChange('final_thoughts', e.target.value)}
+                                        rows={6}
                                         className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#9b1c20] focus:border-transparent"
-                                        placeholder="Any other thoughts, suggestions, or feedback you'd like to share?"
+                                        placeholder="Any other thoughts, suggestions, or feedback you'd like to share about your experience with United Holdings?"
                                     />
+                                </div>
+
+                                {/* Summary Card */}
+                                <div className="bg-gradient-to-r from-[#9b1c20] to-[#7a1619] rounded-xl p-6 text-white">
+                                    <h3 className="text-lg font-semibold mb-4">Thank You for Your Feedback</h3>
+                                    <p className="text-white/90 text-sm mb-4">
+                                        Your insights help us continuously improve our services and digital experience for all United Holdings stakeholders.
+                                    </p>
+                                    <div className="text-xs text-white/70">
+                                        <p>Your feedback will be reviewed by our team and used to enhance our platform.</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -787,16 +568,16 @@ export default function FeedbackPage() {
                             ← Back
                         </button>
 
-                        {currentStep < 5 ? (
+                        {currentStep < 4 ? (
                             <button
                                 type="button"
                                 onClick={nextStep}
                                 className="bg-gradient-to-r from-[#9b1c20] to-[#7a1619] text-white px-8 py-3 rounded-xl font-semibold hover:shadow-lg transition-all duration-200"
                             >
-                                Continue to {['About You', 'Website Feedback', 'Business Fit', 'KPIs', 'Final Thoughts'][currentStep]} →
+                                Continue to {['About You', 'Experience', 'Features', 'Final Thoughts'][currentStep]} →
                             </button>
                         ) : (<div></div>)}
-                        {currentStep === 5 && (
+                        {currentStep === 4 && (
                             <button
                                 type="submit"
                                 disabled={loading}
@@ -811,7 +592,7 @@ export default function FeedbackPage() {
                 {/* Progress Indicator */}
                 <div className="mt-8 text-center">
                     <p className="text-sm text-gray-500">
-                        Step {currentStep} of 5 • Your feedback helps us improve our services
+                        Step {currentStep} of 4 • Your feedback helps us improve our services
                     </p>
                 </div>
             </div>

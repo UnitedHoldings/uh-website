@@ -102,7 +102,6 @@ function Agent() {
         console.error('Error fetching callback reasons:', error);
         setReasonsError(error.message);
         // Use fallback data if API fails
-        setCallbackReasons(FALLBACK_REASONS);
       } finally {
         setLoadingReasons(false);
       }

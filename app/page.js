@@ -5,10 +5,10 @@ import MotionTextStrip from "@/components/MotionTextStrip";
 import Products from "@/components/Products";
 import SeoHead from "@/components/SEOhead";
 import StartQuote from "@/components/Startqoute";
-import WhyChooseUs from "@/components/WhyChooseUs";
 import { useEffect, useRef, useState, useMemo } from "react";
 import { trackEvent, trackPageDuration } from "@/lib/posthog";
 import { useRouter } from "next/navigation";
+import WhyChooseUs from "@/components/WhyChooseUs/WhyChooseUs";
 
 // Department colors and mappings
 const DEPARTMENT_COLORS = {
