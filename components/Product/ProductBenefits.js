@@ -1,6 +1,6 @@
 // components/ProductBenefits.js
 
-import { getCompanyDetails, getCompanyStyles } from "./productCompany";
+import { getCompanyDetails, getCompanyStyles } from "../productCompany";
 
 export default function ProductBenefits({ benefits, company, variant = 'dark' }) {
     const styles = getCompanyStyles(company);

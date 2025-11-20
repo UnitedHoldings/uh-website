@@ -119,7 +119,7 @@ export default function Contact() {
   useEffect(() => {
     const fetchBranches = async () => {
       try {
-        const response = await fetch('https://uh-server-staging-688256516165.asia-east1.run.app/api/branches');
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/branches`);
 
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);

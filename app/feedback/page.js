@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react'
 
 const STORAGE_KEY = 'public_feedback_submissions_v1'
-const SERVER_URL = 'https://uh-server-staging-688256516165.asia-east1.run.app/api/feedback'
+const SERVER_URL = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/feedback`
 
 export default function FeedbackPage() {
     const [currentStep, setCurrentStep] = useState(1)

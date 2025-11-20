@@ -33,331 +33,7 @@ import {
 } from "react-icons/io5";
 import { trackPageDuration } from '@/lib/posthog';
 
-// Enhanced mock data with more details and variety
-const initialJobVacancies = [
-  {
-    id: 1,
-    title: "Insurance Sales Agent",
-    department: "Sales & Marketing",
-    location: "Mbabane",
-    type: "Full-time",
-    experience: "2+ years",
-    salary: "E8,000 - E12,000",
-    postedDate: "2024-01-15",
-    deadline: "2024-02-15",
-    description: "We are looking for a motivated Insurance Sales Agent to join our team. You will be responsible for selling insurance policies and providing excellent customer service.",
-    responsibilities: [
-      "Sell insurance policies to new and existing clients",
-      "Build and maintain client relationships",
-      "Explain policy features and benefits",
-      "Process applications and documentation",
-      "Meet sales targets and goals"
-    ],
-    requirements: [
-      "Diploma in Sales/Marketing or related field",
-      "2+ years sales experience",
-      "Excellent communication skills",
-      "Valid Eswatini driver's license",
-      "Insurance certification (advantageous)"
-    ],
-    benefits: [
-      "Competitive salary + commission",
-      "Medical insurance",
-      "Retirement benefits",
-      "Professional development",
-      "Performance bonuses"
-    ],
-    company: "UGI",
-    category: "Sales",
-    urgency: "high",
-    views: 124,
-    applications: 23,
-    featured: true,
-    skills: ["Sales", "Communication", "Customer Service", "Insurance", "Negotiation"]
-  },
-  {
-    id: 2,
-    title: "Senior Claims Processing Officer",
-    department: "Claims Department",
-    location: "Manzini HQ",
-    type: "Full-time",
-    experience: "3+ years",
-    salary: "E10,000 - E15,000",
-    postedDate: "2024-01-10",
-    deadline: "2024-02-10",
-    description: "Join our claims team as a Senior Processing Officer. You will handle complex insurance claims efficiently and provide excellent service to our clients.",
-    responsibilities: [
-      "Process and evaluate complex insurance claims",
-      "Communicate with clients regarding claim status",
-      "Verify policy coverage and documentation",
-      "Coordinate with assessors and investigators",
-      "Train junior claims officers"
-    ],
-    requirements: [
-      "Bachelor's degree in Finance or related field",
-      "3+ years in claims processing",
-      "Knowledge of insurance regulations",
-      "Strong analytical skills",
-      "Leadership experience"
-    ],
-    benefits: [
-      "Competitive salary package",
-      "Health and life insurance",
-      "Pension fund",
-      "Training opportunities",
-      "Career growth path"
-    ],
-    company: "UGI",
-    category: "Operations",
-    urgency: "medium",
-    views: 89,
-    applications: 15,
-    featured: false,
-    skills: ["Claims Processing", "Analytical Skills", "Insurance Law", "Leadership", "Communication"]
-  },
-  {
-    id: 3,
-    title: "Digital Loan Officer",
-    department: "Credit Department",
-    location: "Mbabane",
-    type: "Full-time",
-    experience: "2+ years",
-    salary: "E9,000 - E13,000",
-    postedDate: "2024-01-12",
-    deadline: "2024-02-12",
-    description: "United Pay is seeking a Digital Loan Officer to evaluate, authorize, and recommend approval of loan applications through our digital platform.",
-    responsibilities: [
-      "Evaluate digital loan applications and documentation",
-      "Use AI-powered risk assessment tools",
-      "Determine all applicable ratios and metrics",
-      "Approve loans within specified limits",
-      "Provide digital customer support"
-    ],
-    requirements: [
-      "Diploma in Finance or related field",
-      "2+ years in digital lending or banking",
-      "Knowledge of fintech platforms",
-      "Strong numerical and tech skills",
-      "Excellent customer service"
-    ],
-    benefits: [
-      "Performance-based bonuses",
-      "Mobile and transport allowance",
-      "Medical aid",
-      "Staff loan benefits",
-      "Professional certification support"
-    ],
-    company: "UP",
-    category: "Finance",
-    urgency: "high",
-    views: 156,
-    applications: 31,
-    featured: true,
-    skills: ["FinTech", "Risk Assessment", "Digital Lending", "Customer Service", "Analytics"]
-  },
-  {
-    id: 4,
-    title: "Customer Experience Specialist",
-    department: "Client Services",
-    location: "Siteki",
-    type: "Full-time",
-    experience: "1+ years",
-    salary: "E6,000 - E9,000",
-    postedDate: "2024-01-08",
-    deadline: "2024-02-08",
-    description: "Provide exceptional customer experience to our clients across multiple channels, handling inquiries and resolving issues efficiently.",
-    responsibilities: [
-      "Handle customer inquiries via phone, email, and chat",
-      "Resolve customer complaints proactively",
-      "Process policy changes and updates",
-      "Maintain customer experience metrics",
-      "Provide product information and guidance"
-    ],
-    requirements: [
-      "Matric certificate required",
-      "1+ years customer service experience",
-      "Excellent communication skills",
-      "Computer literacy",
-      "Multilingual (advantageous)"
-    ],
-    benefits: [
-      "Stable working hours",
-      "Comprehensive training",
-      "Career advancement opportunities",
-      "Staff insurance benefits",
-      "Supportive team environment"
-    ],
-    company: "ULA",
-    category: "Customer Service",
-    urgency: "low",
-    views: 67,
-    applications: 12,
-    featured: false,
-    skills: ["Customer Service", "Communication", "Problem Solving", "Multilingual", "CRM"]
-  },
-  {
-    id: 5,
-    title: "IT Support Specialist",
-    department: "Information Technology",
-    location: "Manzini HQ",
-    type: "Full-time",
-    experience: "3+ years",
-    salary: "E12,000 - E18,000",
-    postedDate: "2024-01-05",
-    deadline: "2024-02-05",
-    description: "Support our technology infrastructure and ensure smooth operation of all IT systems across the organization with modern cloud solutions.",
-    responsibilities: [
-      "Maintain computer systems and networks",
-      "Provide technical support to staff",
-      "Install and configure software/hardware",
-      "Troubleshoot system issues",
-      "Manage cloud infrastructure"
-    ],
-    requirements: [
-      "Degree in IT or related field",
-      "3+ years IT support experience",
-      "Networking and hardware knowledge",
-      "Cloud platform experience (AWS/Azure)",
-      "Relevant certifications"
-    ],
-    benefits: [
-      "Competitive IT industry salary",
-      "Latest technology exposure",
-      "Certification support",
-      "Flexible working hours",
-      "Comprehensive benefits package"
-    ],
-    company: "UGI",
-    category: "Technology",
-    urgency: "medium",
-    views: 98,
-    applications: 18,
-    featured: true,
-    skills: ["IT Support", "Networking", "Cloud Computing", "Troubleshooting", "Security"]
-  },
-  {
-    id: 6,
-    title: "Life Assurance Advisor",
-    department: "Sales & Marketing",
-    location: "Nhlangano",
-    type: "Full-time",
-    experience: "2+ years",
-    salary: "E7,000 - E11,000 + Commission",
-    postedDate: "2024-01-18",
-    deadline: "2024-02-18",
-    description: "Help families secure their future by providing life assurance solutions and financial advice through personalized consultations.",
-    responsibilities: [
-      "Sell life assurance products",
-      "Conduct client needs analysis",
-      "Provide financial advice",
-      "Build client portfolio",
-      "Meet sales targets"
-    ],
-    requirements: [
-      "Relevant financial services qualification",
-      "2+ years in financial services",
-      "Excellent interpersonal skills",
-      "Self-motivated and driven",
-      "Valid regulatory certifications"
-    ],
-    benefits: [
-      "Uncapped commission structure",
-      "Company vehicle allowance",
-      "Comprehensive health cover",
-      "Retirement planning",
-      "Performance incentives"
-    ],
-    company: "ULA",
-    category: "Sales",
-    urgency: "high",
-    views: 112,
-    applications: 27,
-    featured: false,
-    skills: ["Financial Advice", "Sales", "Client Relations", "Insurance", "Financial Planning"]
-  },
-  {
-    id: 7,
-    title: "Mobile App Developer",
-    department: "Technology & Innovation",
-    location: "Manzini HQ",
-    type: "Full-time",
-    experience: "3+ years",
-    salary: "E15,000 - E22,000",
-    postedDate: "2024-01-20",
-    deadline: "2024-02-20",
-    description: "Join our innovation team to develop cutting-edge mobile applications for United Pay's digital financial services platform.",
-    responsibilities: [
-      "Develop and maintain mobile applications",
-      "Collaborate with UX/UI designers",
-      "Implement new features and functionalities",
-      "Ensure app performance and quality",
-      "Stay updated with mobile technologies"
-    ],
-    requirements: [
-      "Degree in Computer Science or related",
-      "3+ years mobile development experience",
-      "Proficiency in React Native/Flutter",
-      "Experience with REST APIs",
-      "Portfolio of published apps"
-    ],
-    benefits: [
-      "Competitive tech salary",
-      "Flexible remote work options",
-      "Latest equipment provided",
-      "Conference and training budget",
-      "Stock options potential"
-    ],
-    company: "UP",
-    category: "Technology",
-    urgency: "high",
-    views: 203,
-    applications: 45,
-    featured: true,
-    skills: ["React Native", "Mobile Development", "JavaScript", "API Integration", "UI/UX"]
-  },
-  {
-    id: 8,
-    title: "HR Business Partner",
-    department: "Human Resources",
-    location: "Manzini HQ",
-    type: "Full-time",
-    experience: "4+ years",
-    salary: "E14,000 - E20,000",
-    postedDate: "2024-01-14",
-    deadline: "2024-02-14",
-    description: "Strategic HR partner supporting business units in talent management, employee relations, and organizational development.",
-    responsibilities: [
-      "Partner with business leaders on HR strategy",
-      "Manage employee relations and engagement",
-      "Drive talent development initiatives",
-      "Oversee performance management",
-      "Implement HR policies and procedures"
-    ],
-    requirements: [
-      "Bachelor's degree in HR or related",
-      "4+ years HR business partner experience",
-      "Knowledge of Eswatini labor laws",
-      "Strong interpersonal skills",
-      "HR certification preferred"
-    ],
-    benefits: [
-      "Strategic role impact",
-      "Professional development",
-      "Comprehensive benefits",
-      "Leadership exposure",
-      "Work-life balance"
-    ],
-    company: "Group",
-    category: "HR",
-    urgency: "medium",
-    views: 76,
-    applications: 14,
-    featured: false,
-    skills: ["HR Strategy", "Talent Management", "Employee Relations", "Labor Law", "Leadership"]
-  }
-];
-
-// Company information
+// Company information - kept static as it's likely not in the API
 const COMPANY_INFO = {
   'UGI': {
     name: 'United General Insurance',
@@ -385,7 +61,7 @@ const COMPANY_INFO = {
   }
 };
 
-// Category icons
+// Category icons - kept static
 const CATEGORY_ICONS = {
   'Sales': IoPeopleOutline,
   'Operations': IoBriefcaseOutline,
@@ -396,8 +72,9 @@ const CATEGORY_ICONS = {
 };
 
 export default function CareersPage() {
-  const [jobs, setJobs] = useState(initialJobVacancies);
-  const [filteredJobs, setFilteredJobs] = useState(initialJobVacancies);
+  const [pageData, setPageData] = useState(null);
+  const [jobs, setJobs] = useState([]);
+  const [filteredJobs, setFilteredJobs] = useState([]);
   const [selectedJob, setSelectedJob] = useState(null);
   const [savedJobs, setSavedJobs] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
@@ -414,6 +91,52 @@ export default function CareersPage() {
   const [showFilters, setShowFilters] = useState(false);
   const [applicationModal, setApplicationModal] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // Fetch data from API
+  useEffect(() => {
+    const fetchCareersData = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/careers`);
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        
+        if (data.success) {
+          setPageData(data.data.pageConfig);
+          setJobs(data.data.jobs || []);
+          setFilteredJobs(data.data.jobs || []);
+        } else {
+          throw new Error(data.message || 'Failed to fetch careers data');
+        }
+      } catch (err) {
+        console.error('Error fetching careers data:', err);
+        setError(err.message);
+        // Fallback to empty data to prevent crashes
+        setPageData({
+          heroTitle: "Join Our Team",
+          heroSubtitle: "Build your career with Eswatini's leading insurance and financial services group",
+          heroStatistics: [
+            { label: "Companies", value: "3" },
+            { label: "Branches", value: "12+" },
+            { label: "Employees", value: "50+" },
+            { label: "Years Legacy", value: "80+" }
+          ]
+        });
+        setJobs([]);
+        setFilteredJobs([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCareersData();
+  }, []);
 
   // Track page duration
   useEffect(() => {
@@ -423,15 +146,17 @@ export default function CareersPage() {
 
   // Filter and sort jobs
   useEffect(() => {
-    let results = jobs;
+    if (!jobs.length) return;
+
+    let results = [...jobs];
 
     // Search filter
     if (searchTerm) {
       results = results.filter(job =>
-        job.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        job.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        job.department.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        job.skills.some(skill => skill.toLowerCase().includes(searchTerm.toLowerCase()))
+        job.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        job.description?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        job.department?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        (job.skills && job.skills.some(skill => skill.toLowerCase().includes(searchTerm.toLowerCase())))
       );
     }
 
@@ -458,7 +183,7 @@ export default function CareersPage() {
     // Experience filter
     if (filters.experience !== 'All') {
       results = results.filter(job => {
-        const expYears = parseInt(job.experience);
+        const expYears = parseInt(job.experience) || 0;
         switch (filters.experience) {
           case 'entry': return expYears <= 1;
           case 'mid': return expYears > 1 && expYears <= 3;
@@ -476,20 +201,20 @@ export default function CareersPage() {
     // Sort results
     switch (sortBy) {
       case 'newest':
-        results.sort((a, b) => new Date(b.postedDate) - new Date(a.postedDate));
+        results.sort((a, b) => new Date(b.postedDate || b.createdAt) - new Date(a.postedDate || a.createdAt));
         break;
       case 'deadline':
         results.sort((a, b) => new Date(a.deadline) - new Date(b.deadline));
         break;
       case 'salary':
         results.sort((a, b) => {
-          const aSalary = parseInt(a.salary.replace(/[^\d]/g, ''));
-          const bSalary = parseInt(b.salary.replace(/[^\d]/g, ''));
+          const aSalary = parseInt((a.salary || '0').replace(/[^\d]/g, '')) || 0;
+          const bSalary = parseInt((b.salary || '0').replace(/[^\d]/g, '')) || 0;
           return bSalary - aSalary;
         });
         break;
       case 'popular':
-        results.sort((a, b) => b.views - a.views);
+        results.sort((a, b) => (b.views || 0) - (a.views || 0));
         break;
       default:
         break;
@@ -508,15 +233,17 @@ export default function CareersPage() {
   };
 
   // Get unique values for filters
-  const companies = ['All', ...new Set(jobs.map(job => job.company))];
-  const locations = ['All', ...new Set(jobs.map(job => job.location))];
-  const categories = ['All', ...new Set(jobs.map(job => job.category))];
-  const jobTypes = ['All', ...new Set(jobs.map(job => job.type))];
+  const companies = ['All', ...new Set(jobs.map(job => job.company).filter(Boolean))];
+  const locations = ['All', ...new Set(jobs.map(job => job.location).filter(Boolean))];
+  const categories = ['All', ...new Set(jobs.map(job => job.category).filter(Boolean))];
+  const jobTypes = ['All', ...new Set(jobs.map(job => job.type).filter(Boolean))];
   const experiences = ['All', 'Entry (0-1 years)', 'Mid (2-3 years)', 'Senior (4+ years)'];
   const urgencyLevels = ['All', 'High', 'Medium', 'Low'];
 
   // Calculate days until deadline with color coding
   const getDeadlineInfo = (deadline) => {
+    if (!deadline) return { days: 0, color: 'text-gray-600', bg: 'bg-gray-100', label: 'No deadline' };
+    
     const today = new Date();
     const deadlineDate = new Date(deadline);
     const diffTime = deadlineDate - today;
@@ -530,7 +257,9 @@ export default function CareersPage() {
 
   // Get experience level
   const getExperienceLevel = (experience) => {
-    const years = parseInt(experience);
+    if (!experience) return { level: 'Not specified', color: 'text-gray-600', bg: 'bg-gray-100' };
+    
+    const years = parseInt(experience) || 0;
     if (years <= 1) return { level: 'Entry', color: 'text-blue-600', bg: 'bg-blue-100' };
     if (years <= 3) return { level: 'Mid', color: 'text-green-600', bg: 'bg-green-100' };
     return { level: 'Senior', color: 'text-purple-600', bg: 'bg-purple-100' };
@@ -539,13 +268,13 @@ export default function CareersPage() {
   // Open job details overlay
   const openJobDetails = (job) => {
     setSelectedJob(job);
-    document.body.style.overflow = 'hidden'; // Prevent background scrolling
+    document.body.style.overflow = 'hidden';
   };
 
   // Close job details overlay
   const closeJobDetails = () => {
     setSelectedJob(null);
-    document.body.style.overflow = 'unset'; // Re-enable scrolling
+    document.body.style.overflow = 'unset';
   };
 
   // Handle keyboard navigation for job details
@@ -580,6 +309,39 @@ export default function CareersPage() {
     { number: 4, title: 'Review', completed: currentStep > 4 }
   ];
 
+  // Loading state
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-16 h-16 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading careers...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Error state
+  if (error && jobs.length === 0) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <IoCloseOutline className="text-2xl text-red-600" />
+          </div>
+          <h2 className="text-2xl font-bold text-gray-900 mb-2">Failed to load careers</h2>
+          <p className="text-gray-600 mb-4">{error}</p>
+          <button
+            onClick={() => window.location.reload()}
+            className="px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors"
+          >
+            Try Again
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen  ">
       {/* Enhanced Hero Section */}
@@ -588,22 +350,22 @@ export default function CareersPage() {
         <div className="relative z-10 max-w-7xl text-white mx-auto px-4 sm:px-6 lg:px-8 py-20">
           <div className="text-center">
             <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-clip-text  bg-[#9b1c20] text-white">
-              Build Your Future With Us
+              {pageData?.heroTitle || "Build Your Future With Us"}
             </h1>
             <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto leading-relaxed">
-              Join Eswatini&apos;s leading financial services group and grow your career with purpose, impact, and innovation.
+              {pageData?.heroSubtitle || "Join Eswatini's leading financial services group and grow your career with purpose, impact, and innovation."}
             </p>
             
             {/* Stats Grid */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8 max-w-2xl mx-auto">
-              {[
+              {(pageData?.heroStatistics || [
                 { number: '3', label: 'Companies' },
                 { number: '50+', label: 'Open Roles' },
                 { number: '12+', label: 'Locations' },
                 { number: '80+', label: 'Years Legacy' }
-              ].map((stat, index) => (
+              ]).map((stat, index) => (
                 <div key={index} className="text-center p-4 bg-white/10 rounded-xl backdrop-blur-sm">
-                  <div className="text-2xl md:text-3xl font-bold mb-1">{stat.number}</div>
+                  <div className="text-2xl md:text-3xl font-bold mb-1">{stat.value}</div>
                   <div className="text-sm opacity-90">{stat.label}</div>
                 </div>
               ))}
@@ -645,9 +407,9 @@ export default function CareersPage() {
             </h2>
             <div className="hidden md:flex items-center gap-2 text-sm text-gray-600">
               <span>•</span>
-              <span>{jobs.reduce((sum, job) => sum + job.views, 0).toLocaleString()} views</span>
+              <span>{jobs.reduce((sum, job) => sum + (job.views || 0), 0).toLocaleString()} views</span>
               <span>•</span>
-              <span>{jobs.reduce((sum, job) => sum + job.applications, 0).toLocaleString()} applications</span>
+              <span>{jobs.reduce((sum, job) => sum + (job.applications || 0), 0).toLocaleString()} applications</span>
             </div>
           </div>
 
@@ -731,7 +493,7 @@ export default function CareersPage() {
                         className="text-blue-600 focus:ring-blue-500"
                       />
                       <span className="ml-3 text-sm text-gray-700">
-                        {company === 'All' ? 'All Companies' : COMPANY_INFO[company]?.name}
+                        {company === 'All' ? 'All Companies' : COMPANY_INFO[company]?.name || company}
                       </span>
                     </label>
                   ))}
@@ -816,7 +578,7 @@ export default function CareersPage() {
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-600">Remote Options</span>
-                    <span className="font-semibold">{jobs.filter(j => j.location.includes('Remote')).length}</span>
+                    <span className="font-semibold">{jobs.filter(j => j.location && j.location.includes('Remote')).length}</span>
                   </div>
                 </div>
               </div>
@@ -848,9 +610,9 @@ export default function CareersPage() {
                             <div className="flex items-center gap-2 mb-2">
                               <span 
                                 className="px-3 py-1 rounded-full text-white text-sm font-semibold"
-                                style={{ backgroundColor: COMPANY_INFO[job.company]?.color }}
+                                style={{ backgroundColor: COMPANY_INFO[job.company]?.color || '#6b7280' }}
                               >
-                                {COMPANY_INFO[job.company]?.name}
+                                {COMPANY_INFO[job.company]?.name || job.company}
                               </span>
                               {job.featured && (
                                 <span className="px-2 py-1 bg-yellow-100 text-yellow-800 text-xs font-semibold rounded-full">
@@ -893,7 +655,7 @@ export default function CareersPage() {
 
                         {/* Skills */}
                         <div className="flex flex-wrap gap-1 mb-4">
-                          {job.skills.slice(0, 3).map((skill, index) => (
+                          {(job.skills || []).slice(0, 3).map((skill, index) => (
                             <span
                               key={index}
                               className="px-2 py-1 bg-blue-50 text-blue-700 text-xs rounded-full"
@@ -901,7 +663,7 @@ export default function CareersPage() {
                               {skill}
                             </span>
                           ))}
-                          {job.skills.length > 3 && (
+                          {job.skills && job.skills.length > 3 && (
                             <span className="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-full">
                               +{job.skills.length - 3} more
                             </span>
@@ -913,17 +675,17 @@ export default function CareersPage() {
                           <div className="flex items-center gap-4 text-sm">
                             <div className="flex items-center gap-1 text-gray-600">
                               <IoEyeOutline />
-                              <span>{job.views}</span>
+                              <span>{job.views || 0}</span>
                             </div>
                             <div className="flex items-center gap-1 text-green-600">
                               <IoPeopleOutline />
-                              <span>{job.applications}</span>
+                              <span>{job.applications || 0}</span>
                             </div>
                           </div>
                           <div className="text-right">
                             <div className="font-semibold text-green-600 text-sm">{job.salary}</div>
                             <div className={`text-xs ${deadlineInfo.color}`}>
-                              {deadlineInfo.days > 0 ? `${deadlineInfo.days} days left` : 'Expired'}
+                              {deadlineInfo.days > 0 ? `${deadlineInfo.days} days left` : deadlineInfo.label}
                             </div>
                           </div>
                         </div>
@@ -953,9 +715,9 @@ export default function CareersPage() {
                             <div className="flex items-center gap-3 mb-2">
                               <span 
                                 className="px-3 py-1 rounded-full text-white text-sm font-semibold"
-                                style={{ backgroundColor: COMPANY_INFO[job.company]?.color }}
+                                style={{ backgroundColor: COMPANY_INFO[job.company]?.color || '#6b7280' }}
                               >
-                                {COMPANY_INFO[job.company]?.name}
+                                {COMPANY_INFO[job.company]?.name || job.company}
                               </span>
                               {job.featured && (
                                 <span className="px-2 py-1 bg-yellow-100 text-yellow-800 text-xs font-semibold rounded-full">
@@ -971,7 +733,7 @@ export default function CareersPage() {
                             <p className="text-sm text-gray-600 line-clamp-2 mb-3">{job.description}</p>
                             
                             <div className="flex flex-wrap gap-2">
-                              {job.skills.slice(0, 4).map((skill, index) => (
+                              {(job.skills || []).slice(0, 4).map((skill, index) => (
                                 <span
                                   key={index}
                                   className="px-3 py-1 bg-blue-50 text-blue-700 text-sm rounded-full"
@@ -987,7 +749,7 @@ export default function CareersPage() {
                               <div className="font-bold text-green-600 text-lg">{job.salary}</div>
                               <div className="text-sm text-gray-600">{job.type}</div>
                               <div className={`text-sm ${deadlineInfo.color}`}>
-                                {deadlineInfo.days > 0 ? `${deadlineInfo.days} days left` : 'Expired'}
+                                {deadlineInfo.days > 0 ? `${deadlineInfo.days} days left` : deadlineInfo.label}
                               </div>
                             </div>
                             
@@ -1026,24 +788,29 @@ export default function CareersPage() {
                 </div>
                 <h3 className="text-2xl font-bold text-gray-900 mb-3">No jobs found</h3>
                 <p className="text-gray-600 mb-6 max-w-md mx-auto">
-                  We couldn&apos;t find any jobs matching your criteria. Try adjusting your filters or search terms.
+                  {jobs.length === 0 
+                    ? "We're not currently hiring, but check back soon for new opportunities!"
+                    : "We couldn't find any jobs matching your criteria. Try adjusting your filters or search terms."
+                  }
                 </p>
-                <button
-                  onClick={() => {
-                    setSearchTerm('');
-                    setFilters({
-                      company: 'All',
-                      location: 'All',
-                      category: 'All',
-                      type: 'All',
-                      experience: 'All',
-                      urgency: 'All'
-                    });
-                  }}
-                  className="px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl font-semibold hover:from-blue-700 hover:to-purple-700 transition-all "
-                >
-                  Reset All Filters
-                </button>
+                {jobs.length > 0 && (
+                  <button
+                    onClick={() => {
+                      setSearchTerm('');
+                      setFilters({
+                        company: 'All',
+                        location: 'All',
+                        category: 'All',
+                        type: 'All',
+                        experience: 'All',
+                        urgency: 'All'
+                      });
+                    }}
+                    className="px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl font-semibold hover:from-blue-700 hover:to-purple-700 transition-all "
+                  >
+                    Reset All Filters
+                  </button>
+                )}
               </div>
             )}
           </div>
@@ -1061,9 +828,9 @@ export default function CareersPage() {
                   <div className="flex items-center gap-3 mb-3">
                     <span 
                       className="px-3 py-1 rounded-full text-white text-sm font-semibold"
-                      style={{ backgroundColor: COMPANY_INFO[selectedJob.company]?.color }}
+                      style={{ backgroundColor: COMPANY_INFO[selectedJob.company]?.color || '#6b7280' }}
                     >
-                      {COMPANY_INFO[selectedJob.company]?.name}
+                      {COMPANY_INFO[selectedJob.company]?.name || selectedJob.company}
                     </span>
                     {selectedJob.featured && (
                       <span className="px-2 py-1 bg-yellow-100 text-yellow-800 text-xs font-semibold rounded-full">
@@ -1121,16 +888,16 @@ export default function CareersPage() {
                 <div className="text-center">
                   <p className="text-sm text-gray-600">Deadline</p>
                   <p className="font-bold text-red-600 text-lg">
-                    {new Date(selectedJob.deadline).toLocaleDateString()}
+                    {selectedJob.deadline ? new Date(selectedJob.deadline).toLocaleDateString() : 'No deadline'}
                   </p>
                 </div>
                 <div className="text-center">
                   <p className="text-sm text-gray-600">Views</p>
-                  <p className="font-bold text-blue-600 text-lg">{selectedJob.views}</p>
+                  <p className="font-bold text-blue-600 text-lg">{selectedJob.views || 0}</p>
                 </div>
                 <div className="text-center">
                   <p className="text-sm text-gray-600">Applications</p>
-                  <p className="font-bold text-purple-600 text-lg">{selectedJob.applications}</p>
+                  <p className="font-bold text-purple-600 text-lg">{selectedJob.applications || 0}</p>
                 </div>
               </div>
             </div>
@@ -1148,70 +915,78 @@ export default function CareersPage() {
                 </div>
 
                 {/* Responsibilities */}
-                <div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
-                    <IoCheckmarkCircleOutline className="text-green-600" />
-                    Key Responsibilities
-                  </h3>
-                  <ul className="space-y-3">
-                    {selectedJob.responsibilities.map((responsibility, index) => (
-                      <li key={index} className="flex items-start gap-3 text-gray-700">
-                        <div className="w-2 h-2 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
-                        <span>{responsibility}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                {selectedJob.responsibilities && selectedJob.responsibilities.length > 0 && (
+                  <div>
+                    <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+                      <IoCheckmarkCircleOutline className="text-green-600" />
+                      Key Responsibilities
+                    </h3>
+                    <ul className="space-y-3">
+                      {selectedJob.responsibilities.map((responsibility, index) => (
+                        <li key={index} className="flex items-start gap-3 text-gray-700">
+                          <div className="w-2 h-2 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
+                          <span>{responsibility}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
 
                 {/* Requirements */}
-                <div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
-                    <IoSchoolOutline className="text-orange-600" />
-                    Requirements
-                  </h3>
-                  <ul className="space-y-3">
-                    {selectedJob.requirements.map((requirement, index) => (
-                      <li key={index} className="flex items-start gap-3 text-gray-700">
-                        <div className="w-2 h-2 bg-orange-500 rounded-full mt-2 flex-shrink-0"></div>
-                        <span>{requirement}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                {selectedJob.requirements && selectedJob.requirements.length > 0 && (
+                  <div>
+                    <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+                      <IoSchoolOutline className="text-orange-600" />
+                      Requirements
+                    </h3>
+                    <ul className="space-y-3">
+                      {selectedJob.requirements.map((requirement, index) => (
+                        <li key={index} className="flex items-start gap-3 text-gray-700">
+                          <div className="w-2 h-2 bg-orange-500 rounded-full mt-2 flex-shrink-0"></div>
+                          <span>{requirement}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
 
                 {/* Benefits */}
-                <div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
-                    <IoHeartOutline className="text-red-600" />
-                    Benefits & Perks
-                  </h3>
-                  <ul className="space-y-3">
-                    {selectedJob.benefits.map((benefit, index) => (
-                      <li key={index} className="flex items-start gap-3 text-gray-700">
-                        <div className="w-2 h-2 bg-red-500 rounded-full mt-2 flex-shrink-0"></div>
-                        <span>{benefit}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                {selectedJob.benefits && selectedJob.benefits.length > 0 && (
+                  <div>
+                    <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+                      <IoHeartOutline className="text-red-600" />
+                      Benefits & Perks
+                    </h3>
+                    <ul className="space-y-3">
+                      {selectedJob.benefits.map((benefit, index) => (
+                        <li key={index} className="flex items-start gap-3 text-gray-700">
+                          <div className="w-2 h-2 bg-red-500 rounded-full mt-2 flex-shrink-0"></div>
+                          <span>{benefit}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
 
                 {/* Skills */}
-                <div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
-                    <IoStatsChartOutline className="text-purple-600" />
-                    Required Skills
-                  </h3>
-                  <div className="flex flex-wrap gap-2">
-                    {selectedJob.skills.map((skill, index) => (
-                      <span
-                        key={index}
-                        className="px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-full text-sm font-medium"
-                      >
-                        {skill}
-                      </span>
-                    ))}
+                {selectedJob.skills && selectedJob.skills.length > 0 && (
+                  <div>
+                    <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+                      <IoStatsChartOutline className="text-purple-600" />
+                      Required Skills
+                    </h3>
+                    <div className="flex flex-wrap gap-2">
+                      {selectedJob.skills.map((skill, index) => (
+                        <span
+                          key={index}
+                          className="px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-full text-sm font-medium"
+                        >
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
                   </div>
-                </div>
+                )}
               </div>
             </div>
 

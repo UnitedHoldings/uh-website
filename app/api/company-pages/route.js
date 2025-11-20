@@ -1,6 +1,6 @@
 export async function GET() {
   try {
-    const response = await fetch('https://uh-server-staging-688256516165.asia-east1.run.app/api/company-pages', {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/company-pages`, {
       headers: {
         'Content-Type': 'application/json',
       },

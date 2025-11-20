@@ -41,7 +41,7 @@ const iconMap = {
 // Function to fetch data from API
 const fetchUnitedLifeAssuranceData = async () => {
   try {
-    const response = await fetch('https://uh-server-staging-688256516165.asia-east1.run.app/api/products?type=ulaProducts');
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/products?type=ulaProducts`);
     
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);

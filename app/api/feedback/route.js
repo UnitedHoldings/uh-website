@@ -1,7 +1,7 @@
 // Server-side proxy route for feedback + cookie session issuance
 import { NextResponse } from 'next/server'
 
-const FORWARD_URL = 'https://uh-server-staging-688256516165.asia-east1.run.app/api/feedback'
+const FORWARD_URL = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/feedback`
 
 const BETA_TESTERS = {
   'rego@ummo.xyz': 'fags$3sadty',
