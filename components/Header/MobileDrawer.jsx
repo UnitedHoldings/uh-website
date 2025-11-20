@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { PiX } from 'react-icons/pi';
 import { ContactInfo } from './ContactInfo';
 import { NavigationMenu } from './NavigationMenu';
+import { Logo } from './Logo';
 
 export const MobileDrawer = ({ 
     isOpen, 

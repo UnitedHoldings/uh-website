@@ -46,10 +46,10 @@ const categoryIcons = {
 };
 
 const categoryColors = {
-    'Legal Insurance': 'bg-blue-100 text-blue-600',
-    'Motor Insurance': 'bg-green-100 text-green-600',
+    'Legal Insurance': 'bg-blue-100 text-[#9b1c20]',
+    'Motor Insurance': 'bg-green-100 text-[#9b1c20]',
     'Personal Accident Insurance': 'bg-red-100 text-red-600',
-    'Home Contents Insurance': 'bg-purple-100 text-purple-600',
+    'Home Contents Insurance': 'bg-purple-100 text-[#9b1c20]',
     'Home Insurance': 'bg-orange-100 text-orange-600',
     'Multimark Policy': 'bg-indigo-100 text-indigo-600',
     'Medical Malpractice': 'bg-pink-100 text-pink-600',
@@ -302,7 +302,7 @@ export default function UnitedGeneralInsurance() {
                         {product.benefits.slice(0, 2).map((benefit, index) => (
                             <div key={index} className="flex items-center text-sm text-gray-600">
                                 <div className="w-5 h-5 bg-green-100 rounded-full flex items-center justify-center mr-2 flex-shrink-0">
-                                    <PiCheckCircle className="text-green-600" />
+                                    <PiCheckCircle className="text-[#9b1c20]" />
                                 </div>
                                 <span className="line-clamp-1">{benefit.text}</span>
                             </div>

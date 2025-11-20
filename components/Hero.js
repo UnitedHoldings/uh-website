@@ -181,7 +181,7 @@ const Hero = ({ currentSlide = 0, setCurrentSlide }) => {
             <p className="text-red-500 mb-4">Error loading slides: {error}</p>
             <button 
               onClick={() => window.location.reload()} 
-              className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+              className="px-4 py-2 bg-[#9b1c20] text-white rounded hover:bg-[#9b1c20]"
             >
               Retry
             </button>
@@ -205,7 +205,7 @@ const Hero = ({ currentSlide = 0, setCurrentSlide }) => {
   }
 
   return (
-    <div className="w-screen flex flex-col max-w-none h-auto lg:h-[80vh] relative overflow-hidden">
+    <div className="w-screen flex flex-col max-w-none h-auto lg:h-[85vh] relative overflow-hidden">
       {/* Call Back Form Modal */}
       {showCallBackForm && (
         <div className=" flex items-center justify-center z-30 p-4">
@@ -302,7 +302,7 @@ const Hero = ({ currentSlide = 0, setCurrentSlide }) => {
                     {slide.title1} <span style={{ color: '#ffffff' }}>{slide.title11}</span> {slide.title2}.
                   </h1>
                   <div className="h-0.5 bg-white w-full" />
-                  <p className="text-lg sm:text-sm font-normal">{slide.description}</p>
+                  <p className="text-lg sm:text-sm line-clamp-3 font-normal">{slide.description}</p>
 
                   <div className="flex gap-4 flex-wrap">
                     <button

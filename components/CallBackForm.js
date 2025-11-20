@@ -92,7 +92,7 @@ const CallBackForm = ({ onClose }) => {
       };
 
       // Send email using your API
-      const response = await fetch('http://website.api.united.co.sz/api/send-email', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/send-email`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -167,7 +167,7 @@ const CallBackForm = ({ onClose }) => {
   }
 
   return (
-    <div className="lg:bg-white/90 bg-white rounded-2xl absolute top-40 z-20 lg:right-[10%] right-0 p-6 w-full max-w-md lg:max-w-xl mx-4">
+    <div className="lg:bg-white/90 bg-white rounded-2xl absolute top-[12vh] lg:top-[15vh] z-20 lg:right-[10%] right-[2vw] p-6 w-full max-w-[90vw] lg:max-w-[35vw]  mx-4">
       <div className="mb-6">
         <h3 className="text-2xl font-bold font-outfit text-[#9b1c20]">Need a Call Back?</h3>
         <p className="text-gray-600 mt-2">We&apos;ll get back to you shortly</p>

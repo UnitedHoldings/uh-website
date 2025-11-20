@@ -232,7 +232,7 @@ CREATE TABLE cms_product_categories (
   company_code VARCHAR(10) NOT NULL REFERENCES cms_company_pages(company_code),
   category_name VARCHAR(255) NOT NULL,
   category_icon VARCHAR(50) NOT NULL,            -- "PiUser", "PiCar", etc
-  category_color_class VARCHAR(50) NOT NULL,     -- "bg-blue-100 text-blue-600"
+  category_color_class VARCHAR(50) NOT NULL,     -- "bg-blue-100 text-[#9b1c20]"
   display_order INT DEFAULT 0,
   
   is_active BOOLEAN DEFAULT true,
@@ -332,18 +332,18 @@ INSERT INTO cms_company_pages (
 ```sql
 -- cms_product_categories seed data for ULA (5 categories)
 INSERT INTO cms_product_categories VALUES
-('ula-1', 'ULA', 'Sinawe Funeral Plan', 'PiUsersThree', 'bg-blue-100 text-blue-600', 0),
+('ula-1', 'ULA', 'Sinawe Funeral Plan', 'PiUsersThree', 'bg-blue-100 text-[#9b1c20]', 0),
 ('ula-2', 'ULA', 'Individual Funeral Plan', 'PiUser', 'bg-green-100 text-green-600', 1),
-('ula-3', 'ULA', 'Tinkhundla Funeral Cover', 'PiMapPin', 'bg-purple-100 text-purple-600', 2),
+('ula-3', 'ULA', 'Tinkhundla Funeral Cover', 'PiMapPin', 'bg-purple-100 text-[#9b1c20]', 2),
 ('ula-4', 'ULA', 'Group Life', 'PiUsers', 'bg-orange-100 text-orange-600', 3),
 ('ula-5', 'ULA', 'Credit Life', 'PiBank', 'bg-teal-100 text-teal-600', 4);
 
 -- cms_product_categories seed data for UGI (12 categories)
 INSERT INTO cms_product_categories VALUES
-('ugi-1', 'UGI', 'Legal Insurance', 'PiGavel', 'bg-blue-100 text-blue-600', 0),
+('ugi-1', 'UGI', 'Legal Insurance', 'PiGavel', 'bg-blue-100 text-[#9b1c20]', 0),
 ('ugi-2', 'UGI', 'Motor Insurance', 'PiCar', 'bg-green-100 text-green-600', 1),
 ('ugi-3', 'UGI', 'Personal Accident Insurance', 'PiFirstAidKit', 'bg-red-100 text-red-600', 2),
-('ugi-4', 'UGI', 'Home Contents Insurance', 'PiHouse', 'bg-purple-100 text-purple-600', 3),
+('ugi-4', 'UGI', 'Home Contents Insurance', 'PiHouse', 'bg-purple-100 text-[#9b1c20]', 3),
 ('ugi-5', 'UGI', 'Home Insurance', 'PiCheckCircle', 'bg-orange-100 text-orange-600', 4),
 ('ugi-6', 'UGI', 'Multimark Policy', 'PiBuildings', 'bg-indigo-100 text-indigo-600', 5),
 ('ugi-7', 'UGI', 'Medical Malpractice', 'PiStethoscope', 'bg-pink-100 text-pink-600', 6),
@@ -844,7 +844,7 @@ GET /api/cms/company-categories/UGI
       "company_code": "UGI",
       "category_name": "Legal Insurance",
       "category_icon": "PiGavel",
-      "category_color_class": "bg-blue-100 text-blue-600",
+      "category_color_class": "bg-blue-100 text-[#9b1c20]",
       "display_order": 0
     },
     {
@@ -1024,18 +1024,18 @@ INSERT INTO cms_company_pages (
 
 -- Insert product categories for ULA
 INSERT INTO cms_product_categories (company_code, category_name, category_icon, category_color_class, display_order) VALUES
-('ULA', 'Sinawe Funeral Plan', 'PiUsersThree', 'bg-blue-100 text-blue-600', 0),
+('ULA', 'Sinawe Funeral Plan', 'PiUsersThree', 'bg-blue-100 text-[#9b1c20]', 0),
 ('ULA', 'Individual Funeral Plan', 'PiUser', 'bg-green-100 text-green-600', 1),
-('ULA', 'Tinkhundla Funeral Cover', 'PiMapPin', 'bg-purple-100 text-purple-600', 2),
+('ULA', 'Tinkhundla Funeral Cover', 'PiMapPin', 'bg-purple-100 text-[#9b1c20]', 2),
 ('ULA', 'Group Life', 'PiUsers', 'bg-orange-100 text-orange-600', 3),
 ('ULA', 'Credit Life', 'PiBank', 'bg-teal-100 text-teal-600', 4);
 
 -- Insert product categories for UGI (12 total)
 INSERT INTO cms_product_categories (company_code, category_name, category_icon, category_color_class, display_order) VALUES
-('UGI', 'Legal Insurance', 'PiGavel', 'bg-blue-100 text-blue-600', 0),
+('UGI', 'Legal Insurance', 'PiGavel', 'bg-blue-100 text-[#9b1c20]', 0),
 ('UGI', 'Motor Insurance', 'PiCar', 'bg-green-100 text-green-600', 1),
 ('UGI', 'Personal Accident Insurance', 'PiFirstAidKit', 'bg-red-100 text-red-600', 2),
-('UGI', 'Home Contents Insurance', 'PiHouse', 'bg-purple-100 text-purple-600', 3),
+('UGI', 'Home Contents Insurance', 'PiHouse', 'bg-purple-100 text-[#9b1c20]', 3),
 ('UGI', 'Home Insurance', 'PiCheckCircle', 'bg-orange-100 text-orange-600', 4),
 ('UGI', 'Multimark Policy', 'PiBuildings', 'bg-indigo-100 text-indigo-600', 5),
 ('UGI', 'Medical Malpractice', 'PiStethoscope', 'bg-pink-100 text-pink-600', 6),

@@ -26,7 +26,7 @@ const SLIDE_DEPARTMENTS = {
 const TAB_CONFIG = [
   { name: "Life Assurance", slideId: "life", shortName: "Life", slug: "../united-life-assurance" },
   { name: "General Insurance", slideId: "general", shortName: "General", slug: "../united-general-insurance" },
-  { name: "Loans", slideId: "loans", shortName: "Loans", slug: "../united-loans" },
+  { name: "Loans", slideId: "loans", shortName: "Loans", slug: "../united-pay" },
 ];
 
 const slidesData = [
@@ -40,7 +40,7 @@ const slidesData = [
     description:
       "Protect your loved ones with comprehensive life insurance coverage. From funeral plans to family protection, we have you covered.",
     button: "Learn More",
-    url: "https://united.co.sz/life-assurance",
+    url: "../../united-life-assurance",
   },
   {
     id: "general",
@@ -52,7 +52,7 @@ const slidesData = [
     description:
       "Comprehensive insurance solutions for your home, motor, and business. Get protected against unexpected events and losses.",
     button: "Get Covered",
-    url: "https://united.co.sz/general-insurance",
+    url: "../../united-general-insurance",
   },
   {
     id: "loans",
@@ -64,7 +64,7 @@ const slidesData = [
     description:
       "We know mid-month crisis is not easy to get over, Umlamleli is there boost you need to get through the month. Umlamleli provides loans from E1, 000.00 – E5,000.00 payable within 3 months.",
     button: "Apply Now",
-    url: "https://united.co.sz/loans",
+    url: "../../united-pay",
   },
 ];
 

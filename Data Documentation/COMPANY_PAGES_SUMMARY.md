@@ -309,7 +309,7 @@ Returns all categories for company:
       "id": "uuid-1",
       "category_name": "Legal Insurance",
       "category_icon": "PiGavel",
-      "category_color_class": "bg-blue-100 text-blue-600"
+      "category_color_class": "bg-blue-100 text-[#9b1c20]"
     },
     // ... more categories
   ]

@@ -161,7 +161,7 @@ export default function EmailGate({ hours = 1 }) {
         </label>
 
         {isUnitedEmail(email) && (
-          <div className="text-sm text-blue-600 bg-blue-50 p-2 rounded">
+          <div className="text-sm text-[#9b1c20] bg-blue-50 p-2 rounded">
             <strong>United Domain Access:</strong> All {UNITED_DOMAIN} emails use a shared password.
           </div>
         )}

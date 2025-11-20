@@ -410,18 +410,7 @@ export default function UnitedPay() {
                 >
                   {heroCTAText}
                 </button>
-                <button
-                  onClick={() => {
-                    trackEvent('up_banner_cta_clicked', {
-                      cta_text: ctaPrimaryText,
-                      location: 'up_hero_banner',
-                      product_page: 'UP'
-                    });
-                  }}
-                  className="border-2 border-white text-white px-8 py-4 rounded-full font-semibold hover:bg-white hover:text-[#15803d] transition-colors text-lg text-center"
-                >
-                  {ctaPrimaryText}
-                </button>
+            
               </div>
             </div>
           </div>

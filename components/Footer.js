@@ -109,6 +109,11 @@ function Footer() {
             path: '/policies',
             icon: PiFile
         },
+        { 
+            title: 'News Blog', 
+            path: '/news',
+            icon: PiNewspaper
+        },
     ]
 
     return (

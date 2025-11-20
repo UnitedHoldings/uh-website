@@ -577,7 +577,7 @@ export default function GalleryPage() {
                     )}
                     <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300"></div>
                     {image.featured && (
-                      <div className="absolute top-3 left-3 px-2 py-1 bg-blue-500 text-white text-xs font-semibold rounded-full">
+                      <div className="absolute top-3 left-3 px-2 py-1 bg-[#9b1c20] text-white text-xs font-semibold rounded-full">
                         Featured
                       </div>
                     )}

@@ -208,7 +208,7 @@ export default function BranchMap({ branches = [] }) {
                       e.stopPropagation();
                       openGoogleMaps(branch.coords, branch.name);
                     }}
-                    className="mt-2 text-blue-600 underline hover:text-blue-800 font-semibold"
+                    className="mt-2 text-[#9b1c20] underline hover:text-blue-800 font-semibold"
                   >
                     Get Directions
                   </button>

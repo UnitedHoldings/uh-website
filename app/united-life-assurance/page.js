@@ -40,9 +40,9 @@ const categoryIcons = {
 };
 
 const categoryColors = {
-  'Sinawe Funeral Plan': 'bg-blue-100 text-blue-600',
-  'Individual Funeral Plan': 'bg-green-100 text-green-600',
-  'Tinkhundla Funeral Cover': 'bg-purple-100 text-purple-600',
+  'Sinawe Funeral Plan': 'bg-blue-100 text-[#9b1c20]',
+  'Individual Funeral Plan': 'bg-green-100 text-[#9b1c20]',
+  'Tinkhundla Funeral Cover': 'bg-purple-100 text-[#9b1c20]',
   'Group Life': 'bg-orange-100 text-orange-600',
   'Credit Life': 'bg-teal-100 text-teal-600',
 };
@@ -272,7 +272,7 @@ export default function UnitedLifeAssurance() {
             {product.benefits.slice(0, 2).map((benefit, index) => (
               <div key={index} className="flex items-center text-sm text-gray-600">
                 <div className="w-5 h-5 bg-green-100 rounded-full flex items-center justify-center mr-2 flex-shrink-0">
-                  <PiCheckCircle className="text-green-600 text-xs lg:text-base" />
+                  <PiCheckCircle className="text-[#9b1c20] text-xs lg:text-base" />
                 </div>
                 <span className="line-clamp-1">{benefit.text}</span>
               </div>
