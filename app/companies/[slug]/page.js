@@ -1,4 +1,5 @@
 import CompanyProductsPage from "@/components/Companies/CompnayProductPage";
+import Link from "next/link";
 
 export default function CompanyPage({ params }) {
   // Validate company code
@@ -12,13 +13,13 @@ export default function CompanyPage({ params }) {
       <div className="min-h-screen bg-gray-100 flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-2xl font-bold text-gray-900 mb-4">Company Not Found</h1>
-          <p className="text-gray-600 mb-4">The company code "{params.companyCode}" is not valid.</p>
-          <a 
+          <p className="text-gray-600 mb-4">The company code &quot;{params.companyCode}&quot; is not valid.</p>
+          <Link 
             href="/"
             className="bg-blue-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-[#9b1c20] transition-colors"
           >
             Go Home
-          </a>
+          </Link>
         </div>
       </div>
     );
