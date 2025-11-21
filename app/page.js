@@ -24,9 +24,9 @@ const SLIDE_DEPARTMENTS = {
 };
 
 const TAB_CONFIG = [
-  { name: "Life Assurance", slideId: "life", shortName: "Life", slug: "../united-life-assurance" },
-  { name: "General Insurance", slideId: "general", shortName: "General", slug: "../united-general-insurance" },
-  { name: "Loans", slideId: "loans", shortName: "Loans", slug: "../united-pay" },
+  { name: "Life Assurance", slideId: "life", shortName: "Life", slug: "../companies/ULA" },
+  { name: "General Insurance", slideId: "general", shortName: "General", slug: "../companies/UGI" },
+  { name: "Loans", slideId: "loans", shortName: "Loans", slug: "../companies/UP" },
 ];
 
 const slidesData = [

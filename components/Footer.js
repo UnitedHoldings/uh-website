@@ -65,6 +65,16 @@ function Footer() {
             path: '/about/our-team',
             icon: PiUsersThree
         },
+        { 
+            title: 'Careers', 
+            path: '/about/careers',
+            icon: PiBriefcaseMetal
+        },
+        { 
+            title: 'Gallery', 
+            path: '/about/gallery',
+            icon: PiImages
+        },
        
     ]
 

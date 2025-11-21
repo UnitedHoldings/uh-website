@@ -330,7 +330,7 @@ function Agent() {
                         href="mailto:info@unitedholdings.co.sz"
                         className="font-semibold text-sm md:text-base text-[#9b1c20] hover:underline transition hover:text-[#F7941D]"
                       >
-                        info@unitedholdings.co.sz
+                        info@united.co.sz
                       </a>
                     </div>
                   </div>

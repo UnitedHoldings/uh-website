@@ -4,8 +4,7 @@ import {
   IoBusinessOutline,
   IoLocationOutline,
   IoTimeOutline,
-  IoBookmarkOutline,
-  IoBookmark,
+  
   IoShareSocialOutline,
   IoArrowForwardOutline,
   IoSearchOutline,
@@ -646,19 +645,7 @@ export default function CareersPage() {
                             <h3 className="text-lg font-bold text-gray-900 mb-1">{job.title}</h3>
                             <p className="text-sm text-gray-600 mb-2">{job.department}</p>
                           </div>
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              toggleSaveJob(job._id);
-                            }}
-                            className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
-                          >
-                            {savedJobs.includes(job._id) ? (
-                              <IoBookmark className="text-yellow-500 text-xl" />
-                            ) : (
-                              <IoBookmarkOutline className="text-gray-400 text-xl" />
-                            )}
-                          </button>
+                      
                         </div>
 
                         {/* Meta Info */}
@@ -768,22 +755,7 @@ export default function CareersPage() {
                             </div>
                             
                             <div className="flex gap-2">
-                              <button
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  toggleSaveJob(job._id);
-                                }}
-                                className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
-                              >
-                                {savedJobs.includes(job._id) ? (
-                                  <IoBookmark className="text-yellow-500 text-xl" />
-                                ) : (
-                                  <IoBookmarkOutline className="text-gray-400 text-xl" />
-                                )}
-                              </button>
-                              <button className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
-                                <IoShareSocialOutline className="text-gray-400 text-xl" />
-                              </button>
+                             
                             </div>
                           </div>
                         </div>
@@ -870,19 +842,7 @@ export default function CareersPage() {
                 </div>
                 
                 <div className="flex gap-2 ml-4">
-                  <button
-                    onClick={() => toggleSaveJob(selectedJob._id)}
-                    className="p-3 rounded-xl border border-gray-300 hover:bg-gray-50 transition-colors"
-                  >
-                    {savedJobs.includes(selectedJob._id) ? (
-                      <IoBookmark className="text-yellow-500 text-2xl" />
-                    ) : (
-                      <IoBookmarkOutline className="text-gray-400 text-2xl" />
-                    )}
-                  </button>
-                  <button className="p-3 rounded-xl border border-gray-300 hover:bg-gray-50 transition-colors">
-                    <IoShareSocialOutline className="text-gray-400 text-2xl" />
-                  </button>
+                  
                   <button
                     onClick={closeJobDetails}
                     className="p-3 rounded-xl border border-gray-300 hover:bg-gray-50 transition-colors"
