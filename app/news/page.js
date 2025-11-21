@@ -249,23 +249,7 @@ export default function NewsPage() {
               />
 
               <div className="flex items-center justify-between mt-8 pt-6 border-t border-gray-200">
-                <div className="flex items-center gap-4">
-                  <button
-                    onClick={() => toggleSaveArticle(selectedArticle._id)}
-                    className="flex items-center gap-2 text-gray-600 hover:text-gray-900"
-                  >
-                    {savedArticles.includes(selectedArticle._id) ? (
-                      <IoBookmark className="text-yellow-500" />
-                    ) : (
-                      <IoBookmarkOutline />
-                    )}
-                    <span>{savedArticles.includes(selectedArticle._id) ? 'Saved' : 'Save Article'}</span>
-                  </button>
-                  <button className="flex items-center gap-2 text-gray-600 hover:text-gray-900">
-                    <IoShareSocialOutline />
-                    <span>Share</span>
-                  </button>
-                </div>
+               
                 <div className="text-sm text-gray-500">
                   Published on {formatDate(selectedArticle.publishDate)}
                 </div>
