@@ -143,9 +143,9 @@ export default function Header() {
         { name: "HOME", link: "/" },
         { name: "ABOUT US", link: "/about", dropdown: aboutDropdown },
         { name: "PRODUCTS", dropdown: productsDropdown },
-        { name: "UNITED LIFE ASSURANCE", link: "companies/ULA" },
-        { name: "UNITED GENERAL INSURANCE", link: "companies/UGI" },
-        { name: "UNITED PAY", link: "companies/UP" },
+        { name: "UNITED LIFE ASSURANCE", link: "../../companies/ULA" },
+        { name: "UNITED GENERAL INSURANCE", link: "../../companies/UGI" },
+        { name: "UNITED PAY", link: "../../companies/UP" },
         { name: "RESOURCES", dropdown: resourcesDropdown },
         { name: "CONTACT US", link: "/contact" },
     ];

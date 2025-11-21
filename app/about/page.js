@@ -101,13 +101,7 @@ export default function About() {
               <p className='max-w-[800px] text-white text-lg sm:text-xl md:text-2xl text-center sm:text-left'>
                 {aboutData.claimsBannerText}
               </p>
-              <Link href={aboutData.claimsCTALink}>
-                <div className="flex-shrink-0">
-                  <button className='border-white border text-white py-2 px-6 sm:px-8 rounded-full text-sm sm:text-base hover:bg-white hover:text-[#9b1c20] transition-colors'>
-                    {aboutData.claimsCTAText}
-                  </button>
-                </div>
-              </Link>
+              
             </div>
           </div>
         </div>
