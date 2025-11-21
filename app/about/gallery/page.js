@@ -388,7 +388,7 @@ export default function GalleryPage() {
 
         {/* Album Grid */}
         {!selectedAlbum ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6">
             {filteredAlbums.map(album => {
               const featuredImage = album.images.find(img => img.featured) || album.images[0];
               const CategoryIcon = getCategoryIcon(album.category);
@@ -400,7 +400,7 @@ export default function GalleryPage() {
                   onClick={() => openAlbum(album)}
                 >
                   {/* Album Cover */}
-                  <div className="relative h-48 overflow-hidden">
+                  <div className="relative h-56 overflow-hidden">
                     {featuredImage?.image?.asset?.url ? (
                       <Image
                         src={featuredImage.image.asset.url}
