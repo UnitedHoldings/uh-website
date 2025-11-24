@@ -180,9 +180,9 @@ const STATIC_MAIN_NAV_ITEMS = [
     { name: "HOME", link: "/" },
     { name: "ABOUT US", link: "/about", dropdown: STATIC_ABOUT_DROPDOWN },
     { name: "PRODUCTS", dropdown: STATIC_PRODUCTS_DROPDOWN },
-    { name: "UNITED LIFE ASSURANCE", link: "companies/ULA" },
-    { name: "UNITED GENERAL INSURANCE", link: "companies/UGI" },
-    { name: "UNITED PAY", link: "companies/UP" },
+    { name: "UNITED LIFE ASSURANCE", link: "../../companies/ULA" },
+    { name: "UNITED GENERAL INSURANCE", link: "../../companies/UGI" },
+    { name: "UNITED PAY", link: "../../companies/UP" },
     { name: "RESOURCES", dropdown: STATIC_RESOURCES_DROPDOWN },
     { name: "CONTACT US", link: "/contact" },
 ];
