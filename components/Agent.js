@@ -319,7 +319,7 @@ function Agent() {
 
                 {/* Business Unit Emails from API */}
                 <div className="pt-4 border-t border-gray-200">
-                  <p className="font-bold text-gray-600 text-sm md:text-base mb-2">or Contact us vai:</p>
+                  <p className="font-bold text-gray-600 text-sm md:text-base mb-2">or Contact us:</p>
                   <div className="flex flex-col lg:flex-row items-start sm:items-center gap-3 sm:gap-4 md:gap-6">
                     <div className="flex items-center gap-2">
                       <SlPhone className="text-sm md:text-base text-[#9b1c20] flex-shrink-0" />

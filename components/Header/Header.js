@@ -73,16 +73,57 @@ const ICON_MAP = {
     PiTruck: PiTruck,
 };
 
+// Static fallback structure for initial render
+const STATIC_PRODUCTS_DROPDOWN = [
+    {
+        category: 'Life Assurance',
+        icon: PiHeart,
+        link: '../../companies/ULA',
+        color: DEPARTMENT_COLORS["Life Assurance"],
+        items: []
+    },
+    {
+        category: 'General Personal Insurance',
+        icon: PiShieldCheck,
+        link: '../../companies/UGI',
+        color: DEPARTMENT_COLORS["General & Business Insurance"],
+        items: []
+    },
+    {
+        category: 'General Business Insurance',
+        icon: PiBriefcase,
+        link: '../../companies/UGI',
+        color: DEPARTMENT_COLORS["General & Business Insurance"],
+        items: []
+    },
+    {
+        category: 'Loans & Financing',
+        icon: PiMoney,
+        link: '../../companies/UP',
+        color: DEPARTMENT_COLORS["Loans & Financing"],
+        items: []
+    }
+];
+
 export default function Header() {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
     const [mobileActiveDropdown, setMobileActiveDropdown] = useState(null);
     const [productCategories, setProductCategories] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [mounted, setMounted] = useState(false);
 
-    // Fetch product categories from API
+    // Set mounted state to handle hydration
     useEffect(() => {
+        setMounted(true);
+    }, []);
+
+    // Fetch product categories from API - client side only
+    useEffect(() => {
+        if (!mounted) return;
+
         const fetchProductCategories = async () => {
             try {
+                setLoading(true);
                 const response = await fetch('https://website.api.united.co.sz/api/product-categories');
                 if (!response.ok) {
                     throw new Error(`Failed to fetch product categories: ${response.status}`);
@@ -98,11 +139,19 @@ export default function Header() {
         };
 
         fetchProductCategories();
-    }, []);
+    }, [mounted]);
 
     // Transform API data into products dropdown structure
     const productsDropdown = useMemo(() => {
-        if (loading) return [];
+        // Return static structure during SSR/initial render
+        if (!mounted || loading) {
+            return STATIC_PRODUCTS_DROPDOWN;
+        }
+        
+        // Return static structure if no categories loaded
+        if (productCategories.length === 0) {
+            return STATIC_PRODUCTS_DROPDOWN;
+        }
         
         // Group categories by company
         const categoriesByCompany = {
@@ -188,7 +237,7 @@ export default function Header() {
                 }))
             }
         ];
-    }, [productCategories, loading]);
+    }, [productCategories, loading, mounted]);
 
     // About dropdown data
     const aboutDropdown = useMemo(() => [
@@ -235,7 +284,7 @@ export default function Header() {
     ], []);
 
     // Main navigation items
-    const mainNavItems = [
+    const mainNavItems = useMemo(() => [
         { name: "HOME", link: "/" },
         { name: "ABOUT US", link: "/about", dropdown: aboutDropdown },
         { name: "PRODUCTS", dropdown: productsDropdown },
@@ -244,7 +293,7 @@ export default function Header() {
         { name: "UNITED PAY", link: "../../companies/UP" },
         { name: "RESOURCES", dropdown: resourcesDropdown },
         { name: "CONTACT US", link: "/contact" },
-    ];
+    ], [aboutDropdown, productsDropdown, resourcesDropdown]);
 
     const toggleDrawer = () => {
         setIsDrawerOpen(!isDrawerOpen);
