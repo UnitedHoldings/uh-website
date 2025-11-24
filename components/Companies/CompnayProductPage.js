@@ -515,18 +515,7 @@ export default function CompanyProductsPage({ companyCode }) {
                 >
                   {heroCTAText}
                 </button>
-                <button
-                  onClick={() => {
-                    trackEvent(`${companyCode.toLowerCase()}_banner_cta_clicked`, {
-                      cta_text: ctaPrimaryText,
-                      location: `${companyCode.toLowerCase()}_hero_banner`,
-                      product_page: companyCode
-                    });
-                  }}
-                  className="bg-white text-gray-900 px-8 py-4 rounded-full font-semibold hover:bg-gray-100 transition-colors text-lg text-center"
-                >
-                  {ctaPrimaryText}
-                </button>
+            
               </div>
             </div>
           </div>

@@ -76,7 +76,7 @@ function Agent() {
     const fetchCallbackReasons = async () => {
       try {
         const response = await fetch('/api/callback-reasons');
-        
+
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -87,13 +87,13 @@ function Agent() {
         }
 
         const result = await response.json();
-        
+
         if (result.success && result.data) {
           // Filter only active reasons and sort by displayOrder
           const activeReasons = result.data
             .filter(reason => reason.isActive)
             .sort((a, b) => a.displayOrder - b.displayOrder);
-          
+
           setCallbackReasons(activeReasons);
         } else {
           throw new Error(result.message || 'Failed to fetch callback reasons');
@@ -113,7 +113,7 @@ function Agent() {
   // Get email based on selected reason from API data
   const getEmailByReason = (selectedReason) => {
     if (!selectedReason) return 'info@unitedholdings.co.sz';
-    
+
     const foundReason = callbackReasons.find(reason => reason.label === selectedReason);
     return foundReason ? foundReason.targetEmail : 'info@unitedholdings.co.sz';
   };
@@ -121,7 +121,7 @@ function Agent() {
   // Get description for selected reason
   const getReasonDescription = (selectedReason) => {
     if (!selectedReason) return '';
-    
+
     const foundReason = callbackReasons.find(reason => reason.label === selectedReason);
     return foundReason ? foundReason.description : '';
   };
@@ -140,7 +140,7 @@ function Agent() {
     try {
       const recipientEmail = getEmailByReason(reason);
       const reasonDescription = getReasonDescription(reason);
-      
+
       const emailData = {
         product_name: "Callback Request - " + reason,
         product_company: "United Holdings",
@@ -207,7 +207,7 @@ function Agent() {
                          lg:absolute lg:top-[55%] lg:left-1/2 lg:transform lg:-translate-x-1/2 lg:-translate-y-1/2 
                          p-3 sm:p-4 md:p-6 rounded-xl lg:rounded-3xl 
                          flex flex-col lg:flex-row justify-between gap-4 sm:gap-6 md:gap-8">
-            
+
             {/* Form Section */}
             <div className="space-y-4 sm:space-y-6 flex flex-col py-4 sm:py-6 lg:py-8 px-2 sm:px-4 md:px-6 lg:px-8 w-full">
               {/* Title */}
@@ -287,7 +287,7 @@ function Agent() {
                     </div>
                   </div>
                 )}
-                
+
                 {/* Submit Button */}
                 <button
                   type="submit"
@@ -310,10 +310,16 @@ function Agent() {
 
               {/* Quick Links & Contact */}
               <div className="space-y-2">
-          
+
 
                 {/* Contact Information */}
                 <div className="flex flex-row items-start sm:items-center gap-3 sm:gap-4 md:gap-6">
+
+                </div>
+
+                {/* Business Unit Emails from API */}
+                <div className="pt-4 border-t border-gray-200">
+                  <p className="font-bold text-gray-600 text-sm md:text-base mb-2">or Contact us vai:</p>
                   <div className="flex flex-col lg:flex-row items-start sm:items-center gap-3 sm:gap-4 md:gap-6">
                     <div className="flex items-center gap-2">
                       <SlPhone className="text-sm md:text-base text-[#9b1c20] flex-shrink-0" />
@@ -333,38 +339,6 @@ function Agent() {
                         info@united.co.sz
                       </a>
                     </div>
-                  </div>
-                </div>
-
-                {/* Business Unit Emails from API */}
-                <div className="pt-4 border-t border-gray-200">
-                  <p className="font-bold text-gray-600 text-sm md:text-base mb-2">Contact Specific Departments</p>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
-                    {callbackReasons.length > 0 ? (
-                      <>
-                        {callbackReasons
-                          .filter(reason => reason.targetDepartment && reason.targetEmail)
-                          .reduce((unique, reason) => {
-                            const exists = unique.find(item => 
-                              item.targetDepartment === reason.targetDepartment && 
-                              item.targetEmail === reason.targetEmail
-                            );
-                            if (!exists) {
-                              unique.push(reason);
-                            }
-                            return unique;
-                          }, [])
-                          .map((reasonItem) => (
-                            <div key={reasonItem._id} className="flex items-center gap-1">
-                              <span className="font-semibold text-[#9b1c20]">{reasonItem.targetDepartment}:</span>
-                              <span>{reasonItem.targetEmail}</span>
-                            </div>
-                          ))
-                        }
-                      </>
-                    ) : (
-                      <div className="text-gray-500">Loading department contacts...</div>
-                    )}
                   </div>
                 </div>
               </div>

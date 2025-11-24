@@ -1,6 +1,6 @@
 // components/Header/index.jsx
 "use client"
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import {
     PiHeart,
     PiShieldCheck,
@@ -22,6 +22,20 @@ import {
     PiImage,
     PiFile,
     PiNewspaper,
+    PiFlower,
+    PiPiggyBank,
+    PiAirplaneTilt,
+    PiGraduationCap,
+    PiFirstAid,
+    PiArmchair,
+    PiShield,
+    PiPackage,
+    PiFlame,
+    PiTruck,
+    PiCertificate,
+    PiHandCoins,
+    PiCreditCard,
+    PiLockKey,
 } from 'react-icons/pi';
 
 // Components
@@ -36,63 +50,145 @@ const DEPARTMENT_COLORS = {
     "Loans & Financing": "#f79620",
 };
 
+// Icon mapping for API category icons
+const ICON_MAP = {
+    PiUser: PiUser,
+    PiCar: PiCar,
+    PiHandCoins: PiHandCoins,
+    PiFlower: PiFlower,
+    PiCreditCard: PiCreditCard,
+    PiHouse: PiHouse,
+    PiPiggyBank: PiPiggyBank,
+    PiAirplaneTilt: PiAirplaneTilt,
+    PiBriefcase: PiBriefcase,
+    PiGraduationCap: PiGraduationCap,
+    PiFirstAid: PiFirstAid,
+    PiArmchair: PiArmchair,
+    PiShieldCheck: PiShieldCheck,
+    PiCertificate: PiCertificate,
+    PiPackage: PiPackage,
+    PiShield: PiShield,
+    PiLockKey: PiLockKey,
+    PiFlame: PiFlame,
+    PiTruck: PiTruck,
+};
+
 export default function Header() {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
     const [mobileActiveDropdown, setMobileActiveDropdown] = useState(null);
+    const [productCategories, setProductCategories] = useState([]);
+    const [loading, setLoading] = useState(true);
 
-    // Products dropdown data
-    const productsDropdown = useMemo(() => [
-        {
-            category: 'Life Assurance',
-            icon: PiHeart,
-            link: '/united-life-assurance',
-            color: DEPARTMENT_COLORS["Life Assurance"],
-            items: [
-                { name: 'Dignified Homelink Cover', link: '/products/dignified-homelink-cover', icon: PiUsers },
-                { name: 'Dignified Tribute Cover', link: '/products/dignified-tribute-cover', icon: PiUser },
-                { name: 'Dignified Family Support Cover', link: '/products/dignified-family-support-cover', icon: PiCalendar },
-                { name: 'Dignified Senior Citizen Cover', link: '/products/dignified-senior-citizen-cover', icon: PiUsers },
-                { name: 'Credit Life', link: '/products/credit-life', icon: PiMoney },
-                { name: 'Dignified Funeral Plan Cover', link: '/products/dignified-funeral-plan-cover', icon: PiCalendar },
-                { name: 'Tinkhundla Funeral Cover', link: '/products/tinkhundla-funeral-cover', icon: PiCalendar },
-            ]
-        },
-        {
-            category: 'General Personal Insurance',
-            icon: PiShieldCheck,
-            link: '/united-general-insurance',
-            color: DEPARTMENT_COLORS["General & Business Insurance"],
-            items: [
-                { name: 'Motor Insurance', link: '/products/motor-insurance', icon: PiCar },
-                { name: 'Home Contents Insurance', link: '/products/home-contents-insurance', icon: PiHouse },
-                { name: 'Legal Insurance', link: '/products/legal-insurance', icon: PiScales },
-                { name: 'Personal Accident Insurance', link: '/products/personal-accident-insurance', icon: PiWarningCircle },
-            ]
-        },
-        {
-            category: 'General Business Insurance',
-            icon: PiBriefcase,
-            color: DEPARTMENT_COLORS["General & Business Insurance"],
-            items: [
-                { name: 'Multimark Policy', link: '/products/multimark-policy', icon: PiBuildingOffice },
-                { name: 'Medical Malpractice', link: '/products/medical-malpractice', icon: PiUser },
-                { name: 'Professional Indemnity', link: '/products/professional-indemnity', icon: PiFileText },
-                { name: 'Bonds and Guarantees', link: '/products/bonds-and-guarantees', icon: PiFileText },
-                { name: 'Engineering Policies', link: '/products/engineering-policies', icon: PiBuildingOffice },
-                { name: 'Fidelity Guarantee', link: '/products/fidelity-guarantee', icon: PiLock },
-                { name: 'Political Violence and Terrorism', link: '/products/political-violence-and-terrorism', icon: PiWarningCircle },
-            ]
-        },
-        {
-            category: 'Loans & Financing',
-            icon: PiMoney,
-            color: DEPARTMENT_COLORS["Loans & Financing"],
-            items: [
-                { name: 'Micro Loans', link: 'https://uploans.united.co.sz/', icon: PiMoney },
-                { name: 'Umlamleli Loan (Salary Advance)', link: 'https://uploans.united.co.sz/', icon: PiTrendUp },
-            ]
-        }
-    ], []);
+    // Fetch product categories from API
+    useEffect(() => {
+        const fetchProductCategories = async () => {
+            try {
+                const response = await fetch('https://website.api.united.co.sz/api/product-categories');
+                if (!response.ok) {
+                    throw new Error(`Failed to fetch product categories: ${response.status}`);
+                }
+                const data = await response.json();
+                setProductCategories(data.data || []);
+            } catch (err) {
+                console.error('Error fetching product categories:', err);
+                setProductCategories([]);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchProductCategories();
+    }, []);
+
+    // Transform API data into products dropdown structure
+    const productsDropdown = useMemo(() => {
+        if (loading) return [];
+        
+        // Group categories by company
+        const categoriesByCompany = {
+            ULA: [],
+            UGI: [],
+            UP: []
+        };
+
+        // Sort and group categories
+        productCategories
+            .filter(cat => cat.isActive)
+            .sort((a, b) => a.displayOrder - b.displayOrder)
+            .forEach(category => {
+                if (categoriesByCompany[category.companyCode]) {
+                    categoriesByCompany[category.companyCode].push(category);
+                }
+            });
+
+        // Map to the required dropdown structure
+        return [
+            {
+                category: 'Life Assurance',
+                icon: PiHeart,
+                link: '../../companies/ULA',
+                color: DEPARTMENT_COLORS["Life Assurance"],
+                items: categoriesByCompany.ULA.map(cat => ({
+                    name: cat.categoryName,
+                    link: `/products/${cat.categoryName.toLowerCase().replace(/\s+/g, '-')}`,
+                    icon: ICON_MAP[cat.categoryIcon] || PiUser,
+                    description: `${cat.categoryName} coverage`
+                }))
+            },
+            {
+                category: 'General Personal Insurance',
+                icon: PiShieldCheck,
+                link: '../../companies/UGI',
+                color: DEPARTMENT_COLORS["General & Business Insurance"],
+                items: categoriesByCompany.UGI.filter(cat => 
+                    cat.categoryName === 'Motor Insurance' ||
+                    cat.categoryName === 'Home Insurance' ||
+                    cat.categoryName === 'Personal Accident' ||
+                    cat.categoryName === 'Travel Insurance' ||
+                    cat.categoryName === 'Contents Insurance' ||
+                    cat.categoryName === 'Theft Insurance' ||
+                    cat.categoryName === 'Fire Insurance'
+                ).map(cat => ({
+                    name: cat.categoryName,
+                    link: `/products/${cat.categoryName.toLowerCase().replace(/\s+/g, '-')}`,
+                    icon: ICON_MAP[cat.categoryIcon] || PiShieldCheck,
+                    description: `${cat.categoryName} coverage`
+                }))
+            },
+            {
+                category: 'General Business Insurance',
+                icon: PiBriefcase,
+                link: '../../companies/UGI',
+                color: DEPARTMENT_COLORS["General & Business Insurance"],
+                items: categoriesByCompany.UGI.filter(cat => 
+                    cat.categoryName === 'Business Insurance' ||
+                    cat.categoryName === 'Public Liability' ||
+                    cat.categoryName === 'Professional Indemnity' ||
+                    cat.categoryName === 'All Risks' ||
+                    cat.categoryName === 'Goods in Transit'
+                ).map(cat => ({
+                    name: cat.categoryName,
+                    link: `/products/${cat.categoryName.toLowerCase().replace(/\s+/g, '-')}`,
+                    icon: ICON_MAP[cat.categoryIcon] || PiBriefcase,
+                    description: `${cat.categoryName} coverage`
+                }))
+            },
+            {
+                category: 'Loans & Financing',
+                icon: PiMoney,
+                link: '../../companies/UP',
+                color: DEPARTMENT_COLORS["Loans & Financing"],
+                items: categoriesByCompany.UP.map(cat => ({
+                    name: cat.categoryName,
+                    link: cat.categoryName === 'Personal Loans' || cat.categoryName === 'Salary Advances' 
+                        ? 'https://uploans.united.co.sz/' 
+                        : `/products/${cat.categoryName.toLowerCase().replace(/\s+/g, '-')}`,
+                    icon: ICON_MAP[cat.categoryIcon] || PiMoney,
+                    description: `${cat.categoryName} services`
+                }))
+            }
+        ];
+    }, [productCategories, loading]);
 
     // About dropdown data
     const aboutDropdown = useMemo(() => [

@@ -535,27 +535,7 @@ const EnhancedReviewsCarousel = ({ reviews, loading = false }) => {
           </div>
         </div>
 
-        {/* CTA Section */}
-        <motion.div
-          className="text-center mt-12"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.5 }}
-        >
-          <button
-            onMouseEnter={() => setIsAutoPlaying(false)}
-            onMouseLeave={() => setIsAutoPlaying(true)}
-            className="group relative inline-flex items-center px-8 py-4 text-[#9b1c20] bg-white rounded-2xl font-bold text-lg transition-all duration-300 hover:scale-105 overflow-hidden"
-            onClick={() => trackEvent('share_your_experience_clicked', {
-              location: 'why_choose_us_section',
-              page_section: 'client_feedback'
-            })}
-          >
-            <span className="relative z-10">Share Your Experience</span>
-            <div className="absolute inset-0 bg-gradient-to-r from-[#F9AF55] to-[#9b1c20] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-          </button>
-        </motion.div>
+    
       </div>
     </div>
   );

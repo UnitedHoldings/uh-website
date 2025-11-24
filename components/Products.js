@@ -22,7 +22,8 @@ import {
     PiCurrencyCircleDollar,
     PiShieldCheck,
     PiHouse,
-    PiFileText
+    PiFileText,
+    PiHeart
 } from 'react-icons/pi';
 
 // Product data ordered by company: ULA, UGI, UP
@@ -55,7 +56,7 @@ const productData = [
         desc: 'Protect your loans and family by covering repayments in case of death or disability. Peace of mind for borrowers across Eswatini.',
         img: '/credit-life.jpg',
         company: 'ULA',
-        icon: <PiCurrencyCircleDollar className="text-2xl" />,
+        icon: <PiHeart className="text-2xl" />,
         stats: ['From E25/month', 'Loan Protection', 'Quick Claims'],
         link: '/products/credit-life',
         color: '#3d834d',
