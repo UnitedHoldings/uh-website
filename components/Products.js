@@ -40,13 +40,13 @@ const productData = [
         bgColor: '#3d834d'
     },
     {
-        title: 'Individual Funeral Plan',
-        desc: 'Personalized funeral coverage with fast payouts and premium flexibility. Ensure your final journey is handled with dignity and care.',
+        title: 'Dignified Homelink Cover',
+        desc: 'This product covers foreign nationals who are residents in Eswatini as well as Swazis who are residents in other countries. The Dups Direct Home Link plan provides cash payment upon the passing of a covered individual, including the policyholder and his/her family member dependents. The cash covers the costs of repatriating the body remains of the deceased back into Eswatini, or to anywhere in the world. It is up to the family of the deceased to decide the form in which they prefer to repatriate the remains – this, however, is not linked to the payout.',
         img: '/individual-funeral.jpg',
         company: 'ULA',
         icon: <BsPeople className="text-2xl" />,
-        stats: ['From E30/month', 'Personal Coverage', 'Flexible Payments'],
-        link: '/products/individual-funeral-plan',
+        stats: [ 'Personal Coverage', 'Flexible Payments'],
+        link: '/products/dignified-homelink-cover',
         color: '#3d834d',
         bgColor: '#3d834d'
     },

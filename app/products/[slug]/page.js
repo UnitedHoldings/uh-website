@@ -26,6 +26,7 @@ const getProductCompany = (product) => {
     productName.includes('life') ||
     productName.includes('credit life') ||
     productName.includes('dignified') ||
+    productName.includes('individual funeral') ||
     productName.includes('dignified senior citizen cover') ||
     productName.includes('group life')) {
     return 'ULA';

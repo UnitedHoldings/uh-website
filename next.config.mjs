@@ -10,14 +10,20 @@ const nextConfig = {
       },
     ],
   },
-  source: "/:path*",
-  headers: [
-    {
-      key: "Content-Security-Policy",
-      value:
-        "default-src 'self'; script-src 'self' https://*.posthog.com; connect-src 'self' https://*.posthog.com; worker-src 'self' blob: data:;",
-    },
-  ],
+  headers: async () => {
+    return [
+      {
+        source: '/:path*',
+        headers: [
+          {
+            key: 'Content-Security-Policy',
+            value:
+              "default-src 'self'; script-src 'self' https://*.posthog.com; connect-src 'self' https://*.posthog.com; worker-src 'self' blob: data:;",
+          },
+        ],
+      },
+    ];
+  },
 };
 
 export default nextConfig;

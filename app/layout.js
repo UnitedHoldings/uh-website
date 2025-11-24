@@ -134,6 +134,34 @@ export default function RootLayout({ children }) {
         <Script id="gtag-init" strategy="afterInteractive">
           {`window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-31DS0EN7P0');`}
         </Script>
+
+        {/* ✅ Landbot Chatbot Script */}
+        <Script
+          id="landbot-script"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.addEventListener('mouseover', initLandbot, { once: true });
+              window.addEventListener('touchstart', initLandbot, { once: true });
+              var myLandbot;
+              function initLandbot() {
+                if (!myLandbot) {
+                  var s = document.createElement('script');
+                  s.type = "module";
+                  s.async = true;
+                  s.addEventListener('load', function() {
+                    myLandbot = new Landbot.Popup({
+                      configUrl: 'https://storage.googleapis.com/landbot.online/v3/H-3231997-Y7NP2LQX01JVDT2O/index.json',
+                    });
+                  });
+                  s.src = 'https://cdn.landbot.io/landbot-3/landbot-3.0.0.mjs';
+                  var x = document.getElementsByTagName('script')[0];
+                  x.parentNode.insertBefore(s, x);
+                }
+              }
+            `,
+          }}
+        />
       </head>
       <body
         className={`font-outfit antialiased relative bg-white text-gray-900`}
@@ -178,11 +206,15 @@ export default function RootLayout({ children }) {
           </span>
         </a>
 
-        {/* ✅ Red Feedback Floating Button - Right side */}
-        <a
-          href="/feedback"
-          aria-label="Provide Feedback"
-          className="fixed right-4 sm:right-6 bottom-4 sm:bottom-6 z-50 flex items-center gap-2 bg-gradient-to-r from-[#9b1c20] to-[#7a1619] hover:from-[#8a191c] hover:to-[#6a1316] text-white pl-3 pr-4 py-3 rounded-full shadow-2xl transition-all duration-300 hover:scale-105 hover:shadow-3xl group border-2 border-white"
+        {/* ✅ Chatbot Floating Button - Right side */}
+        <button
+          onClick={() => {
+            if (typeof window !== 'undefined' && window.initLandbot) {
+              window.initLandbot();
+            }
+          }}
+          aria-label="Open Chatbot"
+          className="fixed right-4 sm:right-6 bottom-4 sm:bottom-6 z-50 flex items-center gap-2 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white pl-3 pr-4 py-3 rounded-full shadow-2xl transition-all duration-300 hover:scale-105 hover:shadow-3xl group border-2 border-white"
         >
           <div className="relative">
             <svg
@@ -197,18 +229,18 @@ export default function RootLayout({ children }) {
               strokeLinejoin="round"
               className="flex-shrink-0"
             >
-              <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
             </svg>
             {/* Animated ping effect */}
-            <span className="absolute -top-1 z-50 -right-1 flex h-3 w-3">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
+            <span className="absolute -top-1 -right-1 flex h-3 w-3">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-3 w-3 bg-blue-500"></span>
             </span>
           </div>
           <span className="font-semibold text-sm whitespace-nowrap hidden sm:inline-block transition-all duration-300">
-            Feedback!
+            Chatbot
           </span>
-        </a>
+        </button>
       </body>
     </html>
   );
