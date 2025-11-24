@@ -147,7 +147,6 @@ export default function Home() {
   }, [currentSlide, activeTab, tabMap]); // Now tabMap is stable
   const router = useRouter();
   const handleTabClick = (index, tab) => {
-    router.push(tab.slug);
     const newSlide = slideMap[index];
     const companyName = TAB_CONFIG[index].name;
 
