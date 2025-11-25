@@ -179,37 +179,29 @@ export default function RootLayout({ children }) {
           </span>
         </a>
 
-        {/* ✅ Red Feedback Floating Button - Right side */}
-        <a
-          href="/feedback"
-          aria-label="Provide Feedback"
-          className="fixed right-4 sm:right-6 bottom-4 sm:bottom-6 z-50 flex items-center gap-2 bg-gradient-to-r from-[#9b1c20] to-[#7a1619] hover:from-[#8a191c] hover:to-[#6a1316] text-white pl-3 pr-4 py-3 rounded-full shadow-2xl transition-all duration-300 hover:scale-105 hover:shadow-3xl group border-2 border-white"
-        >
-          <div className="relative">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="28"
-              height="28"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="flex-shrink-0"
-            >
-              <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
-            </svg>
-            {/* Animated ping effect */}
-            <span className="absolute -top-1 z-50 -right-1 flex h-3 w-3">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
-            </span>
-          </div>
-          <span className="font-semibold text-sm whitespace-nowrap hidden sm:inline-block transition-all duration-300">
-            Feedback!
-          </span>
-        </a>
+        {/* ✅ Voiceflow Chatbot - Right side */}
+        <Script
+          id="voiceflow-init"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function(d, t) {
+                var v = d.createElement(t), s = d.getElementsByTagName(t)[0];
+                v.onload = function() {
+                  window.voiceflow.chat.load({
+                    verify: { projectID: '68dea042360ab353c0717f93' },
+                    url: 'https://general-runtime.voiceflow.com',
+                    versionID: 'production',
+                    voice: {
+                      url: "https://runtime-api.voiceflow.com"
+                    }
+                  });
+                }
+                v.src = "https://cdn.voiceflow.com/widget-next/bundle.mjs"; v.type = "text/javascript"; s.parentNode.insertBefore(v, s);
+              })(document, 'script');
+            `
+          }}
+        />
       </body>
     </html>
   );
