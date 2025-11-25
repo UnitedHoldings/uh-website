@@ -16,7 +16,7 @@ export const CompanyHeader = ({ product, company }) => {
   const companyName = COMPANY_NAMES[company] || company;
 
   return (
-    <>
+    <div>
       {/* Company Header Bar */}
       <div
         className='h-8 w-full'
@@ -39,6 +39,6 @@ export const CompanyHeader = ({ product, company }) => {
           </div>
         </header>
       </div>
-    </>
+    </div>
   );
 };

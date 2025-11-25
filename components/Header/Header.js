@@ -86,7 +86,7 @@ const STATIC_PRODUCTS_DROPDOWN = [
     {
         category: 'Life Assurance',
         icon: PiHeart,
-        link: '/united-life-assurance',
+        link: '../../companies/ULA',
         color: '#3d834d',
         items: [
             { name: 'Dignified Homelink Cover', link: '/products/dignified-homelink-cover', icon: PiUsers, description: 'Dignified Homelink Cover' },
@@ -101,7 +101,7 @@ const STATIC_PRODUCTS_DROPDOWN = [
     {
         category: 'General Personal Insurance',
         icon: PiShieldCheck,
-        link: '/united-general-insurance',
+        link: '../../companies/UGI',
         color: '#286278',
         items: [
             { name: 'Motor Insurance', link: '/products/motor-insurance', icon: PiCar, description: 'Motor Insurance' },
@@ -113,7 +113,7 @@ const STATIC_PRODUCTS_DROPDOWN = [
     {
         category: 'General Business Insurance',
         icon: PiBriefcase,
-        link: '/united-general-insurance',
+        link: '../../companies/UGI',
         color: '#286278',
         items: [
             { name: 'Multimark Policy', link: '/products/multimark-policy', icon: PiBuildingOffice, description: 'Multimark Policy' },

@@ -67,7 +67,7 @@ export default function About() {
   }
 
   return (
-    <>
+    <div>
       <div className="min-h-screen font-outfit mx-auto">
         {/* Header Section */}
         <div className='bg-[#881a1e] h-6 sm:h-8 w-full' />
@@ -236,6 +236,6 @@ export default function About() {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }

@@ -15,7 +15,7 @@ export const ProductForm = ({
   companyText
 }) => {
   return (
-    <>
+    <div>
       <div className="mt-4 sm:mt-6 flex flex-col sm:flex-row gap-3 sm:items-center">
         <div className="bg-white w-full rounded-lg sm:rounded-xl -lg p-4 sm:p-6 md:p-8 flex flex-col gap-3 sm:gap-4 items-center mx-auto text-black">
           <div className='w-full flex flex-col text-center sm:text-left'>
@@ -47,6 +47,6 @@ export const ProductForm = ({
           {submitMessage || submitError}
         </div>
       )}
-    </>
+    </div>
   );
 };

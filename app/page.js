@@ -177,7 +177,7 @@ export default function Home() {
   const currentColor = getCurrentDepartmentColor();
 
   return (
-    <>
+    <div>
       <SeoHead
         title="United Holdings | Insurance & Financial Solutions"
         description="United Holdings provides trusted insurance and financial solutions tailored for Eswatini and Southern Africa. Get quotes, manage policies, and connect with our team."
@@ -246,6 +246,6 @@ export default function Home() {
         <Agent />
         <WhyChooseUs />
       </div>
-    </>
+    </div>
   );
 }

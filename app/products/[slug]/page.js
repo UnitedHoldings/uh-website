@@ -144,11 +144,10 @@ export default function ProductPage({ params }) {
           ])
       };
 
-      const response = await fetch('http://website.api.united.co.sz/api/get-quote', {
+      const response = await fetch('/api/quote', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Accept': 'application/json',
         },
         body: JSON.stringify(requestBody),
       });
@@ -174,7 +173,6 @@ export default function ProductPage({ params }) {
 
       const companyText = getCompanySpecificText(getProductCompany(product));
       setSubmitMessage(companyText.successMessage);
-      setSubmitted(true);
 
       setFormData({
         name: '',

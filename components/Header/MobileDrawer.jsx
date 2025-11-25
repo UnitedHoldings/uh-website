@@ -17,7 +17,7 @@ export const MobileDrawer = ({
     if (!isOpen) return null;
 
     return (
-        <>
+        <div>
             {/* Overlay */}
             <div
                 className="fixed inset-0 bg-black bg-opacity-50 z-50 lg:hidden"
@@ -54,6 +54,6 @@ export const MobileDrawer = ({
                     <ContactInfo variant="mobile-drawer" location="mobile_drawer" />
                 </div>
             </div>
-        </>
+        </div>
     );
 };

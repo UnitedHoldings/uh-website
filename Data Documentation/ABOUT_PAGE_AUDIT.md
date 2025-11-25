@@ -348,13 +348,13 @@ PUT  /api/cms/pages/about/companies/{id} // Update a company (admin)
 // app/about/page.js - CURRENT
 export default function About() {
   return (
-    <>
+    <div>
       <div>
         <h1>About United Holdings</h1>
         <p>Learn about our purpose...</p>
         {/* ... hardcoded content ... */}
       </div>
-    </>
+    </div>
   )
 }
 ```
