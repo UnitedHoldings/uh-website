@@ -546,10 +546,7 @@ export default function GalleryPage() {
                     )}
                     <span>Favorite</span>
                   </button>
-                  <button className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50">
-                    <IoShareSocialOutline />
-                    <span>Share</span>
-                  </button>
+             
                 </div>
               </div>
             </div>
@@ -653,16 +650,8 @@ export default function GalleryPage() {
                     <span className="text-sm text-gray-300">
                       {currentImageIndex + 1} of {selectedAlbum.images.length}
                     </span>
-                    <div className="flex gap-2">
-                      <button className="flex items-center gap-2 px-3 py-2 bg-white/20 rounded-lg hover:bg-white/30 transition-colors">
-                        <IoDownloadOutline />
-                        <span>Download</span>
-                      </button>
-                      <button className="flex items-center gap-2 px-3 py-2 bg-white/20 rounded-lg hover:bg-white/30 transition-colors">
-                        <IoShareSocialOutline />
-                        <span>Share</span>
-                      </button>
-                    </div>
+                   
+                    
                   </div>
                 </div>
               </div>
