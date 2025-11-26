@@ -8,9 +8,10 @@
 export async function POST(request) {
   try {
     const body = await request.json();
-
+    console.log(body);
+    
     // Forward the request to the backend API
-    const response = await fetch('https://website.api.united.co.sz/api/get-quote', {
+    const response = await fetch('https://website.api.united.co.sz/api/apply', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

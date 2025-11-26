@@ -1,5 +1,6 @@
 'use client'
 import React, { useState, useEffect } from 'react';
+import { LoadingState } from './LoadingState';
 
 // Reusable Input Field Component
 const InputField = ({ label, name, type = 'text', value, onChange, required = false, className = ' ', ...props }) => (
@@ -130,8 +131,6 @@ export default function RenderForm({
                 const response = await fetch(
                     `https://website.api.united.co.sz/api/form-category?categoryKey=${categoryKey}`
                 );
-                console.log( `https://website.api.united.co.sz/api/form-category?categoryKey=${categoryKey}`);
-                
                 
                 if (!response.ok) {
                     throw new Error(`Failed to fetch form configuration: ${response.status}`);
@@ -154,58 +153,141 @@ export default function RenderForm({
         };
 
         fetchFormConfig();
-    }, [product]); // Changed dependency to product object instead of product.name
+    }, [product]);
+
+    // Helper function to find field keys by type or label pattern
+    const findFieldKey = (patterns, type = null) => {
+        if (!formConfig || !formConfig.formFields) return null;
+        
+        for (const field of formConfig.formFields) {
+            // Check by type first
+            if (type && field.type === type) {
+                return field.fieldKey;
+            }
+            // Check by field key patterns
+            for (const pattern of patterns) {
+                if (field.fieldKey.toLowerCase().includes(pattern)) {
+                    return field.fieldKey;
+                }
+            }
+            // Check by label patterns as fallback
+            for (const pattern of patterns) {
+                if (field.label.toLowerCase().includes(pattern)) {
+                    return field.fieldKey;
+                }
+            }
+        }
+        return null;
+    };
+
+    // Transform flat form data to the required API payload structure
+    const transformFormDataToPayload = (flatFormData) => {
+        if (!formConfig || !formConfig.formFields) {
+            return null;
+        }
+
+        const formFields = formConfig.formFields.map(field => {
+            let value = flatFormData[field.fieldKey] || '';
+            
+            // Convert value types based on field type
+            switch (field.type) {
+                case 'number':
+                    value = value ? Number(value) : 0;
+                    break;
+                case 'checkbox':
+                    value = Boolean(value);
+                    break;
+                // Add other type conversions as needed
+                default:
+                    // Keep as string for text, email, tel, date, select
+                    break;
+            }
+
+            return {
+                fieldKey: field.fieldKey,
+                label: field.label,
+                value: value,
+                type: field.type
+            };
+        });
+
+        return {
+            product: product?.name || '',
+            companyCode: company?.code || 'UGI', // Fallback to UGI if company code not available
+            formFields: formFields
+        };
+    };
 
     const handleFormSubmit = (e) => {
         e.preventDefault();
         console.log('Form submitted. formData:', formData);
         
-        // Tolerate several common field keys for name, email, phone
-        const nameVal = (
-            formData.fullName || formData.name || formData.full_name || formData.firstName || formData.first_name || ''
-        ).toString().trim();
-        const emailVal = (
-            formData.email || formData.Email || formData.userEmail || formData.emailAddress || ''
-        ).toString().trim();
-        const phoneVal = (
-            formData.phone || formData.mobile || formData.telephone || formData.phoneNumber || formData.mobileNumber || ''
-        ).toString().trim();
-
-        // Debug log to see what values we're checking
-        console.log('Validation check - name:', nameVal, 'email:', emailVal, 'phone:', phoneVal);
-
-        if (!nameVal) {
-            setError('Please enter your full name.');
-            return;
-        }
-        if (!emailVal) {
-            setError('Please enter your email address.');
-            return;
-        }
-        if (!phoneVal) {
-            setError('Please enter your phone number.');
+        // Validate that all required fields have values
+        if (!formConfig || !formConfig.formFields) {
+            setError('Form configuration not loaded. Please try again.');
             return;
         }
 
-        // Email validation
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(emailVal)) {
-            setError('Please enter a valid email address.');
+        const emptyFields = [];
+
+        // Check all required fields for empty values
+        formConfig.formFields.forEach(field => {
+            const fieldValue = (formData[field.fieldKey] || '').toString().trim();
+            if (!fieldValue) {
+                emptyFields.push(field.label);
+            }
+        });
+
+        // If there are empty fields, show error with specific field names
+        if (emptyFields.length > 0) {
+            setError(`Please fill in all required fields: ${emptyFields.join(', ')}`);
             return;
         }
 
-        // Clear any previous error and call the sendQuote function from parent
+        // (email validation moved below after extracting the dynamic email value)
+
+        // Build a flat payload expected by the page-level handler (name, email, phone at top-level)
+        const nameFieldKey = findFieldKey(['name', 'fullname', 'firstname', 'lastname']);
+        const emailFieldKey = findFieldKey(['email'], 'email');
+        const phoneFieldKey = findFieldKey(['phone', 'mobile', 'tel', 'cell'], 'tel');
+
+        const nameVal = nameFieldKey ? (formData[nameFieldKey] || '').toString().trim() : '';
+        const emailVal = emailFieldKey ? (formData[emailFieldKey] || '').toString().trim() : '';
+        const phoneVal = phoneFieldKey ? (formData[phoneFieldKey] || '').toString().trim() : '';
+
+        // Validate email format if we found an email field
+        if (emailVal) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(emailVal)) {
+                setError('Please enter a valid email address.');
+                return;
+            }
+        }
+
+        // Build flat payload containing all form fields keyed by their fieldKey
+        const flatPayload = formConfig.formFields.reduce((acc, f) => {
+            acc[f.fieldKey] = formData[f.fieldKey] || '';
+            return acc;
+        }, {});
+
+        // Ensure top-level name/email/phone keys exist for the page handler
+        if (nameVal) flatPayload.name = nameVal;
+        if (emailVal) flatPayload.email = emailVal;
+        if (phoneVal) flatPayload.phone = phoneVal;
+
+        // Also prepare the API-specific payload (kept for debugging/logs)
+        const apiPayload = transformFormDataToPayload(formData);
+        if (!apiPayload) {
+            setError('Failed to prepare form data for submission.');
+            return;
+        }
+
+        console.log('Prepared flat payload for page handler:', flatPayload);
+        console.log('Prepared API payload for remote endpoint:', apiPayload);
+
+        // Clear any previous error and call the page-level submit handler with the flat payload
         setError(null);
-        // Normalize commonly-used keys when sending so backend receives expected shape
-        const payload = {
-            ...formData,
-            name: nameVal,
-            email: emailVal,
-            phone: phoneVal,
-        };
-
-        console.log('Sending payload:', payload);
-        sendQuote(payload);
+        sendQuote(apiPayload);
     };
 
     if (!product) {
@@ -219,7 +301,7 @@ export default function RenderForm({
     if (loading) {
         return (
             <div className="flex justify-center items-center py-8">
-                <div className="text-gray-600">Loading form configuration...</div>
+                <LoadingState />
             </div>
         );
     }
@@ -261,8 +343,6 @@ export default function RenderForm({
                     </div>
                 </div>
             )}
-
-           
 
             {/* Submit Button */}
             <div className='w-full flex justify-center sm:justify-start mt-4 sm:mt-6'>

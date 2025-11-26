@@ -247,7 +247,6 @@ export default function CompanyProductsPage({ companyCode }) {
 
       } catch (err) {
         setError(err.message);
-        console.error('Failed to load data:', err);
       } finally {
         setLoading(false);
       }
@@ -309,7 +308,6 @@ export default function CompanyProductsPage({ companyCode }) {
   }, [searchQuery, selectedCategory, priceFilter, products, companyCode]);
 
   const ProductCard = ({ product }) => {
-    console.log('Product data:', product);
     
     // Safe icon selection with fallback
     const IconComponent = config.icons[product.name] || PiShield;
@@ -317,8 +315,6 @@ export default function CompanyProductsPage({ companyCode }) {
 
     // Debug: Check if icon is found
     if (!config.icons[product.name]) {
-      console.warn(`No icon found for product: ${product.name} in company: ${companyCode}`);
-      console.log('Available icons:', Object.keys(config.icons));
     }
 
     const CTAButton = () => {

@@ -110,7 +110,7 @@ export default function ProductPage({ params }) {
 
         setProduct(foundProduct);
       } catch (error) {
-        console.error('Error loading products:', error);
+        
       } finally {
         setLoading(false);
       }
@@ -128,21 +128,7 @@ export default function ProductPage({ params }) {
     setSubmitMessage('');
 
     try {
-      const requestBody = {
-        name: formDataToSubmit.name,
-        surname: formDataToSubmit.name.split(' ').slice(1).join(' ') || formDataToSubmit.name,
-        email: formDataToSubmit.email,
-        mobileNumber: formDataToSubmit.phone,
-        productName: product.name,
-        productData: Object.entries(formDataToSubmit)
-          .filter(([key, value]) => value && value.toString().trim() !== '')
-          .map(([key, value]) => ({ field: key, value: value.toString().trim() }))
-          .concat([
-            { field: 'product', value: product.name },
-            { field: 'company', value: getProductCompany(product) },
-            { field: 'timestamp', value: new Date().toISOString() }
-          ])
-      };
+      const requestBody = {...formDataToSubmit};
 
       const response = await fetch('/api/quote', {
         method: 'POST',
@@ -153,18 +139,14 @@ export default function ProductPage({ params }) {
       });
 
       if (response.status === 204) {
-        console.log('Request successful (204 No Content)');
       } else if (response.ok) {
         const responseText = await response.text();
         if (responseText.trim()) {
           try {
             const result = JSON.parse(responseText);
-            console.log('Response JSON:', result);
           } catch (parseError) {
-            console.warn('Response is not valid JSON:', responseText);
           }
         } else {
-          console.log('Response is empty (expected)');
         }
       } else {
         const errorText = await response.text();
@@ -187,7 +169,6 @@ export default function ProductPage({ params }) {
       return true;
 
     } catch (error) {
-      console.error('Error sending quote:', error);
       const errorMessage = error.message.includes('Failed to fetch')
         ? 'Network error. Please check your connection and try again.'
         : `Failed to submit your request: ${error.message}`;
@@ -200,20 +181,14 @@ export default function ProductPage({ params }) {
 
   // Handle form submission from RenderForm
   const handleFormSubmit = async (submittedFormData) => {
-    console.log('Form submitted with data:', submittedFormData);
 
-    if (!submittedFormData.name || !submittedFormData.email || !submittedFormData.phone) {
-      setSubmitError('Please fill in all required fields (name, email, and phone)');
-      return false;
-    }
+    
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(submittedFormData.email)) {
-      setSubmitError('Please enter a valid email address');
-      return false;
-    }
+ 
 
     setFormData(submittedFormData);
+    console.log(submittedFormData);
+    
     return await sendQuote(submittedFormData);
   };
 
