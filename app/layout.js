@@ -137,7 +137,7 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body
-        className={`font-outfit antialiased relative bg-white text-gray-900`}
+        className={`max-w-[100vw] overflow-x-hidden font-outfit antialiased relative bg-white text-gray-900`}
       >
         <Header />
         {/* Global email gate (beta/login modal) */}

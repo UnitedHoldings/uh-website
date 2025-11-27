@@ -19,41 +19,85 @@ const InputField = ({ label, name, type = 'text', value, onChange, required = fa
     </div>
 );
 
-// Reusable Select Field Component
-const SelectField = ({ label, name, value, onChange, options = [], required = false, className = '' }) => (
-    <div className={className}>
-        <label className="block text-xs font-medium text-gray-800 ">{label}</label>
-        <select
-            name={name}
-            value={value}
-            onChange={onChange}
-            required={required}
-            className="w-full  py-2 outline-none  bg-white border-gray-300 border-b   placeholder-gray-300 "
-        >
-            <option value="" disabled>{`Select ${label}`}</option>
-            {options.map((option) => (
-                <option key={option.value} value={option.value}>
-                    {option.label}
-                </option>
-            ))}
-        </select>
-    </div>
-);
+// Reusable Select Field Component - UPDATED to handle string arrays
+const SelectField = ({ label, name, value, onChange, options = [], required = false, className = '' }) => {
+    // Normalize options to handle both string arrays and object arrays
+    const normalizeOptions = (rawOptions) => {
+        if (!Array.isArray(rawOptions)) return [];
+        
+        return rawOptions.map(option => {
+            if (typeof option === 'string') {
+                // Convert string to { value: string, label: string }
+                return { value: option, label: option };
+            } else if (option && typeof option === 'object' && option.value !== undefined) {
+                // Already in correct format
+                return option;
+            }
+            // Invalid option, return null and filter out
+            return null;
+        }).filter(option => option !== null);
+    };
 
-// Field renderer based on field configuration from API
+    const normalizedOptions = normalizeOptions(options);
+
+    return (
+        <div className={className}>
+            <label className="block text-xs font-medium text-gray-800 ">{label}</label>
+            <select
+                name={name}
+                value={value}
+                onChange={onChange}
+                required={required}
+                className="w-full py-2 outline-none bg-white border-gray-300 border-b text-gray-900"
+                style={{ color: '#1f2937' }}
+            >
+                <option value="" disabled className="text-gray-500">{`Select ${label}`}</option>
+                {normalizedOptions.length > 0 ? (
+                    normalizedOptions.map((option, index) => (
+                        <option 
+                            key={`${option.value}-${index}`} 
+                            value={option.value}
+                            className="text-gray-900"
+                            style={{ color: '#1f2937', backgroundColor: 'white' }}
+                        >
+                            {option.label}
+                        </option>
+                    ))
+                ) : (
+                    <option value="" disabled className="text-gray-500">
+                        No options available
+                    </option>
+                )}
+            </select>
+        </div>
+    );
+};
+
+// Field renderer based on field configuration from API - UPDATED
 const DynamicField = ({ field, value, onChange, className = '' }) => {
     const commonProps = {
         label: field.label,
-        name: field.fieldKey, // Use fieldKey from API as name
+        name: field.fieldKey,
         value: value || '',
         onChange: onChange,
-        required: true, // All fields from API are required
+        required: field.required || true, // Use field.required from API, default to true
         className: className
     };
 
+    // Debug log for select fields
+    if (field.type === 'select') {
+        console.log(`Select field "${field.label}":`, {
+            fieldKey: field.fieldKey,
+            rawValue: field.value,
+            isArray: Array.isArray(field.value),
+            arrayType: Array.isArray(field.value) && field.value.length > 0 ? typeof field.value[0] : 'empty'
+        });
+    }
+
     switch (field.type) {
         case 'select':
-            return <SelectField {...commonProps} options={field.options || []} />;
+            // Pass the raw value array - SelectField will normalize it
+            return <SelectField {...commonProps} options={field.value || []} />;
         case 'date':
             return <InputField {...commonProps} type="date" />;
         case 'number':
@@ -92,7 +136,6 @@ export default function RenderForm({
     // Function to determine product category key based on API structure
     const getProductCategoryKey = () => {
         const productName = product.name;
-        
         return productName;
     };
 
@@ -123,6 +166,24 @@ export default function RenderForm({
                 
                 if (result.success && result.data) {
                     setFormConfig(result.data);
+                    console.log("Form configuration loaded:", result.data);
+                    
+                    // Enhanced debug: Log all select fields and their options
+                    if (result.data.formFields) {
+                        result.data.formFields.forEach(field => {
+                            if (field.type === 'select') {
+                                console.log(`Select field analysis "${field.label}":`, {
+                                    fieldKey: field.fieldKey,
+                                    rawOptions: field.value,
+                                    optionsType: typeof field.value,
+                                    isArray: Array.isArray(field.value),
+                                    arrayLength: Array.isArray(field.value) ? field.value.length : 'N/A',
+                                    firstItemType: Array.isArray(field.value) && field.value.length > 0 ? typeof field.value[0] : 'N/A',
+                                    firstItemValue: Array.isArray(field.value) && field.value.length > 0 ? field.value[0] : 'N/A'
+                                });
+                            }
+                        });
+                    }
                 } else {
                     throw new Error(result.message || 'Invalid API response');
                 }
@@ -214,9 +275,14 @@ export default function RenderForm({
 
         // Check all required fields for empty values
         formConfig.formFields.forEach(field => {
-            const fieldValue = (formData[field.fieldKey] || '').toString().trim();
-            if (!fieldValue) {
-                emptyFields.push(field.label);
+            // Use field.required from API, default to true for backwards compatibility
+            const isFieldRequired = field.required !== undefined ? field.required : true;
+            
+            if (isFieldRequired) {
+                const fieldValue = (formData[field.fieldKey] || '').toString().trim();
+                if (!fieldValue) {
+                    emptyFields.push(field.label);
+                }
             }
         });
 
@@ -225,8 +291,6 @@ export default function RenderForm({
             setError(`Please fill in all required fields: ${emptyFields.join(', ')}`);
             return;
         }
-
-        // (email validation moved below after extracting the dynamic email value)
 
         // Build a flat payload expected by the page-level handler (name, email, phone at top-level)
         const nameFieldKey = findFieldKey(['name', 'fullname', 'firstname', 'lastname']);
@@ -264,6 +328,7 @@ export default function RenderForm({
             return;
         }
 
+        console.log('API Payload:', apiPayload);
 
         // Clear any previous error and call the page-level submit handler with the flat payload
         setError(null);
