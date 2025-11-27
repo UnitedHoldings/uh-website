@@ -91,9 +91,7 @@ export default function RenderForm({
 
     // Function to determine product category key based on API structure
     const getProductCategoryKey = () => {
-        console.log('Product Data', product);
         const productName = product.name;
-        console.log(productName);
         
         return productName;
     };
@@ -116,7 +114,6 @@ export default function RenderForm({
                 const response = await fetch(
                     `https://website.api.united.co.sz/api/form-category?categoryName=${categoryName}`
                 );
-                console.log(`https://website.api.united.co.sz/api/form-category?categoryName=${categoryName}`);
                 
                 if (!response.ok) {
                     throw new Error(`Failed to fetch form configuration: ${response.status}`);
