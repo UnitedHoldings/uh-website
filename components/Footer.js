@@ -161,7 +161,7 @@ function Footer() {
                                     href="tel:8001010" 
                                     className="font-semibold text-[#F7941D] hover:underline transition duration-150"
                                 >
-                                    800 1010
+                                   Toll Free: 800 1010
                                 </a>
                             </div>
                             <div className="flex items-center space-x-3">
@@ -303,9 +303,7 @@ function Footer() {
                         <p className="text-sm text-gray-200 text-center lg:text-left">
                             © {new Date().getFullYear()} United Holdings Eswatini. All rights reserved.
                         </p>
-                        <p className="text-sm text-gray-200 text-center lg:text-right">
-                          Toll Free: 800 1010
-                        </p>
+                      
                     </div>
                 </div>
             </div>
