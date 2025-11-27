@@ -304,7 +304,7 @@ function Footer() {
                             © {new Date().getFullYear()} United Holdings Eswatini. All rights reserved.
                         </p>
                         <p className="text-sm text-gray-200 text-center lg:text-right">
-                            Developed with <PiHeart className="inline-block w-4 h-4 text-red-600 mx-1" /> by <a href="https://www.linkedin.com/company/ummo-inc/" target="_blank" rel="noopener noreferrer" className="hover:text-[#F7941D] underline">UMMO Inc.</a>
+                          Toll Free: 800 1010
                         </p>
                     </div>
                 </div>
