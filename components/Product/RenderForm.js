@@ -91,26 +91,11 @@ export default function RenderForm({
 
     // Function to determine product category key based on API structure
     const getProductCategoryKey = () => {
-        if (!product || !product.name) return 'general_insurance';
+        console.log('Product Data', product);
+        const productName = product.name;
+        console.log(productName);
         
-        const productName = product.name.toLowerCase();
-        
-        if (productName.includes('funeral') || productName.includes('life') || productName.includes('credit life') || productName.includes('group life')) {
-            return 'life_insurance';
-        } else if (productName.includes('motor') || productName.includes('car')) {
-            return 'motor_insurance';
-        } else if (productName.includes('home') || productName.includes('property')) {
-            return 'home_insurance';
-        } else if (productName.includes('legal')) {
-            return 'legal_insurance';
-        } else if (productName.includes('personal accident')) {
-            return 'personal_accident_insurance';
-        } else if (productName.includes('multimark') || productName.includes('business') || productName.includes('professional') || productName.includes('fidelity') || productName.includes('engineering')) {
-            return 'business_insurance';
-        } else if (productName.includes('loan') || productName.includes('micro') || productName.includes('umlamleli')) {
-            return 'loan_products';
-        }
-        return 'general_insurance';
+        return productName;
     };
 
     // Fetch form configuration from external API
@@ -122,15 +107,16 @@ export default function RenderForm({
                 return;
             }
 
-            const categoryKey = getProductCategoryKey();
+            const categoryName = getProductCategoryKey();
             
             setLoading(true);
             setError(null);
 
             try {
                 const response = await fetch(
-                    `https://website.api.united.co.sz/api/form-category?categoryKey=${categoryKey}`
+                    `https://website.api.united.co.sz/api/form-category?categoryName=${categoryName}`
                 );
+                console.log(`https://website.api.united.co.sz/api/form-category?categoryName=${categoryName}`);
                 
                 if (!response.ok) {
                     throw new Error(`Failed to fetch form configuration: ${response.status}`);
@@ -144,7 +130,6 @@ export default function RenderForm({
                     throw new Error(result.message || 'Invalid API response');
                 }
             } catch (err) {
-                console.error('Error fetching form configuration:', err);
                 setError(err.message);
                 setFormConfig(null);
             } finally {
@@ -282,8 +267,6 @@ export default function RenderForm({
             return;
         }
 
-        console.log('Prepared flat payload for page handler:', flatPayload);
-        console.log('Prepared API payload for remote endpoint:', apiPayload);
 
         // Clear any previous error and call the page-level submit handler with the flat payload
         setError(null);
