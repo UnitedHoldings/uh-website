@@ -103,14 +103,14 @@ export default function Team() {
         }
         
         const data = await response.json();
-        console.log('API Response:', data); // Debug log
+
         
         const validatedData = validateTeamData(data);
         const sortedData = sortTeamDataBySequence(validatedData);
         setTeamData(sortedData);
       } catch (err) {
         setError(err.message);
-        console.error('Error fetching team data:', err);
+     
       } finally {
         setLoading(false);
       }
