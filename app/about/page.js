@@ -38,7 +38,7 @@ export default function About() {
           throw new Error('No data available');
         }
       } catch (err) {
-        console.error('Error fetching about page data:', err);
+
         setError('Failed to load page content');
       } finally {
         setLoading(false);
@@ -76,7 +76,7 @@ export default function About() {
             <h1 className="text-xl sm:text-2xl md:text-4xl font-semibold text-white text-center sm:text-left">
               {aboutData.headerTitle}
             </h1>
-            <p className="text-xs sm:text-sm text-white text-center sm:text-left mt-2">
+            <p className="text-lg sm:text-sm text-white text-center sm:text-left mt-2">
               {aboutData.headerSubtitle}
             </p>
           </header>
@@ -98,7 +98,7 @@ export default function About() {
         <div className='w-full bg-[#9b1c20] py-6 sm:py-8 mb-6 sm:mb-8'>
           <div className='max-w-[1400px] mx-auto px-4 sm:px-6 space-y-4 sm:space-y-6'>
             <div className="flex flex-col sm:flex-row justify-between items-center gap-4 sm:gap-8">
-              <p className='max-w-[800px] text-white text-lg sm:text-xl md:text-2xl text-center sm:text-left'>
+              <p className='max-w-[800px] text-white text-lg  text-center sm:text-left'>
                 {aboutData.claimsBannerText}
               </p>
               
