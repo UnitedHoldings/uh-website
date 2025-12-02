@@ -264,7 +264,7 @@ export default function Team() {
       <div className='w-full bg-[#9b1c20] py-6 sm:py-8 mb-6 sm:mb-8'>
         <div className='max-w-[1400px] mx-auto px-4 sm:px-6 space-y-4 sm:space-y-6'>
           <div className="flex flex-col sm:flex-row justify-between items-center gap-4 sm:gap-8">
-            <p className='max-w-[800px] text-white text-lg sm:text-xl md:text-2xl text-center sm:text-left'>
+            <p className='max-w-[800px] text-white text-lg  text-center sm:text-left'>
               Our experienced leadership team is committed to delivering exceptional financial services{' '}
               <span className="hover:underline cursor-pointer font-semibold">tailored to your needs</span>.
               Get to know the people behind our success.

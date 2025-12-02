@@ -4,7 +4,7 @@ import {
   IoBusinessOutline,
   IoLocationOutline,
   IoTimeOutline,
-  
+
   IoShareSocialOutline,
   IoArrowForwardOutline,
   IoSearchOutline,
@@ -98,13 +98,13 @@ export default function CareersPage() {
       try {
         setLoading(true);
         const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/careers`);
-        
+
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
-        
+
         const data = await response.json();
-        
+
         if (data.success) {
           setPageData(data.data.pageConfig);
           setJobs(data.data.jobs || []);
@@ -113,7 +113,7 @@ export default function CareersPage() {
           throw new Error(data.message || 'Failed to fetch careers data');
         }
       } catch (err) {
-        console.error('Error fetching careers data:', err);
+
         setError(err.message);
         // Fallback to empty data to prevent crashes
         setPageData({
@@ -149,12 +149,10 @@ export default function CareersPage() {
     let results = [...jobs];
 
     // Search filter
+    // Search filter
     if (searchTerm) {
       results = results.filter(job =>
-        job.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        job.description?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        job.department?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        (job.requirements && job.requirements.some(req => req.toLowerCase().includes(searchTerm.toLowerCase())))
+        job.title?.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
 
@@ -235,12 +233,12 @@ export default function CareersPage() {
   // Calculate days until deadline with color coding
   const getDeadlineInfo = (deadline) => {
     if (!deadline) return { days: 0, color: 'text-gray-600', bg: 'bg-gray-100', label: 'No deadline' };
-    
+
     const today = new Date();
     const deadlineDate = new Date(deadline);
     const diffTime = deadlineDate - today;
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    
+
     if (diffDays <= 0) return { days: 0, color: 'text-red-600', bg: 'bg-red-100', label: 'Expired' };
     if (diffDays <= 3) return { days: diffDays, color: 'text-red-600', bg: 'bg-red-100', label: 'Urgent' };
     if (diffDays <= 7) return { days: diffDays, color: 'text-orange-600', bg: 'bg-orange-100', label: 'Closing soon' };
@@ -250,7 +248,7 @@ export default function CareersPage() {
   // Get experience level
   const getExperienceLevel = (experience) => {
     if (!experience) return { level: 'Not specified', color: 'text-gray-600', bg: 'bg-gray-100' };
-    
+
     const years = parseInt(experience) || 0;
     if (years <= 1) return { level: 'Entry', color: 'text-[#9b1c20]', bg: 'bg-blue-100' };
     if (years <= 3) return { level: 'Mid', color: 'text-[#9b1c20]', bg: 'bg-green-100' };
@@ -347,7 +345,7 @@ export default function CareersPage() {
             <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto leading-relaxed">
               {pageData?.heroSubtitle || "Join Eswatini's leading financial services group and grow your career with purpose, impact, and innovation."}
             </p>
-            
+
             {/* Stats Grid */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8 max-w-2xl mx-auto">
               {(pageData?.heroStatistics || [
@@ -368,7 +366,7 @@ export default function CareersPage() {
               <div className="relative">
                 <input
                   type="text"
-                  placeholder="Search for your dream job... (e.g., 'Sales', 'Technology', 'Mbabane')"
+                  placeholder="Search for your dream job... "
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   className="w-full px-6 py-4 bg-white rounded-2xl border-0 text-gray-900 text-lg focus:ring-4 focus:ring-[#9b1c20]/20"
@@ -378,7 +376,7 @@ export default function CareersPage() {
             </div>
           </div>
         </div>
-        
+
         {/* Wave Decoration */}
         <div className="absolute bottom-0 left-0 right-0">
           <svg viewBox="0 0 1200 120" preserveAspectRatio="none" className="w-full h-12">
@@ -410,17 +408,15 @@ export default function CareersPage() {
             <div className="flex bg-white rounded-lg border border-gray-200 p-1">
               <button
                 onClick={() => setView('grid')}
-                className={`p-2 rounded-md transition-all ${
-                  view === 'grid' ? 'bg-blue-50 text-[#9b1c20]' : 'text-gray-600 hover:text-gray-900'
-                }`}
+                className={`p-2 rounded-md transition-all ${view === 'grid' ? 'bg-blue-50 text-[#9b1c20]' : 'text-gray-600 hover:text-gray-900'
+                  }`}
               >
                 Grid
               </button>
               <button
                 onClick={() => setView('list')}
-                className={`p-2 rounded-md transition-all ${
-                  view === 'list' ? 'bg-blue-50 text-[#9b1c20]' : 'text-gray-600 hover:text-gray-900'
-                }`}
+                className={`p-2 rounded-md transition-all ${view === 'list' ? 'bg-blue-50 text-[#9b1c20]' : 'text-gray-600 hover:text-gray-900'
+                  }`}
               >
                 List
               </button>
@@ -616,13 +612,12 @@ export default function CareersPage() {
                   const deadlineInfo = getDeadlineInfo(job.deadline);
                   const experienceInfo = getExperienceLevel(job.experience);
                   const CategoryIcon = CATEGORY_ICONS[job.category] || IoBriefcaseOutline;
-                  
+
                   return (
                     <div
                       key={job._id}
-                      className={`bg-white rounded-2xl transition-all duration-300 cursor-pointer border-2 ${
-                        job.featured ? 'ring-4 ring-yellow-500/20 border-yellow-500' : 'border-transparent'
-                      }`}
+                      className={`bg-white rounded-2xl transition-all duration-300 cursor-pointer border-2 ${job.featured ? 'ring-4 ring-yellow-500/20 border-yellow-500' : 'border-transparent'
+                        }`}
                       onClick={() => openJobDetails(job)}
                     >
                       <div className="p-6">
@@ -630,7 +625,7 @@ export default function CareersPage() {
                         <div className="flex justify-between items-start mb-4">
                           <div className="flex-1">
                             <div className="flex items-center gap-2 mb-2">
-                              <span 
+                              <span
                                 className="px-3 py-1 rounded-full text-white text-sm font-semibold"
                                 style={{ backgroundColor: COMPANY_INFO[job.company]?.color || '#6b7280' }}
                               >
@@ -645,7 +640,7 @@ export default function CareersPage() {
                             <h3 className="text-lg font-bold text-gray-900 mb-1">{job.title}</h3>
                             <p className="text-sm text-gray-600 mb-2">{job.department}</p>
                           </div>
-                      
+
                         </div>
 
                         {/* Meta Info */}
@@ -698,20 +693,19 @@ export default function CareersPage() {
                 {filteredJobs.map(job => {
                   const deadlineInfo = getDeadlineInfo(job.deadline);
                   const experienceInfo = getExperienceLevel(job.experience);
-                  
+
                   return (
                     <div
                       key={job._id}
-                      className={`bg-white rounded-2xl transition-all duration-300 cursor-pointer border-2 ${
-                        job.featured ? 'ring-4 ring-yellow-500/20 border-yellow-500' : 'border-transparent'
-                      }`}
+                      className={`bg-white rounded-2xl transition-all duration-300 cursor-pointer border-2 ${job.featured ? 'ring-4 ring-yellow-500/20 border-yellow-500' : 'border-transparent'
+                        }`}
                       onClick={() => openJobDetails(job)}
                     >
                       <div className="p-6">
                         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
                           <div className="flex-1">
                             <div className="flex items-center gap-3 mb-2">
-                              <span 
+                              <span
                                 className="px-3 py-1 rounded-full text-white text-sm font-semibold"
                                 style={{ backgroundColor: COMPANY_INFO[job.company]?.color || '#6b7280' }}
                               >
@@ -729,7 +723,7 @@ export default function CareersPage() {
                             <h3 className="text-xl font-bold text-gray-900 mb-1">{job.title}</h3>
                             <p className="text-gray-600 mb-2">{job.department} • {job.location}</p>
                             <p className="text-sm text-gray-600 line-clamp-2 mb-3">{job.description}</p>
-                            
+
                             {/* Requirements Preview */}
                             {job.requirements && job.requirements.length > 0 && (
                               <div className="flex flex-wrap gap-2">
@@ -744,7 +738,7 @@ export default function CareersPage() {
                               </div>
                             )}
                           </div>
-                          
+
                           <div className="flex flex-col items-end gap-3">
                             <div className="text-right">
                               <div className="font-bold text-[#9b1c20] text-lg">{job.salary}</div>
@@ -753,9 +747,9 @@ export default function CareersPage() {
                                 {deadlineInfo.days > 0 ? `${deadlineInfo.days} days left` : deadlineInfo.label}
                               </div>
                             </div>
-                            
+
                             <div className="flex gap-2">
-                             
+
                             </div>
                           </div>
                         </div>
@@ -774,7 +768,7 @@ export default function CareersPage() {
                 </div>
                 <h3 className="text-2xl font-bold text-gray-900 mb-3">No jobs found</h3>
                 <p className="text-gray-600 mb-6 max-w-md mx-auto">
-                  {jobs.length === 0 
+                  {jobs.length === 0
                     ? "We're not currently hiring, but check back soon for new opportunities!"
                     : "We couldn't find any jobs matching your criteria. Try adjusting your filters or search terms."
                   }
@@ -811,7 +805,7 @@ export default function CareersPage() {
               <div className="flex justify-between items-start mb-4">
                 <div className="flex-1">
                   <div className="flex items-center gap-3 mb-3">
-                    <span 
+                    <span
                       className="px-3 py-1 rounded-full text-white text-sm font-semibold"
                       style={{ backgroundColor: COMPANY_INFO[selectedJob.company]?.color || '#6b7280' }}
                     >
@@ -827,7 +821,7 @@ export default function CareersPage() {
                     {selectedJob.title}
                   </h2>
                   <p className="text-lg text-gray-600 mb-3">{selectedJob.department}</p>
-                  
+
                   <div className="flex flex-wrap gap-3 mb-4">
                     <span className="bg-blue-100 text-[#9b1c20] px-3 py-1 rounded-full text-sm font-medium">
                       {selectedJob.location}
@@ -840,9 +834,9 @@ export default function CareersPage() {
                     </span>
                   </div>
                 </div>
-                
+
                 <div className="flex gap-2 ml-4">
-                  
+
                   <button
                     onClick={closeJobDetails}
                     className="p-3 rounded-xl border border-gray-300 hover:bg-gray-50 transition-colors"
@@ -954,7 +948,7 @@ export default function CareersPage() {
                     {pageData?.ctaDescription || "Join our team and start your journey with United Group."}
                   </p>
                 </div>
-                
+
               </div>
             </div>
           </div>
@@ -975,33 +969,30 @@ export default function CareersPage() {
                   <IoCloseOutline className="text-2xl text-gray-400" />
                 </button>
               </div>
-              
+
               {/* Progress Steps */}
               <div className="flex justify-between mt-6">
                 {applicationSteps.map((step, index) => (
                   <div key={step.number} className="flex items-center">
-                    <div className={`flex items-center justify-center w-8 h-8 rounded-full ${
-                      step.completed ? 'bg-[#9b1c20] text-white' : 
-                      currentStep === step.number ? 'bg-[#9b1c20] text-white' : 
-                      'bg-gray-200 text-gray-600'
-                    }`}>
+                    <div className={`flex items-center justify-center w-8 h-8 rounded-full ${step.completed ? 'bg-[#9b1c20] text-white' :
+                        currentStep === step.number ? 'bg-[#9b1c20] text-white' :
+                          'bg-gray-200 text-gray-600'
+                      }`}>
                       {step.completed ? <IoCheckmarkCircleOutline /> : step.number}
                     </div>
-                    <span className={`ml-2 text-sm font-medium ${
-                      currentStep >= step.number ? 'text-gray-900' : 'text-gray-500'
-                    }`}>
+                    <span className={`ml-2 text-sm font-medium ${currentStep >= step.number ? 'text-gray-900' : 'text-gray-500'
+                      }`}>
                       {step.title}
                     </span>
                     {index < applicationSteps.length - 1 && (
-                      <div className={`w-12 h-0.5 mx-4 ${
-                        step.completed ? 'bg-[#9b1c20]' : 'bg-gray-200'
-                      }`} />
+                      <div className={`w-12 h-0.5 mx-4 ${step.completed ? 'bg-[#9b1c20]' : 'bg-gray-200'
+                        }`} />
                     )}
                   </div>
                 ))}
               </div>
             </div>
-            
+
             <div className="p-6">
               {/* Application form would go here */}
               <div className="text-center py-12">
