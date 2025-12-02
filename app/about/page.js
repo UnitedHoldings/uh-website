@@ -76,7 +76,7 @@ export default function About() {
             <h1 className="text-xl sm:text-2xl md:text-4xl font-semibold text-white text-center sm:text-left">
               {aboutData.headerTitle}
             </h1>
-            <p className="text-lg sm:text-sm text-white text-center sm:text-left mt-2">
+            <p className="text-lg  text-white text-center sm:text-left mt-2">
               {aboutData.headerSubtitle}
             </p>
           </header>
