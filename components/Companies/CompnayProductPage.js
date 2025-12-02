@@ -400,17 +400,7 @@ export default function CompanyProductsPage({ companyCode }) {
             ))}
           </div>
 
-          {/* Stats */}
-          <div className="flex items-center space-x-8 text-xs text-gray-500 mb-4">
-            <span className="flex items-center">
-              <PiShieldCheck className="mr-1" />
-              {product.stats?.[1] || 'N/A'}
-            </span>
-            <span className="flex items-center">
-              <PiMapPin className="mr-1" />
-              {product.stats?.[2] || 'N/A'}
-            </span>
-          </div>
+          
 
           {/* CTA Button */}
           <CTAButton />
@@ -543,35 +533,7 @@ export default function CompanyProductsPage({ companyCode }) {
             </div>
 
             {/* Filters */}
-            <div className="flex flex-col sm:flex-row gap-4 w-full lg:w-auto">
-              {config.hasCategoryFilter && (
-                <div className="relative">
-                  <PiFunnel className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 text-xl" />
-                  <select
-                    value={selectedCategory}
-                    onChange={(e) => setSelectedCategory(e.target.value)}
-                    className="pl-10 pr-8 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-900 focus:border-transparent appearance-none bg-white"
-                  >
-                    <option value="All">All Products</option>
-                    {categories.filter(cat => cat !== 'All').map(category => (
-                      <option key={category} value={category}>{category}</option>
-                    ))}
-                  </select>
-                </div>
-              )}
-              <div className="relative">
-                <PiFunnel className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 text-xl" />
-                <select
-                  value={priceFilter}
-                  onChange={(e) => setPriceFilter(e.target.value)}
-                  className="pl-10 pr-8 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-900 focus:border-transparent appearance-none bg-white"
-                >
-                  {config.priceFilters.map(filter => (
-                    <option key={filter.value} value={filter.value}>{filter.label}</option>
-                  ))}
-                </select>
-              </div>
-            </div>
+        
           </div>
 
           {/* Results Count */}

@@ -135,6 +135,31 @@ export default function RootLayout({ children }) {
           src="/gtag-init.js"
           strategy="afterInteractive"
         />
+        
+        {/* ✅ Add custom styles for Voiceflow widget pop-up animation */}
+        <style>{`
+          /* Voiceflow widget pop-up animation */
+          .vf-chat {
+            animation: popUp 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            transform-origin: center;
+            opacity: 0;
+            transform: scale(0.8) translateY(30px);
+          }
+          
+          @keyframes popUp {
+            0% {
+              opacity: 0;
+              transform: scale(0.8) translateY(30px);
+            }
+            70% {
+              transform: scale(1.05) translateY(-5px);
+            }
+            100% {
+              opacity: 1;
+              transform: scale(1) translateY(0);
+            }
+          }
+        `}</style>
       </head>
       <body
         className={`max-w-[100vw] overflow-x-hidden font-outfit antialiased relative bg-white text-gray-900`}
@@ -179,7 +204,7 @@ export default function RootLayout({ children }) {
           </span>
         </a>
 
-        {/* ✅ Voiceflow Chatbot - Right side */}
+        {/* ✅ Enhanced Voiceflow Chatbot with auto-popup animation */}
         <Script
           id="voiceflow-init"
           strategy="afterInteractive"
@@ -195,9 +220,50 @@ export default function RootLayout({ children }) {
                     voice: {
                       url: "https://runtime-api.voiceflow.com"
                     }
+                  }).then(function() {
+                    console.log('Voiceflow chatbot loaded successfully');
+                    
+                    // Function to find and animate the Voiceflow widget
+                    function animateVoiceflowWidget() {
+                      // Voiceflow usually adds a button with class 'vf-chat'
+                      const vfWidget = document.querySelector('.vf-chat');
+                      
+                      if (vfWidget) {
+                        console.log('Voiceflow widget found, applying pop-up animation');
+                        
+                        // Add a small delay before starting animation to ensure widget is fully rendered
+                        setTimeout(() => {
+                          vfWidget.style.animation = 'popUp 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards';
+                        }, 300);
+                      } else {
+                        // If widget not found yet, wait a bit and try again
+                        setTimeout(animateVoiceflowWidget, 500);
+                      }
+                    }
+                    
+                    // Start looking for the widget after a short delay
+                    setTimeout(animateVoiceflowWidget, 1000);
+                    
+                    // Also try when window loads fully
+                    if (document.readyState === 'complete') {
+                      setTimeout(animateVoiceflowWidget, 500);
+                    } else {
+                      window.addEventListener('load', function() {
+                        setTimeout(animateVoiceflowWidget, 500);
+                      });
+                    }
+                    
+                    // Try on DOMContentLoaded as well
+                    document.addEventListener('DOMContentLoaded', function() {
+                      setTimeout(animateVoiceflowWidget, 1000);
+                    });
+                  }).catch(function(error) {
+                    console.error('Voiceflow failed to load:', error);
                   });
                 }
-                v.src = "https://cdn.voiceflow.com/widget-next/bundle.mjs"; v.type = "text/javascript"; s.parentNode.insertBefore(v, s);
+                v.src = "https://cdn.voiceflow.com/widget-next/bundle.mjs"; 
+                v.type = "text/javascript"; 
+                s.parentNode.insertBefore(v, s);
               })(document, 'script');
             `
           }}

@@ -242,7 +242,7 @@ export default function Team() {
           <h1 className="text-xl sm:text-2xl md:text-4xl font-semibold text-white text-center sm:text-left">
             Our Leadership Team
           </h1>
-          <p className="text-xs sm:text-sm text-white text-center sm:text-left mt-2">
+          <p className=" text-white mt-2 text-lg ">
             Meet the dedicated professionals driving United Holdings forward
           </p>
         </header>
