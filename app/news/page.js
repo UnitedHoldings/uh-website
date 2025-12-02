@@ -108,7 +108,7 @@ export default function NewsPage() {
           throw new Error(data.message || 'Failed to load news data');
         }
       } catch (err) {
-        console.error('Error fetching news data:', err);
+ 
         setError(err.message);
         // Use fallback data
         setNewsData(FALLBACK_DATA.data.articles);
@@ -302,7 +302,7 @@ export default function NewsPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
-      <div className="bg-gradient-to-r from-[#9b1c20] to-[#3d834d] text-white py-16">
+      <div className="bg-[#9b1c20] text-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <IoNewspaperOutline className="text-6xl mx-auto mb-4" />
