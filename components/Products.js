@@ -1,220 +1,194 @@
 "use client"
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import { trackEvent } from '@/lib/posthog';
-import {
-    BsArrowRight,
-    BsShieldCheck,
-    BsHeart,
-    BsCash,
-    BsBriefcase,
-    BsHouse,
-    BsPeople,
-    BsGraphUp
-} from 'react-icons/bs';
-import {
-    PiCar,
-    PiGavel,
-    PiUsersThree,
-    PiCurrencyCircleDollar,
-    PiShieldCheck,
-    PiHouse,
-    PiFileText,
-    PiHeart
-} from 'react-icons/pi';
+import { BsArrowRight } from 'react-icons/bs';
+import * as PiIcons from 'react-icons/pi';
 
-// Product data ordered by company: ULA, UGI, UP
-const productData = [
-    // ULA Products (4)
-    {
-        title: 'Family Funeral Plan',
-        desc: 'Comprehensive funeral coverage for your entire family with quick claims processing and flexible payment terms. Protect your loved ones during difficult times.',
-        img: '/family.jpg',
-        company: 'ULA',
-        icon: <BsHeart className="text-2xl" />,
-        stats: ['From E50/month', 'Family Coverage', 'Quick Payouts'],
-        link: '/products/family-funeral-plan',
-        color: '#3d834d',
-        bgColor: '#3d834d'
-    },
-    {
-        title: 'Dignified Homelink Cover',
-        desc: 'This product covers foreign nationals who are residents in Eswatini as well as Swazis who are residents in other countries. The Dups Direct Home Link plan provides cash payment upon the passing of a covered individual, including the policyholder and his/her family member dependents. The cash covers the costs of repatriating the body remains of the deceased back into Eswatini, or to anywhere in the world. It is up to the family of the deceased to decide the form in which they prefer to repatriate the remains – this, however, is not linked to the payout.',
-        img: '/individual-funeral.jpg',
-        company: 'ULA',
-        icon: <BsPeople className="text-2xl" />,
-        stats: [ 'Personal Coverage', 'Flexible Payments'],
-        link: '/products/dignified-homelink-cover',
-        color: '#3d834d',
-        bgColor: '#3d834d'
-    },
-    {
-        title: 'Credit Life',
-        desc: 'Protect your loans and family by covering repayments in case of death or disability. Peace of mind for borrowers across Eswatini.',
-        img: '/credit-life.jpg',
-        company: 'ULA',
-        icon: <PiHeart className="text-2xl" />,
-        stats: ['From E25/month', 'Loan Protection', 'Quick Claims'],
-        link: '/products/credit-life',
-        color: '#3d834d',
-        bgColor: '#3d834d'
-    },
-   
+// Function to get icon component based on categoryIcon string
+const getIconComponent = (iconName) => {
+    try {
+        // Use dynamic icon import from react-icons/pi
+        if (iconName && PiIcons[iconName]) {
+            return PiIcons[iconName];
+        }
+    } catch (error) {
+        console.error(`Icon ${iconName} not found:`, error);
+    }
+    return PiIcons.PiQuestion; // Default question icon
+};
 
-    // UGI Products (4)
-    {
-        title: 'Motor Insurance',
-        desc: 'Comprehensive vehicle protection with options for third-party, fire & theft, or full comprehensive coverage. Drive with total confidence.',
-        img: '/motor.jpg',
-        company: 'UGI',
-        icon: <PiCar className="text-2xl" />,
-        stats: ['From E200/month', '3 Coverage Options', '24/7 Support'],
-        link: '/products/motor-insurance',
-        color: '#9b1c20',
-        bgColor: '#286278'
-    },
-    {
-        title: 'Home Insurance',
-        desc: 'Complete protection for your home and belongings against theft, natural disasters, and accidental damage. Protect what matters most.',
-        img: '/home-contents.jpg',
-        company: 'UGI',
-        icon: <PiHouse className="text-2xl" />,
-        stats: ['From E100/month', 'Full Protection', 'Quick Claims'],
-        link: '/products/home-contents-insurance',
-        color: '#9b1c20',
-        bgColor: '#286278'
-    },
-    {
-        title: 'Legal Insurance',
-        desc: 'Expert legal protection covering civil, criminal, and labor disputes. Access to professional legal counsel and representation.',
-        img: '/legal.jpg',
-        company: 'UGI',
-        icon: <PiGavel className="text-2xl" />,
-        stats: ['From E50/month', 'Legal Representation', 'Nationwide'],
-        link: '/products/legal-insurance',
-        color: '#9b1c20',
-        bgColor: '#286278'
-    },
-    {
-        title: 'Personal Accident',
-        desc: 'Financial security against unexpected accidents with lump-sum payouts for injuries, disabilities, or death. Secure your future.',
-        img: '/personal-accident.jpg',
-        company: 'UGI',
-        icon: <PiShieldCheck className="text-2xl" />,
-        stats: ['From E30/month', 'Accident Cover', 'Income Protection'],
-        link: '/products/personal-accident-insurance',
-        color: '#9b1c20',
-        bgColor: '#286278'
-    },
+// Extract color from categoryColorClass
+const extractColorFromClass = (colorClass) => {
+    if (!colorClass) return '#9b1c20'; // Default color
+    
+    // Extract color from class like "hover:text-red-700 hover:border-red-700"
+    const match = colorClass.match(/hover:text-([\w-]+)/);
+    if (match) {
+        const colorName = match[1];
+        // Map Tailwind color names to hex codes
+        const colorMap = {
+            'red-700': '#b91c1c',
+            'blue-900': '#1e3a8a',
+            'green-700': '#15803d',
+            'blue-800': '#1e40af',
+            'indigo-700': '#4338ca',
+            'purple-700': '#7c3aed',
+            'yellow-600': '#ca8a04',
+            'gray-700': '#374151',
+        };
+        return colorMap[colorName] || '#9b1c20';
+    }
+    return '#9b1c20'; // Default color
+};
 
-    // UP Products (2)
-    {
-        title: 'Micro Loans',
-        desc: 'Fast, accessible financial solutions up to E50,000 with flexible repayment terms. Quick cash for life\'s unexpected moments.',
-        img: '/loan.jpg',
-        company: 'UP',
-        icon: <BsCash className="text-2xl" />,
-        stats: ['Up to E50,000', '48hr Approval', 'Flexible Terms'],
-        link: 'https://uploans.united.co.sz/',
-        color: '#f79620',
-        bgColor: '#f79620'
-    },
-    {
-        title: 'Umlamleli Loan',
-        desc: 'Specialized financial solutions for government employees with higher limits and favorable terms. Secure funding tailored for public servants.',
-        img: '/civil-servant-loan.jpg',
-        company: 'UP',
-        icon: <BsBriefcase className="text-2xl" />,
-        stats: ['Up to E20,000', 'Low Rates', 'Salary Deduction'],
-        link: 'https://uploans.united.co.sz/',
-        color: '#f79620',
-        bgColor: '#f79620'
-    },
-];
+// Get company background color based on company code
+const getCompanyColor = (companyCode) => {
+    switch (companyCode) {
+        case 'ULA': return '#3d834d';
+        case 'UGI': return '#286278';
+        case 'UP': return '#f79620';
+        default: return '#9b1c20';
+    }
+};
 
-const ProductCard = ({ title, desc, img, company, icon, stats, link, color, bgColor }) => (
-<Link
-    href={link}
-    className="block group h-full px-2"
-    onClick={() => trackEvent('featured_product_learn_more_clicked', {
-        product_clicked: title,
-        product_company: company,
-        destination_link: link,
-        location: 'featured_products_section'
-    })}
->
-    <div
-        className="   hover:-2xl rounded-2xl relative flex flex-col h-full cursor-pointer transition-all duration-500 overflow-hidden"
-        style={{ backgroundColor: bgColor }}
-    >
-        {/* Image Container with Overlay */}
-        <div className="h-[800px] relative overflow-hidden">
-            <Image
-                src={img}
-                alt={title}
-                fill
-                priority={true}
-                className="object-cover  transition-transform duration-700 group-hover:scale-110"
-            />
+// Get company name based on company code
+const getCompanyName = (companyCode) => {
+    switch (companyCode) {
+        case 'ULA': return 'United Life Assurance';
+        case 'UGI': return 'United General Insurance';
+        case 'UP': return 'United Pay';
+        default: return 'United Group';
+    }
+};
 
-            {/* Icon Overlay */}
-            <div style={{ backgroundColor: bgColor }} className="absolute rounded-full flex items-center justify-center px-6 top-4 -left-4 text-white ">
-                <div className="flex items-center gap-2">
-                    <div
-                        className="p-2 rounded-lg backdrop-blur-sm"
+// Generate image path based on category name
+const getImagePath = (categoryName) => {
+    const imageMap = {
+        'Life Insurance': '/family.jpg',
+        'Motor Insurance': '/motor.jpg',
+        'Personal Loans': '/loan.jpg',
+        'Funeral Cover': '/individual-funeral.jpg',
+        'Salary Advances': '/civil-servant-loan.jpg',
+        'Home Insurance': '/home-contents.jpg',
+        'Personal Accident': '/personal-accident.jpg',
+        'Legal Insurance': '/legal.jpg',
+    };
+    
+    // Clean the category name for matching
+    const cleanName = categoryName.trim();
+    return imageMap[cleanName] || `/products/${cleanName.toLowerCase().replace(/\s+/g, '-')}.jpg`;
+};
 
-                    >
-                        {icon}
-                    </div>
-                    <h3 className="text-xl text-center font-semibold  font-outfit group-hover:text-white transition-colors">
-                        {title}
-                    </h3>
-                </div>
-            </div>
-        </div>
+// Generate description based on category name
+const getDescription = (categoryName, companyCode) => {
+    const companyName = getCompanyName(companyCode);
+    return `Comprehensive ${categoryName.toLowerCase()} coverage from ${companyName}. Protect what matters most with our reliable and affordable solutions.`;
+};
 
-        {/* Content */}
-        <div className="flex flex- pb-0 flex-grow items-center justify-between text-white" style={{ backgroundColor: bgColor }}>
+// Generate link based on category name
+const getProductLink = (categoryName) => {
+    return `/products/${categoryName.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')}`;
+};
 
-            <div className="px-2 line-clamp-2 h-11 text-sm space-y-4">
-                <p>{desc} </p>
-            </div>
-            {/* CTA */}
+const ProductCard = ({ category }) => {
+    const {
+        _id,
+        companyCode,
+        categoryName,
+        categoryIcon,
+        categoryColorClass
+    } = category;
+
+    const IconComponent = getIconComponent(categoryIcon);
+    const bgColor = getCompanyColor(companyCode);
+    const textColor = extractColorFromClass(categoryColorClass);
+    const image = getImagePath(categoryName);
+    const description = getDescription(categoryName, companyCode);
+    const link = getProductLink(categoryName);
+
+    return (
+        <Link
+            href={link}
+            className="block group h-full px-2"
+            onClick={() => trackEvent('featured_product_learn_more_clicked', {
+                product_clicked: categoryName,
+                product_company: companyCode,
+                destination_link: link,
+                location: 'featured_products_section'
+            })}
+        >
             <div
-                className="flex items-center min-w-[10rem] justify-center hover:bg-white py-6 space-x-2 text-white hover:text-current border-t border-white/30 transition-all duration-300 group-hover:border-transparent"
-                style={{
-                    '--hover-text-color': bgColor
-                }}
+                className="hover:-2xl rounded-2xl relative flex flex-col h-full cursor-pointer transition-all duration-500 overflow-hidden"
+                style={{ backgroundColor: bgColor }}
             >
-                <span className="text-sm font-semibold group-hover:text-[var(--hover-text-color)]">
-                    Learn More
-                </span>
-                <BsArrowRight
-                    className="transition-transform duration-300 group-hover:translate-x-1 group-hover:text-[var(--hover-text-color)]"
-                />
-            </div>
-        </div>
+                {/* Image Container with Overlay */}
+                <div className="h-[800px] relative overflow-hidden">
+                    <Image
+                        src={image}
+                        alt={categoryName}
+                        fill
+                        priority={true}
+                        className="object-cover transition-transform duration-700 group-hover:scale-110"
+                        onError={(e) => {
+                            // Fallback to a default image if the specified image doesn't exist
+                            e.target.src = '/products/default.jpg';
+                        }}
+                    />
 
-        {/* Hover Effect Overlay */}
-        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-300 rounded-2xl pointer-events-none" />
-    </div>
-</Link>
-);
+                    {/* Icon Overlay */}
+                    <div 
+                        style={{ backgroundColor: bgColor }} 
+                        className="absolute rounded-full flex items-center justify-center px-6 top-4 -left-4 text-white"
+                    >
+                        <div className="flex items-center gap-2">
+                            <div className="p-2 rounded-lg backdrop-blur-sm">
+                                <IconComponent className="text-2xl" />
+                            </div>
+                            <h3 className="text-xl text-center font-semibold font-outfit group-hover:text-white transition-colors">
+                                {categoryName}
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Content */}
+                <div className="flex flex- pb-0 flex-grow items-center justify-between text-white" style={{ backgroundColor: bgColor }}>
+                    <div className="px-2 line-clamp-2 h-11 text-sm space-y-4">
+                        <p>{description}</p>
+                    </div>
+                    {/* CTA */}
+                    <div
+                        className="flex items-center min-w-[10rem] justify-center hover:bg-white py-6 space-x-2 text-white hover:text-current border-t border-white/30 transition-all duration-300 group-hover:border-transparent"
+                        style={{
+                            '--hover-text-color': bgColor
+                        }}
+                    >
+                        <span className="text-sm font-semibold group-hover:text-[var(--hover-text-color)]">
+                            Learn More
+                        </span>
+                        <BsArrowRight
+                            className="transition-transform duration-300 group-hover:translate-x-1 group-hover:text-[var(--hover-text-color)]"
+                        />
+                    </div>
+                </div>
+
+                {/* Hover Effect Overlay */}
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-300 rounded-2xl pointer-events-none" />
+            </div>
+        </Link>
+    );
+};
 
 // Custom arrow components
 const CustomLeftArrow = ({ onClick, ...rest }) => {
-    const {
-        onMove,
-        carouselState: { currentSlide, deviceType }
-    } = rest;
-
     return (
         <button
             onClick={() => onClick()}
-            className="absolute left-10 top z-10 p-3 rounded-xl  bg-[#9b1c20] text-white hover:bg-[#9b1c20] hover:text-white transition-all duration-300 -lg hover:-xl "
+            className="absolute left-10 top z-10 p-3 rounded-xl bg-[#9b1c20] text-white hover:bg-[#9b1c20] hover:text-white transition-all duration-300 -lg hover:-xl"
             aria-label="Previous products"
         >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -225,15 +199,10 @@ const CustomLeftArrow = ({ onClick, ...rest }) => {
 };
 
 const CustomRightArrow = ({ onClick, ...rest }) => {
-    const {
-        onMove,
-        carouselState: { currentSlide, deviceType }
-    } = rest;
-
     return (
         <button
             onClick={() => onClick()}
-            className="absolute right-10 z-10 p-3 rounded-xl   bg-[#9b1c20] text-white hover:bg-[#9b1c20] hover:text-white transition-all duration-300 -lg hover:-xl "
+            className="absolute right-10 z-10 p-3 rounded-xl bg-[#9b1c20] text-white hover:bg-[#9b1c20] hover:text-white transition-all duration-300 -lg hover:-xl"
             aria-label="Next products"
         >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -244,8 +213,41 @@ const CustomRightArrow = ({ onClick, ...rest }) => {
 };
 
 function Products() {
-    // Use the ordered product data directly (ULA, UGI, UP)
-    const [products] = useState(productData);
+    const [categories, setCategories] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const fetchCategories = async () => {
+            try {
+                setLoading(true);
+                const response = await fetch('https://website.api.united.co.sz//api/product-categories');
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    // Filter active categories and sort by displayOrder
+                    const activeCategories = data.data
+                        .filter(category => category.isActive)
+                        .sort((a, b) => a.displayOrder - b.displayOrder);
+                    setCategories(activeCategories);
+                } else {
+                    throw new Error(data.message || 'Failed to fetch categories');
+                }
+            } catch (err) {
+                console.error('Error fetching categories:', err);
+                setError(err.message);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchCategories();
+    }, []);
 
     // Responsive configuration for react-multi-carousel
     const responsive = {
@@ -273,21 +275,61 @@ function Products() {
 
     // Custom dot component
     const CustomDot = ({ onClick, ...rest }) => {
-        const {
-            onMove,
-            index,
-            active,
-            carouselState: { currentSlide, deviceType }
-        } = rest;
+        const { active } = rest;
 
         return (
             <button
-                className={`mx-1 w-3 h-3 rounded-full transition-all duration-300 ${active ? 'bg-[#9b1c20] w-8' : 'bg-gray-300 hover:bg-gray-400'
-                    }`}
+                className={`mx-1 w-3 h-3 rounded-full transition-all duration-300 ${active ? 'bg-[#9b1c20] w-8' : 'bg-gray-300 hover:bg-gray-400'}`}
                 onClick={() => onClick()}
             />
         );
     };
+
+    if (loading) {
+        return (
+            <div className="font-outfit max-w-[1400px] mx-auto px-4 lg:p-0 w-full space-y-12">
+                <div className="flex flex-col gap-8">
+                    <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+                        <div className="flex flex-col gap-4">
+                            <h3 className="text-2xl md:text-3xl font-bold text-[#9b1c20] mb-2 font-outfit">
+                                Featured Products
+                            </h3>
+                            <p className="text-gray-600 max-w-2xl text-lg lg:text-xl">
+                                Explore our range of innovative solutions from United General Insurance,
+                                United Life Assurance, and United Pay.
+                            </p>
+                        </div>
+                    </div>
+                    <div className="flex justify-center items-center h-96">
+                        <div className="animate-pulse text-lg">Loading products...</div>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
+    if (error) {
+        return (
+            <div className="font-outfit max-w-[1400px] mx-auto px-4 lg:p-0 w-full space-y-12">
+                <div className="flex flex-col gap-8">
+                    <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+                        <div className="flex flex-col gap-4">
+                            <h3 className="text-2xl md:text-3xl font-bold text-[#9b1c20] mb-2 font-outfit">
+                                Featured Products
+                            </h3>
+                            <p className="text-gray-600 max-w-2xl text-lg lg:text-xl">
+                                Explore our range of innovative solutions from United General Insurance,
+                                United Life Assurance, and United Pay.
+                            </p>
+                        </div>
+                    </div>
+                    <div className="flex justify-center items-center h-96">
+                        <div className="text-red-600">Error loading products: {error}</div>
+                    </div>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className=''>
@@ -308,38 +350,43 @@ function Products() {
 
                     {/* React Multi Carousel */}
                     <div className="relative py-2 gap-4">
-                        <Carousel
-                            responsive={responsive}
-                            infinite={true}
-                            autoPlaySpeed={5000}
-                            keyBoardControl={true}
-                            customTransition="transform 500ms ease-in-out"
-                            transitionDuration={500}
-                            containerClass="carousel-container"
-                            itemClass="carousel-item-padding-80-px"
-                            arrows={true}
-                            customLeftArrow={<CustomLeftArrow />}
-                            customRightArrow={<CustomRightArrow />}
-                       
-                            autoPlay={true}
-                            customDot={<CustomDot />}
-                            dotListClass="custom-dot-list"
-                            partialVisible={true}
-                            removeArrowOnDeviceType={['mobile']}
-                            rewind={false}
-                            rewindWithAnimation={false}
-                            rtl={false}
-                            shouldResetAutoplay={true}
-                            slidesToSlide={1}
-                            swipeable={true}
-                            draggable={true}
-                        >
-                            {products.map((product, idx) => (
-                                <div key={idx} className="h-[520px]">
-                                    <ProductCard {...product} />
-                                </div>
-                            ))}
-                        </Carousel>
+                        {categories.length > 0 ? (
+                            <Carousel
+                                responsive={responsive}
+                                infinite={true}
+                                autoPlaySpeed={5000}
+                                keyBoardControl={true}
+                                customTransition="transform 500ms ease-in-out"
+                                transitionDuration={500}
+                                containerClass="carousel-container"
+                                itemClass="carousel-item-padding-80-px"
+                                arrows={true}
+                                customLeftArrow={<CustomLeftArrow />}
+                                customRightArrow={<CustomRightArrow />}
+                                autoPlay={true}
+                                customDot={<CustomDot />}
+                                dotListClass="custom-dot-list"
+                                partialVisible={true}
+                                removeArrowOnDeviceType={['mobile']}
+                                rewind={false}
+                                rewindWithAnimation={false}
+                                rtl={false}
+                                shouldResetAutoplay={true}
+                                slidesToSlide={1}
+                                swipeable={true}
+                                draggable={true}
+                            >
+                                {categories.map((category) => (
+                                    <div key={category._id} className="h-[520px]">
+                                        <ProductCard category={category} />
+                                    </div>
+                                ))}
+                            </Carousel>
+                        ) : (
+                            <div className="flex justify-center items-center h-96">
+                                <div className="text-gray-500">No products available at the moment.</div>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>
