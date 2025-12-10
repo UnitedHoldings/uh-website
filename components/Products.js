@@ -7,42 +7,42 @@ import 'react-multi-carousel/lib/styles.css';
 import { trackEvent } from '@/lib/posthog';
 import { BsArrowRight } from 'react-icons/bs';
 import * as PiIcons from 'react-icons/pi';
+import * as BsIcons from 'react-icons/bs';
 
 // Function to get icon component based on categoryIcon string
 const getIconComponent = (iconName) => {
     try {
-        // Use dynamic icon import from react-icons/pi
+        // Check in BsIcons first (since API uses Bs icons)
+        if (iconName && BsIcons[iconName]) {
+            return BsIcons[iconName];
+        }
+        // Then check in PiIcons
         if (iconName && PiIcons[iconName]) {
             return PiIcons[iconName];
         }
     } catch (error) {
         console.error(`Icon ${iconName} not found:`, error);
     }
-    return PiIcons.PiQuestion; // Default question icon
+    // Default icon
+    return BsIcons.BsQuestionCircle || PiIcons.PiQuestion;
 };
 
 // Extract color from categoryColorClass
 const extractColorFromClass = (colorClass) => {
-    if (!colorClass) return '#9b1c20'; // Default color
+    if (!colorClass) return '#9b1c20';
     
-    // Extract color from class like "hover:text-red-700 hover:border-red-700"
     const match = colorClass.match(/hover:text-([\w-]+)/);
     if (match) {
         const colorName = match[1];
-        // Map Tailwind color names to hex codes
         const colorMap = {
             'red-700': '#b91c1c',
             'blue-900': '#1e3a8a',
             'green-700': '#15803d',
             'blue-800': '#1e40af',
-            'indigo-700': '#4338ca',
-            'purple-700': '#7c3aed',
-            'yellow-600': '#ca8a04',
-            'gray-700': '#374151',
         };
         return colorMap[colorName] || '#9b1c20';
     }
-    return '#9b1c20'; // Default color
+    return '#9b1c20';
 };
 
 // Get company background color based on company code
@@ -65,55 +65,41 @@ const getCompanyName = (companyCode) => {
     }
 };
 
-// Generate image path based on category name
-const getImagePath = (categoryName) => {
-    const imageMap = {
-        'Life Insurance': '/family.jpg',
-        'Motor Insurance': '/motor.jpg',
-        'Personal Loans': '/loan.jpg',
-        'Funeral Cover': '/individual-funeral.jpg',
-        'Salary Advances': '/civil-servant-loan.jpg',
-        'Home Insurance': '/home-contents.jpg',
-        'Personal Accident': '/personal-accident.jpg',
-        'Legal Insurance': '/legal.jpg',
-    };
-    
-    // Clean the category name for matching
-    const cleanName = categoryName.trim();
-    return imageMap[cleanName] || `/products/${cleanName.toLowerCase().replace(/\s+/g, '-')}.jpg`;
-};
-
-// Generate description based on category name
-const getDescription = (categoryName, companyCode) => {
-    const companyName = getCompanyName(companyCode);
-    return `Comprehensive ${categoryName.toLowerCase()} coverage from ${companyName}. Protect what matters most with our reliable and affordable solutions.`;
-};
-
-// Generate link based on category name
-const getProductLink = (categoryName) => {
-    return `/products/${categoryName.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')}`;
+// Sanitize URL to ensure it's valid
+const sanitizeImageUrl = (url) => {
+    if (!url) return '/default-product.jpg';
+    return url.replace(/\/\//g, '/').replace('https:/', 'https://');
 };
 
 const ProductCard = ({ category }) => {
     const {
-        _id,
         companyCode,
         categoryName,
+        description,
         categoryIcon,
-        categoryColorClass
+        categoryColorClass,
+        image
     } = category;
 
     const IconComponent = getIconComponent(categoryIcon);
     const bgColor = getCompanyColor(companyCode);
     const textColor = extractColorFromClass(categoryColorClass);
-    const image = getImagePath(categoryName);
-    const description = getDescription(categoryName, companyCode);
-    const link = getProductLink(categoryName);
+    
+    // Use image URL from API or fallback
+    const imageUrl = image?.asset?.url 
+        ? sanitizeImageUrl(image.asset.url)
+        : `/products/${categoryName.toLowerCase().replace(/\s+/g, '-')}.jpg`;
+    
+    // Use description from API or generate one
+    const displayDescription = description || `Comprehensive ${categoryName.toLowerCase()} coverage from ${getCompanyName(companyCode)}.`;
+    
+    // Generate link
+    const link = `/products/${categoryName.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')}`;
 
     return (
         <Link
             href={link}
-            className="block group h-full px-2"
+            className="block group h-full "
             onClick={() => trackEvent('featured_product_learn_more_clicked', {
                 product_clicked: categoryName,
                 product_company: companyCode,
@@ -122,57 +108,63 @@ const ProductCard = ({ category }) => {
             })}
         >
             <div
-                className="hover:-2xl rounded-2xl relative flex flex-col h-full cursor-pointer transition-all duration-500 overflow-hidden"
+                className="rounded-2xl relative flex flex-col h-full cursor-pointer transition-all duration-500 overflow-hidden shadow-lg hover:shadow-2xl"
                 style={{ backgroundColor: bgColor }}
             >
-                {/* Image Container with Overlay */}
-                <div className="h-[800px] relative overflow-hidden">
+                {/* Image Container */}
+                <div className="h-64 md:h-72 relative overflow-hidden">
                     <Image
-                        src={image}
+                        src={imageUrl}
                         alt={categoryName}
                         fill
                         priority={true}
                         className="object-cover transition-transform duration-700 group-hover:scale-110"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                         onError={(e) => {
-                            // Fallback to a default image if the specified image doesn't exist
-                            e.target.src = '/products/default.jpg';
+                            e.target.src = '/default-product.jpg';
                         }}
                     />
+                    
+                    {/* Dark overlay for better text visibility */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
 
-                    {/* Icon Overlay */}
-                    <div 
-                        style={{ backgroundColor: bgColor }} 
-                        className="absolute rounded-full flex items-center justify-center px-6 top-4 -left-4 text-white"
-                    >
-                        <div className="flex items-center gap-2">
-                            <div className="p-2 rounded-lg backdrop-blur-sm">
-                                <IconComponent className="text-2xl" />
-                            </div>
-                            <h3 className="text-xl text-center font-semibold font-outfit group-hover:text-white transition-colors">
-                                {categoryName}
-                            </h3>
+                    {/* Icon and Title Overlay */}
+                    <div className="absolute bottom-4 left-4 right-4 flex items-center gap-3">
+                        <div className="p-2 rounded-lg bg-white/20 backdrop-blur-sm">
+                            <IconComponent className="text-2xl text-white" />
                         </div>
+                        <h3 className="text-xl font-semibold font-outfit text-white">
+                            {categoryName}
+                        </h3>
                     </div>
                 </div>
 
                 {/* Content */}
-                <div className="flex flex- pb-0 flex-grow items-center justify-between text-white" style={{ backgroundColor: bgColor }}>
-                    <div className="px-2 line-clamp-2 h-11 text-sm space-y-4">
-                        <p>{description}</p>
+                <div className="flex flex-col p-4 flex-grow">
+                    <div className="mb-4">
+                        <div className="flex items-center gap-2 mb-2">
+                            <span className="text-xs font-semibold px-2 py-1 rounded-full text-white bg-black/20">
+                                {companyCode}
+                            </span>
+                            <span className="text-xs text-white/80">
+                                {getCompanyName(companyCode)}
+                            </span>
+                        </div>
+                        <p className="text-white text-sm line-clamp-3 h-16">
+                            {displayDescription}
+                        </p>
                     </div>
+                    
                     {/* CTA */}
-                    <div
-                        className="flex items-center min-w-[10rem] justify-center hover:bg-white py-6 space-x-2 text-white hover:text-current border-t border-white/30 transition-all duration-300 group-hover:border-transparent"
-                        style={{
-                            '--hover-text-color': bgColor
-                        }}
-                    >
-                        <span className="text-sm font-semibold group-hover:text-[var(--hover-text-color)]">
-                            Learn More
-                        </span>
-                        <BsArrowRight
-                            className="transition-transform duration-300 group-hover:translate-x-1 group-hover:text-[var(--hover-text-color)]"
-                        />
+                    <div className="mt-auto">
+                        <div
+                            className="flex items-center justify-center space-x-2 py-3 px-4 rounded-lg bg-white/10 hover:bg-white/20 text-white transition-all duration-300 group-hover:bg-white group-hover:text-[#9b1c20]"
+                        >
+                            <span className="text-sm font-semibold">
+                                Learn More
+                            </span>
+                            <BsArrowRight className="transition-transform duration-300 group-hover:translate-x-1" />
+                        </div>
                     </div>
                 </div>
 
@@ -183,12 +175,12 @@ const ProductCard = ({ category }) => {
     );
 };
 
-// Custom arrow components
+// Custom arrow components (keep as is)
 const CustomLeftArrow = ({ onClick, ...rest }) => {
     return (
         <button
             onClick={() => onClick()}
-            className="absolute left-10 top z-10 p-3 rounded-xl bg-[#9b1c20] text-white hover:bg-[#9b1c20] hover:text-white transition-all duration-300 -lg hover:-xl"
+            className="absolute left-4 top-1/2 transform -translate-y-1/2 z-10 p-3 rounded-xl bg-[#9b1c20] text-white hover:bg-[#7a1518] transition-all duration-300 shadow-lg"
             aria-label="Previous products"
         >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -202,7 +194,7 @@ const CustomRightArrow = ({ onClick, ...rest }) => {
     return (
         <button
             onClick={() => onClick()}
-            className="absolute right-10 z-10 p-3 rounded-xl bg-[#9b1c20] text-white hover:bg-[#9b1c20] hover:text-white transition-all duration-300 -lg hover:-xl"
+            className="absolute right-4 top-1/2 transform -translate-y-1/2 z-10 p-3 rounded-xl bg-[#9b1c20] text-white hover:bg-[#7a1518] transition-all duration-300 shadow-lg"
             aria-label="Next products"
         >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -221,7 +213,7 @@ function Products() {
         const fetchCategories = async () => {
             try {
                 setLoading(true);
-                const response = await fetch('https://website.api.united.co.sz//api/product-categories');
+                const response = await fetch('https://website.api.united.co.sz/api/product-categories');
                 
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
@@ -230,11 +222,11 @@ function Products() {
                 const data = await response.json();
                 
                 if (data.success) {
-                    // Filter active categories and sort by displayOrder
-                    const activeCategories = data.data
-                        .filter(category => category.isActive)
+                    // REMOVED isActive filter since API doesn't include it
+                    // Sort by displayOrder
+                    const sortedCategories = data.data
                         .sort((a, b) => a.displayOrder - b.displayOrder);
-                    setCategories(activeCategories);
+                    setCategories(sortedCategories);
                 } else {
                     throw new Error(data.message || 'Failed to fetch categories');
                 }
@@ -249,22 +241,22 @@ function Products() {
         fetchCategories();
     }, []);
 
-    // Responsive configuration for react-multi-carousel
+    // Responsive configuration
     const responsive = {
         superLargeDesktop: {
             breakpoint: { max: 4000, min: 1400 },
             items: 3,
-            partialVisibilityGutter: 20
+            partialVisibilityGutter: 30
         },
         desktop: {
             breakpoint: { max: 1400, min: 1024 },
             items: 3,
-            partialVisibilityGutter: 20
+            partialVisibilityGutter: 30
         },
         tablet: {
             breakpoint: { max: 1024, min: 768 },
             items: 2,
-            partialVisibilityGutter: 0
+            partialVisibilityGutter: 20
         },
         mobile: {
             breakpoint: { max: 768, min: 0 },
@@ -281,27 +273,26 @@ function Products() {
             <button
                 className={`mx-1 w-3 h-3 rounded-full transition-all duration-300 ${active ? 'bg-[#9b1c20] w-8' : 'bg-gray-300 hover:bg-gray-400'}`}
                 onClick={() => onClick()}
+                aria-label={`Go to slide ${rest.index + 1}`}
             />
         );
     };
 
     if (loading) {
         return (
-            <div className="font-outfit max-w-[1400px] mx-auto px-4 lg:p-0 w-full space-y-12">
+            <div className="font-outfit max-w-[1400px] mx-auto px-4 py-12">
                 <div className="flex flex-col gap-8">
-                    <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
-                        <div className="flex flex-col gap-4">
-                            <h3 className="text-2xl md:text-3xl font-bold text-[#9b1c20] mb-2 font-outfit">
-                                Featured Products
-                            </h3>
-                            <p className="text-gray-600 max-w-2xl text-lg lg:text-xl">
-                                Explore our range of innovative solutions from United General Insurance,
-                                United Life Assurance, and United Pay.
-                            </p>
-                        </div>
+                    <div className="flex flex-col gap-4">
+                        <h3 className="text-2xl md:text-3xl font-bold text-[#9b1c20] mb-2 font-outfit">
+                            Featured Products
+                        </h3>
+                        <p className="text-gray-600 max-w-2xl text-lg">
+                            Explore our range of innovative solutions from United General Insurance,
+                            United Life Assurance, and United Pay.
+                        </p>
                     </div>
-                    <div className="flex justify-center items-center h-96">
-                        <div className="animate-pulse text-lg">Loading products...</div>
+                    <div className="flex justify-center items-center h-64">
+                        <div className="animate-pulse text-lg text-gray-500">Loading products...</div>
                     </div>
                 </div>
             </div>
@@ -310,21 +301,28 @@ function Products() {
 
     if (error) {
         return (
-            <div className="font-outfit max-w-[1400px] mx-auto px-4 lg:p-0 w-full space-y-12">
+            <div className="font-outfit max-w-[1400px] mx-auto px-4 py-12">
                 <div className="flex flex-col gap-8">
-                    <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
-                        <div className="flex flex-col gap-4">
-                            <h3 className="text-2xl md:text-3xl font-bold text-[#9b1c20] mb-2 font-outfit">
-                                Featured Products
-                            </h3>
-                            <p className="text-gray-600 max-w-2xl text-lg lg:text-xl">
-                                Explore our range of innovative solutions from United General Insurance,
-                                United Life Assurance, and United Pay.
-                            </p>
-                        </div>
+                    <div className="flex flex-col gap-4">
+                        <h3 className="text-2xl md:text-3xl font-bold text-[#9b1c20] mb-2 font-outfit">
+                            Featured Products
+                        </h3>
+                        <p className="text-gray-600 max-w-2xl text-lg">
+                            Explore our range of innovative solutions from United General Insurance,
+                            United Life Assurance, and United Pay.
+                        </p>
                     </div>
-                    <div className="flex justify-center items-center h-96">
-                        <div className="text-red-600">Error loading products: {error}</div>
+                    <div className="flex justify-center items-center h-64">
+                        <div className="text-red-600 p-4 bg-red-50 rounded-lg">
+                            <p className="font-semibold">Error loading products</p>
+                            <p className="text-sm mt-1">{error}</p>
+                            <button 
+                                onClick={() => window.location.reload()}
+                                className="mt-3 text-sm bg-[#9b1c20] text-white px-4 py-2 rounded hover:bg-[#7a1518] transition-colors"
+                            >
+                                Retry
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -332,25 +330,27 @@ function Products() {
     }
 
     return (
-        <div className=''>
-            <div className="font-outfit max-w-[1400px] mx-auto px-4 lg:p-0 w-full space-y-12 ">
-                {/* Carousel Section */}
-                <div className="flex flex-col gap-8">
+        <div className="py-12 bg-gray-50">
+            <div className="font-outfit max-w-[1400px] mx-auto px-4 lg:px-8">
+                {/* Header */}
+                <div className="flex flex-col gap-8 mb-12">
                     <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
                         <div className="flex flex-col gap-4">
                             <h3 className="text-2xl md:text-3xl font-bold text-[#9b1c20] mb-2 font-outfit">
                                 Featured Products
                             </h3>
-                            <p className="text-gray-600 max-w-2xl text-lg lg:text-xl">
+                            <p className="text-gray-600 max-w-2xl text-lg">
                                 Explore our range of innovative solutions from United General Insurance,
                                 United Life Assurance, and United Pay.
                             </p>
                         </div>
                     </div>
+                </div>
 
-                    {/* React Multi Carousel */}
-                    <div className="relative py-2 gap-4">
-                        {categories.length > 0 ? (
+                {/* Carousel */}
+                <div className="relative">
+                    {categories.length > 0 ? (
+                        <>
                             <Carousel
                                 responsive={responsive}
                                 infinite={true}
@@ -358,36 +358,42 @@ function Products() {
                                 keyBoardControl={true}
                                 customTransition="transform 500ms ease-in-out"
                                 transitionDuration={500}
-                                containerClass="carousel-container"
-                                itemClass="carousel-item-padding-80-px"
+                                containerClass="carousel-container pb-12"
+                                itemClass="px-2"
                                 arrows={true}
                                 customLeftArrow={<CustomLeftArrow />}
                                 customRightArrow={<CustomRightArrow />}
                                 autoPlay={true}
                                 customDot={<CustomDot />}
-                                dotListClass="custom-dot-list"
-                                partialVisible={true}
+                                showDots={true}
+                                dotListClass="custom-dot-list mt-8"
+                                partialVisible={false}
                                 removeArrowOnDeviceType={['mobile']}
                                 rewind={false}
-                                rewindWithAnimation={false}
                                 rtl={false}
                                 shouldResetAutoplay={true}
                                 slidesToSlide={1}
                                 swipeable={true}
                                 draggable={true}
                             >
-                                {categories.map((category) => (
-                                    <div key={category._id} className="h-[520px]">
+                                {categories.map((category, index) => (
+                                    <div key={`${category.companyCode}-${category.categoryName}-${index}`} className="h-full">
                                         <ProductCard category={category} />
                                     </div>
                                 ))}
                             </Carousel>
-                        ) : (
-                            <div className="flex justify-center items-center h-96">
-                                <div className="text-gray-500">No products available at the moment.</div>
+                            
+                            {/* View All Button */}
+                           
+                        </>
+                    ) : (
+                        <div className="flex justify-center items-center h-64">
+                            <div className="text-gray-500 text-center">
+                                <p className="text-lg mb-2">No products available</p>
+                                <p className="text-sm">Please check back later</p>
                             </div>
-                        )}
-                    </div>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>
