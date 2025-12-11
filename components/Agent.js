@@ -42,23 +42,19 @@ function Agent() {
           
           // Set callback reasons from API
           if (result.data.callbackReasons && Array.isArray(result.data.callbackReasons)) {
-            console.log('Raw callback reasons from API:', result.data.callbackReasons);
             
             // Include all reasons and sort by displayOrder
             const allReasons = result.data.callbackReasons
               .sort((a, b) => (a.displayOrder || 0) - (b.displayOrder || 0));
             
-            console.log('All callback reasons:', allReasons);
             setCallbackReasons(allReasons);
           } else {
-            console.warn('No callback reasons found in API response');
             setCallbackReasons([]);
           }
         } else {
           throw new Error(result.message || 'Failed to fetch data');
         }
       } catch (error) {
-        console.error('Error fetching officers data:', error);
         setReasonsError(error.message);
         setCallbackReasons([]);
       } finally {
@@ -140,7 +136,6 @@ function Agent() {
         setMessage(officersData?.messages?.api?.error || 'Failed to send callback request. Please try again.');
       }
     } catch (error) {
-      console.error('Error sending email:', error);
       setMessage(officersData?.messages?.api?.error || 'Failed to send callback request. Please try again.');
     } finally {
       setIsLoading(false);

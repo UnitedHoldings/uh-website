@@ -125,7 +125,7 @@ export default function FeedbackPage() {
             setSubmitted(true)
 
         } catch (err) {
-            console.error('Feedback submission error', err)
+   
             setStatus({ error: 'Failed to submit feedback. Please try again.' })
         } finally {
             setLoading(false)

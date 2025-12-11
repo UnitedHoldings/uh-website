@@ -26,7 +26,6 @@ const Applications = () => {
       }
     } catch (err) {
       setError("Error fetching applications");
-      console.error(err);
     } finally {
       setLoading(false);
     }

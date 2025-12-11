@@ -160,7 +160,6 @@ const fetchUnitedGeneralInsuranceData = async () => {
     return transformedData;
     
   } catch (error) {
-    console.error('Error fetching United General Insurance data:', error);
     throw error; // Re-throw the error for the caller to handle
   }
 };

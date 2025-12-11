@@ -570,7 +570,7 @@ const WhyChooseUs = () => {
         }
       } catch (err) {
         setError(err.message);
-        console.error('Error fetching reviews from API:', err);
+        le.error('Error fetching reviews from API:', err);
       } finally {
         setLoading(false);
       }

@@ -213,7 +213,6 @@ export default function Header() {
                 const data = await response.json();
                 setHeaderData(data.data || null);
             } catch (err) {
-                console.error('Error fetching header data:', err);
                 setHeaderData(null);
             } finally {
                 setLoading(false);

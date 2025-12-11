@@ -27,7 +27,7 @@ export async function POST(req) {
       forwardText = await forwardRes.text()
       forwardOk = forwardRes.ok || forwardRes.status === 204
     } catch (err) {
-      console.warn('Forwarding to external feedback endpoint failed:', err)
+
     }
 
     // For beta access, we issue a special cookie with 1-hour expiry
@@ -64,7 +64,7 @@ export async function POST(req) {
       },
     })
   } catch (err) {
-    console.error('Error in /api/feedback route:', err)
+
     return NextResponse.json({ error: 'Internal error' }, { status: 500 })
   }
 }

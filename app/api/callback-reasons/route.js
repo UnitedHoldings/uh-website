@@ -22,7 +22,7 @@ export async function GET() {
       },
     });
   } catch (error) {
-    console.error('Proxy API error:', error);
+
     return new Response(JSON.stringify({
       success: false,
       error: error.message,

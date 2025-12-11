@@ -114,7 +114,6 @@ export default function EmailGate({ hours = 1 }) {
       setVisible(false)
       setStatus({ ok: 'Beta access granted. Welcome!' })
     } catch (err) {
-      console.error('Beta gate error:', err)
       setStatus({ error: 'Failed to verify beta access. Please try again.' })
     } finally {
       setLoading(false)

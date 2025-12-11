@@ -134,7 +134,7 @@ export default function Contact() {
         }
       } catch (err) {
         setError(err.message);
-        console.error('Error fetching branches from API:', err);
+    
       } finally {
         setLoading(false);
       }

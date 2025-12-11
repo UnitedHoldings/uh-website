@@ -27,7 +27,7 @@ export default function PolicyPage() {
                     }
                 }
             } catch (error) {
-                console.error('Error fetching policies:', error);
+     
             } finally {
                 setLoading(false);
             }

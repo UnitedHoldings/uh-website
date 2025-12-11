@@ -8,7 +8,7 @@
 export async function POST(request) {
   try {
     const body = await request.json();
-    console.log(body);
+
     
     // Forward the request to the backend API
     const response = await fetch('https://website.api.united.co.sz/api/apply', {
@@ -54,7 +54,7 @@ export async function POST(request) {
       headers: { 'Content-Type': 'application/json' },
     });
   } catch (error) {
-    console.error('Quote API error:', error);
+
     return new Response(JSON.stringify({ success: false, error: error.message }), {
       status: 500,
       headers: { 'Content-Type': 'application/json' },

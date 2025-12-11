@@ -33,7 +33,6 @@ const FormBuilder = () => {
       }
     } catch (err) {
       setError("Error fetching form categories");
-      console.error(err);
     } finally {
       setLoading(false);
     }
@@ -104,7 +103,6 @@ const FormBuilder = () => {
       }
     } catch (err) {
       setSubmitError("Error submitting application. Please try again.");
-      console.error(err);
     } finally {
       setSubmitting(false);
     }

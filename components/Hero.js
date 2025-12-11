@@ -125,7 +125,6 @@ const Hero = ({ currentSlide = 0, setCurrentSlide }) => {
           throw new Error('Invalid data format from API');
         }
       } catch (err) {
-        console.error('Failed to fetch slides from API:', err.message);
         setError(err.message);
       } finally {
         setLoading(false);

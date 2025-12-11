@@ -119,7 +119,6 @@ const fetchUnitedPayData = async () => {
     return transformedData;
     
   } catch (error) {
-    console.error('Error fetching United Pay data:', error);
     throw error; // Re-throw the error for the caller to handle
   }
 };

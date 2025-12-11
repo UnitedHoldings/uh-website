@@ -129,7 +129,6 @@ const fetchUnitedLifeAssuranceData = async () => {
     return transformedData;
     
   } catch (error) {
-    console.error('Error fetching United Life Assurance data:', error);
     throw error; // Re-throw the error for the caller to handle
   }
 };

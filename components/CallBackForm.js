@@ -135,7 +135,6 @@ const CallBackForm = ({ onClose }) => {
       }
 
     } catch (error) {
-      console.error('Error sending email:', error);
       setFormState({
         loading: false,
         error: error.message || 'Failed to submit form. Please try again.',
