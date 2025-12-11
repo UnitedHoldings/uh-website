@@ -134,7 +134,7 @@ export default function Contact() {
         }
       } catch (err) {
         setError(err.message);
-    
+
       } finally {
         setLoading(false);
       }
@@ -213,7 +213,7 @@ export default function Contact() {
           <div className="text-6xl text-gray-300 mx-auto mb-4">📍</div>
           <h3 className="text-xl font-semibold text-gray-600 mb-2">Failed to load branches</h3>
           <p className="text-gray-500 mb-4">{error}</p>
-          <button 
+          <button
             onClick={() => window.location.reload()}
             className="bg-[#9b1c20] text-white px-6 py-2 rounded-full font-semibold hover:bg-[#881a1e] transition-colors"
           >
@@ -265,7 +265,7 @@ export default function Contact() {
                 >
                   Our Branches
                 </button>
-                
+
               </nav>
               <div className="text-sm text-gray-600 mt-3 md:mt-0">
                 <span className="font-semibold">Need help?</span> Call 800 1010 or email <a href="mailto:info@united.co.sz" className="text-[#9b1c20] underline">info@united.co.sz</a>
@@ -283,7 +283,8 @@ export default function Contact() {
                 </div>
                 <div>
                   <h4 className="font-semibold text-lg">Head Office</h4>
-                  <p className="text-gray-600">Manzini, Eswatini</p>
+                  <p className="text-gray-600">Plot 105 Cnr, Masalesikhundleni </p>
+                  <p className="text-gray-600">and Mahleka Streets, Manzini M200</p>
                 </div>
               </div>
 
@@ -331,103 +332,103 @@ export default function Contact() {
           </div>
 
           <div className='w-full lg:border-l lg:border-gray-400 lg:pl-6 mt-8 lg:mt-0'>
-            
-              <div className="space-y-6">
-                <div className="h-[800px] rounded-lg overflow-hidden">
-                  <Suspense fallback={<MapSkeleton />}>
-                    <BranchMap branches={completeBranches} />
-                  </Suspense>
-                </div>
 
-                {/* Search and Filters */}
-                <div className="space-y-4">
-                  <div className="flex flex-col md:flex-row gap-4">
-                    <div className="flex-1">
-                      <input
-                        type="text"
-                        placeholder="Search branches by name or phone..."
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9b1c20] focus:border-transparent"
-                      />
-                    </div>
-                    <div className="flex gap-2">
-                      <select
-                        value={regionFilter}
-                        onChange={(e) => setRegionFilter(e.target.value)}
-                        className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9b1c20] focus:border-transparent"
-                      >
-                        {regions.map(region => (
-                          <option key={region} value={region}>
-                            {region === 'All' ? 'All Regions' : region}
-                          </option>
-                        ))}
-                      </select>
-                      <select
-                        value={departmentFilter}
-                        onChange={(e) => setDepartmentFilter(e.target.value)}
-                        className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9b1c20] focus:border-transparent"
-                      >
-                        {departments.map(dept => (
-                          <option key={dept} value={dept}>
-                            {dept === 'All' ? 'All Departments' : dept}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
+            <div className="space-y-6">
+              <div className="h-[800px] rounded-lg overflow-hidden">
+                <Suspense fallback={<MapSkeleton />}>
+                  <BranchMap branches={completeBranches} />
+                </Suspense>
+              </div>
+
+              {/* Search and Filters */}
+              <div className="space-y-4">
+                <div className="flex flex-col md:flex-row gap-4">
+                  <div className="flex-1">
+                    <input
+                      type="text"
+                      placeholder="Search branches by name or phone..."
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9b1c20] focus:border-transparent"
+                    />
                   </div>
-
-                  <div className="text-sm text-gray-600">
-                    Showing {filteredBranches.length} of {completeBranches.length} branches
-                  </div>
-                </div>
-
-                {/* Branches List */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {displayedBranches.map((branch, index) => (
-                    <div key={index} className="p-6 border bg-[#9b1c20] rounded-lg hover:-md transition-">
-                      <h4 className="text-xl font-semibold text-white mb-2">{branch.name}</h4>
-                      <div className="flex items-center gap-2 mb-2">
-                        <span className="text-sm border text-white px-2 py-1 rounded">
-                          {branch.region}
-                        </span>
-                        {branch.departments.map((dept, idx) => (
-                          <span key={idx} className="text-sm bg-[#7c161a] text-white px-2 py-1 rounded">
-                            {dept}
-                          </span>
-                        ))}
-                      </div>
-                      <p className="text-lg text-gray-100 mb-2">{branch.phone}</p>
-                      <p className="text-md text-gray-300 mb-4">{branch.hours}</p>
-                      <button
-                        onClick={() => {
-                          trackEvent('branch_get_direction_clicked', {
-                            branch_name: branch.name,
-                            branch_region: branch.region,
-                            location: 'contact_us_map_view'
-                          });
-                          openGoogleMaps(branch.coords, branch.name);
-                        }}
-                        className="text-gray-300 font-semibold underline hover:text-white transition-colors"
-                      >
-                        Get Directions
-                      </button>
-                    </div>
-                  ))}
-                </div>
-
-                {filteredBranches.length > 4 && (
-                  <div className="text-center">
-                    <button
-                      onClick={() => setShowAllBranches(!showAllBranches)}
-                      className="border border-[#9b1c20] text-[#9b1c20] py-2 px-6 rounded-full font-semibold hover:bg-[#9b1c20] hover:text-white transition-colors"
+                  <div className="flex gap-2">
+                    <select
+                      value={regionFilter}
+                      onChange={(e) => setRegionFilter(e.target.value)}
+                      className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9b1c20] focus:border-transparent"
                     >
-                      {showAllBranches ? 'Show Less' : `View All ${filteredBranches.length} Branches`}
+                      {regions.map(region => (
+                        <option key={region} value={region}>
+                          {region === 'All' ? 'All Regions' : region}
+                        </option>
+                      ))}
+                    </select>
+                    <select
+                      value={departmentFilter}
+                      onChange={(e) => setDepartmentFilter(e.target.value)}
+                      className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#9b1c20] focus:border-transparent"
+                    >
+                      {departments.map(dept => (
+                        <option key={dept} value={dept}>
+                          {dept === 'All' ? 'All Departments' : dept}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+
+                <div className="text-sm text-gray-600">
+                  Showing {filteredBranches.length} of {completeBranches.length} branches
+                </div>
+              </div>
+
+              {/* Branches List */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {displayedBranches.map((branch, index) => (
+                  <div key={index} className="p-6 border bg-[#9b1c20] rounded-lg hover:-md transition-">
+                    <h4 className="text-xl font-semibold text-white mb-2">{branch.name}</h4>
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="text-sm border text-white px-2 py-1 rounded">
+                        {branch.region}
+                      </span>
+                      {branch.departments.map((dept, idx) => (
+                        <span key={idx} className="text-sm bg-[#7c161a] text-white px-2 py-1 rounded">
+                          {dept}
+                        </span>
+                      ))}
+                    </div>
+                    <p className="text-lg text-gray-100 mb-2">{branch.phone}</p>
+                    <p className="text-md text-gray-300 mb-4">{branch.hours}</p>
+                    <button
+                      onClick={() => {
+                        trackEvent('branch_get_direction_clicked', {
+                          branch_name: branch.name,
+                          branch_region: branch.region,
+                          location: 'contact_us_map_view'
+                        });
+                        openGoogleMaps(branch.coords, branch.name);
+                      }}
+                      className="text-gray-300 font-semibold underline hover:text-white transition-colors"
+                    >
+                      Get Directions
                     </button>
                   </div>
-                )}
+                ))}
               </div>
-            
+
+              {filteredBranches.length > 4 && (
+                <div className="text-center">
+                  <button
+                    onClick={() => setShowAllBranches(!showAllBranches)}
+                    className="border border-[#9b1c20] text-[#9b1c20] py-2 px-6 rounded-full font-semibold hover:bg-[#9b1c20] hover:text-white transition-colors"
+                  >
+                    {showAllBranches ? 'Show Less' : `View All ${filteredBranches.length} Branches`}
+                  </button>
+                </div>
+              )}
+            </div>
+
           </div>
         </div>
       </div>
