@@ -211,7 +211,7 @@ export default function RootLayout({ children }) {
                 var v = d.createElement(t), s = d.getElementsByTagName(t)[0];
                 v.onload = function() {
                   window.voiceflow.chat.load({
-                    verify: { projectID: '693c2abd3bd90b6bff4abe20' },
+                    verify: { projectID: '693c2abd3bd90b6bff4abe0' },
                     url: 'https://general-runtime.voiceflow.com',
                     versionID: 'production',
                     voice: {
