@@ -3,7 +3,7 @@ import "./globals.css";
 import Footer from "@/components/Footer";
 import PostHogProvider from "@/lib/PHProvider";
 import { Suspense } from "react";
-import Script from 'next/script';
+import Script from "next/script";
 import Header from "@/components/Header/Header";
 
 // Site constants
@@ -131,11 +131,8 @@ export default function RootLayout({ children }) {
           src="https://www.googletagmanager.com/gtag/js?id=G-31DS0EN7P0"
           strategy="afterInteractive"
         />
-        <Script
-          src="/gtag-init.js"
-          strategy="afterInteractive"
-        />
-        
+        <Script src="/gtag-init.js" strategy="afterInteractive" />
+
         {/* ✅ Add custom styles for Voiceflow widget pop-up animation */}
         <style>{`
           /* Voiceflow widget pop-up animation */
@@ -214,7 +211,7 @@ export default function RootLayout({ children }) {
                 var v = d.createElement(t), s = d.getElementsByTagName(t)[0];
                 v.onload = function() {
                   window.voiceflow.chat.load({
-                    verify: { projectID: '6936a13595539737447718bf' },
+                    verify: { projectID: '693c2abd3bd90b6bff4abe20' },
                     url: 'https://general-runtime.voiceflow.com',
                     versionID: 'production',
                     voice: {
@@ -265,7 +262,7 @@ export default function RootLayout({ children }) {
                 v.type = "text/javascript"; 
                 s.parentNode.insertBefore(v, s);
               })(document, 'script');
-            `
+            `,
           }}
         />
       </body>
