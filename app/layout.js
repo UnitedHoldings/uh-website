@@ -47,6 +47,9 @@ const outfit = Outfit({
   display: "swap",
 });
 
+// Voiceflow project ID read from environment (exposed to the client)
+const VOICEFLOW_PROJECT_ID = process.env.NEXT_PUBLIC_VOICEFLOW_PROJECT_ID;
+const voiceflowProjectIDForScript = VOICEFLOW_PROJECT_ID ? `'${VOICEFLOW_PROJECT_ID}'` : 'null';
 // ✅ Metadata API
 export const metadata = {
   title: {
@@ -214,7 +217,7 @@ export default function RootLayout({ children }) {
                 var v = d.createElement(t), s = d.getElementsByTagName(t)[0];
                 v.onload = function() {
                   window.voiceflow.chat.load({
-                    verify: { projectID: '6936a13595539737447718bf' },
+                    verify: { projectID: ${voiceflowProjectIDForScript} },
                     url: 'https://general-runtime.voiceflow.com',
                     versionID: 'production',
                     voice: {
