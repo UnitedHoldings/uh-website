@@ -35,7 +35,7 @@ const getProductCompany = (product) => {
   if (productName.includes('loan') ||
     productName.includes('micro') ||
     productName.includes('salary') ||
-    productName.includes('umlamleli')) {
+    productName.includes('micro loan')) {
     return 'UP';
   }
 
